@@ -1,20 +1,43 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import * as React from 'react';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import Dashboard from './src/Screens/Dashboard';
+import AllJobs from './src/Screens/AllJobs';
+import JobsDetail from './src/Screens/JobsDetail';
+import { StatusBar } from 'react-native';
+const Stack = createNativeStackNavigator();
+function App() {
 
-export default function App() {
+  const screenOptions = {
+    headerStyle: { backgroundColor: '#FBA200' },
+    headerTintColor: 'white',
+    headerTitleAlign: 'center',
+    gestureEnabled: true,
+  }
+
+  StatusBar.setBarStyle('light-content');
+
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <NavigationContainer>
+      <Stack.Navigator screenOptions={screenOptions}>
+        <Stack.Screen name="Dashboard" component={Dashboard} />
+        <Stack.Screen
+          name="All-Job"
+          component={AllJobs}
+          options={{
+            title: 'All Jobs'
+          }}
+        />
+        <Stack.Screen
+          name="jobs-detail"
+          component={JobsDetail}
+          options={{
+            title: 'Jobs Detail'
+          }}
+        />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+export default App;
