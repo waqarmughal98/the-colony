@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, Image, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import Color from '../../Color'
+import { vh, vw } from '../../utils/ScreenSize';
 const DashboardBottom = () => {
   const data = [
     {
@@ -54,19 +55,21 @@ const styles = StyleSheet.create({
     marginHorizontal:13,
     marginVertical:10,
     borderRadius:10,
-    height:235,
-    padding:20,
+    height:vh * 30,
+    padding:5,
+    justifyContent: 'center',
   }
   ,
   subContainer:{
     display:"flex",
     flexDirection:"row",
     gap:12,
-    flexWrap:"wrap"
+    flexWrap:"wrap",
+    justifyContent: "center"
   },
   individualContainer:{
     height:90,
-    width:90,
+    width: vw * 25,
     backgroundColor:'white',
     borderRadius:5,
     display:"flex",

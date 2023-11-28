@@ -2,9 +2,7 @@ import React from "react";
 import { StyleSheet, Text, View, TouchableOpacity, Dimensions } from "react-native";
 import calenderimg from "../../../assets/imgs/latest.png";
 import { Entypo, MaterialIcons, AntDesign } from "@expo/vector-icons";
-const { width, height } = Dimensions.get('window');
-const vw = width / 100;
-const vh = height / 100;
+import { vh, vw } from "../../utils/ScreenSize";
 
 const DashboardTopItem = ({ item, navigation }) => {
   return (
@@ -87,6 +85,7 @@ const DashboardTop = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     marginTop: 20,
+    height: vh * 40
   },
   subContainer: {
     display: "flex",
