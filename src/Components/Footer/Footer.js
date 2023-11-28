@@ -8,15 +8,15 @@ const Footer = () => {
     <View style={styles.footerContainer}>
       {/* Your three images */}
       <TouchableOpacity  style={styles.individual} >
-         <Image source={require('../../assets/imgs/contact.png')} style={styles.footerImage} />
+         <Image source={require('../../../assets/imgs/contact.png')} style={styles.footerImage} />
          <Text style={styles.text}>Dashboard</Text>
       </TouchableOpacity>
       <TouchableOpacity  style={styles.individual} >
-         <Image source={require('../../assets/imgs/lg.png')} style={styles.footerImage} />
+         <Image source={require('../../../assets/imgs/lg.png')} style={styles.footerImage} />
          <Text style={styles.text}></Text>
       </TouchableOpacity>
       <TouchableOpacity  style={styles.individual} >
-         <Image source={require('../../assets/imgs/profile.png')} style={styles.footerImage} />
+         <Image source={require('../../../assets/imgs/profile.png')} style={styles.footerImage} />
          <Text style={styles.text}>Profile</Text>
       </TouchableOpacity>
 
