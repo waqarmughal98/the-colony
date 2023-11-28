@@ -7,23 +7,26 @@ import {
   Image,
   Dimensions,
   TouchableOpacity,
+  Alert,
 } from 'react-native';
 import React,{useState} from 'react';
-import { FontAwesome } from '@expo/vector-icons';
+import { FontAwesome,Ionicons } from '@expo/vector-icons';
 const { width, height } = Dimensions.get('window');
 const vw = width / 100;
 const vh = height / 100;
-const Login = () => {
+const Login = ({navigation}) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const handleEmailChange = (text) => {
-    setEmail(text);
-  };
-
-  const handlePasswordChange = (text) => {
-    setPassword(text);
-  };
+  const Login=()=>{
+    if(email=="admin@gmail.com" && password=="password"){
+        navigation.navigate("Dashboard")
+    }
+    else{
+        Alert('Invalid credentials');  
+    }
+  }
+   
   return (
     <ImageBackground
       source={require('../../assets/imgs/Bg.png')} // Replace with the actual path to your image
@@ -38,18 +41,15 @@ const Login = () => {
         <Text style={styles.text2}>Sign in to view the project</Text>
          <View style={styles.inputMainContainer}>
          <View style={styles.inputContainer}>
-          <FontAwesome
-            name="envelope"
-            size={20}
+         <Ionicons name="person"  size={20}
             color="black"
-            style={styles.inputIcon}
-          />
+            style={styles.inputIcon}/>
           <TextInput
             style={styles.input}
             placeholder="Email"
             placeholderTextColor="black"
             value={email}
-            onChangeText={handleEmailChange}
+            onChangeText={(text)=>setEmail(text)}
           />
         </View>
 
@@ -66,12 +66,12 @@ const Login = () => {
             placeholderTextColor="black"
             secureTextEntry={true}
             value={password}
-            onChangeText={handlePasswordChange}
+            onChangeText={(text)=>setPassword(text)}
           />
         </View>
          </View>
 
-            <TouchableOpacity activeOpacity={0.6} style={styles.signInButton}>
+            <TouchableOpacity onPress={()=>Login()} activeOpacity={0.6} style={styles.signInButton}>
                 <Text style={styles.textSignIn}>Sign In</Text>
             </TouchableOpacity>
 
