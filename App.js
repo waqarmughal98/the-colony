@@ -6,6 +6,8 @@ import AllJobs from './src/Screens/AllJobs';
 import ProblemReportReplies from './src/Screens/ProblemReportReplies';
 import JobsDetail from './src/Screens/JobsDetail';
 import { StatusBar } from 'react-native';
+import Login from './src/Screens/Login';
+import SplashScreen from './src/Screens/SpashScreen';
 const Stack = createNativeStackNavigator();
 function App() {
 
@@ -20,8 +22,21 @@ function App() {
 
   return (
     <NavigationContainer>
-      <Stack.Navigator screenOptions={screenOptions}>
-        <Stack.Screen name="Dashboard" component={Dashboard} />
+      <Stack.Navigator screenOptions={screenOptions} initialRouteName="SplashScreen">
+      <Stack.Screen
+          name="SplashScreen"
+          component={SplashScreen}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Login"
+          component={Login}
+          options={{
+            headerShown: false, // Hide header on the Login screen
+          }}
+        />
+
+        <Stack.Screen name="Dashboard"  component={Dashboard} />
         <Stack.Screen
           name="All-Job"
           component={AllJobs}
