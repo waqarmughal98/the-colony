@@ -42,7 +42,7 @@ function Dashboard({ navigation }) {
           <DashboardBottom navigation={navigation}/>
         </View>
         </View>
-         <Footer/>
+        <Footer/>
       </View>
     );
   }
@@ -52,7 +52,7 @@ export default Dashboard
 const styles = StyleSheet.create({
     mainContainer:{
         flex:1,
-        backgroundColor: Color.brightOrange
+        backgroundColor: Color.brightOrange,
     },
     DasboardTop:{
       marginVertical:10,
