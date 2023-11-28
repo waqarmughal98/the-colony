@@ -38,7 +38,7 @@ const Logs = () => {
                 </View>
                 <Text style={styles.text2}>Posted a updated</Text>
                 <Text style={styles.text3}>200-Draitwitch Swt</Text>
-                <View >
+                <View style={styles.updateBg}>
                   <Text style={[styles.text4,{ backgroundColor: index%2==0 ?"#F0F4F7": '#DEE1EC' }]}>
                     Update new updates on
                   </Text>
@@ -66,7 +66,7 @@ const styles = StyleSheet.create({
   Container: {
     height: '100%',
     backgroundColor: 'white',
-    paddingBottom:12,
+    paddingBottom:120,
   },
   Indicator: {
     flexGrow: 1,
@@ -92,6 +92,9 @@ const styles = StyleSheet.create({
   Image: {
     height: 50,
     width: 50,
+  },
+  updateBg:{
+    alignSelf: 'flex-start'
   },
   text4: {
     padding: 8,
