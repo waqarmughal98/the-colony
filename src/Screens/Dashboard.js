@@ -4,7 +4,7 @@ import { Ionicons } from '@expo/vector-icons';
 import Color from '../Color';
 import DasboardTop from '../Components/Dasboard/DasboardTop';
 import DashboardBottom from '../Components/Dasboard/DashboardBottom';
-import Footer from '../Components/Footer';
+import Footer from '../Components/Footer/Footer';
 function Dashboard({ navigation }) {
 
     React.useLayoutEffect(() => {

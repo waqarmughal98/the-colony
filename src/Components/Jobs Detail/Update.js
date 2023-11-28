@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View , ScrollView, ActivityIndicator, Image} from 'react-native'
+import { StyleSheet, Text, View , ScrollView, ActivityIndicator, Image, TextInput} from 'react-native'
 import React, { useState, useEffect } from 'react'
 import Color from '../../Color'
 const Update = () => {

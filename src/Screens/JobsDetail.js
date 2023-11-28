@@ -16,7 +16,7 @@ import Update from '../Components/Jobs Detail/Update';
 import Notes from '../Components/Jobs Detail/Notes';
 import Logs from '../Components/Jobs Detail/Logs';
 import ProblemReports from '../Components/Jobs Detail/ProblemReports';
-const JobsDetail = () => {
+const JobsDetail = ({navigation}) => {
   const navbarOptions = [
     {
       id: 0,
@@ -117,7 +117,7 @@ const JobsDetail = () => {
         ) : selectedOptionID == 7 ? (
           <Logs />
         ) : selectedOptionID == 8 ? (
-          <ProblemReports />
+          <ProblemReports navigation={navigation} />
         ) : null}
       </View>
     </View>

@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Image, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Image, Text, StyleSheet, TouchableOpacity,Dimensions } from 'react-native';
 import Color from '../../Color'
 import { vh, vw } from '../../utils/ScreenSize';
 const DashboardBottom = () => {

@@ -3,6 +3,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Dashboard from './src/Screens/Dashboard';
 import AllJobs from './src/Screens/AllJobs';
+import ProblemReportReplies from './src/Screens/ProblemReportReplies';
 import JobsDetail from './src/Screens/JobsDetail';
 import { StatusBar } from 'react-native';
 const Stack = createNativeStackNavigator();
@@ -33,6 +34,13 @@ function App() {
           component={JobsDetail}
           options={{
             title: 'Jobs Detail'
+          }}
+        />
+            <Stack.Screen
+          name="problem-report-replies"
+          component={ProblemReportReplies}
+          options={{
+            title: 'Problem Report Replies'
           }}
         />
       </Stack.Navigator>
