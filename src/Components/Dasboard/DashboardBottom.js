@@ -1,6 +1,9 @@
 import React from 'react';
-import { View, Image, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Image, Text, StyleSheet, TouchableOpacity,Dimensions } from 'react-native';
 import Color from '../../Color'
+const { width, height } = Dimensions.get('window');
+const vw = width / 100;
+const vh = height / 100;
 const DashboardBottom = () => {
   const data = [
     {
@@ -65,8 +68,8 @@ const styles = StyleSheet.create({
     flexWrap:"wrap"
   },
   individualContainer:{
-    height:90,
-    width:90,
+    height:vh*12,
+    width:vw*25,
     backgroundColor:'white',
     borderRadius:5,
     display:"flex",

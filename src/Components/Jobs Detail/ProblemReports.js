@@ -2,7 +2,7 @@ import { StyleSheet, Text, View, ActivityIndicator, TouchableOpacity , ScrollVie
 import React, { useState, useEffect } from 'react'
 import { MaterialIcons } from '@expo/vector-icons';
 import Color from '../../Color'
-const ProblemReports = () => {
+const ProblemReports = ({navigation}) => {
   const [loading, setLoading]=useState(true)
    
   const data=[
@@ -47,7 +47,7 @@ const ProblemReports = () => {
                   data.map((item,index)=>
                   {
                       return(
-                          <TouchableOpacity activeOpacity={0.6} key={index}>
+                          <TouchableOpacity onPress={()=>navigation.navigate("problem-report-replies")} activeOpacity={0.6} key={index}>
                               <View style={[styles.mainIndividual,{backgroundColor:index%2==0 ? '#D2CBBC' : '#F2F1CF'}]}>
                                 <View style={styles.individual}>
                                   <Text style={styles.dataText}>{item.jobName}</Text>

@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, TouchableOpacity } from 'react-native'
+import { StyleSheet, Text, View, TouchableOpacity, ScrollView } from 'react-native'
 import React from 'react'
 import { MaterialIcons } from '@expo/vector-icons';
 import Color from '../Color';
@@ -26,16 +26,7 @@ const AllJobs = ({navigation}) => {
         {
             jobName:"Halo therapy",
             company: "Sevent Trent..."
-        },
-        {
-            jobName:"Halo therapy",
-            company: "Sevent ...... Trent"
-        },
-        {
-            jobName:"Halo therapy",
-            company: "Sevent Trent"
-        },
-
+        },    
     ]
     
   return (
@@ -47,6 +38,7 @@ const AllJobs = ({navigation}) => {
           </View>
           {/* All Data */}
           <View style={styles.dataContainer}>
+            <ScrollView>
               {
                 data.map((item,index)=>
                 {
@@ -61,7 +53,7 @@ const AllJobs = ({navigation}) => {
                     )
                 })
               }
-
+            </ScrollView>
           </View>
       
     </View>
