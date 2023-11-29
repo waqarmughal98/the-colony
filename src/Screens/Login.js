@@ -11,71 +11,66 @@ import {
 } from 'react-native';
 import React,{useState} from 'react';
 import { FontAwesome,Ionicons } from '@expo/vector-icons';
-const { width, height } = Dimensions.get('window');
-const vw = width / 100;
-const vh = height / 100;
+import { vh, vw } from '../utils/ScreenSize';
+import axios from 'axios';
+import { URL } from '../utils/Constant';
+import * as SecureStore from "expo-secure-store";
 const Login = ({navigation}) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const Login=()=>{
-    if(email=="admin@gmail.com" && password=="password"){
-        navigation.navigate("Dashboard")
-    }
-    else{
-        Alert('Invalid credentials');  
-    }
+  const Login = () => {
+    console.log(email,password)
+    axios.post(URL + '/login',{}, {
+      params: {
+        email: email,
+        password: password
+      }
+    }).then((res)=>{
+      console.log(res.data.token);
+      (async function(){
+        await SecureStore.setItemAsync("token", res.data.token);
+      })()
+      navigation.navigate("Dashboard")
+      
+    }).catch((err)=>{
+      console.log(err);
+      Alert.alert('Invalid credentials'); 
+    })
   }
    
   return (
-    <ImageBackground
-      source={require('../../assets/imgs/Bg.png')} // Replace with the actual path to your image
-      style={styles.backgroundImage}
-    >
+    <ImageBackground source={require('../../assets/imgs/Bg.png')} style={styles.backgroundImage}>
       <View style={styles.container}>
-        <Image
-          source={require('../../assets/imgs/logoLogin.png')}
-          style={styles.Image}
-        />
+        <Image source={require('../../assets/imgs/logoLogin.png')} style={styles.Image}/>
         <Text style={styles.text1}>Welcome back! Let's build</Text>
         <Text style={styles.text2}>Sign in to view the project</Text>
-         <View style={styles.inputMainContainer}>
-         <View style={styles.inputContainer}>
-         <Ionicons name="person"  size={20}
-            color="black"
-            style={styles.inputIcon}/>
-          <TextInput
-            style={styles.input}
-            placeholder="Email"
-            placeholderTextColor="black"
-            value={email}
-            onChangeText={(text)=>setEmail(text)}
-          />
+        <View style={styles.inputMainContainer}>
+          <View style={styles.inputContainer}>
+            <Ionicons name="person"  size={20} color="black" style={styles.inputIcon}/>
+            <TextInput
+              style={styles.input}
+              placeholder="Email"
+              placeholderTextColor="black"
+              value={email}
+              onChangeText={(text)=>setEmail(text)}
+            />
+          </View>
+          <View style={styles.inputContainer}>
+            <FontAwesome name="lock" size={20} color="black" style={styles.inputIcon} />
+            <TextInput
+              style={styles.input}
+              placeholder="Password"
+              placeholderTextColor="black"
+              secureTextEntry={true}
+              value={password}
+              onChangeText={(text)=>setPassword(text)}
+            />
+          </View>
         </View>
-
-        <View style={styles.inputContainer}>
-          <FontAwesome
-            name="lock"
-            size={20}
-            color="black"
-            style={styles.inputIcon}
-          />
-          <TextInput
-            style={styles.input}
-            placeholder="Password"
-            placeholderTextColor="black"
-            secureTextEntry={true}
-            value={password}
-            onChangeText={(text)=>setPassword(text)}
-          />
-        </View>
-         </View>
-
-            <TouchableOpacity onPress={()=>Login()} activeOpacity={0.6} style={styles.signInButton}>
-                <Text style={styles.textSignIn}>Sign In</Text>
-            </TouchableOpacity>
-
-       
+        <TouchableOpacity onPress={()=>Login()} activeOpacity={0.6} style={styles.signInButton}>
+            <Text style={styles.textSignIn}>Sign In</Text>
+        </TouchableOpacity>
       </View>
     </ImageBackground>
   );
@@ -86,7 +81,7 @@ export default Login;
 const styles = StyleSheet.create({
   backgroundImage: {
     flex: 1,
-    resizeMode: 'cover', // or 'stretch' or 'contain'
+    resizeMode: 'cover',
     alignItems: 'center',
     justifyContent: 'center',
     alignContent: 'center',
@@ -102,7 +97,8 @@ const styles = StyleSheet.create({
     width: vw*73,
   },
   text1: {
-    fontSize: 21,
+    fontSize: 22,
+    fontWeight: '800'
   },
   text2: {
     fontSize: 16,

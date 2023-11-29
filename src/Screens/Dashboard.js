@@ -1,12 +1,13 @@
-import { StyleSheet, Text, View, TouchableOpacity } from 'react-native'
-import React from 'react'
+import { StyleSheet, Text, View, TouchableOpacity, Alert } from 'react-native'
+import React, { useEffect } from 'react'
 import { Ionicons } from '@expo/vector-icons';
 import Color from '../Color';
 import DasboardTop from '../Components/Dasboard/DasboardTop';
 import DashboardBottom from '../Components/Dasboard/DashboardBottom';
 import Footer from '../Components/Footer/Footer';
+import { useNavigation } from '@react-navigation/core';
+import * as SecureStore from "expo-secure-store";
 function Dashboard({ navigation }) {
-
     React.useLayoutEffect(() => {
       navigation.setOptions({
         headerTitle: 'Dashboard',
@@ -29,6 +30,16 @@ function Dashboard({ navigation }) {
         ),
       });
     }, [navigation]);
+
+    useEffect(()=>{
+      let result =  SecureStore.getItemAsync("token");
+      if (result) {
+        Alert.alert("🔐 Here's your value 🔐 \n" + result);
+      } else {
+        Alert.alert('No value stored under that key.');
+        navigation.navigate('Login');
+      }
+    }, [])
   
     return (
       <View style={styles.mainContainer}>
