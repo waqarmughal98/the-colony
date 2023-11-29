@@ -10,7 +10,6 @@ import Login from './src/Screens/Login';
 import SplashScreen from './src/Screens/SpashScreen';
 const Stack = createNativeStackNavigator();
 function App() {
-
   const screenOptions = {
     headerStyle: { backgroundColor: '#FBA200' },
     headerTintColor: 'white',
@@ -19,6 +18,17 @@ function App() {
   }
 
   StatusBar.setBarStyle('light-content');
+
+  // React.useEffect(()=>{
+  //   (async function(){
+  //     let result = await SecureStore.getItemAsync("token");
+  //     if(result){
+  //       navigation.navigate('Dashboard');
+  //     }else{
+  //       navigation.navigate('Login');
+  //     }
+  //   })()
+  // },[])
 
   return (
     <NavigationContainer>

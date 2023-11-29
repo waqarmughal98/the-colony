@@ -6,7 +6,7 @@ import DasboardTop from '../Components/Dasboard/DasboardTop';
 import DashboardBottom from '../Components/Dasboard/DashboardBottom';
 import Footer from '../Components/Footer/Footer';
 import { useNavigation } from '@react-navigation/core';
-import * as SecureStore from "expo-secure-store";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 function Dashboard({ navigation }) {
     React.useLayoutEffect(() => {
       navigation.setOptions({
@@ -32,7 +32,7 @@ function Dashboard({ navigation }) {
     }, [navigation]);
 
     useEffect(()=>{
-      let result =  SecureStore.getItemAsync("token");
+      let result =  AsyncStorage.getItem("token");
       if (result) {
         Alert.alert("🔐 Here's your value 🔐 \n" + result);
       } else {

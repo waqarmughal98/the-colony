@@ -1,33 +1,30 @@
 import { StyleSheet, Text, View, TouchableOpacity, ScrollView } from 'react-native'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { MaterialIcons } from '@expo/vector-icons';
 import Color from '../Color';
+import { URL } from '../utils/Constant';
+import axios from 'axios';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 const AllJobs = ({navigation}) => {
-
-    const data=[
-        {
-            jobName:"Halo therapy",
-            company: "Sevent Trent"
-        },
-        {
-            jobName:"Halo therapy",
-            company: "Sevent Trent"
-        },
-        {
-            jobName:"Halo therapy",
-            company: "Sevent Trent"
-        },
-        {
-            jobName:"Halo therapy",
-            company: "Sevent Trent"
-        },
-        {
-            jobName:"Halo therapy",
-            company: "Sevent Trent..."
-        },    
-    ]
+    const [data, setData] = useState([]);
+    useEffect(()=>{
+        (async ()=>{
+            const authToken = await AsyncStorage.getItem("token");
+            console.log(authToken)
+            axios.get(URL + '/task/all',{
+                headers: {
+                    Authorization: `Bearer ${authToken}`
+                }
+            }).then((res)=>{
+                console.log('tasks', res.data.tasks.data);
+                setData(res.data.tasks.data);
+            }).catch((err)=>{
+                console.log(err);
+            })
+        })()
+    },[])
     
   return (
     <View style={styles.mainContainer}>
@@ -43,10 +40,10 @@ const AllJobs = ({navigation}) => {
                 data.map((item,index)=>
                 {
                     return(
-                        <TouchableOpacity onPress={()=>navigation.navigate("jobs-detail")} activeOpacity={0.6} key={index}>
+                        <TouchableOpacity onPress={()=>navigation.navigate("jobs-detail",{items: item})} activeOpacity={0.6} key={index}>
                             <View style={[styles.individual,{backgroundColor:index%2==0 ? '#D2CBBC' : '#F2F1CF'}]}>
-                            <Text style={styles.dataText}>{item.jobName}</Text>
-                            <Text style={styles.dataText2}>{item.company}</Text> 
+                            <Text style={styles.dataText}>{item.task_title}</Text>
+                            <Text style={styles.dataText2}>{item.project_title}</Text> 
                             <MaterialIcons name={'keyboard-arrow-right'} size={28} color="black" />
                             </View>
                         </TouchableOpacity>

@@ -1,24 +1,13 @@
-import {
-  StyleSheet,
-  Text,
-  View,
-  ImageBackground,
-  TextInput,
-  Image,
-  Dimensions,
-  TouchableOpacity,
-  Alert,
-} from 'react-native';
+import { StyleSheet, Text, View, ImageBackground, TextInput, Image, Dimensions, TouchableOpacity, Alert} from 'react-native';
 import React,{useState} from 'react';
 import { FontAwesome,Ionicons } from '@expo/vector-icons';
 import { vh, vw } from '../utils/ScreenSize';
 import axios from 'axios';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { URL } from '../utils/Constant';
-import * as SecureStore from "expo-secure-store";
 const Login = ({navigation}) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-
   const Login = () => {
     console.log(email,password)
     axios.post(URL + '/login',{}, {
@@ -29,10 +18,9 @@ const Login = ({navigation}) => {
     }).then((res)=>{
       console.log(res.data.token);
       (async function(){
-        await SecureStore.setItemAsync("token", res.data.token);
+        await AsyncStorage.setItem('token', res.data.token)
       })()
       navigation.navigate("Dashboard")
-      
     }).catch((err)=>{
       console.log(err);
       Alert.alert('Invalid credentials'); 

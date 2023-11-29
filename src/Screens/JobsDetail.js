@@ -5,7 +5,7 @@ import {
   FlatList,
   TouchableOpacity,
 } from 'react-native';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Color from '../Color';
 import Detail from '../Components/Jobs Detail/Detail';
 import Team from '../Components/Jobs Detail/Team';
@@ -16,7 +16,13 @@ import Update from '../Components/Jobs Detail/Update';
 import Notes from '../Components/Jobs Detail/Notes';
 import Logs from '../Components/Jobs Detail/Logs';
 import ProblemReports from '../Components/Jobs Detail/ProblemReports';
-const JobsDetail = ({navigation}) => {
+const JobsDetail = ({route, navigation}) => {
+  const { items } = route.params;
+
+  useEffect(()=>{
+    console.log(items);
+  }, [])
+
   const navbarOptions = [
     {
       id: 0,
@@ -85,7 +91,7 @@ const JobsDetail = ({navigation}) => {
     <View style={styles.mainContainer}>
       {/* Heading */}
       <View style={styles.heading}>
-        <Text style={styles.textHeading}>Draitwitch STW</Text>
+        <Text style={styles.textHeading}>{items.task_title}</Text>
       </View>
       {/* Navbar */}
       <View style={styles.navbar}>
