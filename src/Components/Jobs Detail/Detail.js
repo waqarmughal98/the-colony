@@ -78,10 +78,10 @@ const Address = () => {
     <ScrollView contentContainerStyle={styles.scrollViewContainer}>
       {!loading ? (
         <View style={styles.container}>
-          {inputFields.map((field) => {
+          {inputFields.map((field,index) => {
             if (field.key === 'SiteWorkStartDate' || field.key === 'SiteWorkEndDate') {
               return (
-                <View style={styles.inputContainer} key={field.key}>
+                <View style={styles.inputContainer} key={index}>
                 <Text style={styles.label}>{field.label}</Text>
                 <DateInput/>
               </View>
@@ -89,7 +89,7 @@ const Address = () => {
             }
             else if (field.key == 'hotel'){
              return (
-              <View style={[styles.toggleContainer]}>
+              <View style={[styles.toggleContainer]} key={index}>
               <Text style={styles.label}>Is a Hotel Required?</Text>
               <Switch
                 value={showMap}
@@ -100,7 +100,7 @@ const Address = () => {
             }
             else if (field.key == 'QueryRaised' || field.key == 'EnquiryNotes'){
               return (
-                <View style={styles.inputContainer} key={field.key}>
+                <View style={styles.inputContainer} key={index}>
                   <Text style={styles.label}>{field.label}</Text>
                   <TextInput
                     style={styles.inputTextArea}
@@ -114,7 +114,7 @@ const Address = () => {
              }
             else {
               return (
-                <View style={styles.inputContainer} key={field.key}>
+                <View style={styles.inputContainer} key={index}>
                   <Text style={styles.label}>{field.label}</Text>
                   <TextInput
                     style={styles.input}

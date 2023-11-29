@@ -19,8 +19,9 @@ const Login = ({navigation}) => {
       console.log(res.data.token);
       (async function(){
         await AsyncStorage.setItem('token', res.data.token)
+        navigation.navigate("Dashboard")
       })()
-      navigation.navigate("Dashboard")
+   
     }).catch((err)=>{
       console.log(err);
       Alert.alert('Invalid credentials'); 

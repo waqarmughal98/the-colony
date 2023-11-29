@@ -9,6 +9,7 @@ import { StatusBar } from 'react-native';
 import Login from './src/Screens/Login';
 import SplashScreen from './src/Screens/SpashScreen';
 import ProblemReports from './src/Components/Jobs Detail/ProblemReports';
+import WorkLog from './src/Screens/WorkLog';
 const Stack = createNativeStackNavigator();
 function App() {
   const screenOptions = {
@@ -33,12 +34,7 @@ function App() {
 
   return (
     <NavigationContainer>
-      <Stack.Navigator screenOptions={screenOptions} initialRouteName="SplashScreen">
-      <Stack.Screen
-          name="SplashScreen"
-          component={SplashScreen}
-          options={{ headerShown: false }}
-        />
+      <Stack.Navigator screenOptions={screenOptions} initialRouteName="Login">
         <Stack.Screen
           name="Login"
           component={Login}
@@ -69,11 +65,18 @@ function App() {
             title: 'Problem Report Replies'
           }}
         />
-            <Stack.Screen
+         <Stack.Screen
           name="problem-reports"
           component={ProblemReports}
           options={{
             title: 'Problem Reports'
+          }}
+        />
+         <Stack.Screen
+          name="work-logs"
+          component={WorkLog}
+          options={{
+            title: 'Work logs'
           }}
         />
       </Stack.Navigator>
