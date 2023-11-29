@@ -6,18 +6,18 @@ const DashboardBottom = ({navigation}) => {
   const data = [
     {
       img: require('../../../assets/imgs/job_status.png'), // Update the path
-      screenName:"",
+      screenName:"problem-reports",
       title: "Jobs Status",
       color:"#FBA200",
     },
     {
       img: require('../../../assets/imgs/task.png'), // Update the path
-      screenName:"",
+      screenName:"problem-reports",
       title: "Tasks",
     },
     {
       img: require('../../../assets/imgs/request.png'), // Update the path
-      screenName:"",
+      screenName:"problem-reports",
       title: "Requests",
     },
     {
@@ -27,7 +27,7 @@ const DashboardBottom = ({navigation}) => {
     },
     {
       img: require('../../../assets/imgs/latest.png'), // Update the path
-      screenName:"",
+      screenName:"problem-reports",
       title: "Latest Activity",
     },
     {
