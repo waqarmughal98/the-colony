@@ -37,7 +37,7 @@ const Address = () => {
     { label: 'Laser Scan/Drone', value: '', key: 'LaserScan' },
     { label: 'Topo Report', value: '', key: 'TopoReport' },
     { label: 'Utility Survey and Report', value: '', key: 'Survey' },
-    { label: 'New Enquiry Notes', value: '', key: 'EnquiryNotes' },
+    { label: 'New Enquiry Notes', value: '', key: 'NewEnquiryNotes' },
   ];
 
   const [inputData, setInputData] = useState(

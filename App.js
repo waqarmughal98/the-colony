@@ -30,15 +30,11 @@ function App() {
   //     }
   //   })()
   // },[])
+  
 
   return (
     <NavigationContainer>
-      <Stack.Navigator screenOptions={screenOptions} initialRouteName="SplashScreen">
-      <Stack.Screen
-          name="SplashScreen"
-          component={SplashScreen}
-          options={{ headerShown: false }}
-        />
+      <Stack.Navigator screenOptions={screenOptions} initialRouteName="Login">
         <Stack.Screen
           name="Login"
           component={Login}
@@ -62,14 +58,14 @@ function App() {
             title: 'Jobs Detail'
           }}
         />
-            <Stack.Screen
+        <Stack.Screen
           name="problem-report-replies"
           component={ProblemReportReplies}
           options={{
             title: 'Problem Report Replies'
           }}
         />
-            <Stack.Screen
+        <Stack.Screen
           name="problem-reports"
           component={ProblemReports}
           options={{

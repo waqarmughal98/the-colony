@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View, ImageBackground, TextInput, Image, Dimensions, TouchableOpacity, Alert} from 'react-native';
-import React,{useState} from 'react';
+import React,{useEffect, useState} from 'react';
 import { FontAwesome,Ionicons } from '@expo/vector-icons';
 import { vh, vw } from '../utils/ScreenSize';
 import axios from 'axios';
@@ -8,8 +8,8 @@ import { URL } from '../utils/Constant';
 const Login = ({navigation}) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+
   const Login = () => {
-    console.log(email,password)
     axios.post(URL + '/login',{}, {
       params: {
         email: email,
@@ -19,8 +19,8 @@ const Login = ({navigation}) => {
       console.log(res.data.token);
       (async function(){
         await AsyncStorage.setItem('token', res.data.token)
+        navigation.navigate("Dashboard")
       })()
-      navigation.navigate("Dashboard")
     }).catch((err)=>{
       console.log(err);
       Alert.alert('Invalid credentials'); 
