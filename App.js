@@ -9,6 +9,7 @@ import { StatusBar } from 'react-native';
 import Login from './src/Screens/Login';
 import SplashScreen from './src/Screens/SpashScreen';
 import ProblemReports from './src/Components/Jobs Detail/ProblemReports';
+import WorkLog from './src/Screens/WorkLog';
 const Stack = createNativeStackNavigator();
 function App() {
   const screenOptions = {
@@ -70,6 +71,13 @@ function App() {
           component={ProblemReports}
           options={{
             title: 'Problem Reports'
+          }}
+        />
+         <Stack.Screen
+          name="work-logs"
+          component={WorkLog}
+          options={{
+            title: 'Work logs'
           }}
         />
       </Stack.Navigator>

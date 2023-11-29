@@ -5,33 +5,34 @@ import { vh, vw } from '../../utils/ScreenSize';
 const DashboardBottom = ({navigation}) => {
   const data = [
     {
-      img: require('../../../assets/imgs/job_status.png'), // Update the path
-      screenName:"",
+      img: require('../../../assets/imgs/job_status.png'), 
+      screenName:"problem-reports",
       title: "Jobs Status",
       color:"#FBA200",
     },
     {
-      img: require('../../../assets/imgs/task.png'), // Update the path
-      screenName:"",
+      img: require('../../../assets/imgs/task.png'), 
+      screenName:"problem-reports",
       title: "Tasks",
     },
     {
-      img: require('../../../assets/imgs/request.png'), // Update the path
-      screenName:"",
+      img: require('../../../assets/imgs/request.png'), 
+      screenName:"problem-reports",
       title: "Requests",
     },
     {
-      img: require('../../../assets/imgs/problem.png'), // Update the path
+      img: require('../../../assets/imgs/problem.png'), 
       screenName:"problem-reports",
       title: "Problem Rep",
     },
     {
-      img: require('../../../assets/imgs/latest.png'), // Update the path
-      screenName:"",
+      img: require('../../../assets/imgs/latest.png'), 
+      screenName:"problem-reports",
       title: "Latest Activity",
     },
     {
-      img: require('../../../assets/imgs/myjob.png'), // Update the path
+      img: require('../../../assets/imgs/myjob.png'), 
+      screenName:"work-logs",
       title: "Work Log",
     },
   ];

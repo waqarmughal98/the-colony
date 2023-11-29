@@ -83,10 +83,12 @@ const styles = StyleSheet.create({
   Image: {
     height: vh*38,
     width: vw*73,
+    marginTop:-50
   },
   text1: {
     fontSize: 22,
-    fontWeight: '800'
+    fontWeight: '800',
+    marginTop:-20
   },
   text2: {
     fontSize: 16,
