@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, ImageBackground, TextInput, Image, Dimensions, TouchableOpacity, Alert} from 'react-native';
+import { StyleSheet, Text, View, ImageBackground, TextInput, Image, Dimensions, TouchableOpacity, Alert , KeyboardAvoidingView,} from 'react-native';
 import React,{useEffect, useState} from 'react';
 import { FontAwesome,Ionicons } from '@expo/vector-icons';
 import { vh, vw } from '../utils/ScreenSize';
@@ -29,6 +29,7 @@ const Login = ({navigation}) => {
    
   return (
     <ImageBackground source={require('../../assets/imgs/Bg.png')} style={styles.backgroundImage}>
+    
       <View style={styles.container}>
         <Image source={require('../../assets/imgs/logoLogin.png')} style={styles.Image}/>
         <Text style={styles.text1}>Welcome back! Let's build</Text>
@@ -60,6 +61,7 @@ const Login = ({navigation}) => {
             <Text style={styles.textSignIn}>Sign In</Text>
         </TouchableOpacity>
       </View>
+
     </ImageBackground>
   );
 };

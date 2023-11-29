@@ -60,8 +60,8 @@ const Address = () => {
   /* Remove this later; this is dummy data */
   useEffect(() => {
     setInputData({
-      street: 'asd',
-      city: 'ads',
+      Company: 'waqar',
+      jobName: 'ads',
       locationDetail: 'dsa',
       postcode: 'dsa',
     });
