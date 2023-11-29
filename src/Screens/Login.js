@@ -21,17 +21,13 @@ const Login = ({ navigation }) => {
 
   useEffect(() => {
     let token = AsyncStorage.getItem("token");
-    if (token) {
-      navigation.navigate("Dashboard");
-    }
+    // if (token && token !== "") {
+    //   navigation.navigate("Dashboard");
+    // }
   }, []);
 
   const Login = () => {
-    axios
-      .post(
-        URL + "/login",
-        {},
-        {
+    axios .post(URL + "/login",{},{
           params: {
             email: email,
             password: password,
@@ -46,8 +42,8 @@ const Login = ({ navigation }) => {
         })();
       })
       .catch((err) => {
-        console.log(err);
         Alert.alert("Invalid credentials");
+        console.log(err);
       });
   };
 

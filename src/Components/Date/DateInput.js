@@ -18,11 +18,6 @@ const DateInput = () => {
     setShowDatePicker(true);
   };
   
-  React.useEffect(()=>{
-    Alert.alert(date)
-  },[date])
-  
-
   return (
     <TouchableOpacity activeOpacity={0.5} onPress={showDatePickerContainer} style={styles.calendarIcon}>
     <View style={styles.container}>

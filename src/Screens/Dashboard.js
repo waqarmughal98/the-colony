@@ -33,11 +33,10 @@ function Dashboard({ navigation }) {
 
     useEffect(()=>{
       let result =  AsyncStorage.getItem("token");
-      if (result) {
-        // Alert.alert("🔐 Here's your value 🔐 \n" + result);
-      } else {
-        // Alert.alert('No value stored under that key.');
-        // navigation.navigate('Login');
+      if (!result) {
+        navigation.navigate('Login');
+      }else{
+        console.log("🔐 Here's your value 🔐 \n" + result);
       }
     }, [])
   

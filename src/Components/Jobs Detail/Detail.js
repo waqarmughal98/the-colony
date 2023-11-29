@@ -31,7 +31,7 @@ const Address = ({data}) => {
     { label: 'Is a Hotel Required', value: '', key: 'hotel' },
     { label: 'Hotel Details', value: '', key: 'HotelDetails' },
     { label: 'Hotel Address', value: '', key: 'HotelAddress' },
-    { label: 'Hotel PostCode', value: '', key: 'HotelPostCide' },
+    { label: 'Hotel PostCode', value: '', key: 'HotelPostCode' },
     { label: 'Is TM Required', value: '', key: 'tm' },
     { label: 'Enquiry Notes', value: '', key: 'EnquiryNotes' },
     { label: 'Status', value: '', key: 'Status' },
@@ -45,15 +45,35 @@ const Address = ({data}) => {
     { label: 'New Enquiry Notes', value: '', key: 'NewEnquiryNotes' },
   ];
 
-  const [inputData, setInputData] = useState(
-    inputFields.reduce((acc, field) => {
-      acc[field.key] = field.value;
-      return acc;
-    }, {})
-  );
+  const [inputData, setInputData] = useState({
+    Company: data.client_company_name,
+    jobName: data.project_title,
+    jobType: data.project_type,
+    SiteWorkStartDate: data.project_date_start,
+    SiteWorkEndDate: data.project_date_due,
+    Category: "",
+    PoNumber: data.project_custom_field_1,
+    CompanyNotes: "",
+    AnySpecialRequirement: "",
+    hotel: "",
+    HotelDetails: data.project_custom_field_2,
+    HotelAddress: data.project_custom_field_3,
+    HotelPostCode: "",
+    tm: data.project_custom_field_31,
+    EnquiryNotes: "",
+    Status: "",
+    TopoQA: data.project_custom_field_6,
+    UtilityQA: data.project_custom_field_7,
+    QueryRaised: data.project_custom_field_21,
+    JobInfo: "",
+    LaserScan: "",
+    TopoReport: data.project_custom_field_48,
+    Survey: data.project_custom_field_50,
+    NewEnquiryNotes: "",
+  });
 
   const [loading, setLoading] = useState(true);
-  const [showMap, setShowMap] = useState(false);
+  const [hotel, setHotel] = useState(false);
 
   const handleInputChange = (key, text) => {
     setInputData((prevInputData) => ({
@@ -61,36 +81,6 @@ const Address = ({data}) => {
       [key]: text,
     }));
   };
-
-  /* Remove this later; this is dummy data */
-  useEffect(() => {
-    setInputData({
-      Company: data.client_company_name,
-      jobName: data.project_title,
-      jobType: data.project_type,
-      SiteWorkStartDate: data.project_date_start,
-      SiteWorkEndDate: data.project_date_due,
-      Category: "",
-      PoNumber: data.project_custom_field_1,
-      CompanyNotes: "",
-      AnySpecialRequirement: "",
-      hotel: "",
-      HotelDetails: "",
-      HotelAddress: "",
-      HotelPostCide: "",
-      tm: "",
-      EnquiryNotes: "",
-      Status: "",
-      TopoQA: "",
-      UtilityQA: "",
-      QueryRaised: "",
-      JobInfo: "",
-      LaserScan: "",
-      TopoReport: "",
-      Survey: "",
-      NewEnquiryNotes: "",
-    });
-  }, []); 
 
   /* Remove this when fetch data */
   useEffect(() => {
@@ -117,8 +107,8 @@ const Address = ({data}) => {
               <View style={[styles.toggleContainer]} key={index}>
               <Text style={styles.label}>Is a Hotel Required?</Text>
               <Switch
-                value={showMap}
-                onValueChange={(value) => setShowMap(value)}
+                value={hotel}
+                onValueChange={(value) => setHotel(value)}
               />
             </View>
              )
