@@ -8,6 +8,7 @@ import JobsDetail from './src/Screens/JobsDetail';
 import { StatusBar } from 'react-native';
 import Login from './src/Screens/Login';
 import SplashScreen from './src/Screens/SpashScreen';
+import ProblemReports from './src/Components/Jobs Detail/ProblemReports';
 const Stack = createNativeStackNavigator();
 function App() {
 
@@ -56,6 +57,13 @@ function App() {
           component={ProblemReportReplies}
           options={{
             title: 'Problem Report Replies'
+          }}
+        />
+            <Stack.Screen
+          name="problem-reports"
+          component={ProblemReports}
+          options={{
+            title: 'Problem Reports'
           }}
         />
       </Stack.Navigator>
