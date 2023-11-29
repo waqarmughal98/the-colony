@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { StyleSheet, View, TouchableOpacity, Text } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { StyleSheet, View, TouchableOpacity, Text, Alert } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { AntDesign } from '@expo/vector-icons';
 import { vw } from '../../utils/ScreenSize';
@@ -17,6 +17,11 @@ const DateInput = () => {
   const showDatePickerContainer = () => {
     setShowDatePicker(true);
   };
+  
+  React.useEffect(()=>{
+    Alert.alert(date)
+  },[date])
+  
 
   return (
     <TouchableOpacity activeOpacity={0.5} onPress={showDatePickerContainer} style={styles.calendarIcon}>

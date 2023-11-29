@@ -52,10 +52,7 @@ const Login = ({ navigation }) => {
   };
 
   return (
-    <ImageBackground
-      source={require("../../assets/imgs/Bg.png")}
-      style={styles.backgroundImage}
-    >
+    <ImageBackground source={require('../../assets/imgs/Bg.png')} style={styles.backgroundImage}>
       <View style={styles.container}>
         <Image
           source={require("../../assets/imgs/logoLogin.png")}
@@ -104,6 +101,7 @@ const Login = ({ navigation }) => {
           <Text style={styles.textSignIn}>Sign In</Text>
         </TouchableOpacity>
       </View>
+
     </ImageBackground>
   );
 };
