@@ -12,7 +12,12 @@ import React, { useState, useEffect } from 'react';
 import Color from '../../Color';
 import DateInput from '../Date/DateInput';
 
-const Address = () => {
+const Address = ({data}) => {
+
+  useEffect(()=>{
+    console.log(data, 'address')
+  }, [])
+
   const inputFields = [
     { label: 'Company', value: '', key: 'Company' },
     { label: 'Job Name', value: '', key: 'jobName' },
@@ -60,10 +65,30 @@ const Address = () => {
   /* Remove this later; this is dummy data */
   useEffect(() => {
     setInputData({
-      street: 'asd',
-      city: 'ads',
-      locationDetail: 'dsa',
-      postcode: 'dsa',
+      Company: data.client_company_name,
+      jobName: data.project_title,
+      jobType: data.project_type,
+      SiteWorkStartDate: data.project_date_start,
+      SiteWorkEndDate: data.project_date_due,
+      Category: "",
+      PoNumber: data.project_custom_field_1,
+      CompanyNotes: "",
+      AnySpecialRequirement: "",
+      hotel: "",
+      HotelDetails: "",
+      HotelAddress: "",
+      HotelPostCide: "",
+      tm: "",
+      EnquiryNotes: "",
+      Status: "",
+      TopoQA: "",
+      UtilityQA: "",
+      QueryRaised: "",
+      JobInfo: "",
+      LaserScan: "",
+      TopoReport: "",
+      Survey: "",
+      NewEnquiryNotes: "",
     });
   }, []); 
 
