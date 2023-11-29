@@ -6,10 +6,11 @@ import {
   TextInput,
   Switch,
   ScrollView,
-  TouchableOpacity
+  TouchableOpacity,
 } from 'react-native';
 import React, { useState, useEffect } from 'react';
 import Color from '../../Color';
+import DateInput from '../Date/DateInput';
 
 const Address = () => {
   const inputFields = [
@@ -80,12 +81,15 @@ const Address = () => {
           {inputFields.map((field) => {
             if (field.key === 'SiteWorkStartDate' || field.key === 'SiteWorkEndDate') {
               return (
-              <Text key={field.key}>lkl</Text>
+                <View style={styles.inputContainer} key={field.key}>
+                <Text style={styles.label}>{field.label}</Text>
+                <DateInput/>
+              </View>
               );
             }
             else if (field.key == 'hotel'){
              return (
-              <View style={styles.toggleContainer}>
+              <View style={[styles.toggleContainer]}>
               <Text style={styles.label}>Is a Hotel Required?</Text>
               <Switch
                 value={showMap}
@@ -94,6 +98,20 @@ const Address = () => {
             </View>
              )
             }
+            else if (field.key == 'QueryRaised' || field.key == 'EnquiryNotes'){
+              return (
+                <View style={styles.inputContainer} key={field.key}>
+                  <Text style={styles.label}>{field.label}</Text>
+                  <TextInput
+                    style={styles.inputTextArea}
+                    multiline = {true}
+                    numberOfLines = {8}
+                    value={inputData[field.key]}
+                    onChangeText={(text) => handleInputChange(field.key, text)}
+                  />
+                </View>
+              )
+             }
             else {
               return (
                 <View style={styles.inputContainer} key={field.key}>
@@ -173,11 +191,20 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     marginTop: 8,
   },
+  inputTextArea:{
+    backgroundColor: 'white',
+    borderRadius: 13,
+    paddingVertical: 6,
+    justifyContent: 'center',
+    width: '100%',
+    paddingHorizontal: 20,
+    marginTop: 8,
+  },
   toggleContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginTop: 10,
+    marginTop: 25,
   },
   mapContainer: {
     backgroundColor: 'white',

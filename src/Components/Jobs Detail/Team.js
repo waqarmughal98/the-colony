@@ -26,7 +26,7 @@ const Team = () => {
         },
     ]
 
-     /* Remove this when fethc data */
+     /* Remove this when fetch data */
     useEffect(()=>{
         setTimeout(() => {
            setLoading(false) 
