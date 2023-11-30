@@ -97,8 +97,8 @@ const TaskDetail = ({navigation}) => {
                 AssignData.map((item,index)=>
                 {
                     return(
-                            <View style={[styles.individual,{backgroundColor:index%2==0 ? '#D2CBBC' : '#F2F1CF'}]}>
-                            <Text style={styles.dataText}>{item}</Text>
+                            <View key={index} style={[styles.individual,{backgroundColor:index%2==0 ? '#D2CBBC' : '#F2F1CF'}]}>
+                                <Text style={styles.dataText}>{item}</Text>
                             </View>
                     )
                 })
@@ -110,8 +110,8 @@ const TaskDetail = ({navigation}) => {
          </View>
       :
       <View style={styles.Indicator}>
-           <ActivityIndicator size="large" color={"black"} />
-                <Text style={styles.fetchingData}>Fetching Data</Text>
+         <ActivityIndicator size="large" color={"black"} />
+         <Text style={styles.fetchingData}>Fetching Data</Text>
       </View>
      }
   
@@ -159,7 +159,8 @@ const styles = StyleSheet.create({
       },
    
       picker: {
-        width: '50%',
+        flex:1,
+        width: '40%',
       },
       value: {
         fontSize: 16,
@@ -212,6 +213,7 @@ const styles = StyleSheet.create({
       },
       pickerItem: {
         color: 'black', // Set the text color of items
+        fontSize: 12
       },
     
 })

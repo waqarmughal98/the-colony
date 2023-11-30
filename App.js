@@ -12,6 +12,7 @@ import WorkLog from './src/Screens/WorkLog';
 import Logs from './src/Components/Jobs Detail/Logs';
 import Tasks from './src/Screens/Tasks';
 import TaskDetail from './src/Screens/TaskDetail';
+import JobStatus from './src/Screens/JobStatus';
 const Stack = createNativeStackNavigator();
 function App() {
   const screenOptions = {
@@ -103,6 +104,14 @@ function App() {
           component={TaskDetail}
           options={{
             title: 'Tasks'
+          }}
+        />
+
+        <Stack.Screen
+          name="job-Status"
+          component={JobStatus}
+          options={{
+            title: 'Job Status'
           }}
         />
       

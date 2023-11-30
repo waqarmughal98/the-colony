@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, Text, View, TouchableOpacity, Dimensions } from "react-native";
+import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 import calenderimg from "../../../assets/imgs/latest.png";
 import { Entypo, MaterialIcons, AntDesign } from "@expo/vector-icons";
 import { vh, vw } from "../../utils/ScreenSize";
@@ -8,7 +8,7 @@ const DashboardTopItem = ({ item, navigation }) => {
   return (
     <TouchableOpacity
       activeOpacity={0.7}
-      onPress={() => navigation.navigate(item.screen)}
+      onPress={() => navigation.navigate(item.screen, { item: item })}
     >
       <View style={[styles.itemContainer, { backgroundColor: item.color }]}>
         <View style={styles.containerIcon}>
@@ -49,7 +49,8 @@ const DashboardTop = ({ navigation }) => {
       color: "#B8780C",
       iconName: "pluscircleo",
       iconType: "ant",
-      screen: "All-Job",
+      screen: "tasks",
+      ScreenTitle:"Task In Pending",
     },
     {
       img: calenderimg,
@@ -58,7 +59,8 @@ const DashboardTop = ({ navigation }) => {
       color: "#774F07",
       iconName: "arrow-with-circle-right",
       iconType: "entypo",
-      screen: "All-Job",
+      screen: "tasks",
+      ScreenTitle:"Task In Progress",
     },
     {
       img: calenderimg,
