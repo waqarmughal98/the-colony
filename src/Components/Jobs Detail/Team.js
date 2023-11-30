@@ -6,23 +6,23 @@ const Team = () => {
   const [data, setData] = useState([
     {
       label:"Quote Responsibility",
-      text:"Admin test"
+      value: "Admin test"
     },
     {
       label:"Site Manager",
-      text:"Admin test"
+      value: "Admin test"
     },
     {
       label:"Project Manager",
-      text:"Admin test"
+      value: "Admin test"
     },
     {
       label:"Projecet",
-      text:"Test "
+      value: "Test "
     },
     {
       label:"Team",
-      text:"Admin test lkdsjlk lksadj lksadj ksald jk dsaj sadlkjdsa asldkjdsa  "
+      value: "Admin test lkdsjlk lksadj lksadj ksald jk dsaj sadlkjdsa asldkjdsa  "
     }
   ])
 

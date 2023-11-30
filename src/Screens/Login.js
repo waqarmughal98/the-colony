@@ -20,14 +20,14 @@ const Login = ({ navigation }) => {
   const [password, setPassword] = useState("");
 
   useEffect(() => {
-    let token = AsyncStorage.getItem("token");
+    const token = AsyncStorage.getItem("token");
     if (token && token !== "") {
       navigation.navigate("Dashboard");
     }
   }, []);
 
   const Login = () => {
-    axios .post(URL + "/login",{},{
+    axios.post(URL + "/login",{},{
           params: {
             email: email,
             password: password,

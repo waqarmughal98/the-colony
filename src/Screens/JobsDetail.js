@@ -119,7 +119,7 @@ const JobsDetail = ({route, navigation}) => {
         ) : selectedOptionID == 7 ? (
           <Logs data={items} />
         ) : selectedOptionID == 8 ? (
-          <ProblemReports navigation={navigation} />
+          <ProblemReports navigation={navigation} data={items} />
         ) : null}
       </View>
     </View>
