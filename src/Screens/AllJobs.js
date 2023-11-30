@@ -18,7 +18,7 @@ const AllJobs = ({navigation}) => {
                     Authorization: `Bearer ${authToken}`
                 }
             }).then((res)=>{
-                console.log('tasks', res.data.tasks.data);
+                // console.log('tasks', res.data.tasks.data);
                 setData(res.data.tasks.data);
             }).catch((err)=>{
                 console.log(err);

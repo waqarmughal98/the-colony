@@ -12,7 +12,12 @@ import React, { useState, useEffect } from 'react';
 import Color from '../../Color';
 import DateInput from '../Date/DateInput';
 
-const Address = () => {
+const Address = ({data}) => {
+
+  useEffect(()=>{
+    console.log(data, 'address')
+  }, [])
+
   const inputFields = [
     { label: 'Company', value: '', key: 'Company' },
     { label: 'Job Name', value: '', key: 'jobName' },
@@ -26,7 +31,7 @@ const Address = () => {
     { label: 'Is a Hotel Required', value: '', key: 'hotel' },
     { label: 'Hotel Details', value: '', key: 'HotelDetails' },
     { label: 'Hotel Address', value: '', key: 'HotelAddress' },
-    { label: 'Hotel PostCode', value: '', key: 'HotelPostCide' },
+    { label: 'Hotel PostCode', value: '', key: 'HotelPostCode' },
     { label: 'Is TM Required', value: '', key: 'tm' },
     { label: 'Enquiry Notes', value: '', key: 'EnquiryNotes' },
     { label: 'Status', value: '', key: 'Status' },
@@ -40,15 +45,35 @@ const Address = () => {
     { label: 'New Enquiry Notes', value: '', key: 'EnquiryNotes' },
   ];
 
-  const [inputData, setInputData] = useState(
-    inputFields.reduce((acc, field) => {
-      acc[field.key] = field.value;
-      return acc;
-    }, {})
-  );
+  const [inputData, setInputData] = useState({
+    Company: data.client_company_name,
+    jobName: data.project_title,
+    jobType: data.project_type,
+    SiteWorkStartDate: data.project_date_start,
+    SiteWorkEndDate: data.project_date_due,
+    Category: "",
+    PoNumber: data.project_custom_field_1,
+    CompanyNotes: "",
+    AnySpecialRequirement: "",
+    hotel: "",
+    HotelDetails: data.project_custom_field_2,
+    HotelAddress: data.project_custom_field_3,
+    HotelPostCode: "",
+    tm: data.project_custom_field_31,
+    EnquiryNotes: "",
+    Status: "",
+    TopoQA: data.project_custom_field_6,
+    UtilityQA: data.project_custom_field_7,
+    QueryRaised: data.project_custom_field_21,
+    JobInfo: "",
+    LaserScan: "",
+    TopoReport: data.project_custom_field_48,
+    Survey: data.project_custom_field_50,
+    NewEnquiryNotes: "",
+  });
 
   const [loading, setLoading] = useState(true);
-  const [showMap, setShowMap] = useState(false);
+  const [hotel, setHotel] = useState(false);
 
   const handleInputChange = (key, text) => {
     setInputData((prevInputData) => ({
@@ -56,16 +81,6 @@ const Address = () => {
       [key]: text,
     }));
   };
-
-  /* Remove this later; this is dummy data */
-  useEffect(() => {
-    setInputData({
-      street: 'asd',
-      city: 'ads',
-      locationDetail: 'dsa',
-      postcode: 'dsa',
-    });
-  }, []); 
 
   /* Remove this when fetch data */
   useEffect(() => {
@@ -92,8 +107,8 @@ const Address = () => {
               <View style={[styles.toggleContainer]} key={index}>
               <Text style={styles.label}>Is a Hotel Required?</Text>
               <Switch
-                value={showMap}
-                onValueChange={(value) => setShowMap(value)}
+                value={hotel}
+                onValueChange={(value) => setHotel(value)}
               />
             </View>
              )

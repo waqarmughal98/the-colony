@@ -19,10 +19,6 @@ import ProblemReports from '../Components/Jobs Detail/ProblemReports';
 const JobsDetail = ({route, navigation}) => {
   const { items } = route.params;
 
-  useEffect(()=>{
-    console.log(items);
-  }, [])
-
   const navbarOptions = [
     {
       id: 0,
@@ -91,7 +87,7 @@ const JobsDetail = ({route, navigation}) => {
     <View style={styles.mainContainer}>
       {/* Heading */}
       <View style={styles.heading}>
-        <Text style={styles.textHeading}>{items.task_title}</Text>
+        <Text style={styles.textHeading}>{items.project_title}</Text>
       </View>
       {/* Navbar */}
       <View style={styles.navbar}>
@@ -107,21 +103,21 @@ const JobsDetail = ({route, navigation}) => {
       {/* selected component render */}
       <View>
         {selectedOptionID == 0 ? (
-          <Detail />
+          <Detail data={items} />
         ) : selectedOptionID == 1 ? (
-          <Team />
+          <Team data={items} />
         ) : selectedOptionID == 2 ? (
-          <Task />
+          <Task data={items} />
         ) : selectedOptionID == 3 ? (
-          <Address />
+          <Address data={items} />
         ) : selectedOptionID == 4 ? (
-          <Files />
+          <Files data={items} />
         ) : selectedOptionID == 5 ? (
-          <Update />
+          <Update data={items} />
         ) : selectedOptionID == 6 ? (
-          <Notes />
+          <Notes data={items} />
         ) : selectedOptionID == 7 ? (
-          <Logs />
+          <Logs data={items} />
         ) : selectedOptionID == 8 ? (
           <ProblemReports navigation={navigation} />
         ) : null}
