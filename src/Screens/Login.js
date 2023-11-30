@@ -21,9 +21,9 @@ const Login = ({ navigation }) => {
 
   useEffect(() => {
     let token = AsyncStorage.getItem("token");
-    // if (token && token !== "") {
-    //   navigation.navigate("Dashboard");
-    // }
+    if (token && token !== "") {
+      navigation.navigate("Dashboard");
+    }
   }, []);
 
   const Login = () => {
