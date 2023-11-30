@@ -95,7 +95,7 @@ const styles = StyleSheet.create({
   },
   itemContainer: {
     margin: 6,
-    height: 140,
+    height: vh*18.5,
     width: vw * 45,
     display: "flex",
     flexDirection: "column",

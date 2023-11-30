@@ -7,9 +7,11 @@ import ProblemReportReplies from './src/Screens/ProblemReportReplies';
 import JobsDetail from './src/Screens/JobsDetail';
 import { StatusBar } from 'react-native';
 import Login from './src/Screens/Login';
-import SplashScreen from './src/Screens/SpashScreen';
 import ProblemReports from './src/Components/Jobs Detail/ProblemReports';
 import WorkLog from './src/Screens/WorkLog';
+import Logs from './src/Components/Jobs Detail/Logs';
+import Tasks from './src/Screens/Tasks';
+import TaskDetail from './src/Screens/TaskDetail';
 const Stack = createNativeStackNavigator();
 function App() {
   const screenOptions = {
@@ -73,6 +75,7 @@ function App() {
             title: 'Problem Reports'
           }}
         />
+    
          <Stack.Screen
           name="work-logs"
           component={WorkLog}
@@ -80,6 +83,29 @@ function App() {
             title: 'Work logs'
           }}
         />
+       
+         <Stack.Screen
+          name="latest-activity"
+          component={Logs}
+          options={{
+            title: 'Latest Activity'
+          }}
+        />
+          <Stack.Screen
+          name="tasks"
+          component={Tasks}
+          options={{
+            title: 'Tasks'
+          }}
+        />
+          <Stack.Screen
+          name="task-details"
+          component={TaskDetail}
+          options={{
+            title: 'Tasks'
+          }}
+        />
+      
       </Stack.Navigator>
     </NavigationContainer>
   );

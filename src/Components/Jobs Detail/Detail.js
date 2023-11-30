@@ -37,7 +37,7 @@ const Address = () => {
     { label: 'Laser Scan/Drone', value: '', key: 'LaserScan' },
     { label: 'Topo Report', value: '', key: 'TopoReport' },
     { label: 'Utility Survey and Report', value: '', key: 'Survey' },
-    { label: 'New Enquiry Notes', value: '', key: 'NewEnquiryNotes' },
+    { label: 'New Enquiry Notes', value: '', key: 'EnquiryNotes' },
   ];
 
   const [inputData, setInputData] = useState(
@@ -60,8 +60,8 @@ const Address = () => {
   /* Remove this later; this is dummy data */
   useEffect(() => {
     setInputData({
-      Company: 'waqar',
-      jobName: 'ads',
+      street: 'asd',
+      city: 'ads',
       locationDetail: 'dsa',
       postcode: 'dsa',
     });

@@ -12,7 +12,7 @@ const DashboardBottom = ({navigation}) => {
     },
     {
       img: require('../../../assets/imgs/task.png'), 
-      screenName:"problem-reports",
+      screenName:"tasks",
       title: "Tasks",
     },
     {
@@ -27,7 +27,7 @@ const DashboardBottom = ({navigation}) => {
     },
     {
       img: require('../../../assets/imgs/latest.png'), 
-      screenName:"problem-reports",
+      screenName:"latest-activity",
       title: "Latest Activity",
     },
     {
@@ -61,7 +61,7 @@ const styles = StyleSheet.create({
     marginHorizontal:13,
     marginVertical:10,
     borderRadius:10,
-    height:vh * 30,
+    height:vh * 31,
     padding:5,
     justifyContent: 'center',
   }
@@ -74,8 +74,8 @@ const styles = StyleSheet.create({
     justifyContent: "center"
   },
   individualContainer:{
-    height:90,
-    width: vw * 25,
+    height:vh*12,
+    width: vw * 26,
     backgroundColor:'white',
     borderRadius:5,
     display:"flex",

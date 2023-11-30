@@ -1,67 +1,68 @@
-import { StyleSheet, Text, View, ImageBackground, TextInput, Image, Dimensions, TouchableOpacity, Alert , KeyboardAvoidingView,} from 'react-native';
-import React,{useEffect, useState} from 'react';
-import { FontAwesome,Ionicons } from '@expo/vector-icons';
+import { StyleSheet, Text, View, ImageBackground, TextInput, Image, Dimensions, TouchableOpacity, Alert, KeyboardAvoidingView, Platform } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { FontAwesome, Ionicons } from '@expo/vector-icons';
 import { vh, vw } from '../utils/ScreenSize';
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { URL } from '../utils/Constant';
-const Login = ({navigation}) => {
+
+const Login = ({ navigation }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
   const Login = () => {
-    axios.post(URL + '/login',{}, {
+    axios.post(URL + '/login', {}, {
       params: {
         email: email,
         password: password
       }
-    }).then((res)=>{
+    }).then((res) => {
       console.log(res.data.token);
-      (async function(){
+      (async function () {
         await AsyncStorage.setItem('token', res.data.token)
         navigation.navigate("Dashboard")
       })()
-    }).catch((err)=>{
+    }).catch((err) => {
       console.log(err);
-      Alert.alert('Invalid credentials'); 
+      Alert.alert('Invalid credentials');
     })
   }
-   
+
   return (
     <ImageBackground source={require('../../assets/imgs/Bg.png')} style={styles.backgroundImage}>
-    
-      <View style={styles.container}>
-        <Image source={require('../../assets/imgs/logoLogin.png')} style={styles.Image}/>
-        <Text style={styles.text1}>Welcome back! Let's build</Text>
-        <Text style={styles.text2}>Sign in to view the project</Text>
-        <View style={styles.inputMainContainer}>
-          <View style={styles.inputContainer}>
-            <Ionicons name="person"  size={20} color="black" style={styles.inputIcon}/>
-            <TextInput
-              style={styles.input}
-              placeholder="Email"
-              placeholderTextColor="black"
-              value={email}
-              onChangeText={(text)=>setEmail(text)}
-            />
+      <KeyboardAvoidingView  behavior={Platform.OS === 'ios' ? 'padding' : 'height'} enabled  style={styles.container}>
+        <View style={styles.container}>
+          <Image source={require('../../assets/imgs/logoLogin.png')} style={styles.Image} />
+          <Text style={styles.text1}>Welcome back! Let's build</Text>
+          <Text style={styles.text2}>Sign in to view the project</Text>
+          <View style={styles.inputMainContainer}>
+            <View style={styles.inputContainer}>
+              <Ionicons name="person" size={18} color="black" style={styles.inputIcon} />
+              <TextInput
+                style={styles.input}
+                placeholder="Email"
+                placeholderTextColor="black"
+                value={email}
+                onChangeText={(text) => setEmail(text)}
+              />
+            </View>
+            <View style={styles.inputContainer}>
+              <FontAwesome name="lock" size={20} color="black" style={styles.inputIcon} />
+              <TextInput
+                style={styles.input}
+                placeholder="Password"
+                placeholderTextColor="black"
+                secureTextEntry={true}
+                value={password}
+                onChangeText={(text) => setPassword(text)}
+              />
+            </View>
           </View>
-          <View style={styles.inputContainer}>
-            <FontAwesome name="lock" size={20} color="black" style={styles.inputIcon} />
-            <TextInput
-              style={styles.input}
-              placeholder="Password"
-              placeholderTextColor="black"
-              secureTextEntry={true}
-              value={password}
-              onChangeText={(text)=>setPassword(text)}
-            />
-          </View>
-        </View>
-        <TouchableOpacity onPress={()=>Login()} activeOpacity={0.6} style={styles.signInButton}>
+          <TouchableOpacity onPress={() => Login()} activeOpacity={0.6} style={styles.signInButton}>
             <Text style={styles.textSignIn}>Sign In</Text>
-        </TouchableOpacity>
-      </View>
-
+          </TouchableOpacity>
+        </View>
+      </KeyboardAvoidingView>
     </ImageBackground>
   );
 };
@@ -77,6 +78,7 @@ const styles = StyleSheet.create({
     alignContent: 'center',
   },
   container: {
+    flex:1,
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',

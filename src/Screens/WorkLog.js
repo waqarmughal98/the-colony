@@ -52,7 +52,7 @@ const WorkLog = () => {
     },
     {
       img: require('../../assets/imgs/ic_project_severn_trent.png'),
-      title: "Sevent Trent",
+      title: "Severn Trent",
     },
   ];
 
