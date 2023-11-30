@@ -9,6 +9,12 @@ import { URL } from '../utils/Constant';
 const Login = ({ navigation }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  useEffect(() => {
+    let token = AsyncStorage.getItem("token");
+    if (token && token !== "") {
+      navigation.navigate("Dashboard");
+    }
+  }, []);
 
   const Login = () => {
     axios.post(URL + '/login', {}, {
