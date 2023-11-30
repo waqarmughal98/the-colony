@@ -6,13 +6,13 @@ const DashboardBottom = ({navigation}) => {
   const data = [
     {
       img: require('../../../assets/imgs/job_status.png'), 
-      screenName:"problem-reports",
+      screenName:"job-Status",
       title: "Jobs Status",
       color:"#FBA200",
     },
     {
       img: require('../../../assets/imgs/task.png'), 
-      screenName:"problem-reports",
+      screenName:"tasks",
       title: "Tasks",
     },
     {
@@ -27,7 +27,7 @@ const DashboardBottom = ({navigation}) => {
     },
     {
       img: require('../../../assets/imgs/latest.png'), 
-      screenName:"problem-reports",
+      screenName:"latest-activity",
       title: "Latest Activity",
     },
     {
@@ -41,7 +41,7 @@ const DashboardBottom = ({navigation}) => {
     <View style={styles.mainContainer}>
       <View style={styles.subContainer}>
         {data.map((item, index) => (
-          <TouchableOpacity onPress={()=>navigation.navigate(item.screenName)} activeOpacity={0.6} key={index}>
+          <TouchableOpacity onPress={()=>navigation.navigate(item.screenName,{item:{ScreenTitle:"Tasks"}})} activeOpacity={0.6} key={index}>
             <View style={[styles.individualContainer,{backgroundColor: item.color || 'white'}]} >
               <Image style={styles.containerImg} source={item.img}  />
               <Text style={[styles.containerTitle,{color: item.color ? 'white' : 'black' }]}>{item.title}</Text>
@@ -61,7 +61,7 @@ const styles = StyleSheet.create({
     marginHorizontal:13,
     marginVertical:10,
     borderRadius:10,
-    height:vh * 30,
+    height:vh * 31,
     padding:5,
     justifyContent: 'center',
   }
@@ -74,8 +74,8 @@ const styles = StyleSheet.create({
     justifyContent: "center"
   },
   individualContainer:{
-    height:90,
-    width: vw * 25,
+    height:vh*12,
+    width: vw * 26,
     backgroundColor:'white',
     borderRadius:5,
     display:"flex",

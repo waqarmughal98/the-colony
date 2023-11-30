@@ -61,11 +61,9 @@ const Address = () => {
           {inputFields.map((field) => (
             <View style={styles.inputContainer} key={field.key}>
               <Text style={styles.label}>{field.label}*</Text>
-              <TextInput
-                style={styles.input}
-                value={inputData[field.key]}
-                onChangeText={(text) => handleInputChange(field.key, text)}
-              />
+              <View style={styles.textContainer}>
+                <Text style={styles.input}>{inputData[field.key]}</Text>
+              </View>
             </View>
           ))}
           {/*Map View  */}
@@ -104,14 +102,14 @@ const Address = () => {
             <View style={styles.emptyMap}></View>
           )}
            {/* Buttons Container */}
-          <View style={styles.buttonContainer}>
+          {/* <View style={styles.buttonContainer}>
               <TouchableOpacity activeOpacity={0.6} style={styles.button}>
               <Text style={styles.buttonText}>Cancel</Text>
               </TouchableOpacity>
               <TouchableOpacity activeOpacity={0.6} style={styles.button}>
               <Text style={styles.buttonText}>Update</Text>
               </TouchableOpacity>
-          </View>
+          </View> */}
         </View>
       ) : (
         <View style={styles.indicator}>
@@ -153,14 +151,19 @@ const styles = StyleSheet.create({
     fontWeight: '400',
     marginLeft: 15,
   },
-  input: {
+  textContainer:{
     backgroundColor: 'white',
     borderRadius: 100,
+    marginTop: 8,
+    height:40,
+    display:"flex",
+    justifyContent:"center"
+  },
+  input: {
     paddingVertical: 6,
     justifyContent: 'center',
     width: '100%',
     paddingHorizontal: 20,
-    marginTop: 8,
   },
   toggleContainer: {
     flexDirection: 'row',

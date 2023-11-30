@@ -4,7 +4,7 @@
     "slug": "the-colony",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/imgs/lb.png",
     "userInterfaceStyle": "light",
     "splash": {
       "image": "./assets/logoLogin2.png",

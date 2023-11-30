@@ -1,14 +1,23 @@
-import { StyleSheet, Text, View ,ActivityIndicator} from 'react-native'
+import { StyleSheet, Text, View ,Alert,ActivityIndicator} from 'react-native'
 import React,{useState, useEffect} from 'react'
-import { URL } from '../../utils/Constant';
+import TaskContainer from '../Components/Tasks/TaskContainer'
+import { URL } from '../utils/Constant';
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import TaskContainer from '../Tasks/TaskContainer';
 
 
 const Tasks = ({navigation,route}) => {
     const [loading, setLoading]=useState(true)
     const [data, setData] = useState([]);
+    const { item } = route.params;
+    React.useLayoutEffect(() => {
+       navigation.setOptions({
+          headerTintColor: 'white',
+          headerTitleAlign: 'center',
+          headerTitle: item?.ScreenTitle,
+        });
+      }, [navigation]);
+   
 
     /* Change the api this is dummy api */
     useEffect(()=>{
@@ -32,27 +41,27 @@ const Tasks = ({navigation,route}) => {
     <View>
     {
      !loading ? 
-      <View>
-        <TaskContainer navigation={navigation} data={data}/>
-      </View>
-     :
-     <View style={styles.Indicator}>
-       <ActivityIndicator size="large" color={"black"} />
-       <Text style={styles.fetchingData}>Fetching Data</Text>
+        <View>
+            <TaskContainer navigation={navigation} data={data}/>
+        </View>
+        :
+        <View style={styles.Indicator}>
+            <ActivityIndicator size="large" color={"black"} />
+            <Text style={styles.fetchingData}>Fetching Data</Text>
+        </View>
+        }
      </View>
-  }
-   </View>
   )
 }
 
 export default Tasks
 
 const styles = StyleSheet.create({
-  Indicator:{
-    height: '90%',
-    display:"flex",
-    justifyContent:"center",
-    alignItems:"center",
-    alignContent:"center"
-  },
+    Indicator:{
+        height: '90%',
+        display:"flex",
+        justifyContent:"center",
+        alignItems:"center",
+        alignContent:"center"
+      },
 })

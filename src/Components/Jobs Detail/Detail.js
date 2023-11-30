@@ -28,7 +28,6 @@ const Address = ({data}) => {
     { label: 'Po Number', value: '', key: 'PoNumber' },
     { label: 'Company Notes', value: '', key: 'CompanyNotes' },
     { label: 'Any Special Requirement', value: '', key: 'AnySpecialRequirement' },
-    { label: 'Is a Hotel Required', value: '', key: 'hotel' },
     { label: 'Hotel Details', value: '', key: 'HotelDetails' },
     { label: 'Hotel Address', value: '', key: 'HotelAddress' },
     { label: 'Hotel PostCode', value: '', key: 'HotelPostCode' },
@@ -42,7 +41,7 @@ const Address = ({data}) => {
     { label: 'Laser Scan/Drone', value: '', key: 'LaserScan' },
     { label: 'Topo Report', value: '', key: 'TopoReport' },
     { label: 'Utility Survey and Report', value: '', key: 'Survey' },
-    { label: 'New Enquiry Notes', value: '', key: 'NewEnquiryNotes' },
+    { label: 'New Enquiry Notes', value: '', key: 'EnquiryNotes' },
   ];
 
   const [inputData, setInputData] = useState({
@@ -73,14 +72,6 @@ const Address = ({data}) => {
   });
 
   const [loading, setLoading] = useState(true);
-  const [hotel, setHotel] = useState(false);
-
-  const handleInputChange = (key, text) => {
-    setInputData((prevInputData) => ({
-      ...prevInputData,
-      [key]: text,
-    }));
-  };
 
   /* Remove this when fetch data */
   useEffect(() => {
@@ -102,28 +93,11 @@ const Address = ({data}) => {
               </View>
               );
             }
-            else if (field.key == 'hotel'){
-             return (
-              <View style={[styles.toggleContainer]} key={index}>
-              <Text style={styles.label}>Is a Hotel Required?</Text>
-              <Switch
-                value={hotel}
-                onValueChange={(value) => setHotel(value)}
-              />
-            </View>
-             )
-            }
             else if (field.key == 'QueryRaised' || field.key == 'EnquiryNotes'){
               return (
                 <View style={styles.inputContainer} key={index}>
                   <Text style={styles.label}>{field.label}</Text>
-                  <TextInput
-                    style={styles.inputTextArea}
-                    multiline = {true}
-                    numberOfLines = {8}
-                    value={inputData[field.key]}
-                    onChangeText={(text) => handleInputChange(field.key, text)}
-                  />
+                  <Text style={styles.inputTextArea}>{inputData[field.key]}</Text> 
                 </View>
               )
              }
@@ -131,29 +105,14 @@ const Address = ({data}) => {
               return (
                 <View style={styles.inputContainer} key={index}>
                   <Text style={styles.label}>{field.label}</Text>
-                  <TextInput
-                    style={styles.input}
-                    value={inputData[field.key]}
-                    onChangeText={(text) => handleInputChange(field.key, text)}
-                  />
+                  <View style={styles.textContainer}>
+                     <Text style={styles.input}>{inputData[field.key]}</Text>
+                  </View>
                 </View>
               );
             }
           })}
-          {/*Map View  */}
-        
-           {/* Buttons Container */}
-          <View style={styles.buttonContainer}>
-              <TouchableOpacity activeOpacity={0.6} style={styles.button}>
-              <Text style={styles.buttonText}>Cancel</Text>
-              </TouchableOpacity>
-              <TouchableOpacity activeOpacity={0.6} style={styles.button}>
-              <Text style={styles.buttonText}>Save</Text>
-              </TouchableOpacity>
-              <TouchableOpacity activeOpacity={0.6} style={styles.button}>
-              <Text style={styles.buttonText}>Move to Unallocated</Text>
-              </TouchableOpacity>
-          </View>
+ 
         </View>
       ) : (
         <View style={styles.indicator}>
@@ -171,7 +130,6 @@ export default Address;
 const styles = StyleSheet.create({
   scrollViewContainer: {
     flexGrow: 1,
-
   },
   container: {
     minHeight: '100%',
@@ -197,14 +155,19 @@ const styles = StyleSheet.create({
     fontWeight: '400',
     marginLeft: 15,
   },
-  input: {
+  textContainer:{
     backgroundColor: 'white',
+    height:40,
+    display:"flex",
+    justifyContent:"center",
     borderRadius: 100,
+    marginTop: 8,
+  },
+  input: { 
     paddingVertical: 6,
     justifyContent: 'center',
     width: '100%',
     paddingHorizontal: 20,
-    marginTop: 8,
   },
   inputTextArea:{
     backgroundColor: 'white',
@@ -214,6 +177,7 @@ const styles = StyleSheet.create({
     width: '100%',
     paddingHorizontal: 20,
     marginTop: 8,
+    height:150
   },
   toggleContainer: {
     flexDirection: 'row',
