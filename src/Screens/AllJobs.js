@@ -57,7 +57,6 @@ const AllJobs = ({navigation}) => {
                 }
                 </ScrollView>
             </View>
-        
         </View>
      :
      <View style={styles.Indicator}>

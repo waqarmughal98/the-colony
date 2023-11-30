@@ -20,7 +20,6 @@ const DateInput = () => {
   
  
   return (
-    <TouchableOpacity activeOpacity={0.5} onPress={showDatePickerContainer} style={styles.calendarIcon}>
     <View style={styles.container}>
       {/* Left side: Date value */}
       <Text style={styles.dateValue}>{date.toDateString()}</Text>
@@ -39,7 +38,7 @@ const DateInput = () => {
         />
       )}
     </View>
-    </TouchableOpacity>
+   
   );
 };
 
