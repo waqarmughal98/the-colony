@@ -56,17 +56,16 @@ const styles = StyleSheet.create({
        flex:1 
     },
     Container:{
-        flex:1,
+        flexGrow:1,
         backgroundColor:Color.brightOrange
     },
     Indicator:
     {
-         flexGrow:1,
+        flexGrow:1,
         display:"flex",
         justifyContent:"center",
         alignItems:"center",
         alignContent:"center",
-        marginTop:vh*37
     },
     fetchingData:{
         color:'black',

@@ -52,7 +52,7 @@ function Dashboard({ navigation }) {
           <DashboardBottom navigation={navigation}/>
         </View>
         </View>
-        <Footer/>
+
       </View>
     );
   }

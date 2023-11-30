@@ -1,22 +1,22 @@
 // Footer.js
 import React from 'react';
 import { View, Image, Text, StyleSheet,TouchableOpacity } from 'react-native';
+import { Ionicons , SimpleLineIcons} from '@expo/vector-icons';
 
-
-const Footer = () => {
+const Footer = ({navigation}) => {
   return (
     <View style={styles.footerContainer}>
       {/* Your three images */}
       <TouchableOpacity  style={styles.individual} >
-         <Image source={require('../../../assets/imgs/contact.png')} style={styles.footerImage} />
-         <Text style={styles.text}>Dashboard</Text>
+         <SimpleLineIcons name="briefcase" size={20} color="white" />
+         <Text style={styles.text}>WorkLog</Text>
       </TouchableOpacity>
       <TouchableOpacity  style={styles.individual} >
          <Image source={require('../../../assets/imgs/lg.png')} style={styles.footerImage} />
          <Text style={styles.text}></Text>
       </TouchableOpacity>
       <TouchableOpacity  style={styles.individual} >
-         <Image source={require('../../../assets/imgs/profile.png')} style={styles.footerImage} />
+       <Ionicons name="person-outline" size={20} color="white" />
          <Text style={styles.text}>Profile</Text>
       </TouchableOpacity>
 
@@ -34,13 +34,15 @@ const styles = StyleSheet.create({
     height:75,
   },
   footerImage: {
-    width: 27,
-    height: 27,
-    // Add any additional styles for your images
+    width: 35,
+    height: 35,
+  },
+  footerImageleft: {
+    width: 30,
+    height: 30,
   },
   footerLabel: {
     color: 'white',
-    // Add any additional styles for your label
   },
   individual:{
     display:"flex",

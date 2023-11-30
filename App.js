@@ -13,6 +13,7 @@ import Logs from './src/Components/Jobs Detail/Logs';
 import Tasks from './src/Screens/Tasks';
 import TaskDetail from './src/Screens/TaskDetail';
 import JobStatus from './src/Screens/JobStatus';
+import Footer from './src/Components/Footer/Footer';
 const Stack = createNativeStackNavigator();
 function App() {
   const screenOptions = {
@@ -116,6 +117,7 @@ function App() {
         />
       
       </Stack.Navigator>
+      <Footer/>
     </NavigationContainer>
   );
 }
