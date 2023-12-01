@@ -14,6 +14,7 @@ import Tasks from './src/Screens/Tasks';
 import TaskDetail from './src/Screens/TaskDetail';
 import JobStatus from './src/Screens/JobStatus';
 import Footer from './src/Components/Footer/Footer';
+import Requests from './src/Screens/Requests';
 const Stack = createNativeStackNavigator();
 function App() {
   const screenOptions = {
@@ -35,6 +36,40 @@ function App() {
   //     }
   //   })()
   // },[])
+  
+  function MainTabs() {
+    return (
+      <Tab.Navigator
+        screenOptions={({ route }) => ({
+          tabBarIcon: ({ color, size }) => {
+            let iconName;
+  
+            if (route.name === 'WorkLog') {
+              iconName = 'briefcase';
+              return <SimpleLineIcons name={iconName} size={size} color={color} />;
+            } else if (route.name === 'Profile') {
+              iconName = 'person-outline';
+              return <Ionicons name={iconName} size={size} color={color} />;
+            }
+          },
+        })}
+        tabBarOptions={{
+          activeTintColor: 'white',
+          inactiveTintColor: 'gray',
+          style: {
+            backgroundColor: '#FBA200',
+            height: 75,
+          },
+          labelStyle: {
+            fontSize: 11,
+          },
+        }}
+      >
+        <Tab.Screen name="WorkLog" component={WorkLog} options={{ title: 'WorkLog' }} />
+        <Tab.Screen name="Profile" component={Profile} options={{ title: 'Profile' }} />
+      </Tab.Navigator>
+    );
+  }
   
 
   return (
@@ -113,6 +148,14 @@ function App() {
           component={JobStatus}
           options={{
             title: 'Job Status'
+          }}
+        />
+
+        <Stack.Screen
+          name="requests"
+          component={Requests}
+          options={{
+            title: 'Requests'
           }}
         />
       

@@ -4,8 +4,6 @@ import { Ionicons } from '@expo/vector-icons';
 import Color from '../Color';
 import DasboardTop from '../Components/Dasboard/DasboardTop';
 import DashboardBottom from '../Components/Dasboard/DashboardBottom';
-import Footer from '../Components/Footer/Footer';
-import { useNavigation } from '@react-navigation/core';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 import { URL } from '../utils/Constant';

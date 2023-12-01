@@ -1,5 +1,6 @@
 import { StyleSheet, Text, View , ScrollView, ActivityIndicator,TouchableOpacity } from 'react-native'
 import React, { useState, useEffect } from 'react'
+import SelectDropdown from 'react-native-select-dropdown'
 import Color from '../Color'
 // import { Picker } from '@react-native-picker/picker';
 import { vw,vh } from '../utils/ScreenSize'
@@ -45,7 +46,7 @@ const TaskDetail = ({navigation , route}) => {
         {
             label:"Status",
             value: "0",
-            selectoptions:['New (Unassigned)', 'Not Started', 'In Progress', 'On Hold','Query Resolved','Query Raised','Completed'],
+            selectoptions:true,
         },
         {
             label:"Start Date",
@@ -61,6 +62,7 @@ const TaskDetail = ({navigation , route}) => {
         },
 
     ]
+    const data=['New (Unassigned)', 'Not Started', 'In Progress', 'On Hold','Query Resolved','Query Raised','Completed']
     const [selectedStatus, setSelectedStatus] = useState(2);
   return (
     <View style={styles.mainContainer}>
@@ -70,22 +72,27 @@ const TaskDetail = ({navigation , route}) => {
         {options.map((option, index) => (
           <View key={index} style={styles.optionContainer}>
             <Text style={styles.label}>{option.label}</Text>
-            {option.selectoptions && Array.isArray(option.selectoptions) ? (
-            <Picker
-                selectedValue={selectedStatus}
-                onValueChange={(itemValue) => setSelectedStatus(itemValue)}
-                style={styles.picker}
-                itemStyle={styles.pickerItem} // Add this line for styling items
-                ColorValue="#000"
-            >
-                <Picker.Item label="New (Unassigned)" value="1" />
-                <Picker.Item label="Not Started" value="2" />
-                <Picker.Item label="In Progress" value="3" />
-                <Picker.Item label="On Hold" value="4" />
-                <Picker.Item label="Query Resolved" value="5" />
-                <Picker.Item label="Query Raised" value="6" />
-                <Picker.Item label="Completed" value="7" />
-            </Picker>
+           
+            {option.selectoptions ? (
+              <SelectDropdown
+              data={data}
+              buttonStyle={{backgroundColor:"white",height:vh*5,width:vw*45,display:"flex",flexDirection:"row",justifyContent:"row"}}
+              dropdownStyle={{marginTop: -(vh*4)}}
+              buttonTextStyle={{fontSize:15,alignSelf:"right"}}
+              /* Change the default value */
+              defaultValue={data[0]}
+              style={{backgroundColor:"white",height:20,}}
+              onSelect={(selectedItem, index) => {
+                setSelectedStatus(selectedItem)
+              }}
+              buttonTextAfterSelection={(selectedItem, index) => {
+                return selectedItem
+              }}
+              rowTextForSelection={(item, index) => {
+  
+                return item
+              }}
+            />
             ) : (
               <Text style={styles.value}>{option.value}</Text>
             )}

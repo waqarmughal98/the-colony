@@ -17,7 +17,7 @@ const DashboardBottom = ({navigation}) => {
     },
     {
       img: require('../../../assets/imgs/request.png'), 
-      screenName:"problem-reports",
+      screenName:"requests",
       title: "Requests",
     },
     {
