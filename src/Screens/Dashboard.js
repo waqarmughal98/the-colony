@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View, TouchableOpacity, Alert } from 'react-native'
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Ionicons } from '@expo/vector-icons';
 import Color from '../Color';
 import DasboardTop from '../Components/Dasboard/DasboardTop';
@@ -7,7 +7,11 @@ import DashboardBottom from '../Components/Dasboard/DashboardBottom';
 import Footer from '../Components/Footer/Footer';
 import { useNavigation } from '@react-navigation/core';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import axios from 'axios';
+import { URL } from '../utils/Constant';
 function Dashboard({ navigation }) {
+  const [token, setToken] = useState([]);
+  const [data, setData] = useState([]);
     React.useLayoutEffect(() => {
       navigation.setOptions({
         headerTitle: 'Dashboard',
@@ -32,12 +36,19 @@ function Dashboard({ navigation }) {
     }, [navigation]);
 
     useEffect(()=>{
-      let result =  AsyncStorage.getItem("token");
-      if (!result) {
-        navigation.navigate('Login');
-      }else{
-        console.log("🔐 Here's your value 🔐 \n" + result);
-      }
+        (async ()=>{
+          const authToken = await AsyncStorage.getItem("token");
+          console.log(authToken)
+          axios.get(URL + '/dashboard',{
+              headers: {
+                  Authorization: `Bearer ${authToken}`
+              }
+          }).then((res)=>{
+              setData(res.data);
+          }).catch((err)=>{
+              console.log(err);
+          })
+      })()
     }, [])
   
     return (
@@ -45,7 +56,7 @@ function Dashboard({ navigation }) {
         <View style={{flex:1}}>
         {/* DashBoard top section */}
         <View style={styles.DasboardTop}>
-          <DasboardTop navigation={navigation}/>
+          <DasboardTop navigation={navigation} data={data}/>
         </View>
         {/* Dashboard bottom Section */}
         <View style={styles.DashboardBottom}>

@@ -41,8 +41,7 @@ const AllJobs = ({navigation}) => {
                 <View style={styles.dataContainer}>
                     <ScrollView>
                     {
-                        data.map((item,index)=>
-                        {
+                        data?.map((item,index)=>{
                             return(
                                 <TouchableOpacity onPress={()=>navigation.navigate("jobs-detail",{items: item})} activeOpacity={0.6} key={index}>
                                     <View style={[styles.individual,{backgroundColor:index%2==0 ? '#D2CBBC' : '#F2F1CF'}]}>

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 import calenderimg from "../../../assets/imgs/latest.png";
 import { Entypo, MaterialIcons, AntDesign } from "@expo/vector-icons";
@@ -31,11 +31,20 @@ const DashboardTopItem = ({ item, navigation }) => {
   );
 };
 
-const DashboardTop = ({ navigation }) => {
-  const data = [
+const DashboardTop = ({ navigation, data }) => {
+  const [requests, setRequests] = useState([]);
+
+  useEffect(()=>{
+     const request = data?.all_events?.data.filter((item)=>{
+      return item.event_parent_type == "request"
+     })
+     setRequests(request);
+  },[data])
+
+  const item = [
     {
       img: calenderimg,
-      number: "7",
+      number: data?.projects?.pending,
       title: "My Jobs",
       color: "#FFC001",
       iconName: "calendar-today",
@@ -44,7 +53,7 @@ const DashboardTop = ({ navigation }) => {
     },
     {
       img: calenderimg,
-      number: "7",
+      number: data?.tasks?.new,
       title: "New - Tasks",
       color: "#B8780C",
       iconName: "pluscircleo",
@@ -54,7 +63,7 @@ const DashboardTop = ({ navigation }) => {
     },
     {
       img: calenderimg,
-      number: "0",
+      number: data?.tasks?.in_progress,
       title: "Task - In Progress",
       color: "#774F07",
       iconName: "arrow-with-circle-right",
@@ -64,7 +73,7 @@ const DashboardTop = ({ navigation }) => {
     },
     {
       img: calenderimg,
-      number: "10",
+      number: requests?.length,
       title: "Requests",
       color: "#382504",
       iconName: "clockcircleo",
@@ -76,7 +85,7 @@ const DashboardTop = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <View style={styles.subContainer}>
-        {data.map((item, index) => (
+        {item.map((item, index) => (
           <DashboardTopItem key={index} navigation={navigation} item={item} />
         ))}
       </View>

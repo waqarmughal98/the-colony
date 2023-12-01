@@ -1,9 +1,11 @@
 import { StyleSheet, Text, View , ScrollView, ActivityIndicator,TouchableOpacity } from 'react-native'
 import React, { useState, useEffect } from 'react'
 import Color from '../Color'
-import { Picker } from '@react-native-picker/picker';
+// import { Picker } from '@react-native-picker/picker';
 import { vw,vh } from '../utils/ScreenSize'
-const TaskDetail = ({navigation}) => {
+import { Picker } from '@react-native-picker/picker'
+const TaskDetail = ({navigation , route}) => {
+  const { items } = route.params;
   const [loading, setLoading]=useState(true)
   React.useLayoutEffect(() => {
     navigation.setOptions({
@@ -24,6 +26,7 @@ const TaskDetail = ({navigation}) => {
         setTimeout(() => {
            setLoading(false) 
         }, 1000);
+        console.log(items)
     },[])
     
     /* Remove this data */
@@ -33,81 +36,80 @@ const TaskDetail = ({navigation}) => {
     const options=[
         {
             label:"Company",
-            value:"Severn Trent"
+            value: items.client_company_name
         },
         {
             label:"Task",
-            value:"Take Surve"
+            value: items.project_title
         },
         {
             label:"Status",
-            value:"",
-            selectoptions:['In Progress', 'New (Unassigned)','Not Started','On Hold','Query Resolved','Query Raised','Completed'],
+            value: "0",
+            selectoptions:['New (Unassigned)', 'Not Started', 'In Progress', 'On Hold','Query Resolved','Query Raised','Completed'],
         },
         {
             label:"Start Date",
-            value:"04-03-2022"
+            value:items.project_date_start
         },
         {
             label:"End Date",
-            value:"04-03-2022"
+            value:items.project_date_due
         },
         {
             label:"Priority",
-            value:"Low"
+            value:items.task_priority
         },
 
     ]
-    const [selectedStatus, setSelectedStatus] = useState('');
+    const [selectedStatus, setSelectedStatus] = useState(2);
   return (
     <View style={styles.mainContainer}>
-        
      {
-        !loading ? 
-        <View style={styles.Container}>
-              {options.map((option, index) => (
-            <View key={index} style={styles.optionContainer}>
-              <Text style={styles.label}>{option.label}</Text>
-              {option.selectoptions && Array.isArray(option.selectoptions) ? (
-                <Picker
+      !loading ? 
+      <View style={styles.Container}>
+        {options.map((option, index) => (
+          <View key={index} style={styles.optionContainer}>
+            <Text style={styles.label}>{option.label}</Text>
+            {option.selectoptions && Array.isArray(option.selectoptions) ? (
+            <Picker
                 selectedValue={selectedStatus}
                 onValueChange={(itemValue) => setSelectedStatus(itemValue)}
                 style={styles.picker}
                 itemStyle={styles.pickerItem} // Add this line for styling items
+                ColorValue="#000"
             >
-                <Picker.Item label="In Progress" value="In Progress" />
-                <Picker.Item label="New (Unassigned)" value="New (Unassigned)" />
-                <Picker.Item label="Not Started" value="Not Started" />
-                {/* Add more items as needed */}
+                <Picker.Item label="New (Unassigned)" value="1" />
+                <Picker.Item label="Not Started" value="2" />
+                <Picker.Item label="In Progress" value="3" />
+                <Picker.Item label="On Hold" value="4" />
+                <Picker.Item label="Query Resolved" value="5" />
+                <Picker.Item label="Query Raised" value="6" />
+                <Picker.Item label="Completed" value="7" />
             </Picker>
             ) : (
               <Text style={styles.value}>{option.value}</Text>
             )}
-            </View>
-          ))}
-          
-          <View style={styles.bottomContainer}>
-            <View style={styles.TextContainer}>
-                <Text style={styles.text1}>Assigned</Text>
-            </View>
-
+          </View>
+        ))}
+        <View style={styles.bottomContainer}>
+          <View style={styles.TextContainer}>
+              <Text style={styles.text1}>Assigned</Text>
+          </View>
           <View>
             <ScrollView>
               {
-                AssignData.map((item,index)=>
-                {
-                    return(
-                            <View key={index} style={[styles.individual,{backgroundColor:index%2==0 ? '#D2CBBC' : '#F2F1CF'}]}>
-                                <Text style={styles.dataText}>{item}</Text>
-                            </View>
-                    )
+                items?.assigned.map((item,index)=>{
+                  return(
+                    <View key={index} style={[styles.individual,{backgroundColor:index%2==0 ? '#D2CBBC' : '#F2F1CF'}]}>
+                        <Text style={styles.dataText}>{`${item.first_name} ${item.last_name}`}</Text>
+                    </View>
+                  )
                 })
               }
             </ScrollView>
           </View>
-             
-          </View>
-         </View>
+        </View>
+      </View>
       :
       <View style={styles.Indicator}>
          <ActivityIndicator size="large" color={"black"} />
@@ -209,7 +211,7 @@ const styles = StyleSheet.create({
         height: 20, // Adjust the height as needed
         width: 200, // Adjust the width as needed
         backgroundColor: 'white', // Set the background color
-        color: 'black', // Set the text color
+        color: '#000', // Set the text color
       },
       pickerItem: {
         color: 'black', // Set the text color of items
