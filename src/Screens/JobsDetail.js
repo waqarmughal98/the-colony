@@ -4,12 +4,14 @@ import {
   View,
   FlatList,
   TouchableOpacity,
+  Button
 } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import { MaterialIcons,AntDesign } from '@expo/vector-icons';
 import Color from '../Color';
 import Detail from '../Components/Jobs Detail/Detail';
 import Team from '../Components/Jobs Detail/Team';
+import Modal from "react-native-modal";
 import Task from '../Components/Jobs Detail/Task';
 import Address from '../Components/Jobs Detail/Address';
 import Files from '../Components/Jobs Detail/Files';
@@ -62,18 +64,24 @@ const JobsDetail = ({route, navigation}) => {
     navbarOptions[0].id
   );
 
+  const [isModalVisible, setModalVisible] = useState(false);
+
+  const toggleModal = () => {
+    setModalVisible(!isModalVisible);
+  };
+
   React.useLayoutEffect(() => {
     navigation.setOptions({
       headerRight: () => (
         <View style={{ marginRight: 10 }}>
-          {(selectedOptionID==5 || selectedOptionID==6  )  &&  <TouchableOpacity onPress={()=>navigation.navigate("add-request")} activeOpacity={0.6}>
+          {(selectedOptionID==5 || selectedOptionID==6  )  &&  <TouchableOpacity onPress={toggleModal} activeOpacity={0.6}>
             <AntDesign name="pluscircleo" size={24} color="white" />
           </TouchableOpacity>}
         </View>
       ),
     });
   }, [selectedOptionID]);
-  
+
   const renderItem = ({ item }) => (
     <TouchableOpacity
       style={styles.navbarOption}
@@ -134,6 +142,15 @@ const JobsDetail = ({route, navigation}) => {
           <ProblemReports navigation={navigation} data={items} />
         ) : null}
       </View>
+      <Modal isVisible={isModalVisible}>
+        <View style={{ height:400 }}>
+           {
+           selectedOptionID==5 ?  <Text style={{color:"white"}}>Update!</Text> : selectedOptionID==6 ? <Text style={{color:"white"}}>Notes!</Text> :null 
+           }
+           
+          <Button title="Hide modal" onPress={toggleModal} />
+        </View>
+      </Modal>
     </View>
   );
 };
