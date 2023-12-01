@@ -8,7 +8,7 @@ const Requests = ({navigation}) => {
     navigation.setOptions({
       headerRight: () => (
         <View style={{ marginRight: 10 }}>
-          <TouchableOpacity activeOpacity={0.6}>
+          <TouchableOpacity onPress={()=>navigation.navigate("add-request")} activeOpacity={0.6}>
             <AntDesign name="pluscircleo" size={24} color="white" />
           </TouchableOpacity>
         </View>
@@ -106,13 +106,13 @@ const Requests = ({navigation}) => {
                 data.map((item,index)=>
                 {
                     return(
-                        <TouchableOpacity onPress={()=>navigation.navigate("jobs-detail",{items: item})} activeOpacity={0.6} key={index}>
+                        <View  key={index}>
                             <View style={[styles.individual,{backgroundColor:index%2==0 ? '#D2CBBC' : '#F2F1CF'}]}>
-                            <Text style={styles.dataText}>{item.jobName}</Text>
+                            <Text style={styles.dataText}>10-15-2023</Text>
                             <Text style={[styles.dataText2,{color:Color.darkOrange}]}>Holidy</Text> 
                             <Text style={styles.dataText2}>Pending</Text> 
                             </View>
-                        </TouchableOpacity>
+                        </View>
                     )
                 })
               }
