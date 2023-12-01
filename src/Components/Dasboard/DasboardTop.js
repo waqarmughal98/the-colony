@@ -78,7 +78,7 @@ const DashboardTop = ({ navigation, data }) => {
       color: "#382504",
       iconName: "clockcircleo",
       iconType: "ant",
-      screen: "All-Job",
+      screen: "requests",
     },
   ];
 
