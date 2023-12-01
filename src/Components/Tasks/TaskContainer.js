@@ -81,7 +81,7 @@ const styles = StyleSheet.create({
     },
     noRecord:{
       color: "black",
-      fontSize: 24,
+      fontSize: 22,
       width: vw * 100,
       height: vh * 100,
       textAlign: "center",

@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import React, { useEffect, useState } from 'react';
+import { MaterialIcons,AntDesign } from '@expo/vector-icons';
 import Color from '../Color';
 import Detail from '../Components/Jobs Detail/Detail';
 import Team from '../Components/Jobs Detail/Team';
@@ -18,7 +19,6 @@ import Logs from '../Components/Jobs Detail/Logs';
 import ProblemReports from '../Components/Jobs Detail/ProblemReports';
 const JobsDetail = ({route, navigation}) => {
   const { items } = route.params;
-
   const navbarOptions = [
     {
       id: 0,
@@ -62,6 +62,18 @@ const JobsDetail = ({route, navigation}) => {
     navbarOptions[0].id
   );
 
+  React.useLayoutEffect(() => {
+    navigation.setOptions({
+      headerRight: () => (
+        <View style={{ marginRight: 10 }}>
+          {(selectedOptionID==5 || selectedOptionID==6  )  &&  <TouchableOpacity onPress={()=>navigation.navigate("add-request")} activeOpacity={0.6}>
+            <AntDesign name="pluscircleo" size={24} color="white" />
+          </TouchableOpacity>}
+        </View>
+      ),
+    });
+  }, [selectedOptionID]);
+  
   const renderItem = ({ item }) => (
     <TouchableOpacity
       style={styles.navbarOption}
@@ -113,9 +125,9 @@ const JobsDetail = ({route, navigation}) => {
         ) : selectedOptionID == 4 ? (
           <Files data={items} />
         ) : selectedOptionID == 5 ? (
-          <Update data={items} />
+          <Update data={items}  />
         ) : selectedOptionID == 6 ? (
-          <Notes data={items} />
+          <Notes data={items}  />
         ) : selectedOptionID == 7 ? (
           <Logs data={items} />
         ) : selectedOptionID == 8 ? (
