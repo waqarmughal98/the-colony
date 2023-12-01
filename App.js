@@ -15,6 +15,7 @@ import TaskDetail from './src/Screens/TaskDetail';
 import JobStatus from './src/Screens/JobStatus';
 import Footer from './src/Components/Footer/Footer';
 import Requests from './src/Screens/Requests';
+import AddRequest from './src/Screens/AddRequest';
 const Stack = createNativeStackNavigator();
 function App() {
   const screenOptions = {
@@ -156,6 +157,13 @@ function App() {
           component={Requests}
           options={{
             title: 'Requests'
+          }}
+        />
+        <Stack.Screen
+          name="add-request"
+          component={AddRequest}
+          options={{
+            title: 'Add Request'
           }}
         />
       

@@ -1,10 +1,10 @@
 import { StyleSheet, Text, View , ScrollView, ActivityIndicator,TouchableOpacity } from 'react-native'
 import React, { useState, useEffect } from 'react'
+import { FontAwesome } from '@expo/vector-icons';
 import SelectDropdown from 'react-native-select-dropdown'
 import Color from '../Color'
 // import { Picker } from '@react-native-picker/picker';
 import { vw,vh } from '../utils/ScreenSize'
-import { Picker } from '@react-native-picker/picker'
 const TaskDetail = ({navigation , route}) => {
   const { items } = route.params;
   const [loading, setLoading]=useState(true)
@@ -30,10 +30,6 @@ const TaskDetail = ({navigation , route}) => {
         console.log(items)
     },[])
     
-    /* Remove this data */
-    const AssignData=[
-        'Pete','Mark','John','Connie'
-    ]
     const options=[
         {
             label:"Company",
@@ -76,9 +72,12 @@ const TaskDetail = ({navigation , route}) => {
             {option.selectoptions ? (
               <SelectDropdown
               data={data}
-              buttonStyle={{backgroundColor:"white",height:vh*5,width:vw*45,display:"flex",flexDirection:"row",justifyContent:"row"}}
+              buttonStyle={{backgroundColor:"white",height:vh*5,width:vw*50,display:"flex",flexDirection:"row",justifyContent:"row"}}
               dropdownStyle={{marginTop: -(vh*4)}}
-              buttonTextStyle={{fontSize:15,alignSelf:"right"}}
+              buttonTextStyle={{fontSize:15}}
+              renderDropdownIcon={isOpened => {
+                return <FontAwesome style={{marginLeft:4}}  name={isOpened ? 'chevron-up' : 'chevron-down'} color={'#5A5A5A'} size={14} />;
+              }}
               /* Change the default value */
               defaultValue={data[0]}
               style={{backgroundColor:"white",height:20,}}

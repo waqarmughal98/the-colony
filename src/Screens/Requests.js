@@ -21,7 +21,7 @@ const Requests = ({ navigation }) => {
     navigation.setOptions({
       headerRight: () => (
         <View style={{ marginRight: 10 }}>
-          <TouchableOpacity activeOpacity={0.6}>
+          <TouchableOpacity onPress={()=>navigation.navigate("add-request")} activeOpacity={0.6}>
             <AntDesign name="pluscircleo" size={24} color="white" />
           </TouchableOpacity>
         </View>
