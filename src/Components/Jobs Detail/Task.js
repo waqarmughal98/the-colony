@@ -10,17 +10,14 @@ const Tasks = ({navigation,route}) => {
     const [loading, setLoading]=useState(true)
     const [data, setData] = useState([]);
 
-    /* Change the api this is dummy api */
     useEffect(()=>{
         (async ()=>{
             const authToken = await AsyncStorage.getItem("token");
-            console.log(authToken)
             axios.get(URL + '/task/all',{
                 headers: {
                     Authorization: `Bearer ${authToken}`
                 }
             }).then((res)=>{
-                console.log('tasks', res.data.tasks.data);
                 setData(res.data.tasks.data);
                 setLoading(false)
             }).catch((err)=>{
