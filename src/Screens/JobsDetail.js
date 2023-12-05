@@ -7,7 +7,7 @@ import {
   Button
 } from 'react-native';
 import React, { useEffect, useState } from 'react';
-import { MaterialIcons,AntDesign } from '@expo/vector-icons';
+import { Ionicons,AntDesign } from '@expo/vector-icons';
 import Color from '../Color';
 import Detail from '../Components/Jobs Detail/Detail';
 import Team from '../Components/Jobs Detail/Team';
@@ -19,6 +19,8 @@ import Update from '../Components/Jobs Detail/Update';
 import Notes from '../Components/Jobs Detail/Notes';
 import Logs from '../Components/Jobs Detail/Logs';
 import ProblemReports from '../Components/Jobs Detail/ProblemReports';
+import NoteModal from '../Components/Modals/NoteModal';
+import UpdateModal from '../Components/Modals/UpdateModal';
 const JobsDetail = ({route, navigation}) => {
   const { items } = route.params;
   const navbarOptions = [
@@ -143,14 +145,20 @@ const JobsDetail = ({route, navigation}) => {
         ) : null}
       </View>
       <Modal isVisible={isModalVisible}>
-        <View style={{ height:400 }}>
-           {
-           selectedOptionID==5 ?  <Text style={{color:"white"}}>Update!</Text> : selectedOptionID==6 ? <Text style={{color:"white"}}>Notes!</Text> :null 
-           }
-           
-          <Button title="Hide modal" onPress={toggleModal} />
-        </View>
-      </Modal>
+      <View style={{ height: 400, backgroundColor: Color.brightOrange, justifyContent: 'center', alignItems: 'center' ,borderRadius:20 }}>
+        {
+          selectedOptionID === 5 ? <UpdateModal/> :
+            selectedOptionID === 6 ? <NoteModal/> : null
+        }
+        {/* Close button */}
+        <TouchableOpacity
+          style={{ position: 'absolute', top: 10, right: 10 }}
+          onPress={toggleModal}
+        >
+          <Ionicons name="md-close" size={27} color="white" />
+        </TouchableOpacity>
+      </View>
+    </Modal>
     </View>
   );
 };
