@@ -58,7 +58,7 @@ const AddRequest = () => {
             <TextInput value={reason} style={styles.dayInput} onChangeText={(text)=>setReason(text)} />
         </View >
         <View >
-            <Text style={styles.label}>Request Type*</Text>
+            <Text style={styles.label}>Department Type*</Text>
             <SelectDropdown
                 data={departmentData}
                 renderDropdownIcon={isOpened => {
