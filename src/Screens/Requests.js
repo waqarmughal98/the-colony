@@ -199,32 +199,32 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: "black",
     fontWeight: "bold",
-    flex: 1,
+    flex: 0.4,
   },
   text1: {
     fontSize: 16,
     color: "black",
     fontWeight: "bold",
     textAlign: "center",
-    flex: 1,
+    flex: 0.3,
   },
   text2: {
     fontSize: 16,
     color: "black",
     fontWeight: "bold",
     textAlign: "center",
-    flex: 1,
+    flex: 0.3,
   },
 
   dataText: {
     fontSize: 14,
     color: "black",
-    flex: 1,
+    flex: 0.4,
   },
   dataText2: {
     fontSize: 14,
     color: "black",
-    flex: 1,
+    flex: 0.3,
     textAlign: "center",
   },
   icon: {
