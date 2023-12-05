@@ -4,12 +4,14 @@ import {
   View,
   FlatList,
   TouchableOpacity,
+  Button
 } from 'react-native';
 import React, { useEffect, useState } from 'react';
-import { MaterialIcons,AntDesign } from '@expo/vector-icons';
+import { Ionicons,AntDesign } from '@expo/vector-icons';
 import Color from '../Color';
 import Detail from '../Components/Jobs Detail/Detail';
 import Team from '../Components/Jobs Detail/Team';
+import Modal from "react-native-modal";
 import Task from '../Components/Jobs Detail/Task';
 import Address from '../Components/Jobs Detail/Address';
 import Files from '../Components/Jobs Detail/Files';
@@ -17,6 +19,8 @@ import Update from '../Components/Jobs Detail/Update';
 import Notes from '../Components/Jobs Detail/Notes';
 import Logs from '../Components/Jobs Detail/Logs';
 import ProblemReports from '../Components/Jobs Detail/ProblemReports';
+import NoteModal from '../Components/Modals/NoteModal';
+import UpdateModal from '../Components/Modals/UpdateModal';
 const JobsDetail = ({route, navigation}) => {
   const { items } = route.params;
   const navbarOptions = [
@@ -62,18 +66,24 @@ const JobsDetail = ({route, navigation}) => {
     navbarOptions[0].id
   );
 
+  const [isModalVisible, setModalVisible] = useState(false);
+
+  const toggleModal = () => {
+    setModalVisible(!isModalVisible);
+  };
+
   React.useLayoutEffect(() => {
     navigation.setOptions({
       headerRight: () => (
         <View style={{ marginRight: 10 }}>
-          {(selectedOptionID==5 || selectedOptionID==6  )  &&  <TouchableOpacity onPress={()=>navigation.navigate("add-request")} activeOpacity={0.6}>
+          {(selectedOptionID==5 || selectedOptionID==6  )  &&  <TouchableOpacity onPress={toggleModal} activeOpacity={0.6}>
             <AntDesign name="pluscircleo" size={24} color="white" />
           </TouchableOpacity>}
         </View>
       ),
     });
   }, [selectedOptionID]);
-  
+
   const renderItem = ({ item }) => (
     <TouchableOpacity
       style={styles.navbarOption}
@@ -134,6 +144,21 @@ const JobsDetail = ({route, navigation}) => {
           <ProblemReports navigation={navigation} data={items} />
         ) : null}
       </View>
+      <Modal isVisible={isModalVisible}>
+      <View style={{ height: 400, backgroundColor: Color.brightOrange, justifyContent: 'center', alignItems: 'center' ,borderRadius:20 }}>
+        {
+          selectedOptionID === 5 ? <UpdateModal/> :
+            selectedOptionID === 6 ? <NoteModal/> : null
+        }
+        {/* Close button */}
+        <TouchableOpacity
+          style={{ position: 'absolute', top: 10, right: 10 }}
+          onPress={toggleModal}
+        >
+          <Ionicons name="md-close" size={27} color="white" />
+        </TouchableOpacity>
+      </View>
+    </Modal>
     </View>
   );
 };

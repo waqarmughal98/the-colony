@@ -43,7 +43,7 @@ const AddRequest = () => {
         </View >
         <View>
             <Text style={styles.label}>Reason*</Text>
-            <TextInput value={reason} style={styles.reasonInput} onChangeText={(text)=>setReason(text)} />
+            <TextInput value={reason} multiline={true} textAlignVertical="top"  numberOfLines={6} style={styles.reasonInput} onChangeText={(text)=>setReason(text)} />
         </View >
         <View>
             <Text style={styles.label}>Start Date*</Text>
@@ -55,10 +55,10 @@ const AddRequest = () => {
         </View >
         <View>
             <Text style={styles.label}>Days to be taken*</Text>
-            <TextInput value={reason} style={styles.dayInput} onChangeText={(text)=>setReason(text)} />
+            <TextInput value={days} style={styles.dayInput} onChangeText={(text)=>setDays(text)} />
         </View >
         <View >
-            <Text style={styles.label}>Department Type*</Text>
+            <Text style={styles.label}>Department*</Text>
             <SelectDropdown
                 data={departmentData}
                 renderDropdownIcon={isOpened => {
@@ -113,11 +113,10 @@ const styles = StyleSheet.create({
         marginBottom:10
     },
     reasonInput:{
-        height:15*vh,
         width:"100%",
         backgroundColor:"white",
         borderRadius:10,
-        paddingHorizontal:15
+        padding:12
     },
     dayInput:{
         height:45,
