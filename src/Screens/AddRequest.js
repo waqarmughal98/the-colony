@@ -17,7 +17,7 @@ const AddRequest = () => {
     <View style={styles.mainContainer}>
         <ScrollView>
       <View style={styles.fieldsContainer}>
-        <View >
+        <View>
             <Text style={styles.label}>Request Type*</Text>
             <SelectDropdown
                 data={data}
@@ -40,23 +40,23 @@ const AddRequest = () => {
                     return item
                 }}
                 />
-        </View >
+        </View>
         <View>
             <Text style={styles.label}>Reason*</Text>
             <TextInput value={reason} multiline={true} textAlignVertical="top"  numberOfLines={6} style={styles.reasonInput} onChangeText={(text)=>setReason(text)} />
-        </View >
+        </View>
         <View>
             <Text style={styles.label}>Start Date*</Text>
             <DateInput editable={true}/>
-        </View >
+        </View>
         <View>
             <Text style={styles.label}>End Date*</Text>
             <DateInput editable={true}/>
-        </View >
+        </View>
         <View>
             <Text style={styles.label}>Days to be taken*</Text>
             <TextInput value={days} style={styles.dayInput} onChangeText={(text)=>setDays(text)} />
-        </View >
+        </View>
         <View >
             <Text style={styles.label}>Department*</Text>
             <SelectDropdown
@@ -80,7 +80,7 @@ const AddRequest = () => {
                     return item
                 }}
                 />
-        </View >
+        </View>
         <View style={styles.btnContainer}>
            <TouchableOpacity activeOpacity={0.6}>
              <Text style={styles.submitTxt}>Submit</Text>
