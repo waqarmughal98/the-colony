@@ -23,6 +23,7 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import Context, { ContextProvider } from './src/Global/Context';
 import CustomDrawerContent from './src/Components/Drawer/CustomDrawerContent';
 import NewProblemReport from './src/Screens/NewProblemReport';
+import Profile from './src/Components/Jobs Detail/Profile';
 const Stack = createNativeStackNavigator();
 const Drawer = createDrawerNavigator();
 function App() {
@@ -77,7 +78,7 @@ function App() {
       />
       <Tab.Screen
         name="Profile"
-        component={WorkLog}
+        component={Profile}
         options={{
           title: 'Profile',
           tabBarLabel: 'Profile',

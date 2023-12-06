@@ -82,6 +82,6 @@ const styles = StyleSheet.create({
       marginVertical:10,
     },
     DashboardBottom:{
-      marginVertical:7
+      marginVertical:11
     }
 })
