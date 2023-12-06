@@ -73,6 +73,7 @@ const Notes = ({data}) => {
                 </View>
               </View>
             ))}
+            <Text>{/* For space */}</Text>
           </ScrollView>
           </View>
         </View>
@@ -92,6 +93,8 @@ const styles = StyleSheet.create({
     mainContainer: {
     flexGrow: 1,
   },
+  container:{ 
+  },
 
   header: {
     backgroundColor: 'black',
@@ -108,8 +111,7 @@ const styles = StyleSheet.create({
   },
   notesDataContaier: {
     height: windowHeight,
-    backgroundColor: "white"
-
+    backgroundColor: "white",
   },
   individualRow: {
     display: 'flex',
@@ -137,7 +139,6 @@ const styles = StyleSheet.create({
     flex: 1,
     display: 'flex',
     flexDirection: 'row',
-
     alignItems: 'center',
     justifyContent: 'center',
   },
