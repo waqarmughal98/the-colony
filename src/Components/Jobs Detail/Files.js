@@ -58,13 +58,13 @@ const Files = () => {
           data.map((item,index)=>
             <View>
                 <View style={styles.individual}>
-                  <TouchableOpacity activeOpacity={0.6} onPress={()=>hendleOpen(index)}>
+                  <TouchableOpacity activeOpacity={0.6} style={styles.leftBtmContainer} onPress={()=>hendleOpen(index)}>
                       <View style={styles.leftBtm}>
                         <Image source={currentIndex==index?  require('../../../assets/imgs/opened_folder.png'): require('../../../assets/imgs/close_folder.png')} style={styles.Image3} />
                         <Text>{item.FolderName}</Text>
                       </View>
                     </TouchableOpacity>
-                    <View>
+                    <View style={styles.rightBtmContainer}>
                         <ImagePickerFiles index={index} data={data} setData={setData} />
                     </View>
                    
@@ -228,5 +228,6 @@ const styles = StyleSheet.create({
     fontSize:12,
     color:"#5A5A5A",
     flex:0.85
-  }
+  },
+
 })
