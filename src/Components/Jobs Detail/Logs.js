@@ -8,6 +8,7 @@ import {
 } from 'react-native';
 import React, { useState, useEffect } from 'react';
 import Color from '../../Color';
+import { vh } from '../../utils/ScreenSize';
 const Logs = () => {
   const [loading, setLoading] = useState(true);
   const dataArray = [0, 0, 0, 0, 0, 0, 0];
@@ -66,7 +67,7 @@ const styles = StyleSheet.create({
   Container: {
     height: '100%',
     backgroundColor: 'white',
-    paddingBottom:120,
+    paddingBottom:180,
   },
   Indicator: {
     flexGrow: 1,

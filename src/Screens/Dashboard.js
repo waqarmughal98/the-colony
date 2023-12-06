@@ -1,5 +1,6 @@
 import { StyleSheet, Text, View, TouchableOpacity, Alert } from 'react-native'
 import React, { useEffect, useState } from 'react'
+import { createDrawerNavigator } from '@react-navigation/drawer';
 import { Ionicons } from '@expo/vector-icons';
 import Color from '../Color';
 import DasboardTop from '../Components/Dasboard/DasboardTop';
@@ -7,6 +8,7 @@ import DashboardBottom from '../Components/Dasboard/DashboardBottom';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 import { URL } from '../utils/Constant';
+const Drawer = createDrawerNavigator();
 function Dashboard({ navigation }) {
   const [token, setToken] = useState([]);
   const [data, setData] = useState([]);
@@ -18,10 +20,13 @@ function Dashboard({ navigation }) {
         headerTitleAlign: 'center',
         headerLeft: () => (
           <View style={{ marginLeft: 10 }}>
-            <TouchableOpacity activeOpacity={0.6}>
-             <Ionicons name="ios-menu" size={24} color="white" />
-            </TouchableOpacity>
-          </View>
+          <TouchableOpacity
+            onPress={() =>navigation.toggleDrawer()}
+            activeOpacity={0.6}
+          >
+            <Ionicons name="ios-menu" size={24} color="white" />
+          </TouchableOpacity>
+        </View>
         ),
         headerRight: () => (
           <View style={{ marginRight: 10 }}>
