@@ -52,9 +52,9 @@ const Update = ({data}) => {
                     <Image source={require('../../../assets/imgs/avator.png')} style={styles.Image} />
                   </View>
                   <View style={styles.textContainer} >
-                      <Text>{item.heading}</Text>
-                      <Text>{item.text}</Text>
-                      <Text>{item.date}</Text>
+                      <Text>{item.comment_text}</Text>
+                      <Text>{`${item.first_name} ${item.last_name}`}</Text>
+                      <Text>{item?.comment_created?.slice(0,10)}</Text>
                   </View>
                 </View>)
             }
