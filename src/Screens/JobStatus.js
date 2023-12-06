@@ -2,12 +2,28 @@ import { StyleSheet, Text, View , ScrollView, ActivityIndicator} from 'react-nat
 import React, { useState, useEffect } from 'react'
 import { vh,vw } from '../utils/ScreenSize'
 import Color from '../Color'
+import axios from 'axios'
+import { URL } from '../utils/Constant'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 const JobStatus = () => {
   const [loading, setLoading]=useState(true)
-  
 
      /* Remove this when fethc data */
     useEffect(()=>{
+
+        (async ()=>{
+            const authToken = await AsyncStorage.getItem('token');
+            await axios.get(URL + '/job-status', {
+                headers:{
+                    Authorization: `Bearer ${authToken}` 
+                }
+            }).then((res)=>{
+                console.log(res.data)
+            }).catch((err)=>{
+                console.log(err);
+            })
+        })()
+
         setTimeout(() => {
            setLoading(false) 
         }, 1000);

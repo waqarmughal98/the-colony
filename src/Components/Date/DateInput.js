@@ -17,53 +17,49 @@ const DateInput = ({editable}) => {
   const showDatePickerContainer = () => {
     setShowDatePicker(true);
   };
-  
  
   return (
     editable?(
-     <TouchableOpacity activeOpacity={0.6} onPress={showDatePickerContainer} style={{marginTop:-10}}>
+      <TouchableOpacity activeOpacity={0.6} onPress={showDatePickerContainer} style={{marginTop:-10}}>
         <View style={[styles.container,{borderRadius: 10,width:vw*86}]}>
-        {/* Left side: Date value */}
-        <Text style={styles.dateValue}>{date.toDateString()}</Text>
-        {/* Right side: Calendar icon */}   
-          <AntDesign name="calendar" size={22} color="black" />
-        {/* Date Picker */}
-        {showDatePicker && (
-          <DateTimePicker
-            value={date}
-            mode="date"
-            display="default"
-            onChange={handleDateChange}
-            textColor="red"
-            accentColor='yellow'
-            themeVariant='dark'
-          />
-        )}
-      </View>
-     </TouchableOpacity>
-    )
-   :
-   (
+          {/* Left side: Date value */}
+          <Text style={styles.dateValue}>{date.toDateString()}</Text>
+          {/* Right side: Calendar icon */}   
+            <AntDesign name="calendar" size={22} color="black" />
+          {/* Date Picker */}
+          {showDatePicker && (
+            <DateTimePicker
+              value={date}
+              mode="date"
+              display="default"
+              onChange={handleDateChange}
+              textColor="red"
+              accentColor='yellow'
+              themeVariant='dark'
+            />
+          )}
+        </View>
+      </TouchableOpacity>
+    ):(
     <View style={[styles.container,{borderRadius: 40, marginHorizontal:  60, width:vw*86,}]}>
-    {/* Left side: Date value */}
-    <Text style={styles.dateValue}>{date.toDateString()}</Text>
-    {/* Right side: Calendar icon */}   
-      <AntDesign name="calendar" size={22} color="black" />
-    {/* Date Picker */}
-    {showDatePicker && (
-      <DateTimePicker
-        value={date}
-        mode="date"
-        display="default"
-        onChange={handleDateChange}
-        textColor="red"
-        accentColor='yellow'
-        themeVariant='dark'
-      />
-    )}
-  </View>
+      {/* Left side: Date value */}
+      <Text style={styles.dateValue}>{date.toDateString()}</Text>
+      {/* Right side: Calendar icon */}   
+        <AntDesign name="calendar" size={22} color="black" />
+      {/* Date Picker */}
+      {showDatePicker && (
+        <DateTimePicker
+          value={date}
+          mode="date"
+          display="default"
+          onChange={handleDateChange}
+          textColor="red"
+          accentColor='yellow'
+          themeVariant='dark'
+        />
+      )}
+    </View>
    )
-   
   );
 };
 
