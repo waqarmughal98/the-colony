@@ -44,7 +44,7 @@ const DashboardTop = ({ navigation, data }) => {
   const item = [
     {
       img: calenderimg,
-      number: data?.projects?.pending,
+      number: data?.my_tasks?.data?.length,
       title: "My Jobs",
       color: "#FFC001",
       iconName: "calendar-today",

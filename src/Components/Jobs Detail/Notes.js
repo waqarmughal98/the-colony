@@ -2,112 +2,41 @@ import { StyleSheet, Text, View, ScrollView, ActivityIndicator} from 'react-nati
 import React, { useState, useEffect } from 'react'
 import Color from '../../Color';
 import {Dimensions} from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import axios from 'axios';
+import { URL } from '../../utils/Constant';
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
 
-const Notes = () => {
-  const headerOption = ['Title', 'Discription', 'Date'];
+const Notes = ({data}) => {
+  const headerOption = ['Title', 'Description', 'Date'];
+  const [loading, setLoading]=useState(true)
+  const [notes, setNotes] = useState([]);
 
- const [loading, setLoading]=useState(true)
-
-  const NoteData = [
-    {
-      title: 'sa',
-      disc: 'ksajka',
-      date: '01/12/2023',
-    },
-    {
-      title: 'sa',
-      disc: 'ksajka',
-      date: '01/12/2023',
-    },
-    {
-      title: 'sa',
-      disc: 'ksajka',
-      date: '01/12/2023',
-    },
-    {
-      title: 'sa',
-      disc: 'ksajka',
-      date: '01/12/2023',
-    },
-    {
-      title: 'sa',
-      disc: 'ksajka',
-      date: '01/12/2023',
-    },
-    {
-      title: 'sa',
-      disc: 'ksajka',
-      date: '01/12/2023',
-    },
-    {
-      title: 'sa',
-      disc: 'ksajka',
-      date: '01/12/2023',
-    },
-    {
-      title: 'sa',
-      disc: 'ksajka',
-      date: '01/12/2023',
-    },
-    {
-      title: 'sa',
-      disc: 'ksajka',
-      date: '01/12/2023',
-    },
-    {
-      title: 'sa',
-      disc: 'ksajka',
-      date: '01/12/2023',
-    },
-    {
-      title: 'sa',
-      disc: 'ksajka',
-      date: '01/12/2023',
-    },
-    {
-      title: 'sa',
-      disc: 'ksajka',
-      date: '01/12/2023',
-    },
-    {
-      title: 'sa',
-      disc: 'ksajka',
-      date: '01/12/2023',
-    },
-    {
-      title: 'sa',
-      disc: 'ksajka',
-      date: '01/12/2023',
-    },
-    {
-      title: 'sa',
-      disc: 'ksajka',
-      date: '01/12/2023',
-    },
-    {
-      title: 'sa',
-      disc: 'ksajka',
-      date: '01/12/2023',
-    },
-    {
-      title: 'sa',
-      disc: 'ksajka',
-      date: '01/12/2023',
-    },
-    {
-      title: 'sa',
-      disc: 'ksajka',
-      date: '01/12/2023',
-    },
-    {
-      title: 'sa',
-      disc: 'ksajka',
-      date: '01/12/2023',
-    },
-  ];
+  useEffect(()=>{
+    (async ()=>{
+      const param = {
+        params:{
+          project_id: data.project_id,
+          ticketresource_type: "project",
+          ticketresource_id: data.project_id,
+        },
+      }
+      const authToken = await AsyncStorage.getItem('token');
+      axios.post(URL + '/notes/search', {}, {
+        param,
+        headers:{
+          Authorization: `Bearer ${authToken}`
+        }
+      }).then((res)=>{
+        console.log(res.data.notes.data)
+        setNotes(res.data.notes.data)
+      }).catch((err)=>{
+        console.log(err)
+      })
+    })()
+  }, [])
 
     /* Remove this when fethc data */
     useEffect(()=>{
@@ -135,14 +64,12 @@ const Notes = () => {
           </View>
           <View style={styles.notesDataContaier}>
           <ScrollView contentContainerStyle={styles.mainContainer}>
-            {NoteData.map((item, index) => (
+            {notes.map((item, index) => (
               <View style={styles.individualRow} key={index}>
-                <Text style={styles.containerText}>{item.title}</Text>
-                <Text style={styles.containerText2}>{item.disc}</Text>
+                <Text style={styles.containerText}>{item.note_title}</Text>
+                <Text style={styles.containerText2}>{item.note_description}</Text>
                 <View style={styles.containerText3Container}>
-                  <Text style={styles.containerText3}>
-                    {item.date}
-                  </Text>
+                  <Text style={styles.containerText3}>{item.note_created}</Text>
                 </View>
               </View>
             ))}

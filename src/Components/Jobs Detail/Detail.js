@@ -84,7 +84,7 @@ const Address = ({data}) => {
               return (
                 <View style={styles.inputContainer} key={index}>
                 <Text style={styles.label}>{field.label}</Text>
-                <DateInput editable={false}/>
+                <DateInput dateValue={inputData[field.key]} editable={false}/>
               </View>
               );
             }

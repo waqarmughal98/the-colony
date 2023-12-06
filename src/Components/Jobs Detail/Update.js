@@ -1,102 +1,71 @@
 import { StyleSheet, Text, View , ScrollView, ActivityIndicator, Image, TextInput} from 'react-native'
 import React, { useState, useEffect } from 'react'
 import Color from '../../Color'
-const Update = () => {
+import AsyncStorage from '@react-native-async-storage/async-storage'
+import axios from 'axios'
+import { URL } from '../../utils/Constant'
+const Update = ({data}) => {
   const [loading, setLoading]=useState(true)
-    const data=[
-        {
-          heading:"Quote responsibility",
-          text:"Admin test",
-          date:'10-12-2023'
-        },
-        {
-          heading:"Quote responsibility",
-          text:"Admin test",
-          date:'10-12-2023'
-        },
-        {
-          heading:"Quote responsibility",
-          text:"Admin test",
-          date:'10-12-2023'
-        },
-        {
-          heading:"Quote responsibility",
-          text:"Admin test",
-          date:'10-12-2023'
-        },
-        {
-          heading:"Quote responsibility",
-          text:"Admin test",
-          date:'10-12-2023'
-        },
-        {
-          heading:"Quote responsibility",
-          text:"Admin test",
-          date:'10-12-2023'
-        },
-        {
-          heading:"Quote responsibility",
-          text:"Admin test",
-          date:'10-12-2023'
-        },
-        {
-          heading:"Quote responsibility",
-          text:"Admin test",
-          date:'10-12-2023'
-        },
-        {
-          heading:"Quote responsibility",
-          text:"Admin test",
-          date:'10-12-2023'
-        },
-        {
-          heading:"Quote responsibility",
-          text:"Admin test",
-          date:'10-12-2023'
-        },
-    ]
+  const [update, setUpdate] = useState([]);
 
-     /* Remove this when fethc data */
-    useEffect(()=>{
-        setTimeout(() => {
-           setLoading(false) 
-        }, 1000);
-    },[])
-
+  useEffect(()=>{
+    (async ()=>{
+      const param = {
+        params:{
+          project_id: data.project_id,
+          ticketresource_type: "project",
+          ticketresource_id: data.project_id,
+        },
+      }
+      const authToken = await AsyncStorage.getItem('token');
+      axios.post(URL + '/comments/search', {}, {
+        param,
+        headers:{
+          Authorization: `Bearer ${authToken}`
+        }
+      }).then((res)=>{
+        console.log(res.data.comments.data)
+        setUpdate(res.data.comments.data)
+      }).catch((err)=>{
+        console.log(err)
+      })
+    })()
+  }, [])
+  
+  /* Remove this when fethc data */
+  useEffect(()=>{
+    setTimeout(() => {
+        setLoading(false) 
+    }, 1000);
+  },[])
     
   return (
     <View style={styles.mainContainer}>
-        
      {
         !loading ? 
         <View style={[styles.Container,{paddingBottom:100}]}>
             <ScrollView >
             {
-                data.map((item,index)=>
+              update.map((item,index)=>
                 <View style={styles.individual}  key={index}>
-                    <View>
-                      <Image source={require('../../../assets/imgs/avator.png')} style={styles.Image} />
-                    </View>
-                    <View style={styles.textContainer} >
-                        <Text>{item.heading}</Text>
-                        <Text>{item.text}</Text>
-                        <Text>{item.date}</Text>
-
-                    </View>
-
+                  <View>
+                    <Image source={require('../../../assets/imgs/avator.png')} style={styles.Image} />
+                  </View>
+                  <View style={styles.textContainer} >
+                      <Text>{item.heading}</Text>
+                      <Text>{item.text}</Text>
+                      <Text>{item.date}</Text>
+                  </View>
                 </View>)
-               
-                }
-  
+            }
             </ScrollView>
          </View>
       :
       <View style={styles.Indicator}>
-           <ActivityIndicator size="large" color={"black"} />
-           <Text style={styles.fetchingData}>Fetching Data</Text>
+        <ActivityIndicator size="large" color={"black"} />
+        <Text style={styles.fetchingData}>Fetching Data</Text>
       </View>
      }
-  
     </View>
   )
 }
