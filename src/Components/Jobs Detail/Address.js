@@ -1,13 +1,4 @@
-import {
-  StyleSheet,
-  Text,
-  View,
-  ActivityIndicator,
-  TextInput,
-  Switch,
-  ScrollView,
-  TouchableOpacity
-} from 'react-native';
+import {StyleSheet, Text, View, ActivityIndicator, TextInput, Switch, ScrollView, TouchableOpacity } from 'react-native';
 import React, { useState, useEffect } from 'react';
 import Color from '../../Color';
 import MapView, { Marker } from 'react-native-maps';
@@ -37,7 +28,7 @@ const Address = ({ data }) => {
     }));
   };
 
-  /* Remove this later; this is dummy data */
+  /* Remove this later */
   useEffect(() => {
     setInputData({
       street: 'asd',
@@ -78,24 +69,24 @@ const Address = ({ data }) => {
           {showMap ? (
             <View style={[styles.mapContainer]}>
               {/* Your map component goes here */}
-                  <MapView
-                  style={{ flex: 1, borderRadius:15 }}
-                  initialRegion={{
-                  latitude: 37.78825, // Replace with the initial latitude of your map
-                  longitude: -122.4324, // Replace with the initial longitude of your map
-                  latitudeDelta: 0.0922,
-                  longitudeDelta: 0.0421,
-                  }}
+              <MapView
+                style={{ flex: 1, borderRadius:15 }}
+                initialRegion={{
+                latitude: 37.78825, // Replace with the initial latitude of your map
+                longitude: -122.4324, // Replace with the initial longitude of your map
+                latitudeDelta: 0.0922,
+                longitudeDelta: 0.0421,
+                }}
               >
-                  {/* You can add a marker if needed */}
-                  <Marker
+                {/* You can add a marker if needed */}
+                <Marker
                   coordinate={{
-                      latitude: 37.78825, // Replace with the marker's latitude
-                      longitude: -122.4324, // Replace with the marker's longitude
+                    latitude: 37.78825, // Replace with the marker's latitude
+                    longitude: -122.4324, // Replace with the marker's longitude
                   }}
                   title="Marker Title"
                   description="Marker Description"
-                  />
+                />
               </MapView>
             </View>
           ) : (

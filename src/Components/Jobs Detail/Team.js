@@ -16,7 +16,6 @@ const Team = ({ data }) => {
           Authorization: `Bearer ${authToken}`
         }
       }).then((res)=>{
-        console.log(res.data);
         const response = res.data;
         setItems([{
           label:"Quote Responsibility",

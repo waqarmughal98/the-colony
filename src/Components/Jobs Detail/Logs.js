@@ -8,13 +8,29 @@ import {
 } from 'react-native';
 import React, { useState, useEffect } from 'react';
 import Color from '../../Color';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import axios from 'axios';
+import { URL } from '../../utils/Constant';
 import { vh } from '../../utils/ScreenSize';
-const Logs = () => {
+const Logs = ({data}) => {
   const [loading, setLoading] = useState(true);
-  const dataArray = [0, 0, 0, 0, 0, 0, 0];
+  const [items, setItems] = useState([])
 
   /* Remove this when fethc data */
   useEffect(() => {
+    (async ()=>{
+      const authToken = await AsyncStorage.getItem('token');4
+      await axios.get(URL + '/job-activity/' + data?.project_id, {
+        headers: {
+          Authorization: `Bearer ${authToken}`,
+        }
+      }).then((res)=>{
+        console.log(res.data.logs.length)
+        setItems(res.data.logs)
+      }).catch((err)=>{
+        console.log(err);
+      })
+    })()
     setTimeout(() => {
       setLoading(false);
     }, 1000);
@@ -24,29 +40,32 @@ const Logs = () => {
     <ScrollView style={styles.mainContainer}>
       {!loading ? (
         <View style={styles.Container}>
-          {dataArray.map((item, index) => (
-            <View style={[styles.individual,{backgroundColor:index%2!=0? "#F0F4F7":"#FFE6AE"}]} key={index}> 
-              <View style={styles.individual_left}>
-                <Image
-                  source={require('../../../assets/imgs/perosn.png')}
-                  style={styles.Image}
-                />
-              </View>
-              <View style={styles.individual_right}>
-                <View style={styles.text1container}>
-                  <Text style={styles.text1}>Mark</Text>
-                  <Text>on 2023-11-03 </Text>
+          {items.map((item, index) => {
+            const update = item?.event_item_lang.replace(/_/g, ' ');
+            return(
+              <View style={[styles.individual,{backgroundColor:index%2!=0? "#F0F4F7":"#FFE6AE"}]} key={index}> 
+                <View style={styles.individual_left}>
+                  <Image
+                    source={require('../../../assets/imgs/perosn.png')}
+                    style={styles.Image}
+                  />
                 </View>
-                <Text style={styles.text2}>Posted a updated</Text>
-                <Text style={styles.text3}>200-Draitwitch Swt</Text>
-                <View style={styles.updateBg}>
-                  <Text style={[styles.text4,{ backgroundColor: index%2==0 ?"#F0F4F7": '#DEE1EC' }]}>
-                    Update new updates on
-                  </Text>
+                <View style={styles.individual_right}>
+                  <View style={styles.text1container}>
+                    <Text style={styles.text1}>{item?.creator?.first_name}</Text>
+                    <Text>on {item?.event_created?.slice(0, 10)} </Text>
+                  </View>
+                  <Text style={styles.text2}>{update}</Text>
+                  <Text style={styles.text3}>{item?.event_parent_title}</Text>
+                  <View style={styles.updateBg}>
+                    <Text style={[styles.text4,{ backgroundColor: index%2==0 ?"#F0F4F7": '#DEE1EC' }]}>
+                      {item?.event_item_content}
+                    </Text>
+                  </View>
                 </View>
               </View>
-            </View>
-          ))}
+            )
+          })}
         </View>
       ) : (
         <View style={styles.Indicator}>
@@ -123,6 +142,7 @@ const styles = StyleSheet.create({
   },
   text2: {
     marginBottom: 8,
+    textTransform: 'capitalize',
   },
   text3: {
     marginBottom: 8,

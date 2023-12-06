@@ -3,7 +3,7 @@ import { StyleSheet, View, TouchableOpacity, Text, Alert } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { AntDesign } from '@expo/vector-icons';
 import { vw } from '../../utils/ScreenSize';
-const DateInput = ({editable,name,setLeave}) => {
+const DateInput = ({editable,name,setLeave, dateValue}) => {
   const [date, setDate] = useState(new Date());
   const [showDatePicker, setShowDatePicker] = useState(false);
 
@@ -38,7 +38,7 @@ const DateInput = ({editable,name,setLeave}) => {
       <TouchableOpacity activeOpacity={0.6} onPress={showDatePickerContainer} style={{marginTop:-10}}>
         <View style={[styles.container,{borderRadius: 10,width:vw*86}]}>
           {/* Left side: Date value */}
-          <Text style={styles.dateValue}>{date.toDateString()}</Text>
+          <Text style={styles.dateValue}>{date?.toDateString()}</Text>
           {/* Right side: Calendar icon */}   
             <AntDesign name="calendar" size={22} color="black" />
           {/* Date Picker */}
@@ -58,7 +58,7 @@ const DateInput = ({editable,name,setLeave}) => {
     ):(
     <View style={[styles.container,{borderRadius: 40, marginHorizontal:  60, width:vw*86,}]}>
       {/* Left side: Date value */}
-      <Text style={styles.dateValue}>{date.toDateString()}</Text>
+      <Text style={styles.dateValue}>{dateValue}</Text>
       {/* Right side: Calendar icon */}   
         <AntDesign name="calendar" size={22} color="black" />
       {/* Date Picker */}
