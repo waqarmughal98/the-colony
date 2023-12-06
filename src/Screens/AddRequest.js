@@ -6,10 +6,25 @@ import { FontAwesome } from '@expo/vector-icons';
 import SelectDropdown from 'react-native-select-dropdown'
 import DateInput from '../Components/Date/DateInput'
 const AddRequest = () => {
-    const [reason,setReason]=useState("")
-    const [requestType, setRequestType] = useState();
-    const [days, setDays] = useState();
-    const [Department, setDepartment] = useState();
+    const [leave, setLeave] = useState({
+        leave_title: "",
+        leave_start_date: "",
+        leave_end_date: "",
+        leave_reason: "",
+        leave_type: "",
+        day_to_taken: "",
+        department: "",
+    })
+
+    const handleDateChange = (e) =>{
+        console.log('worked')
+    }
+
+    const updateLeave = (value, field)=> {
+        setLeave({...leave, [field]: value})
+        console.log(leave, field, 'value');
+    }
+
     const data=["Holiday","Sickness","Overtime"]
     /* Check this data */
     const departmentData=["Office","Sickness","Overtime"]
@@ -28,13 +43,13 @@ const AddRequest = () => {
                 dropdownStyle={{marginTop: -(vh*4)}}
                 buttonTextStyle={{fontSize:15}}
                 /* Change the default value */
-                defaultValue={data[0]}
+                defaultValue={leave.leave_type}
                 style={{backgroundColor:"white",height:20,}}
                 onSelect={(selectedItem, index) => {
-                    setRequestType(selectedItem)
+                    updateLeave(selectedItem, 'leave_type')
                 }}
                 buttonTextAfterSelection={(selectedItem, index) => {
-                    return (selectedItem )  
+                    return (selectedItem)  
                 }}
                 rowTextForSelection={(item, index) => {
                     return item
@@ -42,20 +57,24 @@ const AddRequest = () => {
                 />
         </View>
         <View>
+            <Text style={styles.label}>Reason Title*</Text>
+            <TextInput value={leave.leave_title} style={styles.dayInput} onChangeText={(text)=>updateLeave(text, 'leave_title')} />
+        </View>
+        <View>
             <Text style={styles.label}>Reason*</Text>
-            <TextInput value={reason} multiline={true} textAlignVertical="top"  numberOfLines={6} style={styles.reasonInput} onChangeText={(text)=>setReason(text)} />
+            <TextInput value={leave.leave_reason} multiline={true} textAlignVertical="top"  numberOfLines={6} style={styles.reasonInput} onChangeText={(text)=>updateLeave(text, "leave_reason")} />
         </View>
         <View>
             <Text style={styles.label}>Start Date*</Text>
-            <DateInput editable={true}/>
+            <DateInput editable={true} handleDateChange={handleDateChange}/>
         </View>
         <View>
             <Text style={styles.label}>End Date*</Text>
-            <DateInput editable={true}/>
+            <DateInput editable={true} handleDateChange={handleDateChange}/>
         </View>
         <View>
             <Text style={styles.label}>Days to be taken*</Text>
-            <TextInput value={days} style={styles.dayInput} onChangeText={(text)=>setDays(text)} />
+            <TextInput value={leave.day_to_taken} style={styles.dayInput} onChangeText={(text)=>updateLeave(text, 'day_to_taken')} />
         </View>
         <View >
             <Text style={styles.label}>Department*</Text>
@@ -68,10 +87,10 @@ const AddRequest = () => {
                 dropdownStyle={{marginTop: -(vh*4)}}
                 buttonTextStyle={{fontSize:15}}
                 /* Change the default value */
-                defaultValue={departmentData[0]}
+                defaultValue={leave.department}
                 style={{backgroundColor:"white",height:20,}}
                 onSelect={(selectedItem, index) => {
-                    setDepartment(selectedItem)
+                    updateLeave(selectedItem, 'department')
                 }}
                 buttonTextAfterSelection={(selectedItem, index) => {
                     return (selectedItem )  
