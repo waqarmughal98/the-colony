@@ -3,7 +3,7 @@ import { StyleSheet, View, TouchableOpacity, Text, Alert } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { AntDesign } from '@expo/vector-icons';
 import { vw } from '../../utils/ScreenSize';
-const DateInput = ({editable}) => {
+const DateInput = ({editable,name,setLeave}) => {
   const [date, setDate] = useState(new Date());
   const [showDatePicker, setShowDatePicker] = useState(false);
 
@@ -11,6 +11,21 @@ const DateInput = ({editable}) => {
     setShowDatePicker(false);
     if (selectedDate !== undefined) {
       setDate(selectedDate);
+      setLeave((preData) => {
+        if (name === "startDate") {
+          return {
+            ...preData,
+            leave_start_date: selectedDate,
+          };
+        } else if (name === "endDate") {
+          return {
+            ...preData,
+            leave_end_date: selectedDate,
+          };
+        } else {
+          return preData; // If name is neither "startDate" nor "endDate", return the unchanged state
+        }
+      });
     }
   };
 
