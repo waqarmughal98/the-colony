@@ -10,7 +10,7 @@ const ProblemReportReplies = ({navigation}) => {
       headerTitleAlign: 'center',
       headerRight: () => (
         <View style={{ marginRight: 5 }}>
-          <TouchableOpacity activeOpacity={0.6}>
+          <TouchableOpacity activeOpacity={0.6} onPress={()=>navigation.navigate("new-problem-report")}>
            <Text>Reply</Text>
           </TouchableOpacity>
         </View>

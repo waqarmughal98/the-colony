@@ -1,7 +1,9 @@
-import * as React from 'react';
+import  React,{useEffect, useState} from 'react';
 import { Image } from "react-native";
-import { NavigationContainer } from '@react-navigation/native';
+import { NavigationContainer , useNavigationState} from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { createDrawerNavigator } from '@react-navigation/drawer';
+
 import Dashboard from './src/Screens/Dashboard';
 import AllJobs from './src/Screens/AllJobs';
 import ProblemReportReplies from './src/Screens/ProblemReportReplies';
@@ -18,181 +20,209 @@ import { SimpleLineIcons, Ionicons } from "@expo/vector-icons";
 import Requests from './src/Screens/Requests';
 import AddRequest from './src/Screens/AddRequest';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-
+import Context, { ContextProvider } from './src/Global/Context';
+import CustomDrawerContent from './src/Components/Drawer/CustomDrawerContent';
+import NewProblemReport from './src/Screens/NewProblemReport';
+import Profile from './src/Components/Jobs Detail/Profile';
 const Stack = createNativeStackNavigator();
+const Drawer = createDrawerNavigator();
+function App() {
+  StatusBar.setBarStyle('light-content');
+  const Tab = createBottomTabNavigator();
+  const TabNavigator = () => (
+    <Tab.Navigator
+      initialRouteName="Home"
+      screenOptions={{
+        headerStyle: { backgroundColor: '#FBA200' },
+        headerTintColor: 'white', 
+        headerTitleAlign: 'center',
+        tabBarActiveTintColor:"white",
+        gestureEnabled: true,
+        tabBarStyle: {
+          height: 65,
+          backgroundColor: 'black',
+          paddingBottom:10,
+          paddingTop:10,
+          position: 'absolute',
+          borderTopWidth: 0,
+      },
+      labelStyle: {
+        fontSize: 11,
+      },
+      }}
+    >
+      <Tab.Screen
+        name="WorkLog"
+        component={WorkLog}
+        options={{
+          title: 'Work Log',
+          tabBarLabel: 'Work Log',
+          tabBarIcon: ({ color, size }) => (
+            <SimpleLineIcons name="briefcase" size={size} color={color} />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="Home"
+        component={HomeStackScreen}
+        options={{
+          tabBarLabel: '',
+          headerShown:false,
+          tabBarIcon: ({ color, size }) => (
+            <Image
+              source={require('./assets/imgs/lb.png')}
+              style={{ height: 55, width: 55, marginTop: 10 }}
+            />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="Profile"
+        component={Profile}
+        options={{
+          title: 'Profile',
+          tabBarLabel: 'Profile',
+          tabBarIcon: ({ color, size }) => (
+            <Ionicons name="person-outline" size={size} color={color} />
+          ),
+        }}
+      />
+    </Tab.Navigator>
+  );
+
+
+  return (
+    <Context>
+       <NavigationContainer>
+       <Drawer.Navigator initialRouteName="Dashboard"  drawerContent={(props) => <CustomDrawerContent {...props} />}>
+        <Drawer.Screen name="Dashboard" options={{
+              headerShown:false,
+              drawerStyle: {
+                color: 'red', 
+              },
+            }} component={TabNavigator} />
+        {/* Add more screens as needed */}
+      </Drawer.Navigator>
+    </NavigationContainer>
+    </Context>
+  );
+ 
+}
+
+export default App;
+
+
 function HomeStackScreen() {
+  const navigationState = useNavigationState(state => state);
   const screenOptions = {
     headerStyle: { backgroundColor: '#FBA200' },
     headerTintColor: 'white',
     headerTitleAlign: 'center',
     gestureEnabled: true,
+
   }
-
- 
   return (
-    <Stack.Navigator screenOptions={screenOptions} initialRouteName="Login">
-    <Stack.Screen
-      name="Login"
-      component={Login}
-      options={{
-        headerShown: false, // Hide header on the Login screen
-      }}
-    />
+    <Stack.Navigator screenOptions={screenOptions} initialRouteName="Dashboard">
+       {navigationState.routes[navigationState.index].name === 'Login' ? (
+          <Stack.Screen
+            name="Login"
+            component={Login}
+            options={{ headerShown: false }}
+          />
+        ) : (
+          <>
+        <Stack.Screen name="Dashboard"  component={Dashboard} />
+        <Stack.Screen
+          name="All-Job"
+          component={AllJobs}
+          options={{
+            title: 'All Jobs'
+          }}
+        />
+        <Stack.Screen
+          name="jobs-detail"
+          component={JobsDetail}
+          options={{
+            title: 'Jobs Detail'
+          }}
+        />
+        <Stack.Screen
+          name="problem-report-replies"
+          component={ProblemReportReplies}
+          options={{
+            title: 'Problem Report Replies'
+          }}
+        />
+        <Stack.Screen
+          name="problem-reports"
+          component={ProblemReports}
+          options={{
+            title: 'Problem Reports'
+          }}
+        />
 
-    <Stack.Screen name="Dashboard"  component={Dashboard} />
-    <Stack.Screen
-      name="All-Job"
-      component={AllJobs}
-      options={{
-        title: 'All Jobs'
-      }}
-    />
-    <Stack.Screen
-      name="jobs-detail"
-      component={JobsDetail}
-      options={{
-        title: 'Jobs Detail'
-      }}
-    />
-    <Stack.Screen
-      name="problem-report-replies"
-      component={ProblemReportReplies}
-      options={{
-        title: 'Problem Report Replies'
-      }}
-    />
-    <Stack.Screen
-      name="problem-reports"
-      component={ProblemReports}
-      options={{
-        title: 'Problem Reports'
-      }}
-    />
+        <Stack.Screen
+          name="work-logs"
+          component={WorkLog}
+          options={{
+            title: 'Work logs'
+          }}
+        />
+      
+        <Stack.Screen
+          name="latest-activity"
+          component={Logs}
+          options={{
+            title: 'Latest Activity'
+          }}
+        />
+          <Stack.Screen
+          name="tasks"
+          component={Tasks}
+          options={{
+            title: 'Tasks'
+          }}
+        />
+          <Stack.Screen
+          name="task-details"
+          component={TaskDetail}
+          options={{
+            title: 'Tasks'
+          }}
+        />
 
-     <Stack.Screen
-      name="work-logs"
-      component={WorkLog}
-      options={{
-        title: 'Work logs'
-      }}
-    />
-   
-     <Stack.Screen
-      name="latest-activity"
-      component={Logs}
-      options={{
-        title: 'Latest Activity'
-      }}
-    />
-      <Stack.Screen
-      name="tasks"
-      component={Tasks}
-      options={{
-        title: 'Tasks'
-      }}
-    />
-      <Stack.Screen
-      name="task-details"
-      component={TaskDetail}
-      options={{
-        title: 'Tasks'
-      }}
-    />
+        <Stack.Screen
+          name="job-Status"
+          component={JobStatus}
+          options={{
+            title: 'Job Status'
+          }}
+        />
 
-    <Stack.Screen
-      name="job-Status"
-      component={JobStatus}
-      options={{
-        title: 'Job Status'
-      }}
-    />
-
-    <Stack.Screen
-      name="requests"
-      component={Requests}
-      options={{
-        title: 'Requests'
-      }}
-    />
-    <Stack.Screen
-      name="add-request"
-      component={AddRequest}
-      options={{
-        title: 'Add Request'
-      }}
-    />
-  
+        <Stack.Screen
+          name="requests"
+          component={Requests}
+          options={{
+            title: 'Requests'
+          }}
+        />
+        <Stack.Screen
+          name="add-request"
+          component={AddRequest}
+          options={{
+            title: 'Add Request'
+          }}
+        />
+        <Stack.Screen
+          name="new-problem-report"
+          component={NewProblemReport}
+          options={{
+            title: 'New Problem Report'
+          }}
+        />
+        </>
+        )}
   </Stack.Navigator>
   );
 }
 
-
-  function App() {
-    StatusBar.setBarStyle('light-content');
-    const Tab = createBottomTabNavigator();
-    const screenOptions = {
-      headerStyle: { backgroundColor: '#FBA200' },
-      headerTintColor: 'white',
-      headerTitleAlign: 'center',
-      gestureEnabled: true,
-      tabBarStyle: {
-        height: 65,
-        backgroundColor: 'black',
-        position: 'absolute',
-        borderTopWidth: 0,
-    },
-    }
-  
-    return (
-      <NavigationContainer>
-        <Tab.Navigator
-        initialRouteName='Home'
-        screenOptions={screenOptions}
-          tabBarOptions={{
-            activeTintColor: 'white',
-            labelStyle: {
-              fontSize: 11,
-              marginBottom: 5,
-              marginTop:-5
-            },
-          }}
-        >
-          <Tab.Screen
-             options={{
-              title:"Work Log",
-              tabBarLabel: 'Work Log',
-              tabBarIcon: ({ color, size }) => (
-                <SimpleLineIcons name={'briefcase'} size={size} color={color} />
-              ),
-            }}
-            name="WorkLog"
-            component={WorkLog}
-          />
-          <Tab.Screen
-            options={{
-              tabBarLabel: '',
-               headerShown:false,
-              tabBarIcon: ({ color, size }) => (
-                <Image source={require('./assets/imgs/lb.png')} style={{ height: 55, width: 55, marginTop:10}} />
-              ),
-            }}
-            name="Home"
-            component={HomeStackScreen}  
-          />
-        
-        <Tab.Screen name="Profile" component={WorkLog}   options={{
-              title:"Profile",
-              tabBarLabel: 'Profile',
-              tabBarIcon: ({ color, size }) => (
-                <Ionicons name="person-outline" size={size} color={color}  />
-              ),
-            }} />
-      </Tab.Navigator>
-      </NavigationContainer>
-    );
-  }
-  
-
-
-
-export default App;

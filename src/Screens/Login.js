@@ -5,8 +5,9 @@ import { vh, vw } from '../utils/ScreenSize';
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { URL } from '../utils/Constant';
-
+import { ContextProvider } from '../Global/Context';
 const Login = ({ navigation }) => {
+  const {setLOGINSTATE} = React.useContext(ContextProvider);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   useEffect(() => {
@@ -25,6 +26,7 @@ const Login = ({ navigation }) => {
         }
       )
       .then((res) => {
+        SetLoginState(true)
         console.log(res.data.token);
         (async function () {
           await AsyncStorage.setItem("token", res.data.token);

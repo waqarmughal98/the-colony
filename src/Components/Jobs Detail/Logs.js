@@ -11,6 +11,7 @@ import Color from '../../Color';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 import { URL } from '../../utils/Constant';
+import { vh } from '../../utils/ScreenSize';
 const Logs = ({data}) => {
   const [loading, setLoading] = useState(true);
   const [items, setItems] = useState([])
@@ -85,7 +86,7 @@ const styles = StyleSheet.create({
   Container: {
     height: '100%',
     backgroundColor: 'white',
-    paddingBottom:120,
+    paddingBottom:180,
   },
   Indicator: {
     flexGrow: 1,
