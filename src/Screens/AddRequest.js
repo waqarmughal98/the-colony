@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View, TextInput, ScrollView, TouchableOpacity } from 'react-native'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Color from '../Color'
 import { vw,vh } from '../utils/ScreenSize'
 import { FontAwesome } from '@expo/vector-icons';
@@ -16,6 +16,10 @@ const AddRequest = () => {
         department: "",
     })
 
+    useEffect(()=>{
+        console.log(leave,"leave")
+
+    },[leave])
     const handleDateChange = (e) =>{
         console.log('worked')
     }
@@ -66,11 +70,11 @@ const AddRequest = () => {
         </View>
         <View>
             <Text style={styles.label}>Start Date*</Text>
-            <DateInput editable={true} handleDateChange={handleDateChange}/>
+            <DateInput editable={true}  setLeave={setLeave} name="startDate"  handleDateChange={handleDateChange}/>
         </View>
         <View>
             <Text style={styles.label}>End Date*</Text>
-            <DateInput editable={true} handleDateChange={handleDateChange}/>
+            <DateInput editable={true} setLeave={setLeave} name="endDate"  handleDateChange={handleDateChange}/>
         </View>
         <View>
             <Text style={styles.label}>Days to be taken*</Text>

@@ -130,63 +130,63 @@ function HomeStackScreen() {
   function App() {
     StatusBar.setBarStyle('light-content');
     const Tab = createBottomTabNavigator();
+    const screenOptions = {
+      headerStyle: { backgroundColor: '#FBA200' },
+      headerTintColor: 'white',
+      headerTitleAlign: 'center',
+      gestureEnabled: true,
+      tabBarStyle: {
+        height: 65,
+        backgroundColor: 'black',
+        position: 'absolute',
+        borderTopWidth: 0,
+    },
+    }
+  
     return (
       <NavigationContainer>
         <Tab.Navigator
-          screenOptions={({ route }) => ({
-            tabBarIcon: ({ color, size }) => {
-              let iconName;
-              if (route.name === 'WorkLog') {
-                iconName = 'briefcase';
-                return <SimpleLineIcons name={iconName} size={size} color={color} />;
-              } 
-              else if (route.name === 'Profile') {
-                iconName = 'person-outline';
-                return <Ionicons name={iconName} size={size} color={color} />;
-              }
-              else if (route.name === 'Profile') {
-                iconName = 'person-outline';
-                return  <Image source={require('./assets/imgs/bee.png')} style={{height:40,width:40}} />
-              }
-            },
-          })}
+        initialRouteName='Home'
+        screenOptions={screenOptions}
           tabBarOptions={{
-            activeTintColor: 'red',
-            inactiveTintColor: 'gray',
-            style: {
-              backgroundColor: '#FBA200',
-              height: 75,
-            },
+            activeTintColor: 'white',
             labelStyle: {
               fontSize: 11,
+              marginBottom: 5,
+              marginTop:-5
             },
           }}
         >
           <Tab.Screen
              options={{
-              headerShown: false,
-              tabBarLabel: 'WorkLog',
+              title:"Work Log",
+              tabBarLabel: 'Work Log',
               tabBarIcon: ({ color, size }) => (
                 <SimpleLineIcons name={'briefcase'} size={size} color={color} />
               ),
             }}
             name="WorkLog"
-            component={HomeStackScreen}
+            component={WorkLog}
           />
           <Tab.Screen
             options={{
-              headerShown: false,
               tabBarLabel: '',
+               headerShown:false,
               tabBarIcon: ({ color, size }) => (
-                <Image source={require('./assets/imgs/bee.png')} style={{ height: 40, width: 40, tintColor: color }} />
+                <Image source={require('./assets/imgs/lb.png')} style={{ height: 55, width: 55, marginTop:10}} />
               ),
             }}
             name="Home"
-            component={Dashboard}
+            component={HomeStackScreen}  
           />
         
-        <Tab.Screen name="Profile" component={WorkLog} options={{ title: 'Profile' }} />
-        {/* <Tab.Screen name="Profile" component={Profile} options={{ title: 'Profile' }} /> */}
+        <Tab.Screen name="Profile" component={WorkLog}   options={{
+              title:"Profile",
+              tabBarLabel: 'Profile',
+              tabBarIcon: ({ color, size }) => (
+                <Ionicons name="person-outline" size={size} color={color}  />
+              ),
+            }} />
       </Tab.Navigator>
       </NavigationContainer>
     );
