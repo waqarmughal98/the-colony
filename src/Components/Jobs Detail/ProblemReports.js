@@ -36,33 +36,32 @@ const ProblemReports = ({navigation}) => {
      {
         !loading ? 
         <View style={styles.Container}>
-            <View style={styles.headerContainer}> 
-               <Text style={styles.text1}>Subject</Text>
-               <Text style={styles.text2}>Job</Text>
-            </View>   
-               {/* All Data */}
-            <View style={styles.allData} >
-              <ScrollView style={{flexGrow:1}}>
-                {
-                  data.map((item,index)=>
-                  {
-                      return(
-                          <TouchableOpacity onPress={()=>navigation.navigate("problem-report-replies")} activeOpacity={0.6} key={index}>
-                              <View style={[styles.mainIndividual,{backgroundColor:index%2==0 ? '#D2CBBC' : '#F2F1CF'}]}>
-                                <View style={styles.individual}>
-                                  <Text style={styles.dataText}>{item.jobName}</Text>
-                                  <Text style={styles.dataText2}>{item.company}</Text> 
-                                  <MaterialIcons name={'keyboard-arrow-right'} size={28} color="black" />
-                              </View>
-                                <Text style={styles.opentext}>{`${item.open ?  'Open' : ''}`}</Text>
-                              </View>
-                          </TouchableOpacity>
-                      )
-                  })
-                }
-              </ScrollView>
-            </View>
-         </View>
+          <View style={styles.headerContainer}> 
+              <Text style={styles.text1}>Subject</Text>
+              <Text style={styles.text2}>Job</Text>
+          </View>   
+          {/* All Data */}
+          <View style={styles.allData} >
+            <ScrollView style={{flexGrow:1}}>
+              {
+                data.map((item,index)=>{
+                    return(
+                      <TouchableOpacity onPress={()=>navigation.navigate("problem-report-replies")} activeOpacity={0.6} key={index}>
+                        <View style={[styles.mainIndividual,{backgroundColor:index%2==0 ? '#D2CBBC' : '#F2F1CF'}]}>
+                          <View style={styles.individual}>
+                            <Text style={styles.dataText}>{item.jobName}</Text>
+                            <Text style={styles.dataText2}>{item.company}</Text> 
+                            <MaterialIcons name={'keyboard-arrow-right'} size={28} color="black" />
+                          </View>
+                          <Text style={styles.opentext}>{`${item.open ?  'Open' : ''}`}</Text>
+                        </View>
+                      </TouchableOpacity>
+                    )
+                })
+              }
+            </ScrollView>
+          </View>
+        </View>
       :
       <View style={styles.Indicator}>
            <ActivityIndicator size="large" color={"black"} />

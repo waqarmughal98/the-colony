@@ -12,7 +12,7 @@ import React, { useState, useEffect } from 'react';
 import Color from '../../Color';
 import MapView, { Marker } from 'react-native-maps';
 
-const Address = () => {
+const Address = ({ data }) => {
   const inputFields = [
     { label: 'Street', value: '', key: 'street' },
     { label: 'City', value: '', key: 'city' },

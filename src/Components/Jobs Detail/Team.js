@@ -1,28 +1,32 @@
 import { StyleSheet, Text, View , ActivityIndicator} from 'react-native'
 import React, { useState, useEffect } from 'react'
 import Color from '../../Color'
-const Team = () => {
+import AsyncStorage from '@react-native-async-storage/async-storage'
+import axios from 'axios'
+const Team = ({ data }) => {
   const [loading, setLoading]=useState(true)
-  const [data, setData] = useState([
-    {
+
+  useEffect(()=>{
+    // (async ()=>{
+    //   const authToken = await AsyncStorage.getItem('token');
+    // })()
+  }, [])
+
+  const [items, setItems] = useState([{
       label:"Quote Responsibility",
-      value: "Admin test"
-    },
-    {
+      value: data?.qoute_responsible,
+    },{
       label:"Site Manager",
-      value: "Admin test"
-    },
-    {
+      value: data?.site_manager
+    },{
       label:"Project Manager",
-      value: "Admin test"
-    },
-    {
-      label:"Projecet",
-      value: "Test "
-    },
-    {
+      value: data?.project_manager
+    },{
+      label:"Project",
+      value: data?.job_owner
+    },{
       label:"Team",
-      value: "Admin test lkdsjlk lksadj lksadj ksald jk dsaj sadlkjdsa asldkjdsa  "
+      value: data?.team
     }
   ])
 
@@ -39,11 +43,11 @@ const Team = () => {
       !loading ? 
         <View style={styles.Container}>
           {
-            data.map((item,index)=>
+            items.map((item,index)=>
             <View key={index} style={styles.individualContainer}>
               <Text style={styles.label}>{item.label}</Text>
               <View style={styles.textContainer}>
-                <Text style={styles.text}>{item.text}</Text>
+                <Text style={styles.text}>{item.value}</Text>
               </View>
             </View>)
           }
@@ -94,8 +98,7 @@ const styles = StyleSheet.create({
     marginTop:8,
   },
   text:{
-      
-    
+    color:'black',
   },
   individualContainer:{
     marginTop:30

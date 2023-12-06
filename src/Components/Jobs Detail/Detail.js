@@ -13,11 +13,6 @@ import Color from '../../Color';
 import DateInput from '../Date/DateInput';
 
 const Address = ({data}) => {
-
-  useEffect(()=>{
-    console.log(data, 'address')
-  }, [])
-
   const inputFields = [
     { label: 'Company', value: '', key: 'Company' },
     { label: 'Job Name', value: '', key: 'jobName' },
