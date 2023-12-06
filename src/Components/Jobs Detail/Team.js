@@ -3,32 +3,43 @@ import React, { useState, useEffect } from 'react'
 import Color from '../../Color'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import axios from 'axios'
+import { URL } from '../../utils/Constant'
 const Team = ({ data }) => {
   const [loading, setLoading]=useState(true)
+  const [items, setItems] = useState()
 
   useEffect(()=>{
-    // (async ()=>{
-    //   const authToken = await AsyncStorage.getItem('token');
-    // })()
-  }, [])
+    (async ()=>{
+      const authToken = await AsyncStorage.getItem('token');
+      await axios.get(URL + '/team/' + data.task_projectid, {
+        headers: {
+          Authorization: `Bearer ${authToken}`
+        }
+      }).then((res)=>{
+        console.log(res.data);
+        const response = res.data;
+        setItems([{
+          label:"Quote Responsibility",
+          value: response?.qoute_responsible,
+        },{
+          label:"Site Manager",
+          value: response?.site_manager
+        },{
+          label:"Project Manager",
+          value: response?.project_manager
+        },{
+          label:"Project Owner",
+          value: response?.job_owner
+        },{
+          label:"Team",
+          value: response?.team
+        }])
 
-  const [items, setItems] = useState([{
-      label:"Quote Responsibility",
-      value: data?.qoute_responsible,
-    },{
-      label:"Site Manager",
-      value: data?.site_manager
-    },{
-      label:"Project Manager",
-      value: data?.project_manager
-    },{
-      label:"Project",
-      value: data?.job_owner
-    },{
-      label:"Team",
-      value: data?.team
-    }
-  ])
+      }).catch((err)=>{
+        console.log(err)
+      })
+    })()
+  }, [])
 
   /* Remove this when fetch data */
   useEffect(()=>{
@@ -47,7 +58,7 @@ const Team = ({ data }) => {
             <View key={index} style={styles.individualContainer}>
               <Text style={styles.label}>{item.label}</Text>
               <View style={styles.textContainer}>
-                <Text style={styles.text}>{item.value}</Text>
+                <Text style={styles.text}>{item.label=="Project Manager" || item.label=="Site Manager" ?`${item.value.first_name} ${item.value.last_name}`:item.value}</Text>
               </View>
             </View>)
           }
