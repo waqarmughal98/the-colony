@@ -12,13 +12,13 @@ const AllJobs = ({navigation}) => {
         (async ()=>{
             const authToken = await AsyncStorage.getItem("token");
             console.log(authToken)
-            axios.get(URL + '/task/all',{
+            axios.get(URL + '/job-status',{
                 headers: {
                     Authorization: `Bearer ${authToken}`
                 }
             }).then((res)=>{
                 // console.log('tasks', res.data.tasks.data);
-                setData(res.data.tasks.data);
+                setData(res.data.projects.data);
                 setLoading(false)
             }).catch((err)=>{
                 console.log(err);

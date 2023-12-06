@@ -44,7 +44,7 @@ const DashboardTop = ({ navigation, data }) => {
   const item = [
     {
       img: calenderimg,
-      number: data?.my_tasks?.data?.length,
+      number: data?.projects?.pending,
       title: "My Jobs",
       color: "#FFC001",
       iconName: "calendar-today",
@@ -73,7 +73,7 @@ const DashboardTop = ({ navigation, data }) => {
     },
     {
       img: calenderimg,
-      number: requests?.length,
+      number: data?.leaves?.new,
       title: "Requests",
       color: "#382504",
       iconName: "clockcircleo",
