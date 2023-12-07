@@ -30,8 +30,8 @@ function Dashboard({ navigation }) {
         ),
         headerRight: () => (
           <View style={{ marginRight: 10 }}>
-            <TouchableOpacity activeOpacity={0.6}>
-             <Ionicons name="ios-notifications" size={24} color="white" />
+            <TouchableOpacity activeOpacity={0.6} onPress={()=>navigation.navigate("notifications")} >
+              <Ionicons name="ios-notifications" size={24} color="white" />
             </TouchableOpacity>
           </View>
         ),

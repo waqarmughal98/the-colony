@@ -1,9 +1,8 @@
-import  React,{useEffect, useState} from 'react';
+import  React from 'react';
 import { Image } from "react-native";
 import { NavigationContainer , useNavigationState} from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createDrawerNavigator } from '@react-navigation/drawer';
-
 import Dashboard from './src/Screens/Dashboard';
 import AllJobs from './src/Screens/AllJobs';
 import ProblemReportReplies from './src/Screens/ProblemReportReplies';
@@ -12,7 +11,6 @@ import { StatusBar } from 'react-native';
 import Login from './src/Screens/Login';
 import ProblemReports from './src/Components/Jobs Detail/ProblemReports';
 import WorkLog from './src/Screens/WorkLog';
-import Logs from './src/Components/Jobs Detail/Logs';
 import Tasks from './src/Screens/Tasks';
 import TaskDetail from './src/Screens/TaskDetail';
 import JobStatus from './src/Screens/JobStatus';
@@ -20,10 +18,12 @@ import { SimpleLineIcons, Ionicons } from "@expo/vector-icons";
 import Requests from './src/Screens/Requests';
 import AddRequest from './src/Screens/AddRequest';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import Context, { ContextProvider } from './src/Global/Context';
+import Context from './src/Global/Context';
 import CustomDrawerContent from './src/Components/Drawer/CustomDrawerContent';
 import NewProblemReport from './src/Screens/NewProblemReport';
 import Profile from './src/Components/Jobs Detail/Profile';
+import Notifications from './src/Screens/Notifications';
+import LatestActivity from './src/Screens/LatestActivity';
 const Stack = createNativeStackNavigator();
 const Drawer = createDrawerNavigator();
 function App() {
@@ -95,11 +95,9 @@ function App() {
     <Context>
        <NavigationContainer>
        <Drawer.Navigator initialRouteName="Dashboard"  drawerContent={(props) => <CustomDrawerContent {...props} />}>
-        <Drawer.Screen name="Dashboard" options={{
+        <Drawer.Screen name="Back to Dashboard" options={{
               headerShown:false,
-              drawerStyle: {
-                color: 'red', 
-              },
+
             }} component={TabNavigator} />
         {/* Add more screens as needed */}
       </Drawer.Navigator>
@@ -171,9 +169,16 @@ function HomeStackScreen() {
       
         <Stack.Screen
           name="latest-activity"
-          component={Logs}
+          component={LatestActivity}
           options={{
             title: 'Latest Activity'
+          }}
+        />
+        <Stack.Screen
+          name="notifications"
+          component={Notifications}
+          options={{
+            title: 'Notifications'
           }}
         />
           <Stack.Screen

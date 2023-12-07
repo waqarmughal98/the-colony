@@ -11,12 +11,10 @@ import Color from '../../Color';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 import { URL } from '../../utils/Constant';
-import { vh } from '../../utils/ScreenSize';
-const Logs = ({data}) => {
+const Logs = ({data,screenName}) => {
   const [loading, setLoading] = useState(true);
   const [items, setItems] = useState([])
 
-  /* Remove this when fethc data */
   useEffect(() => {
     (async ()=>{
       const authToken = await AsyncStorage.getItem('token');4
