@@ -24,20 +24,13 @@ const Update = ({data}) => {
           Authorization: `Bearer ${authToken}`
         }
       }).then((res)=>{
-        console.log(res.data.comments.data)
         setUpdate(res.data.comments.data)
+        setLoading(false) 
       }).catch((err)=>{
         console.log(err)
       })
     })()
   }, [])
-  
-  /* Remove this when fethc data */
-  useEffect(()=>{
-    setTimeout(() => {
-        setLoading(false) 
-    }, 1000);
-  },[])
     
   return (
     <View style={styles.mainContainer}>

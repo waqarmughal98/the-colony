@@ -19,21 +19,19 @@ const Logs = ({data}) => {
   /* Remove this when fethc data */
   useEffect(() => {
     (async ()=>{
-      const authToken = await AsyncStorage.getItem('token');4
+      const authToken = await AsyncStorage.getItem('token');
       await axios.get(URL + '/job-activity/' + data?.project_id, {
         headers: {
           Authorization: `Bearer ${authToken}`,
         }
       }).then((res)=>{
-        console.log(res.data.logs.length)
         setItems(res.data.logs)
+        setLoading(false);
       }).catch((err)=>{
         console.log(err);
+        setLoading(false);
       })
     })()
-    setTimeout(() => {
-      setLoading(false);
-    }, 1000);
   }, []);
 
   return (

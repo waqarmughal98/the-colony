@@ -1,50 +1,42 @@
-import { StyleSheet, Text, View, ScrollView, ActivityIndicator} from 'react-native';
-import React, { useState, useEffect } from 'react'
-import Color from '../../Color';
-import {Dimensions} from 'react-native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import axios from 'axios';
-import { URL } from '../../utils/Constant';
-const windowWidth = Dimensions.get('window').width;
-const windowHeight = Dimensions.get('window').height;
+import {StyleSheet, Text, View, ScrollView, ActivityIndicator} from "react-native";
+import React, { useState, useEffect } from "react";
+import Color from "../../Color";
+import { Dimensions } from "react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import axios from "axios";
+import { URL } from "../../utils/Constant";
+const F = Dimensions.get("window").width;
+const windowHeight = Dimensions.get("window").height;
 
-
-const Notes = ({data}) => {
-  const headerOption = ['Title', 'Description', 'Date'];
-  const [loading, setLoading]=useState(true)
+const Notes = ({ data }) => {
+  const headerOption = ["Title", "Description", "Date"];
+  const [loading, setLoading] = useState(true);
   const [notes, setNotes] = useState([]);
 
-  useEffect(()=>{
-    (async ()=>{
+  useEffect(() => {
+    (async () => {
       const param = {
-        params:{
+        params: {
           project_id: data.project_id,
           noteresource_type: "project",
           noteresource_id: data.project_id,
         },
-      }
-      console.log(data.project_id);
-      const authToken = await AsyncStorage.getItem('token');
-      await axios.post(URL + '/notes/search', {}, {
-        param,
-        headers:{
-          Authorization: `Bearer ${authToken}`
+      };
+      const authToken = await AsyncStorage.getItem("token");
+      await axios.post(URL + "/notes/search", {}, {
+          params: param.params,
+          headers: {
+            Authorization: `Bearer ${authToken}`,
+          },
         }
-      }).then((res)=>{
-        console.log(res.data.notes.data)
-        setNotes(res.data.notes.data)
-      }).catch((err)=>{
-        console.log(err)
-      })
-    })()
-  }, [])
-
-    /* Remove this when fethc data */
-    useEffect(()=>{
-        setTimeout(() => {
-           setLoading(false) 
-        }, 1000);
-    },[])
+      ).then((res) => {
+        setNotes(res.data.notes.data);
+        setLoading(false);
+      }).catch((err) => {
+        console.log(err);
+      });
+    })();
+  }, []);
 
   return (
     <>
@@ -55,7 +47,7 @@ const Notes = ({data}) => {
               <Text
                 style={[
                   styles.headerText,
-                  { textAlign: index == 2 ? 'right' : 'left' },
+                  { textAlign: index == 2 ? "right" : "left" },
                 ]}
                 key={index}
               >
@@ -64,23 +56,27 @@ const Notes = ({data}) => {
             ))}
           </View>
           <View style={styles.notesDataContaier}>
-          <ScrollView contentContainerStyle={styles.mainContainer}>
-            {notes.map((item, index) => (
-              <View style={styles.individualRow} key={index}>
-                <Text style={styles.containerText}>{item.note_title}</Text>
-                <Text style={styles.containerText2}>{item.note_description}</Text>
-                <View style={styles.containerText3Container}>
-                  <Text style={styles.containerText3}>{item.note_created}</Text>
+            <ScrollView contentContainerStyle={styles.mainContainer}>
+              {notes.map((item, index) => (
+                <View style={styles.individualRow} key={index}>
+                  <Text style={styles.containerText}>{item.note_title}</Text>
+                  <Text style={styles.containerText2}>
+                    {item.note_description}
+                  </Text>
+                  <View style={styles.containerText3Container}>
+                    <Text style={styles.containerText3}>
+                      {item.note_created.slice(0, 10)}
+                    </Text>
+                  </View>
                 </View>
-              </View>
-            ))}
-            <Text>{/* For space */}</Text>
-          </ScrollView>
+              ))}
+              <Text>{/* For space */}</Text>
+            </ScrollView>
           </View>
         </View>
       ) : (
         <View style={styles.Indicator}>
-          <ActivityIndicator size="large" color={'black'} />
+          <ActivityIndicator size="large" color={"black"} />
           <Text style={styles.fetchingData}>Fetching Data</Text>
         </View>
       )}
@@ -91,19 +87,16 @@ const Notes = ({data}) => {
 export default Notes;
 
 const styles = StyleSheet.create({
-    mainContainer: {
+  mainContainer: {
     flexGrow: 1,
   },
-  container:{ 
-  },
-
   header: {
-    backgroundColor: 'black',
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+    backgroundColor: "black",
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-between",
     height: 50,
-    alignItems: 'center',
+    alignItems: "center",
     paddingHorizontal: 15,
   },
   headerText: {
@@ -115,13 +108,13 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
   },
   individualRow: {
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-between",
     height: 50,
     paddingHorizontal: 15,
-    alignItems: 'center',
-    borderBottomColor: 'gray',
+    alignItems: "center",
+    borderBottomColor: "gray",
     borderBottomWidth: 1,
   },
   containerText: {
@@ -133,27 +126,26 @@ const styles = StyleSheet.create({
   },
   containerText3: {
     flex: 1,
-    textAlign: 'right',
-    marginRight: 'auto',
+    textAlign: "right",
+    marginRight: "auto",
   },
   containerText3Container: {
     flex: 1,
-    display: 'flex',
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
   },
-  Indicator:
-  {
-      flexGrow:1,
-      display:"flex",
-      justifyContent:"center",
-      alignItems:"center",
-      alignContent:"center",
-      marginTop:"60%"
+  Indicator: {
+    flexGrow: 1,
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    alignContent: "center",
+    marginTop: "60%",
   },
-  fetchingData:{
-      color:'black',
-      fontWeight:"bold"
-  }
+  fetchingData: {
+    color: "black",
+    fontWeight: "bold",
+  },
 });
