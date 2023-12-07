@@ -47,6 +47,18 @@ const Tasks = ({navigation,route}) => {
                 }).catch((err)=>{
                     console.log(err);
                 })
+            }else{
+                axios.get(URL + '/task/all', {
+                headers: {
+                    Authorization: `Bearer ${authToken}`
+                }
+            }).then((res)=>{
+                console.log(res.data.tasks.data, 'All Task');
+                setData(res.data.tasks.data);
+                setLoading(false)
+            }).catch((err)=>{
+                console.log(err);
+            })
             }
         })()
     },[])

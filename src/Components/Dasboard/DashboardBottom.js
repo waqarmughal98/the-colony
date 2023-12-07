@@ -13,7 +13,7 @@ const DashboardBottom = ({navigation}) => {
     {
       img: require('../../../assets/imgs/task.png'), 
       screenName:"tasks",
-    title: "Tasks",
+      title: "Tasks",
     },
     {
       img: require('../../../assets/imgs/request.png'), 

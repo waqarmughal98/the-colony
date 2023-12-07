@@ -19,12 +19,13 @@ const Notes = ({data}) => {
       const param = {
         params:{
           project_id: data.project_id,
-          ticketresource_type: "project",
-          ticketresource_id: data.project_id,
+          noteresource_type: "project",
+          noteresource_id: data.project_id,
         },
       }
+      console.log(data.project_id);
       const authToken = await AsyncStorage.getItem('token');
-      axios.post(URL + '/notes/search', {}, {
+      await axios.post(URL + '/notes/search', {}, {
         param,
         headers:{
           Authorization: `Bearer ${authToken}`
