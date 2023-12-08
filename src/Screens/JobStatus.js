@@ -1,11 +1,11 @@
-import { StyleSheet, Text, View , ScrollView, ActivityIndicator} from 'react-native'
+import { StyleSheet, Text, View , ScrollView, ActivityIndicator, TouchableOpacity} from 'react-native'
 import React, { useState, useEffect } from 'react'
 import { vh,vw } from '../utils/ScreenSize'
 import Color from '../Color'
 import axios from 'axios'
 import { URL } from '../utils/Constant'
 import AsyncStorage from '@react-native-async-storage/async-storage'
-const JobStatus = () => {
+const JobStatus = ({navigation}) => {
   const [loading, setLoading]=useState(true)
 
      /* Remove this when fethc data */
@@ -40,7 +40,7 @@ const JobStatus = () => {
                 <View style={styles.allData} >
                    {
                     data.map((item,index)=>
-                         <View key={index} style={styles.individual}>
+                    <TouchableOpacity key={index} activeOpacity={0.6} onPress={()=>navigation.navigate("All-Job",{screenName:"jobStatus"})} style={styles.individual}>
                             <View style={styles.left}>
                                 <Text style={styles.leftText1}>JobStatus</Text>   
                                 <Text style={styles.leftText2}>Assigned to me : 4</Text> 
@@ -48,7 +48,7 @@ const JobStatus = () => {
                             <View style={styles.right}>   
                                 <Text style={styles.rightText}>2</Text> 
                             </View>  
-                        </View> 
+                        </TouchableOpacity> 
                      )
                    }
                 </View>

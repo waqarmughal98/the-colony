@@ -5,7 +5,9 @@ import Color from '../Color';
 import { URL } from '../utils/Constant';
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-const AllJobs = ({navigation}) => {
+import CalendarComponent from '../Components/Calendar/CalendarComponent';
+const AllJobs = ({navigation,route}) => {
+    const {screenName}= route.params;
     const [data, setData] = useState([]);
     const [loading, setLoading]=useState(true)
     useEffect(()=>{
@@ -26,35 +28,44 @@ const AllJobs = ({navigation}) => {
         })()
     },[])
     
+
+    useEffect(()=>{
+        console.log(screenName,"screenName")
+    },[screenName])
   return (
     <View>
         <View style={styles.container}>
         {
         !loading ? 
             <View style={styles.mainContainer}>
-                {/* Header */}
-                <View style={styles.containerHeader}>
-                    <Text style={styles.text}>Job Name</Text>
-                    <Text style={[styles.text2]}>Company</Text>
-                </View>
-                {/* All Data */}
-                <View style={styles.dataContainer}>
-                    <ScrollView>
-                    {
-                        data?.map((item,index)=>{
-                            return(
-                                <TouchableOpacity onPress={()=>navigation.navigate("jobs-detail",{items: item})} activeOpacity={0.6} key={index}>
-                                    <View style={[styles.individual,{backgroundColor:index%2==0 ? '#D2CBBC' : '#F2F1CF'}]}>
-                                    <Text style={styles.dataText}>{item.project_title}</Text>
-                                    <Text style={styles.dataText2}>{item.client_company_name}</Text> 
-                                    <MaterialIcons name={'keyboard-arrow-right'} size={28} color="black" />
-                                    </View>
-                                </TouchableOpacity>
-                            )
-                        })
-                    }
-                    </ScrollView>
-                </View>
+                <ScrollView>
+                   <View style={styles.AllData}>
+                        {screenName=="jobStatus" ? "" : <CalendarComponent/>}
+                        {/* Header */}
+                        <View style={styles.containerHeader}>
+                            <Text style={styles.text}>Job Name</Text>
+                            <Text style={[styles.text2]}>Company</Text>
+                        </View>
+                        {/* All Data */}
+                        <View style={styles.dataContainer}>
+                            <ScrollView>
+                            {
+                                data?.map((item,index)=>{
+                                    return(
+                                        <TouchableOpacity onPress={()=>navigation.navigate("jobs-detail",{items: item})} activeOpacity={0.6} key={index}>
+                                            <View style={[styles.individual,{backgroundColor:index%2==0 ? '#D2CBBC' : '#F2F1CF'}]}>
+                                            <Text style={styles.dataText}>{item.project_title}</Text>
+                                            <Text style={styles.dataText2}>{item.client_company_name}</Text> 
+                                            <MaterialIcons name={'keyboard-arrow-right'} size={28} color="black" />
+                                            </View>
+                                        </TouchableOpacity>
+                                    )
+                                })
+                            }
+                            </ScrollView>
+                        </View>
+                   </View>
+                </ScrollView>
             </View>
         :
         <View style={styles.Indicator}>
@@ -122,5 +133,8 @@ const styles = StyleSheet.create({
         borderBottomColor:Color.brightOrange,
         borderBottomWidth:1
     },
+    AllData:{
+        paddingBottom:100,
+    }
 
 })
