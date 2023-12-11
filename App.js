@@ -53,10 +53,10 @@ function App() {
     >
       <Tab.Screen
         name="WorkLog"
-        component={WorkLog}
+        component={WorkLogStackScreen}
         options={{
-          title: 'Work Log',
           tabBarLabel: 'Work Log',
+          headerShown:false,
           tabBarIcon: ({ color, size }) => (
             <SimpleLineIcons name="briefcase" size={size} color={color} />
           ),
@@ -97,7 +97,6 @@ function App() {
        <Drawer.Navigator initialRouteName="Dashboard"  drawerContent={(props) => <CustomDrawerContent {...props} />}>
         <Drawer.Screen name="Back to Dashboard" options={{
               headerShown:false,
-
             }} component={TabNavigator} />
         {/* Add more screens as needed */}
       </Drawer.Navigator>
@@ -120,7 +119,7 @@ function HomeStackScreen() {
 
   }
   return (
-    <Stack.Navigator screenOptions={screenOptions} initialRouteName="Dashboard">
+    <Stack.Navigator screenOptions={screenOptions} initialRouteName="Login">
        {navigationState.routes[navigationState.index].name === 'Login' ? (
           <Stack.Screen
             name="Login"
@@ -156,14 +155,6 @@ function HomeStackScreen() {
           component={ProblemReports}
           options={{
             title: 'Problem Reports'
-          }}
-        />
-
-        <Stack.Screen
-          name="work-logs"
-          component={WorkLog}
-          options={{
-            title: 'Work logs'
           }}
         />
       
@@ -230,4 +221,27 @@ function HomeStackScreen() {
   </Stack.Navigator>
   );
 }
+
+const WorkLogStack = createNativeStackNavigator();
+function WorkLogStackScreen() {
+  const screenOptions = {
+    headerStyle: { backgroundColor: '#FBA200' },
+    headerTintColor: 'white',
+    headerTitleAlign: 'center',
+    gestureEnabled: true,
+
+  }
+  return (
+    <WorkLogStack.Navigator  screenOptions={screenOptions} initialRouteName="work-logs">
+         <WorkLogStack.Screen
+          name="work-logs"
+          component={WorkLog}
+          options={{
+            title: 'Work Logs'
+          }}
+        />
+  </WorkLogStack.Navigator>
+  );
+}
+
 

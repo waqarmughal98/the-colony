@@ -31,9 +31,9 @@ const DashboardBottom = ({navigation, status}) => {
       title: "Latest Activity",
     },
     {
-      img: require('../../../assets/imgs/myjob.png'), 
-      screenName:"work-logs",
-      title: "Work Log",
+      img: false, 
+      screenName:"All-Job",
+      title: "Calendar",
     },
   ];
 
@@ -43,7 +43,7 @@ const DashboardBottom = ({navigation, status}) => {
         {data.map((item, index) => (
           <TouchableOpacity onPress={()=>navigation.navigate(item.screenName,{item:{ScreenTitle:"Tasks"}, status: status})} activeOpacity={0.6} key={index}>
             <View style={[styles.individualContainer,{backgroundColor: item.color || 'white'}]} >
-              <Image style={styles.containerImg} source={item.img}  />
+            {item.img ? <Image style={styles.containerImg} source={item.img}  /> : <Ionicons name="ios-calendar" style={styles.calendar}  size={45} color="#FBA200" /> }
               <Text style={[styles.containerTitle,{color: item.color ? 'white' : 'black' }]}>{item.title}</Text>
             </View>
           </TouchableOpacity>
@@ -81,16 +81,21 @@ const styles = StyleSheet.create({
     display:"flex",
     flexDirection:'column',
     justifyContent:"center",
-    alignItems:"center"
+    alignItems:"center",
+    alignContent:"center"
   }
   ,
   containerImg:{
     height:50,
-    width:50
+    width:50,
+    alignSelf:"center"
   },
   containerTitle:{
     fontSize:12,
     textAlign:'center'
+  },
+  calendar:{
+    marginLeft:2
   }
 
 })
