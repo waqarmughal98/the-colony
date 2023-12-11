@@ -7,7 +7,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { URL } from '../utils/Constant';
 import { ContextProvider } from '../Global/Context';
 const Login = ({ navigation }) => {
-  const {setLOGINSTATE} = React.useContext(ContextProvider);
+  const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   useEffect(() => {
@@ -39,6 +39,10 @@ const Login = ({ navigation }) => {
       });
   };
 
+  const togglePasswordVisibility = () => {
+    setShowPassword((prevShowPassword) => !prevShowPassword);
+  };
+
   return (
     <ImageBackground source={require('../../assets/imgs/Bg.png')} style={styles.backgroundImage}>
       <KeyboardAvoidingView  behavior={Platform.OS === 'ios' ? 'padding' : 'height'} enabled  style={styles.container}>
@@ -63,11 +67,20 @@ const Login = ({ navigation }) => {
                 style={styles.input}
                 placeholder="Password"
                 placeholderTextColor="black"
-                secureTextEntry={true}
+                secureTextEntry={!showPassword}
                 value={password}
                 onChangeText={(text) => setPassword(text)}
               />
+             <TouchableOpacity onPress={togglePasswordVisibility} style={styles.eyeIconContainer}>
+              <FontAwesome
+                name={showPassword ? 'eye' : 'eye-slash'}
+                size={20}
+                color="black"
+                style={styles.eyeIcon}
+              />
+            </TouchableOpacity>
             </View>
+            
           </View>
           <TouchableOpacity onPress={() => Login()} activeOpacity={0.6} style={styles.signInButton}>
             <Text style={styles.textSignIn}>Sign In</Text>

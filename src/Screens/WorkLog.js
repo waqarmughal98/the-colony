@@ -1,9 +1,23 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, ScrollView, Image, FlatList } from 'react-native'
 import { vw,vh } from '../utils/ScreenSize';
-import { MaterialIcons } from '@expo/vector-icons';
+import { MaterialIcons,Ionicons } from '@expo/vector-icons';
 import Color from '../Color';
-const WorkLog = () => {
+const WorkLog = ({navigation}) => {
+  React.useLayoutEffect(() => {
+    navigation.setOptions({
+      headerLeft: () => (
+        <View style={{ marginLeft: 10 }}>
+        <TouchableOpacity
+          onPress={() =>navigation.navigate("Dashboard")}
+          activeOpacity={0.6}
+        >
+         <Ionicons name="ios-arrow-back-sharp" size={24} color="white" />
+        </TouchableOpacity>
+      </View>
+      ),
+    });
+  }, [navigation]);
 
   const [selectedTitle, setSelectedTitle] = useState("Un-Categorised");
   const data=[
@@ -40,18 +54,22 @@ const WorkLog = () => {
   const options = [
     {
       img: require('../../assets/imgs/ic_project_severn_trent.png'),
+      color:"#30D9D6",
       title: "Un-Categorised",
     },
     {
       img: require('../../assets/imgs/commercial.png'),
+      color:"#FFCA00",
       title: "Commericial",
     },
     {
       img: require('../../assets/imgs/ic_private_project.png'),
+      color:"#FE158A",
       title: "Private",
     },
     {
       img: require('../../assets/imgs/ic_project_severn_trent.png'),
+      color:"#E2445B",
       title: "Severn Trent",
     },
   ];
@@ -60,7 +78,7 @@ const WorkLog = () => {
   const renderItem = ({ item, index }) => {
     return (
       <TouchableOpacity
-        style={[styles.card]}
+        style={[styles.card,{backgroundColor:item.color}]}
         onPress={() => setSelectedTitle(item.title)}
       >
         <Image style={styles.cardImage} source={item.img} />

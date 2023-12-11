@@ -11,6 +11,7 @@ const TaskDetail = ({navigation , route}) => {
   React.useLayoutEffect(() => {
     navigation.setOptions({
       headerTintColor: 'white',
+      title:"Task Detail",
       headerTitleAlign: 'center',
       headerRight: () => (
         <View style={{ marginRight: 5 }}>
@@ -65,6 +66,7 @@ const TaskDetail = ({navigation , route}) => {
      {
       !loading ? 
       <View style={styles.Container}>
+        <ScrollView>
         {options.map((option, index) => (
           <View key={index} style={styles.optionContainer}>
             <Text style={styles.label}>{option.label}</Text>
@@ -73,14 +75,14 @@ const TaskDetail = ({navigation , route}) => {
               <SelectDropdown
               data={data}
               buttonStyle={{backgroundColor:"white",height:vh*5,width:vw*50,display:"flex",flexDirection:"row",justifyContent:"row"}}
-              dropdownStyle={{marginTop: -(vh*4)}}
+              dropdownStyle={{marginTop: -(vh*4),height:48*vh,fontSize:12}}
               buttonTextStyle={{fontSize:15}}
               renderDropdownIcon={isOpened => {
                 return <FontAwesome style={{marginLeft:4}}  name={isOpened ? 'chevron-up' : 'chevron-down'} color={'#5A5A5A'} size={14} />;
               }}
               /* Change the default value */
               defaultValue={data[0]}
-              style={{backgroundColor:"white",height:20,}}
+
               onSelect={(selectedItem, index) => {
                 setSelectedStatus(selectedItem)
               }}
@@ -115,6 +117,10 @@ const TaskDetail = ({navigation , route}) => {
             </ScrollView>
           </View>
         </View>
+           <TouchableOpacity style={styles.btnContainer}  activeOpacity={0.6} onPress={()=>navigation.navigate("Dashboard")}>
+             <Text style={styles.submitTxt}>Update</Text>
+           </TouchableOpacity>
+        </ScrollView>
       </View>
       :
       <View style={styles.Indicator}>
@@ -223,5 +229,21 @@ const styles = StyleSheet.create({
         color: 'black', // Set the text color of items
         fontSize: 12
       },
+      btnContainer:{
+        backgroundColor:"black",
+        display:"flex",
+        justifyContent:'center',
+        alignItems:"center",
+        marginBottom:12*vh,
+        marginTop:3*vh,
+        marginHorizontal:5*vw,
+        height:45,
+        borderRadius:10,
+    },
+    submitTxt:{
+        color:"white",
+        fontSize:17,
+    }
+      
     
 })

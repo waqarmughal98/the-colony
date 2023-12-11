@@ -26,9 +26,7 @@ const CalendarComponent = () => {
       
         markedDates={selectedDate ? { [selectedDate]: { selected: true } } : {}}
       />
-      {selectedDate && (
-        <Text style={styles.selectedDate}>Selected Date: {selectedDate}</Text>
-      )}
+
     </View>
   );
 };
