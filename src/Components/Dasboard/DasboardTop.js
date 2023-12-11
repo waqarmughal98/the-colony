@@ -32,15 +32,6 @@ const DashboardTopItem = ({ item, navigation }) => {
 };
 
 const DashboardTop = ({ navigation, data }) => {
-  const [requests, setRequests] = useState([]);
-
-  useEffect(()=>{
-     const request = data?.all_events?.data.filter((item)=>{
-      return item.event_parent_type == "request"
-     })
-     setRequests(request);
-  },[data])
-
   const item = [
     {
       img: calenderimg,
@@ -49,7 +40,7 @@ const DashboardTop = ({ navigation, data }) => {
       color: "#FFC001",
       iconName: "calendar-today",
       iconType: "material",
-      screen: "All-Job",
+      screen: "work-logs",
     },
     {
       img: calenderimg,
@@ -86,7 +77,7 @@ const DashboardTop = ({ navigation, data }) => {
     <View style={styles.container}>
       <View style={styles.subContainer}>
         {item.map((item, index) => (
-          <DashboardTopItem key={index} navigation={navigation} item={item} />
+          <DashboardTopItem key={index} navigation={navigation} data={data} item={item} />
         ))}
       </View>
     </View>

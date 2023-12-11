@@ -3,9 +3,28 @@ import { StyleSheet, Text, View, TouchableOpacity, ScrollView, Image, FlatList }
 import { vw,vh } from '../utils/ScreenSize';
 import { MaterialIcons } from '@expo/vector-icons';
 import Color from '../Color';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import axios from 'axios';
+import { URL } from '../utils/Constant';
 const WorkLog = () => {
 
   const [selectedTitle, setSelectedTitle] = useState("Un-Categorised");
+
+  useEffect(()=>{
+    (async()=>{
+      const authToken = await AsyncStorage.getItem('token');
+      await axios.get(URL + '/job-status', {
+        headers: {
+          Authorization: `Bearer ${authToken}`
+        }
+      }).then((res)=>{
+        console.log(res.data)
+      }).catch((err)=>{
+        console.log(err)
+      })
+    })()
+  }, [])
+
   const data=[
     {
         jobName:"Halo therapy",
