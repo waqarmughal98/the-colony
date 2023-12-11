@@ -20,6 +20,22 @@ const WorkLog = ({navigation}) => {
   }, [navigation]);
 
   const [selectedTitle, setSelectedTitle] = useState("Un-Categorised");
+
+  useEffect(()=>{
+    (async()=>{
+      const authToken = await AsyncStorage.getItem('token');
+      await axios.get(URL + '/job-status', {
+        headers: {
+          Authorization: `Bearer ${authToken}`
+        }
+      }).then((res)=>{
+        console.log(res.data)
+      }).catch((err)=>{
+        console.log(err)
+      })
+    })()
+  }, [])
+
   const data=[
     {
         jobName:"Halo therapy",

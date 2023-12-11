@@ -59,11 +59,11 @@ function Dashboard({ navigation }) {
         <View style={{flex:1}}>
         {/* DashBoard top section */}
         <View style={styles.DasboardTop}>
-          <DasboardTop navigation={navigation} data={data}/>
+          <DasboardTop navigation={navigation}/>
         </View>
         {/* Dashboard bottom Section */}
         <View style={styles.DashboardBottom}>
-          <DashboardBottom navigation={navigation}/>
+          <DashboardBottom navigation={navigation} status={data}/>
         </View>
         </View>
 

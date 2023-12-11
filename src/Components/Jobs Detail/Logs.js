@@ -11,24 +11,43 @@ import Color from '../../Color';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 import { URL } from '../../utils/Constant';
-const Logs = ({data,screenName}) => {
+import { vh } from '../../utils/ScreenSize';
+const Logs = ({data, screenName}) => {
   const [loading, setLoading] = useState(true);
   const [items, setItems] = useState([])
 
+  /* Remove this when fethc data */
   useEffect(() => {
+    console.log(screenName);
     (async ()=>{
       const authToken = await AsyncStorage.getItem('token');
-      await axios.get(URL + '/job-activity/' + data?.project_id, {
-        headers: {
-          Authorization: `Bearer ${authToken}`,
-        }
-      }).then((res)=>{
-        setItems(res.data.logs)
-        setLoading(false);
-      }).catch((err)=>{
-        console.log(err);
-        setLoading(false);
-      })
+
+      if(screenName == "notification"){
+        await axios.get(URL + '/notification', {
+          headers: {
+            Authorization: `Bearer ${authToken}`,
+          }
+        }).then((res)=>{
+          setItems(res.data.events.data)
+          setLoading(false);
+        }).catch((err)=>{
+          console.log(err);
+          setLoading(false);
+        })
+      }else{
+        await axios.get(URL + '/job-activity', {
+          headers: {
+            Authorization: `Bearer ${authToken}`,
+          }
+        }).then((res)=>{
+          setItems(res.data.logs)
+          setLoading(false);
+        }).catch((err)=>{
+          console.log(err);
+          setLoading(false);
+        })
+      }
+      
     })()
   }, []);
 
@@ -48,7 +67,7 @@ const Logs = ({data,screenName}) => {
                 </View>
                 <View style={styles.individual_right}>
                   <View style={styles.text1container}>
-                    <Text style={styles.text1}>{item?.creator?.first_name}</Text>
+                    <Text style={styles.text1}>{screenName == "notification" ? item?.first_name : item?.creator?.first_name}</Text>
                     <Text>on {item?.event_created?.slice(0, 10)} </Text>
                   </View>
                   <Text style={styles.text2}>{update}</Text>
@@ -82,7 +101,6 @@ const styles = StyleSheet.create({
   Container: {
     height: '100%',
     backgroundColor: 'white',
-    paddingBottom:180,
   },
   Indicator: {
     flexGrow: 1,

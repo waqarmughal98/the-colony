@@ -2,8 +2,8 @@ import React from 'react';
 import { View, Image, Text, StyleSheet, TouchableOpacity,Dimensions } from 'react-native';
 import Color from '../../Color'
 import { vh, vw } from '../../utils/ScreenSize';
-import { Ionicons } from '@expo/vector-icons'; 
-const DashboardBottom = ({navigation}) => {
+import { Ionicons } from '@expo/vector-icons';
+const DashboardBottom = ({navigation, status}) => {
   const data = [
     {
       img: require('../../../assets/imgs/job_status.png'), 
@@ -42,7 +42,7 @@ const DashboardBottom = ({navigation}) => {
     <View style={styles.mainContainer}>
       <View style={styles.subContainer}>
         {data.map((item, index) => (
-          <TouchableOpacity onPress={()=>navigation.navigate(item.screenName,{item:{ScreenTitle:"Tasks"}})} activeOpacity={0.6} key={index}>
+          <TouchableOpacity onPress={()=>navigation.navigate(item.screenName,{item:{ScreenTitle:"Tasks"}, status: status})} activeOpacity={0.6} key={index}>
             <View style={[styles.individualContainer,{backgroundColor: item.color || 'white'}]} >
             {item.img ? <Image style={styles.containerImg} source={item.img}  /> : <Ionicons name="ios-calendar" style={styles.calendar}  size={45} color="#FBA200" /> }
               <Text style={[styles.containerTitle,{color: item.color ? 'white' : 'black' }]}>{item.title}</Text>
