@@ -2,6 +2,7 @@ import React from 'react';
 import { View, Image, Text, StyleSheet, TouchableOpacity,Dimensions } from 'react-native';
 import Color from '../../Color'
 import { vh, vw } from '../../utils/ScreenSize';
+import { Ionicons } from '@expo/vector-icons';
 const DashboardBottom = ({navigation, status}) => {
   const data = [
     {

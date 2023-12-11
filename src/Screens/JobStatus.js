@@ -61,11 +61,10 @@ const JobStatus = ({ navigation, route }) => {
                         <Text style={styles.rightText}>2</Text> 
                       </View>  
                     </TouchableOpacity> 
-                )
+                    )
                    }
                 </View>
               ))}
-            </View>
           </ScrollView>
         </View>
       ) : (

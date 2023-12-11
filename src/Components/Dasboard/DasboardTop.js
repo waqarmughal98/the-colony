@@ -40,7 +40,7 @@ const DashboardTop = ({ navigation, data }) => {
       color: "#FFC001",
       iconName: "calendar-today",
       iconType: "material",
-      screen: "WorkLog",
+      screen: "work-logs",
     },
     {
       img: calenderimg,
