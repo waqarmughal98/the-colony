@@ -1,5 +1,5 @@
-import  React from 'react';
-import { Image } from "react-native";
+import React, { useState, useEffect } from 'react';
+import { AppState, Modal, View, Text, Button,Image } from 'react-native';
 import { NavigationContainer , useNavigationState} from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createDrawerNavigator } from '@react-navigation/drawer';
@@ -27,6 +27,8 @@ import LatestActivity from './src/Screens/LatestActivity';
 const Stack = createNativeStackNavigator();
 const Drawer = createDrawerNavigator();
 function App() {
+
+
   StatusBar.setBarStyle('light-content');
   const Tab = createBottomTabNavigator();
   const TabNavigator = () => (
@@ -80,8 +82,9 @@ function App() {
         name="Profile"
         component={Profile}
         options={{
-          title: 'Profile',
+          // title: 'Profile',
           tabBarLabel: 'Profile',
+          headerShown:false,
           tabBarIcon: ({ color, size }) => (
             <Ionicons name="person-outline" size={size} color={color} />
           ),

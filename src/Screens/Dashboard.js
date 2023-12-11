@@ -24,7 +24,7 @@ function Dashboard({ navigation }) {
             onPress={() =>navigation.toggleDrawer()}
             activeOpacity={0.6}
           >
-            <Ionicons name="ios-menu" size={24} color="white" />
+            <Ionicons name="ios-menu" size={27} color="white" />
           </TouchableOpacity>
         </View>
         ),

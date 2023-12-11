@@ -104,13 +104,9 @@ const AddRequest = () => {
                 }}
                 />
         </View>
-        <View style={styles.btnContainer}>
-           <TouchableOpacity activeOpacity={0.6}>
+           <TouchableOpacity style={styles.btnContainer} activeOpacity={0.6}>
              <Text style={styles.submitTxt}>Submit</Text>
-           </TouchableOpacity>
-        </View>
-        
-        
+           </TouchableOpacity>       
       </View>
       </ScrollView>
     </View>
@@ -126,6 +122,7 @@ const styles = StyleSheet.create({
     },
     fieldsContainer:{
         paddingHorizontal:5*vw,
+        paddingBottom:6*vh,
         width:100*vw,
         display:"flex",
         gap:2.5*vh,
@@ -153,7 +150,7 @@ const styles = StyleSheet.create({
     display:"flex",
     justifyContent:'center',
     alignItems:"center",
-    marginBottom:3*vh,
+    marginBottom:7*vh,
     marginTop:1.4*vh,
     height:45,
     borderRadius:10,
