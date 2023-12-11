@@ -82,8 +82,9 @@ function App() {
         name="Profile"
         component={Profile}
         options={{
-          title: 'Profile',
+          // title: 'Profile',
           tabBarLabel: 'Profile',
+          headerShown:false,
           tabBarIcon: ({ color, size }) => (
             <Ionicons name="person-outline" size={size} color={color} />
           ),

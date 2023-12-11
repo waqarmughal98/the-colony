@@ -4,6 +4,7 @@ import {
   View,
   ScrollView,
   ActivityIndicator,
+  TouchableOpacity
 } from "react-native";
 import React, { useState, useEffect } from "react";
 import { vh, vw } from "../utils/ScreenSize";
@@ -14,35 +15,22 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 const JobStatus = ({ navigation, route }) => {
   const [loading, setLoading] = useState(true);
   const [data, setData] = useState([]);
+  const [my_projects_states, setMy_projects_states] = useState();
 
   const { item, status } = route.params;
 
   useEffect(() => {
-    console.log(status, 'statusstatusstatus');
+    setMy_projects_states(status.my_projects_states)
+    const resultArray = Object.entries(status.all_projects).map(([title, number]) => ({ title, number }));
+    setData(resultArray)
+    setLoading(false)
   }, [status]);
 
-  /* Remove this when fethc data */
-  useEffect(() => {
-    (async () => {
-      const authToken = await AsyncStorage.getItem("token");
-      await axios
-        .get(URL + "/job-status", {
-          headers: {
-            Authorization: `Bearer ${authToken}`,
-          },
-        })
-        .then((res) => {
-          setData(res.data.projects.data);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    })();
-
-    setTimeout(() => {
-      setLoading(false);
-    }, 1000);
-  }, []);
+  const transformAndCapitalize = (inputString) => {
+    const words = inputString.split('_');
+    const capitalizedWords = words.map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase());
+    return capitalizedWords.join(' ');
+  };
 
   return (
     <View style={styles.mainContainer}>
@@ -51,20 +39,19 @@ const JobStatus = ({ navigation, route }) => {
             <ScrollView>
                 <View style={styles.allData} >
                    {
-                    status.map((item,index)=>
-                    <TouchableOpacity key={index} activeOpacity={0.6} onPress={()=>navigation.navigate("All-Job",{screenName:"jobStatus"})} style={styles.individual}>
+                    data.map((item,index)=>
+                    <TouchableOpacity key={index}   activeOpacity={0.6} onPress={()=>navigation.navigate("All-Job",{screenName:"jobStatus",status:item.title })} style={styles.individual}>
                       <View style={styles.left}>
-                        <Text style={styles.leftText1}>JobStatus</Text>   
-                        <Text style={styles.leftText2}>Assigned to me : 4</Text> 
+                        <Text style={styles.leftText1}>{transformAndCapitalize(item.title)}</Text>   
+                        <Text style={styles.leftText2}>{`Assigned to me : ${my_projects_states[`${item.title}`]}`}</Text> 
                       </View>
                       <View style={styles.right}>   
-                        <Text style={styles.rightText}>2</Text> 
+                        <Text style={styles.rightText}>{item.number}</Text> 
                       </View>  
                     </TouchableOpacity> 
                     )
                    }
                 </View>
-              ))}
           </ScrollView>
         </View>
       ) : (
@@ -113,6 +100,7 @@ const styles = StyleSheet.create({
     display: "flex",
     gap: 15,
     marginTop: 15,
+    paddingBottom:80
   },
   leftText1: {
     fontSize: 16,

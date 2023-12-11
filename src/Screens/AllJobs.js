@@ -3,11 +3,12 @@ import React, { useEffect, useState } from 'react'
 import { MaterialIcons } from '@expo/vector-icons';
 import Color from '../Color';
 import { URL } from '../utils/Constant';
+import { vh } from '../utils/ScreenSize';
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import CalendarComponent from '../Components/Calendar/CalendarComponent';
 const AllJobs = ({navigation,route}) => {
-    const {screenName}= route.params;
+    const {screenName ,status }= route.params;
     const [data, setData] = useState([]);
     const [loading, setLoading]=useState(true)
     useEffect(()=>{
@@ -20,7 +21,12 @@ const AllJobs = ({navigation,route}) => {
                 }
             }).then((res)=>{
                 // console.log('tasks', res.data.tasks.data);
+                if(status){
+                    setData(res.data.projects.data.filter(item => item.project_status === status));
+                }else{
                 setData(res.data.projects.data);
+                }
+               
                 setLoading(false)
             }).catch((err)=>{
                 console.log(err);
@@ -29,9 +35,14 @@ const AllJobs = ({navigation,route}) => {
     },[])
     
 
-    useEffect(()=>{
-        console.log(screenName,"screenName")
-    },[screenName])
+    const transformAndCapitalize = (inputString) => {
+        const words = inputString.split('_');
+        const capitalizedWords = words.map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase());
+        return capitalizedWords.join(' ');
+      };
+    
+
+
   return (
     <View>
         <View style={styles.container}>
@@ -50,7 +61,7 @@ const AllJobs = ({navigation,route}) => {
                         <View style={styles.dataContainer}>
                             <ScrollView>
                             {
-                                data?.map((item,index)=>{
+                                data.length>0 ? data?.map((item,index)=>{
                                     return(
                                         <TouchableOpacity onPress={()=>navigation.navigate("jobs-detail",{items: item})} activeOpacity={0.6} key={index}>
                                             <View style={[styles.individual,{backgroundColor:index%2==0 ? '#D2CBBC' : '#F2F1CF'}]}>
@@ -60,7 +71,10 @@ const AllJobs = ({navigation,route}) => {
                                             </View>
                                         </TouchableOpacity>
                                     )
-                                })
+                                }) :
+                                (
+                                    <Text style={styles.noJobText}>{status ? `There is no job found for ${transformAndCapitalize(status)} Project Status`    :"No Job Found"}</Text>
+                                )
                             }
                             </ScrollView>
                         </View>
@@ -135,6 +149,13 @@ const styles = StyleSheet.create({
     },
     AllData:{
         paddingBottom:100,
+    },
+    noJobText:{
+        textAlign:"center",
+        fontWeight:"bold",
+        fontSize:18,
+        marginTop:30*vh,
+        marginHorizontal:20
     }
 
 })
