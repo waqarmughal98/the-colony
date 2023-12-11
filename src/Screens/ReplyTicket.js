@@ -1,10 +1,11 @@
-import React,{useState} from 'react'
+import React,{useEffect, useState} from 'react'
 import { StyleSheet, Text, View, TextInput, ScrollView, TouchableOpacity } from 'react-native'
 import { vh,vw } from '../utils/ScreenSize'
+import DateInput from '../Components/Date/DateInput';
 import { FontAwesome } from '@expo/vector-icons';
 import SelectDropdown from 'react-native-select-dropdown'
 import ImagePickerComponent from '../Components/Picker/ImagePickerComponent'
-const NewProblemReport = ({navigation,route}) => {
+const ReplyTicket = ({navigation,route}) => {
     const { items } = route.params;
     const getCurrentDate = () => {
         const today = new Date();
@@ -18,22 +19,24 @@ const NewProblemReport = ({navigation,route}) => {
         Subject: "",
         Job: "",
         Problem: "",
-        Status: "",
-        image:""
     })
 
     const handleData = (value, field)=> {
         setData({...data, [field]: value})
     }
-    const dataOption=['Open','On Hold','Answered','Closed']
+   
+
+    useEffect(()=>{
+        console.log(items,"items....")
+    },[items])
   return (
     <View style={styles.container}>
         <ScrollView>
             <View style={styles.mainContainer}>
                     <View>
-                        <Text style={styles.label}>Date</Text>
-                        <View style={styles.dateInput} >
-                           <Text >{data.date}</Text>
+                        <Text style={[styles.label,{marginBottom:5}]}>Date</Text>
+                        <View  >
+                           <DateInput editable={true} style={styles.input}  setData={setData} name="replyTicket"   />
                         </View>
                     </View>
                     <View>
@@ -43,46 +46,17 @@ const NewProblemReport = ({navigation,route}) => {
                     <View>
                         <Text style={styles.label}>Job / Site</Text>
                         <View style={styles.dateInput} >
-                           <Text >{items.project_title}</Text>
+                           <Text ></Text>
                         </View>
                     </View>
                     <View>
                         <Text style={styles.label}>Please describe the problem in detail bellow:</Text>
                         <TextInput value={data.Problem} style={styles.input2} multiline={true} numberOfLines={8} textAlignVertical="top" onChangeText={(text)=>handleData(text, 'Problem')} />
                     </View>
-                    <View>
-                        <Text style={styles.label}>Status</Text>
-
-                            <SelectDropdown
-                            data={dataOption}
-                            buttonStyle={{height:vh*5,width:vw*90,backgroundColor:'#DFE1ED',borderRadius:10}}
-                            dropdownStyle={{marginTop: -(vh*4),height:48*vh,fontSize:12}}
-                            buttonTextStyle={{fontSize:15}}
-                            renderDropdownIcon={isOpened => {
-                                return <FontAwesome   name={isOpened ? 'chevron-up' : 'chevron-down'} color={'#5A5A5A'} size={14} />;
-                            }}
-                            /* Change the default value */
-                            defaultValue={dataOption[0]}
-
-                            onSelect={(selectedItem, index) => {
-                                (text)=>handleData(text, 'Status')
-                            }}
-                            buttonTextAfterSelection={(selectedItem, index) => {
-                                return selectedItem
-                            }}
-                            rowTextForSelection={(item, index) => {
-                
-                                return item
-                            }}
-                            />
-                           
-                    </View>
-                    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-                        <ImagePickerComponent />
-                    </View>
+             
                     <View style={styles.btnContainer}>
                         <TouchableOpacity activeOpacity={0.6}>
-                            <Text style={styles.submitTxt}>Report Problem</Text>
+                            <Text style={styles.submitTxt}>Reply</Text>
                         </TouchableOpacity>
                     </View>
                 </View> 
@@ -91,7 +65,7 @@ const NewProblemReport = ({navigation,route}) => {
   )
 }
 
-export default NewProblemReport
+export default ReplyTicket
 
 const styles = StyleSheet.create({
     container:{

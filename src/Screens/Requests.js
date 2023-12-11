@@ -117,13 +117,7 @@ const Requests = ({ navigation }) => {
         <ScrollView>
           {filteredData.map((item, index) => {
             return (
-              <TouchableOpacity
-                onPress={() =>
-                  navigation.navigate("jobs-detail", { items: item })
-                }
-                activeOpacity={0.6}
-                key={index}
-              >
+              <View key={index}>
                 <View
                   style={[
                     styles.individual,
@@ -138,7 +132,7 @@ const Requests = ({ navigation }) => {
                   </Text>
                   <Text style={styles.dataText2}>{item.leave_status}</Text>
                 </View>
-              </TouchableOpacity>
+              </View>
             );
           })}
         </ScrollView>

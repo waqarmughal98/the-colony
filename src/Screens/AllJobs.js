@@ -11,6 +11,8 @@ const AllJobs = ({navigation,route}) => {
     const {screenName ,status }= route.params;
     const [data, setData] = useState([]);
     const [loading, setLoading]=useState(true)
+    const [loading2, setLoading2]=useState(true)
+
     useEffect(()=>{
         (async ()=>{
             const authToken = await AsyncStorage.getItem("token");
@@ -34,6 +36,7 @@ const AllJobs = ({navigation,route}) => {
         })()
     },[])
     
+
 
     const transformAndCapitalize = (inputString) => {
         const words = inputString.split('_');
@@ -73,7 +76,7 @@ const AllJobs = ({navigation,route}) => {
                                     )
                                 }) :
                                 (
-                                    <Text style={styles.noJobText}>{status ? `There is no job found for ${transformAndCapitalize(status)} Project Status`    :"No Job Found"}</Text>
+                                    <Text style={styles.noJobText}>{status && screenName=="jobStatus" ? `There is no job found for ${transformAndCapitalize(status)} Project Status`    :"No Job Found"}</Text>
                                 )
                             }
                             </ScrollView>

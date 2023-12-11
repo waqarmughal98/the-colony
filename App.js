@@ -25,6 +25,7 @@ import Profile from './src/Components/Jobs Detail/Profile';
 import Notifications from './src/Screens/Notifications';
 import LatestActivity from './src/Screens/LatestActivity';
 import AllProblemReports from './src/Screens/AllProblemReports';
+import ReplyTicket from './src/Screens/ReplyTicket';
 const Stack = createNativeStackNavigator();
 const Drawer = createDrawerNavigator();
 function App() {
@@ -225,6 +226,13 @@ function HomeStackScreen() {
           component={AllProblemReports}
           options={{
             title: 'All Problem Report'
+          }}
+        />
+        <Stack.Screen
+          name="reply-ticket"
+          component={ReplyTicket}
+          options={{
+            title: 'Reply Ticket'
           }}
         />
         </>

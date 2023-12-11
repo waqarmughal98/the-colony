@@ -17,7 +17,7 @@ const ProblemReportReplies = ({navigation,route}) => {
       headerTitleAlign: 'center',
       headerRight: () => (
         <View style={{ marginRight: 5 }}>
-          <TouchableOpacity activeOpacity={0.6} onPress={()=>navigation.navigate("new-problem-report")}>
+          <TouchableOpacity activeOpacity={0.6} onPress={()=>navigation.navigate("reply-ticket",{items:items})}>
            <Text style={{color:"white"}}>Reply</Text>
           </TouchableOpacity>
         </View>

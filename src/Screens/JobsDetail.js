@@ -76,7 +76,10 @@ const JobsDetail = ({route, navigation}) => {
     navigation.setOptions({
       headerRight: () => (
         <View style={{ marginRight: 10 }}>
-          {(selectedOptionID==5 || selectedOptionID==6  )  &&  <TouchableOpacity onPress={toggleModal} activeOpacity={0.6}>
+          {(selectedOptionID==5 || selectedOptionID==6   )  &&  <TouchableOpacity onPress={toggleModal} activeOpacity={0.6}>
+            <AntDesign name="pluscircleo" size={24} color="white" />
+          </TouchableOpacity>}
+          {(selectedOptionID==8  )  &&  <TouchableOpacity onPress={()=>navigation.navigate("new-problem-report",{items:items})} activeOpacity={0.6}>
             <AntDesign name="pluscircleo" size={24} color="white" />
           </TouchableOpacity>}
         </View>

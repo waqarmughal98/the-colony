@@ -3,7 +3,7 @@ import { StyleSheet, View, TouchableOpacity, Text, Alert } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { AntDesign } from '@expo/vector-icons';
 import { vw } from '../../utils/ScreenSize';
-const DateInput = ({editable,name,setLeave, dateValue}) => {
+const DateInput = ({editable,name,setLeave, dateValue,setData}) => {
   const [date, setDate] = useState(new Date());
   const [showDatePicker, setShowDatePicker] = useState(false);
 
@@ -26,6 +26,9 @@ const DateInput = ({editable,name,setLeave, dateValue}) => {
           return preData; // If name is neither "startDate" nor "endDate", return the unchanged state
         }
       });
+      setData((predata)=>({
+        ...predata,date: selectedDate,
+      }))
     }
   };
 
@@ -35,8 +38,8 @@ const DateInput = ({editable,name,setLeave, dateValue}) => {
  
   return (
     editable?(
-      <TouchableOpacity activeOpacity={0.6} onPress={showDatePickerContainer} style={{marginTop:-10}}>
-        <View style={[styles.container,{borderRadius: 10,width:vw*86}]}>
+      <TouchableOpacity activeOpacity={0.6} onPress={showDatePickerContainer} style={{marginTop:-10 }}>
+        <View style={[styles.container,{borderRadius: 10,width:vw*86,backgroundColor: name=="replyTicket" ? '#DFE1ED' : "white"}]}>
           {/* Left side: Date value */}
           <Text style={styles.dateValue}>{date?.toDateString()}</Text>
           {/* Right side: Calendar icon */}   
@@ -56,7 +59,7 @@ const DateInput = ({editable,name,setLeave, dateValue}) => {
         </View>
       </TouchableOpacity>
     ):(
-    <View style={[styles.container,{borderRadius: 40, marginHorizontal:  60, width:vw*86,}]}>
+    <View style={[styles.container,{borderRadius: 40, marginHorizontal:  60, width:vw*86,backgroundColor: "white"}]}>
       {/* Left side: Date value */}
       <Text style={styles.dateValue}>{dateValue}</Text>
       {/* Right side: Calendar icon */}   
@@ -81,13 +84,12 @@ const DateInput = ({editable,name,setLeave, dateValue}) => {
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
-    backgroundColor: 'white',
     padding: 10,
     alignItems: 'center',
     justifyContent: 'space-between',
     marginVertical: 10,
     paddingHorizontal: 20,
-    alignSelf:"center"
+    alignSelf:"center",
   },
   dateValue: {
     fontSize: 14,
