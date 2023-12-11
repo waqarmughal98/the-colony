@@ -18,7 +18,8 @@ const JobStatus = ({ navigation, route }) => {
   const { item, status } = route.params;
 
   useEffect(() => {
-    console.log(status, 'statusstatusstatus');
+    console.log(status.all_projects, 'statusstatusstatus');
+    setData(status)
   }, [status]);
 
   /* Remove this when fethc data */
@@ -48,23 +49,20 @@ const JobStatus = ({ navigation, route }) => {
     <View style={styles.mainContainer}>
       {!loading ? (
         <View style={styles.Container}>
-            <ScrollView>
-                <View style={styles.allData} >
-                   {
-                    status.map((item,index)=>
-                    <TouchableOpacity key={index} activeOpacity={0.6} onPress={()=>navigation.navigate("All-Job",{screenName:"jobStatus"})} style={styles.individual}>
-                      <View style={styles.left}>
-                        <Text style={styles.leftText1}>JobStatus</Text>   
-                        <Text style={styles.leftText2}>Assigned to me : 4</Text> 
-                      </View>
-                      <View style={styles.right}>   
-                        <Text style={styles.rightText}>2</Text> 
-                      </View>  
-                    </TouchableOpacity> 
-                    )
-                   }
+          <ScrollView>
+            <View style={styles.allData} >
+              {status?.map((item,index)=>
+              <TouchableOpacity key={index} activeOpacity={0.6} onPress={()=>navigation.navigate("All-Job",{screenName:"jobStatus"})} style={styles.individual}>
+                <View style={styles.left}>
+                  <Text style={styles.leftText1}>JobStatus</Text>   
+                  <Text style={styles.leftText2}>Assigned to me : 4</Text> 
                 </View>
-              ))}
+                <View style={styles.right}>   
+                  <Text style={styles.rightText}>2</Text> 
+                </View>  
+              </TouchableOpacity> 
+              )}
+            </View>
           </ScrollView>
         </View>
       ) : (
