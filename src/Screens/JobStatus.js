@@ -16,7 +16,6 @@ const JobStatus = ({ navigation, route }) => {
   const [loading, setLoading] = useState(true);
   const [data, setData] = useState([]);
   const [my_projects_states, setMy_projects_states] = useState();
-
   const { item, status } = route.params;
 
   useEffect(() => {

@@ -24,6 +24,7 @@ import NewProblemReport from './src/Screens/NewProblemReport';
 import Profile from './src/Components/Jobs Detail/Profile';
 import Notifications from './src/Screens/Notifications';
 import LatestActivity from './src/Screens/LatestActivity';
+import AllProblemReports from './src/Screens/AllProblemReports';
 const Stack = createNativeStackNavigator();
 const Drawer = createDrawerNavigator();
 function App() {
@@ -217,6 +218,13 @@ function HomeStackScreen() {
           component={NewProblemReport}
           options={{
             title: 'New Problem Report'
+          }}
+        />
+        <Stack.Screen
+          name="all-problem-report"
+          component={AllProblemReports}
+          options={{
+            title: 'All Problem Report'
           }}
         />
         </>

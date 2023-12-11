@@ -23,7 +23,7 @@ const DashboardBottom = ({navigation, status}) => {
     },
     {
       img: require('../../../assets/imgs/problem.png'), 
-      screenName:"problem-reports",
+      screenName:"all-problem-report",
       title: "Problem Rep",
     },
     {

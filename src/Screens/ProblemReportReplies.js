@@ -1,9 +1,16 @@
 import { StyleSheet, Text, View, TouchableOpacity , Dimensions , Image } from 'react-native'
-import React from 'react'
+import React,{useEffect,useState} from 'react'
 const { width, height } = Dimensions.get('window');
 const vw = width / 100;
 const vh = height / 100;
-const ProblemReportReplies = ({navigation}) => {
+import Color from '../Color'
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import axios from 'axios';
+import { URL } from '../utils/Constant';
+const ProblemReportReplies = ({navigation,route}) => {
+  const { id } = route.params;
+  const [items, setItems] = useState([]);
+  const [loading, setLoading]=useState(true)
   React.useLayoutEffect(() => {
     navigation.setOptions({
       headerTintColor: 'white',
@@ -11,25 +18,55 @@ const ProblemReportReplies = ({navigation}) => {
       headerRight: () => (
         <View style={{ marginRight: 5 }}>
           <TouchableOpacity activeOpacity={0.6} onPress={()=>navigation.navigate("new-problem-report")}>
-           <Text>Reply</Text>
+           <Text style={{color:"white"}}>Reply</Text>
           </TouchableOpacity>
         </View>
       ),
     });
   }, [navigation]);
+  useEffect(()=>{
+    (async ()=>{
+ 
+      const authToken = await AsyncStorage.getItem('token');
+      await axios.get(URL + '/problemreports/show/'+id, {
+        headers: {
+          Authorization: `Bearer ${authToken}`,
+        },
+      }).then((res)=>{
+        setItems(res.data.replies)
+      }).catch((err)=>{
+        console.log(err);
+      })
+    })()
+
+    setTimeout(() => {
+       setLoading(false) 
+    }, 1000);
+  },[id])
+
+  useEffect(()=>{
+    console.log(items,"items.....")
+  },[items])
+
+
+
   
   return (
     <View>
-      <View style={styles.individual}>
-         <View style={styles.left}>
-          {/* Change the img */}
-          <Image source={require('../../assets/imgs/avator.png')} style={styles.Image} />
-         </View>
-         <View style={styles.right}>
-           <Text style={styles.text}>by Mark on 2023-11-03</Text>
-           <Text style={styles.text}>new reply</Text>
-         </View>
-      </View>
+       {
+        items.map((item,index)=>
+        <View style={styles.individual}>
+            <View style={styles.left}>
+            {/* Change the img */}
+            <Image source={require('../../assets/imgs/avator.png')} style={styles.Image} />
+            </View>
+            <View style={styles.right}>
+              <Text style={styles.text}>{`by ${item.first_name} on ${item.ticketreply_created.slice(0,10)}`}</Text>
+              <Text style={styles.text}>{item.ticketreply_text}</Text>
+            </View>
+        </View>
+     )
+       }
     </View>
   )
 }

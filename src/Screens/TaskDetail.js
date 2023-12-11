@@ -16,7 +16,7 @@ const TaskDetail = ({navigation , route}) => {
       headerRight: () => (
         <View style={{ marginRight: 5 }}>
           <TouchableOpacity activeOpacity={0.6}>
-           <Text>Update</Text>
+           <Text style={{color:"white"}}>Update</Text>
           </TouchableOpacity>
         </View>
       ),
