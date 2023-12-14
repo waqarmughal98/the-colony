@@ -11,12 +11,12 @@ const Address = ({ data }) => {
     { label: 'Postcode', value: '', key: 'postcode' },
   ];
 
-  const [inputData, setInputData] = useState(
-    inputFields.reduce((acc, field) => {
-      acc[field.key] = field.value;
-      return acc;
-    }, {})
-  );
+  const [inputData, setInputData] = useState({
+    street: data.lead_street,
+    city: data.lead_city,
+    locationDetail: data.lead_state,
+    postcode: data.lead_zip,
+  });
 
   const [loading, setLoading] = useState(true);
   const [showMap, setShowMap] = useState(false);
@@ -27,16 +27,6 @@ const Address = ({ data }) => {
       [key]: text,
     }));
   };
-
-  /* Remove this later */
-  useEffect(() => {
-    setInputData({
-      street: 'asd',
-      city: 'ads',
-      locationDetail: 'dsa',
-      postcode: 'dsa',
-    });
-  }, []); 
 
   /* Remove this when fetch data */
   useEffect(() => {
@@ -72,10 +62,10 @@ const Address = ({ data }) => {
               <MapView
                 style={{ flex: 1, borderRadius:15 }}
                 initialRegion={{
-                latitude: 37.78825, // Replace with the initial latitude of your map
-                longitude: -122.4324, // Replace with the initial longitude of your map
-                latitudeDelta: 0.0922,
-                longitudeDelta: 0.0421,
+                  latitude: 37.78825, // Replace with the initial latitude of your map
+                  longitude: -122.4324, // Replace with the initial longitude of your map
+                  latitudeDelta: 0.0922,
+                  longitudeDelta: 0.0421,
                 }}
               >
                 {/* You can add a marker if needed */}

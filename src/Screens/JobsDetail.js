@@ -132,7 +132,7 @@ const JobsDetail = ({route, navigation}) => {
         ) : selectedOptionID == 1 ? (
           <Team data={items} />
         ) : selectedOptionID == 2 ? (
-          <Task data={items} />
+          <Task navigation={navigation} data={items} />
         ) : selectedOptionID == 3 ? (
           <Address data={items} />
         ) : selectedOptionID == 4 ? (

@@ -26,7 +26,7 @@ const AllJobs = ({navigation,route}) => {
                 if(status){
                     setData(res.data.projects.data.filter(item => item.project_status === status));
                 }else{
-                setData(res.data.projects.data);
+                    setData(res.data.projects.data);
                 }
                
                 setLoading(false)
@@ -35,16 +35,12 @@ const AllJobs = ({navigation,route}) => {
             })
         })()
     },[])
-    
-
 
     const transformAndCapitalize = (inputString) => {
         const words = inputString.split('_');
         const capitalizedWords = words.map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase());
         return capitalizedWords.join(' ');
-      };
-    
-
+    };
 
   return (
     <View>

@@ -10,16 +10,13 @@ const Update = ({data}) => {
 
   useEffect(()=>{
     (async ()=>{
-      const param = {
-        params:{
-          project_id: data.project_id,
-          ticketresource_type: "project",
-          ticketresource_id: data.project_id,
-        },
-      }
       const authToken = await AsyncStorage.getItem('token');
-      axios.post(URL + '/comments/search', {}, {
-        param,
+      await axios.post(URL + '/comments/search', {}, {
+        params:{
+          project_id: data?.project_id,
+          commentresource_type: "project",
+          commentresource_id: data?.project_id,
+        },
         headers:{
           Authorization: `Bearer ${authToken}`
         }

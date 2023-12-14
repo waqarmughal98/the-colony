@@ -24,14 +24,11 @@ const AllProblemReports = ({navigation, data}) => {
         },
       }).then((res)=>{
         setItems(res.data.tickets.data)
+        setLoading(false) 
       }).catch((err)=>{
         console.log(err);
       })
     })()
-
-    setTimeout(() => {
-       setLoading(false) 
-    }, 1000);
   },[])
     
   return (
@@ -50,7 +47,7 @@ const AllProblemReports = ({navigation, data}) => {
               {
                 items?.map((item,index)=>{
                   return(
-                    <TouchableOpacity onPress={()=>navigation.navigate("problem-report-replies", {id: item.ticket_id})} activeOpacity={0.6} key={index}>
+                    <TouchableOpacity onPress={()=>navigation.navigate("problem-report-replies", {id: item.ticket_id, jobTitle: item.project_title})} activeOpacity={0.6} key={index}>
                       <View style={[styles.mainIndividual,{backgroundColor:index%2==0 ? '#D2CBBC' : '#F2F1CF'}]}>
                         <View style={styles.individual}>
                           <Text style={styles.dataText}>{item.ticket_subject}</Text>

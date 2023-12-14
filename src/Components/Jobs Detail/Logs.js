@@ -18,11 +18,10 @@ const Logs = ({data, screenName}) => {
 
   /* Remove this when fethc data */
   useEffect(() => {
-    console.log(screenName);
+    console.log(screenName, data?.project_id);
     (async ()=>{
       const authToken = await AsyncStorage.getItem('token');
-
-      if(screenName == "notification"){
+      if(screenName == "notification" || screenName == "LatestActivity"){
         await axios.get(URL + '/notification', {
           headers: {
             Authorization: `Bearer ${authToken}`,
@@ -34,8 +33,8 @@ const Logs = ({data, screenName}) => {
           console.log(err);
           setLoading(false);
         })
-      }else{
-        await axios.get(URL + '/job-activity', {
+      } else{
+        await axios.get(URL + '/job-activity/' + data?.project_id, {
           headers: {
             Authorization: `Bearer ${authToken}`,
           }
@@ -47,7 +46,6 @@ const Logs = ({data, screenName}) => {
           setLoading(false);
         })
       }
-      
     })()
   }, []);
 

@@ -6,31 +6,34 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import TaskContainer from '../Tasks/TaskContainer';
 
 
-const Tasks = ({navigation,route}) => {
+const Tasks = ({navigation, data}) => {
     const [loading, setLoading]=useState(true)
-    const [data, setData] = useState([]);
-
+    const[item, setItem] = useState([])
     useEffect(()=>{
-        (async ()=>{
-            const authToken = await AsyncStorage.getItem("token");
-            axios.get(URL + '/task/all',{
-                headers: {
-                    Authorization: `Bearer ${authToken}`
-                }
-            }).then((res)=>{
-                setData(res.data.tasks.data);
-                setLoading(false)
-            }).catch((err)=>{
-                console.log(err);
-            })
-        })()
+      (async ()=>{
+        const authToken = await AsyncStorage.getItem("token");
+        axios.get(URL + '/task/all',{
+          params:{
+            taskresource_type: "project",
+            taskresource_id: data.project_id
+          },
+          headers: {
+              Authorization: `Bearer ${authToken}`
+          }
+        }).then((res)=>{
+          setItem(res.data.tasks.data);
+            setLoading(false)
+        }).catch((err)=>{
+            console.log(err);
+        })
+      })()
     },[])
   return (
     <View>
     {
      !loading ? 
       <View>
-        <TaskContainer navigation={navigation} data={data}/>
+        <TaskContainer navigation={navigation} data={item}/>
       </View>
      :
      <View style={styles.Indicator}>

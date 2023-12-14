@@ -12,7 +12,6 @@ const CalendarComponent = () => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Filter Jobs by Seleceting Date</Text>
       <Calendar
         onDayPress={onDayPress}
         theme={{
@@ -23,17 +22,14 @@ const CalendarComponent = () => {
           arrowColor: Color.darkOrange,
           dayTextColor:"black"
         }}
-      
         markedDates={selectedDate ? { [selectedDate]: { selected: true } } : {}}
       />
-
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    padding: 16,
     justifyContent: 'center',
   },
   title: {

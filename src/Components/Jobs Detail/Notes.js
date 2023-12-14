@@ -15,16 +15,13 @@ const Notes = ({ data }) => {
 
   useEffect(() => {
     (async () => {
-      const param = {
-        params: {
-          project_id: data.project_id,
-          noteresource_type: "project",
-          noteresource_id: data.project_id,
-        },
-      };
       const authToken = await AsyncStorage.getItem("token");
       await axios.post(URL + "/notes/search", {}, {
-          params: param.params,
+          params: {
+            project_id: data?.project_id,
+            noteresource_type: "project",
+            noteresource_id: data?.project_id,
+          },
           headers: {
             Authorization: `Bearer ${authToken}`,
           },

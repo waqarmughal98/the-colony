@@ -39,7 +39,7 @@ const DateInput = ({editable,name,setLeave, dateValue,setData}) => {
   return (
     editable?(
       <TouchableOpacity activeOpacity={0.6} onPress={showDatePickerContainer} style={{marginTop:-10 }}>
-        <View style={[styles.container,{borderRadius: 10,width:vw*86,backgroundColor: name=="replyTicket" ? '#DFE1ED' : "white"}]}>
+        <View style={[styles.container,{borderRadius: 10,width:vw*90,backgroundColor: name=="replyTicket" ? '#DFE1ED' : "white"}]}>
           {/* Left side: Date value */}
           <Text style={styles.dateValue}>{date?.toDateString()}</Text>
           {/* Right side: Calendar icon */}   
@@ -88,7 +88,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
     marginVertical: 10,
-    paddingHorizontal: 20,
+    paddingHorizontal: 10,
     alignSelf:"center",
   },
   dateValue: {
