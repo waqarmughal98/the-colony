@@ -33,9 +33,9 @@ const NewProblemReport = ({navigation,route}) => {
         const authToken = await AsyncStorage.getItem('token');
         const param = {
             params:{
-              project_id: data.project_id,
-              ticketresource_type: "project",
-              ticketresource_id: data.project_id,
+                ticketreply_text: data.project_id,
+                ticketresource_type: "project",
+                ticketresource_id: data.project_id,
             },
         }
         axios.post(URL + '/problemreports/' + 10 + "/store", {
