@@ -33,9 +33,6 @@ const ReplyTicket = ({navigation,route}) => {
         await axios.post(URL + '/problemreports/' + items.ticket.ticket_id + '/postreply', {
             params: {
                 ticketreply_ticketid: items.ticket.ticket_id,
-                ticket_clientid: items.ticket.ticket_clientid,
-                ticket_projectid: items.ticket.ticket_projectid,
-                ticket_categoryid: 9,
                 ticketreply_text: data.Problem,
             },
             headers: {
