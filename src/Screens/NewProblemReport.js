@@ -4,6 +4,9 @@ import { vh,vw } from '../utils/ScreenSize'
 import { FontAwesome } from '@expo/vector-icons';
 import SelectDropdown from 'react-native-select-dropdown'
 import ImagePickerComponent from '../Components/Picker/ImagePickerComponent'
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import axios from 'axios';
+import { URL } from '../utils/Constant';
 const NewProblemReport = ({navigation,route}) => {
     const { items } = route.params;
     const getCurrentDate = () => {
@@ -25,67 +28,87 @@ const NewProblemReport = ({navigation,route}) => {
     const handleData = (value, field)=> {
         setData({...data, [field]: value})
     }
+
+    const submitProblem = async ()=>{
+        const authToken = await AsyncStorage.getItem('token');
+        const param = {
+            params:{
+              project_id: data.project_id,
+              ticketresource_type: "project",
+              ticketresource_id: data.project_id,
+            },
+        }
+        axios.post(URL + '/problemreports/' + 10 + "/store", {
+            params : param.params,
+            headers:{
+                Authorization: `Bearer ${authToken}`
+            }
+        }).then((res)=>{
+            console.log(res.data)
+        }).catch((err)=>{
+            console.log(err)
+        })
+    }
+
     const dataOption=['Open','On Hold','Answered','Closed']
   return (
     <View style={styles.container}>
         <ScrollView>
             <View style={styles.mainContainer}>
-                    <View>
-                        <Text style={styles.label}>Date</Text>
-                        <View style={styles.dateInput} >
-                           <Text >{data.date}</Text>
-                        </View>
+                <View>
+                    <Text style={styles.label}>Date</Text>
+                    <View style={styles.dateInput} >
+                        <Text >{data.date}</Text>
                     </View>
-                    <View>
-                        <Text style={styles.label}>Subject</Text>
-                        <TextInput value={data.Subject} style={styles.input} onChangeText={(text)=>handleData(text, 'Subject')} />
+                </View>
+                <View>
+                    <Text style={styles.label}>Subject</Text>
+                    <TextInput value={data.Subject} style={styles.input} onChangeText={(text)=>handleData(text, 'Subject')} />
+                </View>
+                <View>
+                    <Text style={styles.label}>Job / Site</Text>
+                    <View style={styles.dateInput} >
+                        <Text >{items.project_title}</Text>
                     </View>
-                    <View>
-                        <Text style={styles.label}>Job / Site</Text>
-                        <View style={styles.dateInput} >
-                           <Text >{items.project_title}</Text>
-                        </View>
-                    </View>
-                    <View>
-                        <Text style={styles.label}>Please describe the problem in detail bellow:</Text>
-                        <TextInput value={data.Problem} style={styles.input2} multiline={true} numberOfLines={8} textAlignVertical="top" onChangeText={(text)=>handleData(text, 'Problem')} />
-                    </View>
-                    <View>
-                        <Text style={styles.label}>Status</Text>
+                </View>
+                <View>
+                    <Text style={styles.label}>Please describe the problem in detail bellow:</Text>
+                    <TextInput value={data.Problem} style={styles.input2} multiline={true} numberOfLines={8} textAlignVertical="top" onChangeText={(text)=>handleData(text, 'Problem')} />
+                </View>
+                <View>
+                    <Text style={styles.label}>Status</Text>
 
-                            <SelectDropdown
-                            data={dataOption}
-                            buttonStyle={{height:vh*5,width:vw*90,backgroundColor:'#DFE1ED',borderRadius:10}}
-                            dropdownStyle={{marginTop: -(vh*4),height:48*vh,fontSize:12}}
-                            buttonTextStyle={{fontSize:15}}
-                            renderDropdownIcon={isOpened => {
-                                return <FontAwesome   name={isOpened ? 'chevron-up' : 'chevron-down'} color={'#5A5A5A'} size={14} />;
-                            }}
-                            /* Change the default value */
-                            defaultValue={dataOption[0]}
+                    <SelectDropdown
+                        data={dataOption}
+                        buttonStyle={{height:vh*5,width:vw*90,backgroundColor:'#DFE1ED',borderRadius:10}}
+                        dropdownStyle={{marginTop: -(vh*4),height:48*vh,fontSize:12}}
+                        buttonTextStyle={{fontSize:15}}
+                        renderDropdownIcon={isOpened => {
+                            return <FontAwesome   name={isOpened ? 'chevron-up' : 'chevron-down'} color={'#5A5A5A'} size={14} />;
+                        }}
+                        /* Change the default value */
+                        defaultValue={dataOption[0]}
 
-                            onSelect={(selectedItem, index) => {
-                                (text)=>handleData(text, 'Status')
-                            }}
-                            buttonTextAfterSelection={(selectedItem, index) => {
-                                return selectedItem
-                            }}
-                            rowTextForSelection={(item, index) => {
-                
-                                return item
-                            }}
-                            />
-                           
-                    </View>
-                    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-                        <ImagePickerComponent />
-                    </View>
-                    <View style={styles.btnContainer}>
-                        <TouchableOpacity activeOpacity={0.6}>
-                            <Text style={styles.submitTxt}>Report Problem</Text>
-                        </TouchableOpacity>
-                    </View>
-                </View> 
+                        onSelect={(selectedItem, index) => {
+                            (text)=>handleData(text, 'Status')
+                        }}
+                        buttonTextAfterSelection={(selectedItem, index) => {
+                            return selectedItem
+                        }}
+                        rowTextForSelection={(item, index) => {
+                            return item
+                        }}
+                    />
+                </View>
+                <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+                    <ImagePickerComponent />
+                </View>
+                <View style={styles.btnContainer}>
+                    <TouchableOpacity activeOpacity={0.6}>
+                        <Text style={styles.submitTxt}>Report Problem</Text>
+                    </TouchableOpacity>
+                </View>
+            </View> 
         </ScrollView>
     </View>
   )

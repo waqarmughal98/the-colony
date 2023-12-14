@@ -11,29 +11,23 @@ const ProblemReports = ({navigation, data}) => {
 
   useEffect(()=>{
     (async ()=>{
-      const param = {
-        params:{
-          project_id: data.project_id,
-          ticketresource_type: "project",
-          ticketresource_id: data.project_id,
-        },
-      }
       const authToken = await AsyncStorage.getItem('token');
       await axios.post(URL + '/problemreports', {}, {
-        param,
+        params:{
+          project_id: data?.project_id,
+          ticketresource_type: "project",
+          ticketresource_id: data?.project_id,
+        },
         headers: {
           Authorization: `Bearer ${authToken}`,
         },
       }).then((res)=>{
         setItems(res.data.tickets.data)
+        setLoading(false) 
       }).catch((err)=>{
         console.log(err);
       })
     })()
-
-    setTimeout(() => {
-       setLoading(false) 
-    }, 1000);
   },[])
     
   return (
@@ -51,7 +45,7 @@ const ProblemReports = ({navigation, data}) => {
               {
                 items?.map((item,index)=>{
                   return(
-                    <TouchableOpacity onPress={()=>navigation.navigate("problem-report-replies", {id: item.ticket_id})} activeOpacity={0.6} key={index}>
+                    <TouchableOpacity onPress={()=>navigation.navigate("problem-report-replies", {id: item.ticket_id, jobTitle: item.project_title})} activeOpacity={0.6} key={index}>
                       <View style={[styles.mainIndividual,{backgroundColor:index%2==0 ? '#D2CBBC' : '#F2F1CF'}]}>
                         <View style={styles.individual}>
                           <Text style={styles.dataText}>{item.ticket_subject}</Text>

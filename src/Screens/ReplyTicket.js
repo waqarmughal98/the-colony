@@ -5,8 +5,11 @@ import DateInput from '../Components/Date/DateInput';
 import { FontAwesome } from '@expo/vector-icons';
 import SelectDropdown from 'react-native-select-dropdown'
 import ImagePickerComponent from '../Components/Picker/ImagePickerComponent'
+import axios from 'axios';
+import { URL } from '../utils/Constant';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 const ReplyTicket = ({navigation,route}) => {
-    const { items } = route.params;
+    const { items, jobTitle } = route.params;
     const getCurrentDate = () => {
         const today = new Date();
         const year = today.getFullYear();
@@ -17,15 +20,31 @@ const ReplyTicket = ({navigation,route}) => {
     const [data, setData] = useState({
         date: getCurrentDate(),
         Subject: "",
-        Job: "",
+        Job: jobTitle,
         Problem: "",
     })
 
     const handleData = (value, field)=> {
         setData({...data, [field]: value})
     }
-   
 
+    const submitReply = async ()=>{
+        const authToken = await AsyncStorage.getItem('token');
+        await axios.post(URL + '/problemreports/' + items.ticket.ticket_id + '/postreply', {
+            params: {
+                ticketreply_ticketid: items.ticket.ticket_id,
+                ticketreply_text: data.Problem,
+            },
+            headers: {
+                Authorization: `Bearer ${authToken}`,
+            },
+        }).then((res)=>{
+            console.log(res.data);
+        }).catch((err)=>{
+            console.log(err)
+        })
+    }
+   
     useEffect(()=>{
         console.log(items,"items....")
     },[items])
@@ -33,33 +52,32 @@ const ReplyTicket = ({navigation,route}) => {
     <View style={styles.container}>
         <ScrollView>
             <View style={styles.mainContainer}>
+                <View>
+                    <Text style={[styles.label,{marginBottom:5}]}>Date</Text>
                     <View>
-                        <Text style={[styles.label,{marginBottom:5}]}>Date</Text>
-                        <View  >
-                           <DateInput editable={true} style={styles.input}  setData={setData} name="replyTicket"   />
+                        <DateInput editable={true} style={styles.input}  setData={setData} name="replyTicket"   />
+                    </View>
+                </View>
+                <View>
+                    <Text style={styles.label}>Subject</Text>
+                    <TextInput value={data.Subject} style={styles.input} onChangeText={(text)=>handleData(text, 'Subject')} />
+                </View>
+                <View>
+                    <Text style={styles.label}>Job / Site</Text>
+                    <View style={styles.dateInput}>
+                        <Text>{data.Job}</Text>
+                    </View>
+                </View>
+                <View>
+                    <Text style={styles.label}>Please describe the problem in detail bellow:</Text>
+                    <TextInput value={data.Problem} style={styles.input2} multiline={true} numberOfLines={8} textAlignVertical="top" onChangeText={(text)=>handleData(text, 'Problem')} />
+                </View>
+                    <TouchableOpacity activeOpacity={0.6} onPress={submitReply}>
+                        <View style={styles.btnContainer}>
+                                <Text style={styles.submitTxt}>Reply</Text>
                         </View>
-                    </View>
-                    <View>
-                        <Text style={styles.label}>Subject</Text>
-                        <TextInput value={data.Subject} style={styles.input} onChangeText={(text)=>handleData(text, 'Subject')} />
-                    </View>
-                    <View>
-                        <Text style={styles.label}>Job / Site</Text>
-                        <View style={styles.dateInput} >
-                           <Text ></Text>
-                        </View>
-                    </View>
-                    <View>
-                        <Text style={styles.label}>Please describe the problem in detail bellow:</Text>
-                        <TextInput value={data.Problem} style={styles.input2} multiline={true} numberOfLines={8} textAlignVertical="top" onChangeText={(text)=>handleData(text, 'Problem')} />
-                    </View>
-             
-                    <View style={styles.btnContainer}>
-                        <TouchableOpacity activeOpacity={0.6}>
-                            <Text style={styles.submitTxt}>Reply</Text>
-                        </TouchableOpacity>
-                    </View>
-                </View> 
+                    </TouchableOpacity>
+            </View> 
         </ScrollView>
     </View>
   )
@@ -111,8 +129,6 @@ const styles = StyleSheet.create({
         display:"flex",
         justifyContent:'center',
         alignItems:"center",
-        marginBottom:3*vh,
-        marginTop:1.4*vh,
         height:45,
         borderRadius:10,
     },

@@ -2,8 +2,8 @@ import { StyleSheet, Text, View, TextInput, ScrollView, TouchableOpacity } from 
 import React,{useState} from 'react'
 import { vh,vw } from '../../utils/ScreenSize'
 const NoteModal = () => {
-    const [Title,setTitle]=useState("")
-    const [Discription, setDiscription] = useState();
+    const [Title, setTitle]=useState("")
+    const [Description, setDescription] = useState();
   return (
     <View style={styles.mainContainer}>
       <Text style={styles.heading} >Add My Notes</Text>
@@ -12,8 +12,8 @@ const NoteModal = () => {
             <TextInput value={Title} style={styles.titleInput}  onChangeText={(text)=>setTitle(text)} />
         </View >
       <View>
-            <Text style={styles.label}>Discrition</Text>
-            <TextInput value={Discription} multiline={true} textAlignVertical="top"  numberOfLines={6} style={styles.discInput} onChangeText={(text)=>setDiscription(text)}  />
+            <Text style={styles.label}>Description</Text>
+            <TextInput value={Description} multiline={true} textAlignVertical="top"  numberOfLines={6} style={styles.discInput} onChangeText={(text)=>setDescription(text)}  />
       </View >
         <View style={styles.btnContainer}>
             <TouchableOpacity activeOpacity={0.6}>

@@ -6,103 +6,123 @@ import AddFolder from '../Modals/AddFolder'
 import Color from '../../Color';
 import { Ionicons,AntDesign } from '@expo/vector-icons';
 import ImagePickerFiles from '../Picker/ImagePickerFiles';
-const Files = () => {
-  const [data,setData]=useState([])
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import axios from 'axios';
+import { URL } from '../../utils/Constant';
+const Files = ({data}) => {
+  const [items, setItems]=useState([])
   const [isModalVisible, setModalVisible] = useState(false);
   const [currentIndex, setcurrentIndex] = useState(null);
 
   const toggleModal = () => {
     setModalVisible(!isModalVisible);
   };
-  useEffect(()=>{
-    console.log(data,"data..")
-  },[data])
+
   const hendleOpen=(ind)=>{
-     if(ind==currentIndex)
-     {
+    if(ind==currentIndex){
       setcurrentIndex(null)
-     }
-     else{
-       setcurrentIndex(ind)
-     }
+    }else{
+      setcurrentIndex(ind)
+    }
   }
 
+  useEffect(()=>{
+    (async ()=>{
+      const authToken = await AsyncStorage.getItem('token');
+      axios.get(URL + '/files', {}, {
+        params:{
+          source: "ext",
+          ref: 'list',
+          fileresource_type: 'project',
+          fileresource_id: data?.project_id
+        },
+        headers: {
+          Authorization: `Bearer ${authToken}`,
+        }
+      }).then((res)=>{
+        setItems(res.data.files.data);
+        console.log(res.data.files.data);
+      }).catch((err)=>{
+        console.log(err);
+      })
+    })()
+  }, [])
+
   const fileName=(text)=>{
-    let pathParts = text.split("/");
-    let fileName = pathParts[pathParts.length - 1];
+    const pathParts = text.split("/");
+    const fileName = pathParts[pathParts.length - 1];
     return fileName
   }
   return (
     <View>
-       <ScrollView>
+      <ScrollView>
         <View style={{paddingBottom:100}}>
-        {/* Add folder section */}
-       <View style={styles.addFolder}>
-          <View style={styles.left}>
-            <Image source={require('../../../assets/imgs/close_folder.png')} style={styles.Image} />
-            <Text style={styles.text}>Folders</Text>
+          {/* Add folder section */}
+          <View style={styles.addFolder}>
+            <View style={styles.left}>
+              <Image source={require('../../../assets/imgs/close_folder.png')} style={styles.Image} />
+              <Text style={styles.text}>Folders</Text>
+            </View>
+            <View style={styles.right}>
+              <TouchableOpacity activeOpacity={0.6} style={styles.addFolderContainer} onPress={toggleModal} >
+                <Image source={require('../../../assets/imgs/addfile.png')} style={styles.Image2} />
+                <Text style={styles.text1}>Add Folders</Text>
+              </TouchableOpacity>
+            </View>
           </View>
-          <View style={styles.right}>
-            <TouchableOpacity activeOpacity={0.6} style={styles.addFolderContainer} onPress={toggleModal} >
-              <Image source={require('../../../assets/imgs/addfile.png')} style={styles.Image2} />
-              <Text style={styles.text1}>Add Folders</Text>
-            </TouchableOpacity>
-          </View>
-       </View>
-      
-       {/* Folder Name */}
-       <Text style={styles.nameText}>Folder Name</Text>
-      
-       <View style={styles.FolderMainContainer}>
-        {
-          data.map((item,index)=>
-            <View>
+        
+          {/* Folder Name */}
+          <Text style={styles.nameText}>Folder Name</Text>
+        
+          <View style={styles.FolderMainContainer}>
+          {
+            items.map((item,index)=>
+              <View>
                 <View style={styles.individual}>
                   <TouchableOpacity activeOpacity={0.6} style={styles.leftBtmContainer} onPress={()=>hendleOpen(index)}>
-                      <View style={styles.leftBtm}>
-                        <Image source={currentIndex==index?  require('../../../assets/imgs/opened_folder.png'): require('../../../assets/imgs/close_folder.png')} style={styles.Image3} />
-                        <Text>{item.FolderName}</Text>
-                      </View>
-                    </TouchableOpacity>
-                    <View style={styles.rightBtmContainer}>
-                        <ImagePickerFiles index={index} data={data} setData={setData} />
+                    <View style={styles.leftBtm}>
+                      <Image source={currentIndex==index?  require('../../../assets/imgs/opened_folder.png'): require('../../../assets/imgs/close_folder.png')} style={styles.Image3} />
+                      <Text>{item.FolderName}</Text>
                     </View>
-                   
+                  </TouchableOpacity>
+                  <View style={styles.rightBtmContainer}>
+                      <ImagePickerFiles index={index} data={data} setData={setItems} />
+                  </View>
                 </View>
-                    { currentIndex==index && (
-                      <View style={styles.imageContainer}>
-                         {item.images.length>0 ?  (item.images.map((image, i) => (
-                          <View style={styles.ImageWrapper}>
-                            <Image key={i} source={{ uri: image }} style={styles.imageFolder} />
-                            <Text style={styles.fileName}>{fileName(image)}</Text>
-                          </View>
-                        ))):(
-                          <View style={styles.ImageWrapper}>
-                            <Text>There is no image in this folder</Text>
-                          </View>
-                        )}
+                {currentIndex==index && (
+                  <View style={styles.imageContainer}>
+                      {item.images.length>0 ? (item.images.map((image, i) => (
+                      <View style={styles.ImageWrapper} key={i}>
+                        <Image source={{ uri: image }} style={styles.imageFolder} />
+                        <Text style={styles.fileName}>{fileName(image)}</Text>
+                      </View>
+                    ))):(
+                      <View style={styles.ImageWrapper}>
+                        <Text>There is no image in this folder</Text>
                       </View>
                     )}
-            </View>
-          )
-        }
-       </View>
-
-       <Modal isVisible={isModalVisible}>
-          <View style={{ height: 250, backgroundColor: Color.brightOrange, justifyContent: 'center', alignItems: 'center' ,borderRadius:10 }}>
-              <AddFolder toggleModal={toggleModal} setData={setData}/> 
-          
-            {/* Close button */}
-            <TouchableOpacity
-              style={{ position: 'absolute', top: 10, right: 10 }}
-              onPress={toggleModal}
-            >
-              <Ionicons name="md-close" size={27} color="white" />
-            </TouchableOpacity>
+                  </View>
+                )}
+              </View>
+            )
+          }
           </View>
-        </Modal>
+
+          <Modal isVisible={isModalVisible}>
+            <View style={{ height: 250, backgroundColor: Color.brightOrange, justifyContent: 'center', alignItems: 'center' ,borderRadius:10 }}>
+              <AddFolder toggleModal={toggleModal} setData={setItems}/> 
+            
+              {/* Close button */}
+              <TouchableOpacity
+                style={{ position: 'absolute', top: 10, right: 10 }}
+                onPress={toggleModal}
+              >
+                <Ionicons name="md-close" size={27} color="white" />
+              </TouchableOpacity>
+            </View>
+          </Modal>
         </View>
-    </ScrollView>
+      </ScrollView>
     </View>
   )
 }

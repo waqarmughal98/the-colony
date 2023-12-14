@@ -5,6 +5,10 @@ import { vw,vh } from '../utils/ScreenSize'
 import { FontAwesome } from '@expo/vector-icons';
 import SelectDropdown from 'react-native-select-dropdown'
 import DateInput from '../Components/Date/DateInput'
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import axios from 'axios';
+import { URL } from '../utils/Constant';
+import { useNavigation } from '@react-navigation/native';
 const AddRequest = () => {
     const [leave, setLeave] = useState({
         leave_title: "",
@@ -15,6 +19,7 @@ const AddRequest = () => {
         day_to_taken: "",
         department: "",
     })
+    const navigation = useNavigation();
 
     useEffect(()=>{
         console.log(leave,"leave")
@@ -30,86 +35,103 @@ const AddRequest = () => {
         console.log(leave, field, 'value');
     }
 
+    const submitRequest = async ()=>{
+        console.log(leave, 'submit')
+        const authToken = await AsyncStorage.getItem('token');
+        await axios.post(URL + '/leave',{} ,{
+            params:leave,
+            headers:{
+                Authorization: `Bearer ${authToken}`
+            }
+        }).then(()=>{
+            console.log('Submitted')
+            setLeave('')
+            navigation.push('requests')
+        }).catch((err)=>{
+            console.log(err);
+        })
+    }
+
     const data=["Holiday","Sickness","Overtime"]
     /* Check this data */
-    const departmentData=["Office","Sickness","Overtime"]
+    const departmentData=["Office", "Topo Surveyor", "Utilities Surveyor", 'CAD Team']
   return (
     <View style={styles.mainContainer}>
         <ScrollView>
-      <View style={styles.fieldsContainer}>
-        <View>
-            <Text style={styles.label}>Request Type*</Text>
-            <SelectDropdown
-                data={data}
-                renderDropdownIcon={isOpened => {
-                    return <FontAwesome style={{marginRight:4}}  name={isOpened ? 'chevron-up' : 'chevron-down'} color={'#5A5A5A'} size={16} />;
-                  }}
-                buttonStyle={{backgroundColor:"white",height:vh*5,width:"100%",borderRadius:10}}
-                dropdownStyle={{marginTop: -(vh*4)}}
-                buttonTextStyle={{fontSize:15}}
-                /* Change the default value */
-                defaultValue={leave.leave_type}
-                style={{backgroundColor:"white",height:20,}}
-                onSelect={(selectedItem, index) => {
-                    updateLeave(selectedItem, 'leave_type')
-                }}
-                buttonTextAfterSelection={(selectedItem, index) => {
-                    return (selectedItem)  
-                }}
-                rowTextForSelection={(item, index) => {
-                    return item
-                }}
-                />
-        </View>
-        <View>
-            <Text style={styles.label}>Reason Title*</Text>
-            <TextInput value={leave.leave_title} style={styles.dayInput} onChangeText={(text)=>updateLeave(text, 'leave_title')} />
-        </View>
-        <View>
-            <Text style={styles.label}>Reason*</Text>
-            <TextInput value={leave.leave_reason} multiline={true} textAlignVertical="top"  numberOfLines={6} style={styles.reasonInput} onChangeText={(text)=>updateLeave(text, "leave_reason")} />
-        </View>
-        <View>
-            <Text style={styles.label}>Start Date*</Text>
-            <DateInput editable={true}  setLeave={setLeave} name="startDate"  handleDateChange={handleDateChange}/>
-        </View>
-        <View>
-            <Text style={styles.label}>End Date*</Text>
-            <DateInput editable={true} setLeave={setLeave} name="endDate"  handleDateChange={handleDateChange}/>
-        </View>
-        <View>
-            <Text style={styles.label}>Days to be taken*</Text>
-            <TextInput value={leave.day_to_taken} style={styles.dayInput} onChangeText={(text)=>updateLeave(text, 'day_to_taken')} />
-        </View>
-        <View >
-            <Text style={styles.label}>Department*</Text>
-            <SelectDropdown
-                data={departmentData}
-                renderDropdownIcon={isOpened => {
-                    return <FontAwesome style={{marginRight:4}}  name={isOpened ? 'chevron-up' : 'chevron-down'} color={'#5A5A5A'} size={16} />;
-                  }}
-                buttonStyle={{backgroundColor:"white",height:vh*5,width:"100%",borderRadius:10}}
-                dropdownStyle={{marginTop: -(vh*4)}}
-                buttonTextStyle={{fontSize:15}}
-                /* Change the default value */
-                defaultValue={leave.department}
-                style={{backgroundColor:"white",height:20,}}
-                onSelect={(selectedItem, index) => {
-                    updateLeave(selectedItem, 'department')
-                }}
-                buttonTextAfterSelection={(selectedItem, index) => {
-                    return (selectedItem )  
-                }}
-                rowTextForSelection={(item, index) => {
-                    return item
-                }}
-                />
-        </View>
-           <TouchableOpacity style={styles.btnContainer} activeOpacity={0.6}>
-             <Text style={styles.submitTxt}>Submit</Text>
-           </TouchableOpacity>       
-      </View>
-      </ScrollView>
+            <View style={styles.fieldsContainer}>
+                <View>
+                    <Text style={styles.label}>Request Type*</Text>
+                    <SelectDropdown
+                        data={data}
+                        renderDropdownIcon={isOpened => {
+                            return <FontAwesome style={{marginRight:4}}  name={isOpened ? 'chevron-up' : 'chevron-down'} color={'#5A5A5A'} size={16} />;
+                        }}
+                        buttonStyle={{backgroundColor:"white",height:vh*5,width:"100%",borderRadius:10}}
+                        dropdownStyle={{marginTop: -(vh*4)}}
+                        buttonTextStyle={{fontSize:15}}
+                        /* Change the default value */
+                        defaultValue={leave.leave_type}
+                        style={{backgroundColor:"white",height:20,}}
+                        onSelect={(selectedItem, index) => {
+                            updateLeave(selectedItem, 'leave_type')
+                        }}
+                        buttonTextAfterSelection={(selectedItem, index) => {
+                            return (selectedItem)  
+                        }}
+                        rowTextForSelection={(item, index) => {
+                            return item
+                        }}
+                        />
+                </View>
+                <View>
+                    <Text style={styles.label}>Reason Title*</Text>
+                    <TextInput value={leave.leave_title} style={styles.dayInput} onChangeText={(text)=>updateLeave(text, 'leave_title')} />
+                </View>
+                <View>
+                    <Text style={styles.label}>Reason*</Text>
+                    <TextInput value={leave.leave_reason} multiline={true} textAlignVertical="top"  numberOfLines={6} style={styles.reasonInput} onChangeText={(text)=>updateLeave(text, "leave_reason")} />
+                </View>
+                <View>
+                    <Text style={styles.label}>Start Date*</Text>
+                    <DateInput editable={true}  setLeave={setLeave} name="startDate"  handleDateChange={handleDateChange}/>
+                </View>
+                <View>
+                    <Text style={styles.label}>End Date*</Text>
+                    <DateInput editable={true} setLeave={setLeave} name="endDate"  handleDateChange={handleDateChange}/>
+                </View>
+                <View>
+                    <Text style={styles.label}>Days to be taken*</Text>
+                    <TextInput value={leave.day_to_taken} style={styles.dayInput} onChangeText={(text)=>updateLeave(text, 'day_to_taken')} />
+                </View>
+                <View >
+                    <Text style={styles.label}>Department*</Text>
+                    <SelectDropdown
+                        data={departmentData}
+                        renderDropdownIcon={isOpened => {
+                            return <FontAwesome style={{marginRight:4}}  name={isOpened ? 'chevron-up' : 'chevron-down'} color={'#5A5A5A'} size={16} />;
+                        }}
+                        buttonStyle={{backgroundColor:"white",height:vh*5,width:"100%",borderRadius:10}}
+                        dropdownStyle={{marginTop: -(vh*4)}}
+                        buttonTextStyle={{fontSize:15}}
+                        /* Change the default value */
+                        defaultValue={leave.department}
+                        style={{backgroundColor:"white",height:20,}}
+                        onSelect={(selectedItem, index) => {
+                            updateLeave(selectedItem, 'department')
+                        }}
+                        buttonTextAfterSelection={(selectedItem, index) => {
+                            return (selectedItem )  
+                        }}
+                        rowTextForSelection={(item, index) => {
+                            return item
+                        }}
+                        />
+                </View>
+                <TouchableOpacity style={styles.btnContainer} activeOpacity={0.6} onPress={submitRequest}>
+                    <Text style={styles.submitTxt}>Submit</Text>
+                </TouchableOpacity>       
+            </View>
+        </ScrollView>
     </View>
   )
 }

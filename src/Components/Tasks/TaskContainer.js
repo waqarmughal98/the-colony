@@ -4,7 +4,7 @@ import { MaterialIcons } from '@expo/vector-icons';
 import Color from '../../Color';
 import { vh, vw } from '../../utils/ScreenSize';
 
-const TaskContainer = ({navigation, data}) => {
+const TaskContainer = ({data, navigation}) => {
   return (
     <View style={styles.mainContainer}>
       <View style={styles.containerHeader}>
@@ -47,37 +47,37 @@ const styles = StyleSheet.create({
         alignItems:"center"
     },
     text:{
-        fontSize:16,
-        color:'white',
-        fontWeight:'bold',
-        flex:0.25
+      fontSize:16,
+      color:'white',
+      fontWeight:'bold',
+      flex:0.25
     },
     text2:{
-        fontSize:16,
-        color:'white',
-        fontWeight:'bold',
-        flex:0.75,
-        textAlign:"center"
+      fontSize:16,
+      color:'white',
+      fontWeight:'bold',
+      flex:0.75,
+      textAlign:"center"
     },
     dataText:{
-        fontSize:14,
-        color:'black',
-        flex:0.4
+      fontSize:14,
+      color:'black',
+      flex:0.4
     },
     dataText2:{
-        fontSize:14,
-        color:'black',
-        flex:0.6,
-        textAlign:"center"
+      fontSize:14,
+      color:'black',
+      flex:0.6,
+      textAlign:"center"
     },
     individual:{
-        height:45,
-        display:"flex",
-        flexDirection:'row',
-        alignItems:"center",
-        paddingHorizontal:20,
-        borderBottomColor:Color.brightOrange,
-        borderBottomWidth:1
+      height:45,
+      display:"flex",
+      flexDirection:'row',
+      alignItems:"center",
+      paddingHorizontal:20,
+      borderBottomColor:Color.brightOrange,
+      borderBottomWidth:1
     },
     noRecord:{
       color: "black",
