@@ -10,10 +10,12 @@ const Login = ({ navigation }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   useEffect(() => {
-    const token = AsyncStorage.getItem("token");
-    if (token && token !== "") {
-      navigation.navigate("Dashboard",{screen:"Dashboard"});
-    }
+    (async()=>{
+      const authToken = await AsyncStorage.getItem("token");
+      if (authToken && authToken !== "") {
+        await navigation.navigate("Dashboard");
+      }
+    })()
   }, []);
 
   const Login = () => {

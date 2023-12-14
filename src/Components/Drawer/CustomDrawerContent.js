@@ -9,7 +9,7 @@ const CustomDrawerContent = (props) => {
   const HandleLogout= async()=>{
     try {
       await AsyncStorage.removeItem('token')
-      await navigation.navigate("Login") 
+      await navigation.navigate("LoginScreen") 
       // Additional logout logic or navigation here
     } catch (error) {
       console.error('Error removing token:', error);

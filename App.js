@@ -125,7 +125,7 @@ function MainStackScreen() {
   return (
     <Stack.Navigator screenOptions={screenOptions} initialRouteName="Dashboard">
         <Stack.Screen
-          name="Login"
+          name="LoginScreen"
           component={LoginStackScreen}
           options={{ headerShown: false }}
       />
@@ -288,7 +288,7 @@ function LoginStackScreen() {
 
   }
   return (
-    <LoginStack.Navigator  screenOptions={screenOptions} initialRouteName="work-logs">
+    <LoginStack.Navigator  screenOptions={screenOptions} initialRouteName="Login">
          <LoginStack.Screen
           name="Login"
           component={Login}
