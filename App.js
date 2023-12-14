@@ -28,11 +28,29 @@ import AllProblemReports from './src/Screens/AllProblemReports';
 import ReplyTicket from './src/Screens/ReplyTicket';
 const Stack = createNativeStackNavigator();
 const Drawer = createDrawerNavigator();
+
 function App() {
 
-
   StatusBar.setBarStyle('light-content');
-  const Tab = createBottomTabNavigator();
+  return (
+    <Context>
+       <NavigationContainer>
+       <Drawer.Navigator initialRouteName="Dashboard"  drawerContent={(props) => <CustomDrawerContent {...props} />}>
+        <Drawer.Screen name="Back to Dashboard" options={{
+              headerShown:false,
+            }} component={MainStackScreen} />
+        {/* Add more screens as needed */}
+      </Drawer.Navigator>
+    </NavigationContainer>
+    </Context>
+  );
+ 
+}
+
+export default App;
+
+
+const Tab = createBottomTabNavigator();
   const TabNavigator = () => (
     <Tab.Navigator
       initialRouteName="Home"
@@ -68,7 +86,7 @@ function App() {
       />
       <Tab.Screen
         name="Home"
-        component={HomeStackScreen}
+        component={HomeScreenStack}
         options={{
           tabBarLabel: '',
           headerShown:false,
@@ -92,30 +110,11 @@ function App() {
           ),
         }}
       />
+      
     </Tab.Navigator>
   );
 
-
-  return (
-    <Context>
-       <NavigationContainer>
-       <Drawer.Navigator initialRouteName="Dashboard"  drawerContent={(props) => <CustomDrawerContent {...props} />}>
-        <Drawer.Screen name="Back to Dashboard" options={{
-              headerShown:false,
-            }} component={TabNavigator} />
-        {/* Add more screens as needed */}
-      </Drawer.Navigator>
-    </NavigationContainer>
-    </Context>
-  );
- 
-}
-
-export default App;
-
-
-function HomeStackScreen() {
-  const navigationState = useNavigationState(state => state);
+function MainStackScreen() {
   const screenOptions = {
     headerStyle: { backgroundColor: '#FBA200' },
     headerTintColor: 'white',
@@ -124,120 +123,136 @@ function HomeStackScreen() {
 
   }
   return (
-    <Stack.Navigator screenOptions={screenOptions} initialRouteName="Login">
-       {navigationState.routes[navigationState.index].name === 'Login' ? (
-          <Stack.Screen
-            name="Login"
-            component={Login}
-            options={{ headerShown: false }}
-          />
-        ) : (
-          <>
-        <Stack.Screen name="Dashboard"  component={Dashboard} />
+    <Stack.Navigator screenOptions={screenOptions} initialRouteName="Dashboard">
         <Stack.Screen
-          name="All-Job"
-          component={AllJobs}
-          options={{
-            title: 'All Jobs'
-          }}
-        />
-        <Stack.Screen
-          name="jobs-detail"
-          component={JobsDetail}
-          options={{
-            title: 'Jobs Detail'
-          }}
-        />
-        <Stack.Screen
-          name="problem-report-replies"
-          component={ProblemReportReplies}
-          options={{
-            title: 'Problem Report Replies'
-          }}
-        />
-        <Stack.Screen
-          name="problem-reports"
-          component={ProblemReports}
-          options={{
-            title: 'Problem Reports'
-          }}
-        />
+          name="Login"
+          component={LoginStackScreen}
+          options={{ headerShown: false }}
+      />
+        <Stack.Screen name="Dashboard"  options={{headerShown:false}} component={TabNavigator} />
       
-        <Stack.Screen
-          name="latest-activity"
-          component={LatestActivity}
-          options={{
-            title: 'Latest Activity'
-          }}
-        />
-        <Stack.Screen
-          name="notifications"
-          component={Notifications}
-          options={{
-            title: 'Notifications'
-          }}
-        />
-          <Stack.Screen
-          name="tasks"
-          component={Tasks}
-          options={{
-            title: 'Tasks'
-          }}
-        />
-          <Stack.Screen
-          name="task-details"
-          component={TaskDetail}
-          options={{
-            title: 'Tasks'
-          }}
-        />
+   
+    </Stack.Navigator>
+  );
+}
 
-        <Stack.Screen
-          name="job-Status"
-          component={JobStatus}
-          options={{
-            title: 'Job Status'
-          }}
-        />
+const HomeStack= createNativeStackNavigator();
+function HomeScreenStack() {
+  const screenOptions = {
+    headerStyle: { backgroundColor: '#FBA200' },
+    headerTintColor: 'white',
+    headerTitleAlign: 'center',
+    gestureEnabled: true,
 
-        <Stack.Screen
-          name="requests"
-          component={Requests}
-          options={{
-            title: 'Requests'
-          }}
-        />
-        <Stack.Screen
-          name="add-request"
-          component={AddRequest}
-          options={{
-            title: 'Add Request'
-          }}
-        />
-        <Stack.Screen
-          name="new-problem-report"
-          component={NewProblemReport}
-          options={{
-            title: 'New Problem Report'
-          }}
-        />
-        <Stack.Screen
-          name="all-problem-report"
-          component={AllProblemReports}
-          options={{
-            title: 'All Problem Report'
-          }}
-        />
-        <Stack.Screen
-          name="reply-ticket"
-          component={ReplyTicket}
-          options={{
-            title: 'Reply Ticket'
-          }}
-        />
-        </>
-        )}
-  </Stack.Navigator>
+  }
+  return (
+    <HomeStack.Navigator screenOptions={screenOptions} initialRouteName="Dashboard">
+ 
+       <>
+          <HomeStack.Screen name="Dashboard"  component={Dashboard} />
+          <HomeStack.Screen
+            name="All-Job"
+            component={AllJobs}
+            options={{
+              title: 'All Jobs'
+            }}
+          />
+          <HomeStack.Screen
+            name="jobs-detail"
+            component={JobsDetail}
+            options={{
+              title: 'Jobs Detail'
+            }}
+          />
+          <HomeStack.Screen
+            name="problem-report-replies"
+            component={ProblemReportReplies}
+            options={{
+              title: 'Problem Report Replies'
+            }}
+          />
+          <HomeStack.Screen
+            name="problem-reports"
+            component={ProblemReports}
+            options={{
+              title: 'Problem Reports'
+            }}
+          />
+        
+          <HomeStack.Screen
+            name="latest-activity"
+            component={LatestActivity}
+            options={{
+              title: 'Latest Activity'
+            }}
+          />
+          <HomeStack.Screen
+            name="notifications"
+            component={Notifications}
+            options={{
+              title: 'Notifications'
+            }}
+          />
+            <HomeStack.Screen
+            name="tasks"
+            component={Tasks}
+            options={{
+              title: 'Tasks'
+            }}
+          />
+            <HomeStack.Screen
+            name="task-details"
+            component={TaskDetail}
+            options={{
+              title: 'Tasks'
+            }}
+          />
+
+          <HomeStack.Screen
+            name="job-Status"
+            component={JobStatus}
+            options={{
+              title: 'Job Status'
+            }}
+          />
+
+          <HomeStack.Screen
+            name="requests"
+            component={Requests}
+            options={{
+              title: 'Requests'
+            }}
+          />
+          <HomeStack.Screen
+            name="add-request"
+            component={AddRequest}
+            options={{
+              title: 'Add Request'
+            }}
+          />
+          <HomeStack.Screen
+            name="new-problem-report"
+            component={NewProblemReport}
+            options={{
+              title: 'New Problem Report'
+            }}
+          />
+          <HomeStack.Screen
+            name="all-problem-report"
+            component={AllProblemReports}
+            options={{
+              title: 'All Problem Report'
+            }}
+          />
+          <HomeStack.Screen
+            name="reply-ticket"
+            component={ReplyTicket}
+            options={{
+              title: 'Reply Ticket'
+            }}
+          />
+          </> 
+        </HomeStack.Navigator>
   );
 }
 
@@ -262,5 +277,29 @@ function WorkLogStackScreen() {
   </WorkLogStack.Navigator>
   );
 }
+
+const LoginStack = createNativeStackNavigator();
+function LoginStackScreen() {
+  const screenOptions = {
+    headerStyle: { backgroundColor: '#FBA200' },
+    headerTintColor: 'white',
+    headerTitleAlign: 'center',
+    gestureEnabled: true,
+
+  }
+  return (
+    <LoginStack.Navigator  screenOptions={screenOptions} initialRouteName="work-logs">
+         <LoginStack.Screen
+          name="Login"
+          component={Login}
+          options={{
+            headerShown:false
+          }}
+        />
+  </LoginStack.Navigator>
+  );
+}
+
+
 
 
