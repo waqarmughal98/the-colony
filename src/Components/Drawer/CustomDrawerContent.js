@@ -3,7 +3,20 @@ import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { DrawerContentScrollView, DrawerItemList } from '@react-navigation/drawer';
 import { vh,vw } from '../../utils/ScreenSize';
 import Color from '../../Color';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 const CustomDrawerContent = (props) => {
+  const { navigation } = props;
+  const HandleLogout= async()=>{
+    try {
+      await AsyncStorage.removeItem('token')
+      await navigation.navigate("Login") 
+      // Additional logout logic or navigation here
+    } catch (error) {
+      console.error('Error removing token:', error);
+    }
+ 
+  
+  }
   return (
     <DrawerContentScrollView {...props}>
       {/* Your custom drawer content */}
@@ -20,13 +33,15 @@ const CustomDrawerContent = (props) => {
         <TouchableOpacity >
           <Text style={styles.drawerFooterText}>Update Password</Text>
         </TouchableOpacity>
-        <TouchableOpacity >
+        <TouchableOpacity onPress={()=>HandleLogout()}>
           <Text style={styles.drawerFooterText}>Logout</Text>
         </TouchableOpacity>
       </View>
     </DrawerContentScrollView>
   );
 };
+
+
 
 const styles = StyleSheet.create({
   drawerHeader: {

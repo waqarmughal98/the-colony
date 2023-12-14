@@ -1,6 +1,6 @@
 import { StyleSheet, Text, View, TouchableOpacity, Alert } from 'react-native'
 import React, { useEffect, useState } from 'react'
-import { createDrawerNavigator } from '@react-navigation/drawer';
+
 import { Ionicons } from '@expo/vector-icons';
 import Color from '../Color';
 import DasboardTop from '../Components/Dasboard/DasboardTop';
@@ -8,9 +8,8 @@ import DashboardBottom from '../Components/Dasboard/DashboardBottom';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 import { URL } from '../utils/Constant';
-const Drawer = createDrawerNavigator();
 function Dashboard({ navigation }) {
-  const [token, setToken] = useState([]);
+;
   const [data, setData] = useState([]);
     React.useLayoutEffect(() => {
       navigation.setOptions({
@@ -41,6 +40,9 @@ function Dashboard({ navigation }) {
     useEffect(()=>{
         (async ()=>{
           const authToken = await AsyncStorage.getItem("token");
+          if(!authToken){
+             navigation.navigate("Login")
+          }
           console.log(authToken)
           axios.get(URL + '/dashboard',{
               headers: {
@@ -53,7 +55,8 @@ function Dashboard({ navigation }) {
           })
       })()
     }, [])
-  
+
+
     return (
       <View style={styles.mainContainer}>
         <View style={{flex:1}}>
