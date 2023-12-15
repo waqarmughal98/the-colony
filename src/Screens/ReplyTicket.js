@@ -30,16 +30,17 @@ const ReplyTicket = ({navigation,route}) => {
 
     const submitReply = async ()=>{
         const authToken = await AsyncStorage.getItem('token');
-        await axios.post(URL + '/problemreports/' + items.ticket.ticket_id + '/postreply', {
+        await axios.post(URL + '/problemreports/' + items?.ticket?.ticket_id + '/postreply', {},  {
             params: {
-                ticketreply_ticketid: items.ticket.ticket_id,
-                ticketreply_text: data.Problem,
+                ticketreply_ticketid: items?.ticket?.ticket_id,
+                ticketreply_text: data?.Problem,
             },
             headers: {
                 Authorization: `Bearer ${authToken}`,
             },
         }).then((res)=>{
             console.log(res.data);
+            setData('')
         }).catch((err)=>{
             console.log(err)
         })

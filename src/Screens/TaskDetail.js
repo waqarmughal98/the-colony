@@ -5,8 +5,12 @@ import SelectDropdown from 'react-native-select-dropdown'
 import Color from '../Color'
 // import { Picker } from '@react-native-picker/picker';
 import { vw,vh } from '../utils/ScreenSize'
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import axios from 'axios';
+import { URL } from '../utils/Constant';
 const TaskDetail = ({navigation , route}) => {
   const { items } = route.params;
+  const [data, setData] = useState()
   const [loading, setLoading]=useState(true)
   React.useLayoutEffect(() => {
     navigation.setOptions({
@@ -25,75 +29,95 @@ const TaskDetail = ({navigation , route}) => {
 
      /* Remove this when fethc data */
     useEffect(()=>{
+      console.log(items?.task_status)
+      setData([
+        {
+          label:"Company",
+          value: items.client_company_name
+        },
+        {
+          label:"Task",
+          value: items.project_title
+        },
+        {
+          label:"Status",
+          value: items?.task_status - 1,
+          selectoptions:true,
+        },
+        {
+          label:"Start Date",
+          value:items?.project_date_start
+        },
+        {
+          label:"End Date",
+          value:items?.project_date_due
+        },
+        {
+          label:"Priority",
+          value:items?.task_priority
+        },
+    ])
         setTimeout(() => {
            setLoading(false) 
         }, 1000);
-        console.log(items)
     },[])
     
-    const options=[
-        {
-            label:"Company",
-            value: items.client_company_name
-        },
-        {
-            label:"Task",
-            value: items.project_title
-        },
-        {
-            label:"Status",
-            value: "0",
-            selectoptions:true,
-        },
-        {
-            label:"Start Date",
-            value:items.project_date_start
-        },
-        {
-            label:"End Date",
-            value:items.project_date_due
-        },
-        {
-            label:"Priority",
-            value:items.task_priority
-        },
+    const options =['New (Unassigned)', 'Not Started', 'In Progress', 'On Hold','Query Resolved','Query Raised','Completed']
 
-    ]
-    const data=['New (Unassigned)', 'Not Started', 'In Progress', 'On Hold','Query Resolved','Query Raised','Completed']
-    const [selectedStatus, setSelectedStatus] = useState(2);
+    const selectOption = async (value, index)=>{
+      const updatedData = data.map((el)=>(
+        el.label == "Status" ? (
+          { ...el, value: index }
+        ) : el
+      ))
+      await setData(updatedData)
+    }
+
+    const updateTask = async ()=>{
+      const statusObject = await data?.find((item) => item?.label === "Status")
+      const authToken = await AsyncStorage.getItem('token');
+      await axios.post(URL + '/update-task/' + items?.task_id, {
+        task_status: statusObject?.value + 1
+      },{
+        headers:{
+          Authorization: `Bearer ${authToken}`
+        }
+      }).then((res)=>{
+        console.log(res.data);
+      }).catch((err)=>{
+        console.log(err);
+      })
+    }
+
   return (
     <View style={styles.mainContainer}>
      {
       !loading ? 
       <View style={styles.Container}>
         <ScrollView>
-        {options.map((option, index) => (
+        {data.map((option, index) => (
           <View key={index} style={styles.optionContainer}>
             <Text style={styles.label}>{option.label}</Text>
-           
             {option.selectoptions ? (
               <SelectDropdown
-              data={data}
-              buttonStyle={{backgroundColor:"white",height:vh*5,width:vw*50,display:"flex",flexDirection:"row",justifyContent:"row"}}
-              dropdownStyle={{marginTop: -(vh*4),height:48*vh,fontSize:12}}
-              buttonTextStyle={{fontSize:15}}
-              renderDropdownIcon={isOpened => {
-                return <FontAwesome style={{marginLeft:4}}  name={isOpened ? 'chevron-up' : 'chevron-down'} color={'#5A5A5A'} size={14} />;
-              }}
-              /* Change the default value */
-              defaultValue={data[0]}
-
-              onSelect={(selectedItem, index) => {
-                setSelectedStatus(selectedItem)
-              }}
-              buttonTextAfterSelection={(selectedItem, index) => {
-                return selectedItem
-              }}
-              rowTextForSelection={(item, index) => {
-  
-                return item
-              }}
-            />
+                data={options}
+                buttonStyle={{backgroundColor:"white",height:vh*5,width:vw*45,display:"flex",flexDirection:"row",justifyContent:"row"}}
+                dropdownStyle={{marginTop: -(vh*4),fontSize:12}}
+                buttonTextStyle={{fontSize:15}}
+                renderDropdownIcon={isOpened => {
+                  return <FontAwesome style={{marginLeft:4}}  name={isOpened ? 'chevron-up' : 'chevron-down'} color={'#5A5A5A'} size={14} />;
+                }}
+                defaultValue={options[option.value]}
+                onSelect={(selectedItem, index) => {
+                  selectOption("Status", index)
+                }}
+                buttonTextAfterSelection={(selectedItem, index) => {
+                  return selectedItem
+                }}
+                rowTextForSelection={(item, index) => {
+                  return item
+                }}
+              />
             ) : (
               <Text style={styles.value}>{option.value}</Text>
             )}
@@ -117,8 +141,8 @@ const TaskDetail = ({navigation , route}) => {
             </ScrollView>
           </View>
         </View>
-           <TouchableOpacity style={styles.btnContainer}  activeOpacity={0.6} onPress={()=>navigation.navigate("Dashboard")}>
-             <Text style={styles.submitTxt}>Update</Text>
+           <TouchableOpacity style={styles.btnContainer}  activeOpacity={0.6} onPress={updateTask}>
+             <Text style={styles.submitTxt} onPress={updateTask}>Update</Text>
            </TouchableOpacity>
         </ScrollView>
       </View>
@@ -158,6 +182,7 @@ const styles = StyleSheet.create({
     optionContainer: {
         flexDirection: 'row',
         justifyContent: 'space-between',
+        alignItems: 'center',
         borderBottomWidth: 1,
         borderBottomColor: 'lightgray',
         paddingVertical: 15,

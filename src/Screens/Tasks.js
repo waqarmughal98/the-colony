@@ -17,9 +17,7 @@ const Tasks = ({navigation,route}) => {
           headerTitle: item?.ScreenTitle,
         });
       }, [navigation]);
-   
 
-    /* Change the api this is dummy api */
     useEffect(()=>{
         (async ()=>{
             const authToken = await AsyncStorage.getItem("token");
@@ -29,7 +27,7 @@ const Tasks = ({navigation,route}) => {
                         Authorization: `Bearer ${authToken}`
                     }
                 }).then((res)=>{
-                    console.log(res.data.tasks.data, 'Task In Pending');
+                    // console.log(res.data.tasks.data, 'Task In Pending');
                     setData(res.data.tasks.data);
                     setLoading(false)
                 }).catch((err)=>{
@@ -41,7 +39,7 @@ const Tasks = ({navigation,route}) => {
                         Authorization: `Bearer ${authToken}`
                     }
                 }).then((res)=>{
-                    console.log(res.data.tasks.data, 'Task In Progress');
+                    // console.log(res.data.tasks.data, 'Task In Progress');
                     setData(res.data.tasks.data);
                     setLoading(false)
                 }).catch((err)=>{
@@ -49,31 +47,31 @@ const Tasks = ({navigation,route}) => {
                 })
             }else{
                 axios.get(URL + '/task/all', {
-                headers: {
-                    Authorization: `Bearer ${authToken}`
-                }
-            }).then((res)=>{
-                console.log(res.data.tasks.data, 'All Task');
-                setData(res.data.tasks.data);
-                setLoading(false)
-            }).catch((err)=>{
-                console.log(err);
-            })
+                    headers: {
+                        Authorization: `Bearer ${authToken}`
+                    }
+                }).then((res)=>{
+                    // console.log(res.data.tasks.data, 'All Task');
+                    setData(res.data.tasks.data);
+                    setLoading(false)
+                }).catch((err)=>{
+                    console.log(err);
+                })
             }
         })()
     },[])
   return (
     <View>
-    {
-     !loading ? 
-        <View>
-            <TaskContainer navigation={navigation} data={data}/>
-        </View>
-        :
-        <View style={styles.Indicator}>
-            <ActivityIndicator size="large" color={"black"} />
-            <Text style={styles.fetchingData}>Fetching Data</Text>
-        </View>
+        {
+        !loading ? 
+            <View>
+                <TaskContainer navigation={navigation} data={data}/>
+            </View>
+            :
+            <View style={styles.Indicator}>
+                <ActivityIndicator size="large" color={"black"} />
+                <Text style={styles.fetchingData}>Fetching Data</Text>
+            </View>
         }
      </View>
   )
