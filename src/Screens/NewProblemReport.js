@@ -84,11 +84,10 @@ const NewProblemReport = ({navigation,route}) => {
                         dropdownStyle={{marginTop: -(vh*4),height:48*vh,fontSize:12}}
                         buttonTextStyle={{fontSize:15}}
                         renderDropdownIcon={isOpened => {
-                            return <FontAwesome   name={isOpened ? 'chevron-up' : 'chevron-down'} color={'#5A5A5A'} size={14} />;
+                            return <FontAwesome name={isOpened ? 'chevron-up' : 'chevron-down'} color={'#5A5A5A'} size={14} />;
                         }}
                         /* Change the default value */
                         defaultValue={dataOption[0]}
-
                         onSelect={(selectedItem, index) => {
                             (text)=>handleData(text, 'Status')
                         }}
