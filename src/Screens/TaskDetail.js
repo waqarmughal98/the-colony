@@ -77,10 +77,12 @@ const TaskDetail = ({navigation , route}) => {
       const statusObject = await data?.find((item) => item?.label === "Status")
       console.log(items?.task_id, statusObject?.value + 1);
       const authToken = await AsyncStorage.getItem('token');
-      await axios.post(URL + '/update-task/', items?.task_id, {
+      await axios.post(URL + '/update-task/' + items?.task_id, {
         task_status: statusObject?.value + 1
       },{
-        Authorization: `Bearer ${authToken}`
+        headers:{
+          Authorization: `Bearer ${authToken}`
+        }
       }).then((res)=>{
         console.log(res.data);
       }).catch((err)=>{
