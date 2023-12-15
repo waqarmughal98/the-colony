@@ -1,4 +1,4 @@
-import { StyleSheet,TouchableOpacity, Text, View,Image } from 'react-native'
+import { StyleSheet,TouchableOpacity, ImageBackground,Text, View,Image } from 'react-native'
 import React from 'react'
 import {Foundation,Zocial,Ionicons } from '@expo/vector-icons';
 import Color from '../../Color';
@@ -7,6 +7,7 @@ import { vh, vw  } from '../../utils/ScreenSize';
 const Profile = ({navigation}) => {
 
   return (
+    <ImageBackground source={require('../../../assets/imgs/Bg.png')} style={styles.backgroundImage}>
     <View style={styles.mainContainer}>
        <View style={styles.top}>
        <View style={{ marginHorizontal: 20 ,marginTop:5*vh,display:"flex",flexDirection:"row",alignItems:"center",justifyContent:"space-between"}}>
@@ -16,30 +17,45 @@ const Profile = ({navigation}) => {
           >
           <Ionicons name="ios-arrow-back-sharp" size={24} color="white" style={{marginLeft:12}} />
           </TouchableOpacity>
-          <Text style={{fontWeight:"bold",color:"white",textAlign:"center",fontSize:20}}>Profile</Text>
-          <Ionicons name="md-person-sharp" size={20} color="white" />
+          <Text style={{fontWeight:"400",color:"white",textAlign:"center",fontSize:20}}>Profile</Text>
+          <TouchableOpacity activeOpacity={0.6} onPress={()=>navigation.navigate("notifications")} >
+              <Ionicons name="ios-notifications" size={24} color="white" />
+            </TouchableOpacity>
         </View>
-       </View>
-       <View style={styles.bottom}>
-          <View style={styles.imgContainer}>
-            <Image source={require('../../../assets/imgs/lb.png')} style={styles.Image} />
+        <View style={styles.imgContainer}>
+            <Image source={require('../../../assets/imgs/mark.png')} style={styles.Image} />
             <Text style={styles.markTitle}>Mark Nisham</Text>
           </View>
+       </View>
+       <View style={styles.bottom}>
+         
           <Text style={styles.text2}>Personal Details:</Text>
           <View style={styles.infoContainer}>
              <View style={styles.individual}>
-              <Zocial name="email" size={24} color="white" />
+               <View style={styles.topIndividual} >
+                <View style={styles.iconContainer} >
+                  <Zocial name="email" style={styles.icon} size={18} color="black" />
+                </View>
+                 <Text style={styles.iconText}>Email</Text>
+               </View>
               <Text style={styles.text3}>mark@imaginedesigns.co</Text>
-             </View>
+            </View>
+            
              <View style={styles.individual}>
-               <Foundation name="telephone" size={26} color="white" />
-                <Text style={styles.text3}>0321 1646523</Text>
-             </View>
+               <View style={styles.topIndividual} >
+                <View style={styles.iconContainer} >
+                <Foundation name="telephone"  tyle={styles.icon}  size={22} color="black" />
+                </View>
+                 <Text style={styles.iconText}>Phone</Text>
+               </View>
+              <Text style={styles.text3}>321 455 2222</Text>
+            </View>
           </View>
 
      
        </View>
     </View>
+    </ImageBackground>
   )
 }
 
@@ -51,18 +67,14 @@ const styles = StyleSheet.create({
     flexDirection:"column"
   },
   top:{
-    height:
-  36*vh,
-    backgroundColor:Color.darkOrange
+    height:30*vh,
+    zIndex:2
   },
   bottom:{
     backgroundColor:"white",
-    height:78*vh,
-    borderTopRightRadius:30,
-    borderTopLeftRadius:30,
-    marginTop:-10*vh,
-    paddingHorizontal:20
-  
+    height:70*vh,
+    paddingHorizontal:30,
+    zIndex:1
     
   },
   Image:{
@@ -70,47 +82,75 @@ const styles = StyleSheet.create({
     height:20*vh,
     width:20*vh,
     borderColor:"white",
-    borderWidth:2.2*vh,
-    borderRadius:2000,
+
   },
   markTitle:{
-    fontSize:20,
-    fontWeight:"bold",
-    color:"#383c4a"
+    fontSize:22,
+    fontWeight:"400",
+    color:"white",
+    marginLeft:20,
+    marginTop:5*vh
   },
   imgContainer:{
     alignSelf:"center",
     display:"flex",
-    flexDirection:"column",
-    alignItems:"center",
+    flexDirection:"row",
+    alignItems: "center",
+    position: "absolute",
+    top:12*vh,
+    zIndex:100
+  },
+  Image:{
+    width: 22*vh,
+    height:22*vh,
+    borderRadius:500
   },
   text2:{
     fontSize:17,
     marginTop:20,
     fontWeight:"bold",
-    color:"#383c4a"
+    color:"#383c4a",
+    borderBottomColor:"black",
+    borderBottomWidth:1,
+    paddingBottom:17,
+    marginTop:10*vh,
   },
   individual:{
     display:"flex",
-    flexDirection:"row",
-    alignItems:"center",
-    backgroundColor:Color.darkOrange,
+    flexDirection:"column",
     borderRadius:10,
-    height:8*vh,
-    paddingHorizontal:20,
-       // Shadow properties for iOS
-       shadowColor: "black",
-       shadowOffset: { width: 0, height: 2 },
-       shadowOpacity: 0.3,
-       shadowRadius: 4,
-   
-       // Elevation for Android
-       elevation: 2,
+    paddingHorizontal:10,
+    borderBottomColor:"#d3d3d3",
+    borderBottomWidth:1,
+    paddingBottom:20
+  },
+  topIndividual:{
+     display:"flex",
+     flexDirection:"row",
+     alignItems:"center",
+  },
+  icon:{
+       
+  },
+  iconContainer:{
+    backgroundColor:Color.darkOrange,
+    height:30,
+    borderRadius:50,
+    width:30,
+    borderRadius:50,
+    display:"flex",
+    flexDirection:"row",
+    justifyContent:"center",
+    alignItems:"center",
+    marginRight:10
+  },
+  iconText:{
+    fontSize:16
   },
   text3:{
-     fontSize:18,
-     color:"white",
-     marginLeft:20
+     fontSize:15,
+     color:"black",
+    marginTop:10 
   },
   infoContainer:{
   display:"flex",
