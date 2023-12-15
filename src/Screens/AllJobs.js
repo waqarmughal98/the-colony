@@ -11,7 +11,6 @@ const AllJobs = ({navigation,route}) => {
     const {screenName ,status }= route.params;
     const [data, setData] = useState([]);
     const [loading, setLoading]=useState(true)
-    const [loading2, setLoading2]=useState(true)
 
     useEffect(()=>{
         (async ()=>{

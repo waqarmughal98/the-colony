@@ -100,7 +100,7 @@ const Tab = createBottomTabNavigator();
       />
       <Tab.Screen
         name="Profile"
-        component={Profile}
+        component={ProfileStackScreen}
         options={{
           // title: 'Profile',
           tabBarLabel: 'Profile',
@@ -274,7 +274,32 @@ function WorkLogStackScreen() {
             title: 'Work Logs'
           }}
         />
+        <WorkLogStack.Screen name="Dashboard"  component={Dashboard} />
   </WorkLogStack.Navigator>
+  );
+}
+
+const ProfileStack = createNativeStackNavigator();
+function ProfileStackScreen() {
+  const screenOptions = {
+    headerStyle: { backgroundColor: '#FBA200' },
+    headerTintColor: 'white',
+    headerTitleAlign: 'center',
+    gestureEnabled: true,
+
+  }
+  return (
+    <ProfileStack.Navigator  screenOptions={screenOptions} initialRouteName="Profile">
+         <ProfileStack.Screen
+          name="Profile"
+          component={Profile}
+          options={{
+            title: 'Profile',
+            headerShown:false
+          }}
+        />
+        <ProfileStack.Screen name="Dashboard"  component={Dashboard} />
+  </ProfileStack.Navigator>
   );
 }
 

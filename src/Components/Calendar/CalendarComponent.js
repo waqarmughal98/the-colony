@@ -15,12 +15,15 @@ const CalendarComponent = () => {
       <Calendar
         onDayPress={onDayPress}
         theme={{
-          todayTextColor: Color.darkOrange,
-          selectedDayTextColor: 'white',
-          selectedDayBackgroundColor: Color.darkOrange, // Selected date background color
+          todayTextColor: "white",
+          selectedDayTextColor: '#000000',
+          dayTextColor: '#000000',
+          selectedDayBackgroundColor: "white", // Selected date background color
           selectedDotColor: 'white',
-          arrowColor: Color.darkOrange,
-          dayTextColor:"black"
+          arrowColor: "white",
+          dayTextColor:"black",
+          textDisabledColor: '#d3d3d3',
+          calendarBackground:Color.darkOrange
         }}
         markedDates={selectedDate ? { [selectedDate]: { selected: true } } : {}}
       />
@@ -31,6 +34,9 @@ const CalendarComponent = () => {
 const styles = StyleSheet.create({
   container: {
     justifyContent: 'center',
+    backgroundColor:Color.darkOrange,
+    paddingHorizontal:20,
+    paddingVertical:20
   },
   title: {
     fontSize: 16,
