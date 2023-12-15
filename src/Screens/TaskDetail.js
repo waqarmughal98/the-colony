@@ -73,27 +73,24 @@ const TaskDetail = ({navigation , route}) => {
            
             {option.selectoptions ? (
               <SelectDropdown
-              data={data}
-              buttonStyle={{backgroundColor:"white",height:vh*5,width:vw*50,display:"flex",flexDirection:"row",justifyContent:"row"}}
-              dropdownStyle={{marginTop: -(vh*4),height:48*vh,fontSize:12}}
-              buttonTextStyle={{fontSize:15}}
-              renderDropdownIcon={isOpened => {
-                return <FontAwesome style={{marginLeft:4}}  name={isOpened ? 'chevron-up' : 'chevron-down'} color={'#5A5A5A'} size={14} />;
-              }}
-              /* Change the default value */
-              defaultValue={data[0]}
-
-              onSelect={(selectedItem, index) => {
-                setSelectedStatus(selectedItem)
-              }}
-              buttonTextAfterSelection={(selectedItem, index) => {
-                return selectedItem
-              }}
-              rowTextForSelection={(item, index) => {
-  
-                return item
-              }}
-            />
+                data={data}
+                buttonStyle={{backgroundColor:"white",height:vh*5,width:vw*50,display:"flex",flexDirection:"row",justifyContent:"row"}}
+                dropdownStyle={{marginTop: -(vh*4),height:48*vh,fontSize:12}}
+                buttonTextStyle={{fontSize:15}}
+                renderDropdownIcon={isOpened => {
+                  return <FontAwesome style={{marginLeft:4}}  name={isOpened ? 'chevron-up' : 'chevron-down'} color={'#5A5A5A'} size={14} />;
+                }}
+                defaultValue={data[0]}
+                onSelect={(selectedItem, index) => {
+                  setSelectedStatus(selectedItem)
+                }}
+                buttonTextAfterSelection={(selectedItem, index) => {
+                  return selectedItem
+                }}
+                rowTextForSelection={(item, index) => {
+                  return item
+                }}
+              />
             ) : (
               <Text style={styles.value}>{option.value}</Text>
             )}

@@ -32,8 +32,10 @@ const DashboardTopItem = ({ item, navigation }) => {
 };
 
 const DashboardTop = ({ navigation, data }) => {
-  const item = [
-    {
+  const [item, setItem] = useState()
+  useEffect(()=>{
+    setItem([
+      {
       img: calenderimg,
       number: data?.projects?.pending,
       title: "My Jobs",
@@ -70,13 +72,13 @@ const DashboardTop = ({ navigation, data }) => {
       iconName: "clockcircleo",
       iconType: "ant",
       screen: "requests",
-    },
-  ];
+    }])
+  },[data])
 
   return (
     <View style={styles.container}>
       <View style={styles.subContainer}>
-        {item.map((item, index) => (
+        {item?.map((item, index) => (
           <DashboardTopItem key={index} navigation={navigation} data={data} item={item} />
         ))}
       </View>
