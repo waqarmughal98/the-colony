@@ -12,7 +12,9 @@ const Profile = ({navigation}) => {
        <View style={styles.top}>
        <View style={{ marginHorizontal: 20 ,marginTop:5*vh,display:"flex",flexDirection:"row",alignItems:"center",justifyContent:"space-between"}}>
           <TouchableOpacity
-            onPress={() =>navigation.navigate("Dashboard")}
+            onPress={() =>navigation.navigate("Home",{
+              screen:"Dashboard"
+            })}
             activeOpacity={0.6}
           >
           <Ionicons name="ios-arrow-back-sharp" size={24} color="white" style={{marginLeft:12}} />

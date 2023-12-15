@@ -9,21 +9,6 @@ import { URL } from '../utils/Constant';
 const WorkLog = ({navigation}) => {
   const [data, setData] = useState([])
   const [filteredData, setFilteredData] = useState([])
-  React.useLayoutEffect(() => {
-    navigation.setOptions({
-      headerLeft: () => (
-        <View style={{ marginLeft: 10 }}>
-        <TouchableOpacity
-          onPress={() =>navigation.navigate("Dashboard")}
-          activeOpacity={0.6}
-        >
-         <Ionicons name="ios-arrow-back-sharp" size={24} color="white" />
-        </TouchableOpacity>
-      </View>
-      ),
-    });
-  }, [navigation]);
-
   const [selectedTitle, setSelectedTitle] = useState("Un-Categorised");
 
   useEffect(()=>{
@@ -40,6 +25,27 @@ const WorkLog = ({navigation}) => {
       })
     })()
   }, [])
+
+  React.useLayoutEffect(() => {
+    navigation.setOptions({
+      headerTitle: 'Dashboard',
+      headerStyle: { backgroundColor: Color.darkOrange },
+      headerTintColor: 'white',
+      headerTitleAlign: 'center',
+      headerLeft: () => (
+        <View style={{ marginLeft: 10 }}>
+         <TouchableOpacity
+            onPress={() =>navigation.navigate("Home",{
+              screen:"Dashboard"
+            })}
+            activeOpacity={0.6}
+          >
+          <Ionicons name="ios-arrow-back-sharp" size={24} color="white" style={{marginLeft:12}} />
+          </TouchableOpacity>
+      </View>
+      ),
+    });
+  }, [navigation]);
 
   useEffect(()=>{
     filterJobs();

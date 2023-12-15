@@ -49,7 +49,6 @@ const AllJobs = ({navigation,route}) => {
             <View style={styles.mainContainer}>
                 <ScrollView>
                    <View style={styles.AllData}>
-                        {screenName=="jobStatus" ? "" : <CalendarComponent/>}
                         {/* Header */}
                         <View style={styles.containerHeader}>
                             <Text style={styles.text}>Job Name</Text>

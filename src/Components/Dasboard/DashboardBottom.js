@@ -33,7 +33,7 @@ const DashboardBottom = ({navigation, status}) => {
     },
     {
       img: false, 
-      screenName:"All-Job",
+      screenName:"calender",
       title: "Calendar",
     },
   ];

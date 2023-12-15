@@ -14,7 +14,7 @@ import WorkLog from './src/Screens/WorkLog';
 import Tasks from './src/Screens/Tasks';
 import TaskDetail from './src/Screens/TaskDetail';
 import JobStatus from './src/Screens/JobStatus';
-import { SimpleLineIcons, Ionicons } from "@expo/vector-icons";
+import { SimpleLineIcons, Ionicons,Entypo } from "@expo/vector-icons";
 import Requests from './src/Screens/Requests';
 import AddRequest from './src/Screens/AddRequest';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
@@ -26,6 +26,7 @@ import Notifications from './src/Screens/Notifications';
 import LatestActivity from './src/Screens/LatestActivity';
 import AllProblemReports from './src/Screens/AllProblemReports';
 import ReplyTicket from './src/Screens/ReplyTicket';
+import Calender from './src/Screens/Calender';
 const Stack = createNativeStackNavigator();
 const Drawer = createDrawerNavigator();
 
@@ -79,8 +80,14 @@ const Tab = createBottomTabNavigator();
         options={{
           tabBarLabel: 'Work Log',
           headerShown:false,
-          tabBarIcon: ({ color, size }) => (
+          tabBarIcon: ({ color, size,focused }) => (
+            <>
+            {
+             focused?
+             <Entypo name="briefcase"  size={size} color={color} />:
             <SimpleLineIcons name="briefcase" size={size} color={color} />
+            }
+            </>
           ),
         }}
       />
@@ -99,14 +106,14 @@ const Tab = createBottomTabNavigator();
         }}
       />
       <Tab.Screen
-        name="Profile"
+        name="ProfileScreen"
         component={ProfileStackScreen}
         options={{
           // title: 'Profile',
           tabBarLabel: 'Profile',
           headerShown:false,
-          tabBarIcon: ({ color, size }) => (
-            <Ionicons name="person-outline" size={size} color={color} />
+          tabBarIcon: ({ color, size,focused }) => (
+            <Ionicons name={!focused ? "person-outline" : "person" } size={size} color={color} />
           ),
         }}
       />
@@ -251,6 +258,13 @@ function HomeScreenStack() {
               title: 'Reply Ticket'
             }}
           />
+          <HomeStack.Screen
+            name="calender"
+            component={Calender}
+            options={{
+              title: 'Team Calender'
+            }}
+          />
           </> 
         </HomeStack.Navigator>
   );
@@ -274,7 +288,7 @@ function WorkLogStackScreen() {
             title: 'Work Logs'
           }}
         />
-        <WorkLogStack.Screen name="Dashboard"  component={Dashboard} />
+      {/*  <WorkLogStack.Screen name="Dashboard"  component={Dashboard} /> */}
   </WorkLogStack.Navigator>
   );
 }
@@ -298,7 +312,6 @@ function ProfileStackScreen() {
             headerShown:false
           }}
         />
-        <ProfileStack.Screen name="Dashboard"  component={Dashboard} />
   </ProfileStack.Navigator>
   );
 }

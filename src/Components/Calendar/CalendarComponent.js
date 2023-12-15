@@ -2,11 +2,12 @@ import React, { useState } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { Calendar } from 'react-native-calendars';
 import Color from '../../Color';
-const CalendarComponent = () => {
-  const [selectedDate, setSelectedDate] = useState(null);
+const CalendarComponent = ({setSelectedDate}) => {
+  const [selecteddate, setSelecteddate] = useState(null);
 
   const onDayPress = (day) => {
     // Update the state when a date is selected
+    setSelecteddate(day.dateString);
     setSelectedDate(day.dateString);
   };
 
@@ -17,15 +18,15 @@ const CalendarComponent = () => {
         theme={{
           todayTextColor: "white",
           selectedDayTextColor: '#000000',
-          dayTextColor: '#000000',
           selectedDayBackgroundColor: "white", // Selected date background color
           selectedDotColor: 'white',
           arrowColor: "white",
+          monthTextColor:"white",
           dayTextColor:"black",
-          textDisabledColor: '#d3d3d3',
+          textDayStyle:{fontSize:15},
           calendarBackground:Color.darkOrange
         }}
-        markedDates={selectedDate ? { [selectedDate]: { selected: true } } : {}}
+        markedDates={selecteddate ? { [selecteddate]: { selected: true } } : {}}
       />
     </View>
   );
@@ -44,7 +45,7 @@ const styles = StyleSheet.create({
     marginBottom: 12,
     textAlign:"center"
   },
-  selectedDate: {
+  selecteddate: {
     marginTop: 14,
     fontSize: 14,
     fontWeight: '500',
