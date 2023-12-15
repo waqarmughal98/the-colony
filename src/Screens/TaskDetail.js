@@ -75,7 +75,6 @@ const TaskDetail = ({navigation , route}) => {
 
     const updateTask = async ()=>{
       const statusObject = await data?.find((item) => item?.label === "Status")
-      console.log(items?.task_id, statusObject?.value + 1);
       const authToken = await AsyncStorage.getItem('token');
       await axios.post(URL + '/update-task/' + items?.task_id, {
         task_status: statusObject?.value + 1
