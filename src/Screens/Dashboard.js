@@ -41,7 +41,7 @@ function Dashboard({ navigation }) {
         (async ()=>{
           const authToken = await AsyncStorage.getItem("token");
           if(!authToken){
-             navigation.navigate("Login")
+             navigation.navigate("LoginScreen")
           }
           console.log(authToken)
           axios.get(URL + '/dashboard',{
