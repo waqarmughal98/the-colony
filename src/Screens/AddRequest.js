@@ -21,22 +21,11 @@ const AddRequest = () => {
     })
     const navigation = useNavigation();
 
-    useEffect(()=>{
-        console.log(leave,"leave")
-
-    },[leave])
-    
-    const handleDateChange = (e) =>{
-        console.log('worked')
-    }
-
     const updateLeave = (value, field)=> {
         setLeave({...leave, [field]: value})
-        console.log(leave, field, 'value');
     }
 
     const submitRequest = async ()=>{
-        console.log(leave, 'submit')
         const authToken = await AsyncStorage.getItem('token');
         await axios.post(URL + '/leave',{} ,{
             params:leave,
@@ -44,7 +33,6 @@ const AddRequest = () => {
                 Authorization: `Bearer ${authToken}`
             }
         }).then(()=>{
-            console.log('Submitted')
             setLeave('')
             navigation.push('requests')
         }).catch((err)=>{

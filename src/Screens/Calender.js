@@ -14,7 +14,6 @@ const Calender = ({navigation,route}) => {
     const [selectedDate, setSelectedDate] = useState();
     const [loading, setLoading]=useState(true)
 
-
     useEffect(()=>{
         (async ()=>{
             const authToken = await AsyncStorage.getItem("token");
@@ -25,95 +24,77 @@ const Calender = ({navigation,route}) => {
                 }
             }).then((res)=>{
                 setData(res.data.projects.data);
-               
                 setLoading(false)
             }).catch((err)=>{
                 console.log(err);
             })
         })()
     },[])
-
-
-
     
- useEffect(() => {
-    const currentDate = new Date();
-    const year = currentDate.getFullYear();
-    const month = String(currentDate.getMonth() + 1).padStart(2, '0'); 
-    const day = String(currentDate.getDate()).padStart(2, '0');
-    const formattedDate = `${year}-${month}-${day}`;
-    setSelectedDate(formattedDate);
+    useEffect(() => {
+        const currentDate = new Date();
+        const year = currentDate.getFullYear();
+        const month = String(currentDate.getMonth() + 1).padStart(2, '0'); 
+        const day = String(currentDate.getDate()).padStart(2, '0');
+        const formattedDate = `${year}-${month}-${day}`;
+        setSelectedDate(formattedDate);
     }, []); 
 
-  useEffect(()=>{
-    filterData();
-  }, [selectedDate])
+    useEffect(()=>{
+        filterData();
+    }, [selectedDate])
 
-  const filterData = ()=> {
-    const copyData = [...data];
-    const filterDate = copyData.filter((items) => {
-      return items.project_date_start == selectedDate;
-    });
-    setFilteredData(filterDate);
-  };
+    const filterData = ()=> {
+        const copyData = [...data];
+        const filterDate = copyData.filter((items) => {
+            return items.project_date_start == selectedDate;
+        });
+        setFilteredData(filterDate);
+    };
 
-  function isSunday(dateString) {
-    // Convert the string to a Date object
-    const date = new Date(dateString);
-    
-    // Check if the day of the week is Sunday (0 corresponds to Sunday)
-    return date.getDay() === 0;
-  }
-  
+    const isSunday = (dateString) => {
+        const date = new Date(dateString);
+        return date.getDay() === 0;
+    }
 
-  console.log(FilteredData,"FilteredData...")
-  console.log(selectedDate,"selectedDate...")
-
+//   console.log(FilteredData,"FilteredData...")
+//   console.log(selectedDate,"selectedDate...")
   return (
     <View>
         <View style={styles.container}>
         {
         !loading ? 
             <View style={styles.mainContainer}>
-                        <View>
-                            <CalendarComponent setSelectedDate={setSelectedDate}/>
-                            <TouchableOpacity activeOpacity={0.6} onPress={()=>setFilteredData(data)}   style={styles.viewAllbtn}>
-                                <Fontisto name="preview" size={16} color="white" />
-                                <Text style={{fontSize:14,color:"white",}}>View All</Text>
-                            </TouchableOpacity>
-                        </View>
-                     
-                        {/* All Data */}
-                        <View style={styles.dataContainer}>
-                        {
-                                isSunday(selectedDate) && FilteredData.length==0? 
-                                (
-                                 <HolidayCard  />
-                                ):
-                                ( 
-                                    <ScrollView >
-                                    <View>
-                                    {
-                                            FilteredData.length>0 ? FilteredData?.map((item,index)=>{
-                                                return(
-                                                    <>
-                                                        <DataCard   navigation={navigation} item={item} />
-                                                    </>
-                                                )
-                                            }) 
-                                            :
-                                            (
-                                                <DataCard item={false} />
-                                            )
-                                        }
-                                    </View>                     
-                             </ScrollView>
-
-                                )
-                            }               
-                                 
-                        </View>
-            
+                <View>
+                    <CalendarComponent setSelectedDate={setSelectedDate}/>
+                    <TouchableOpacity activeOpacity={0.6} onPress={()=>setFilteredData(data)}   style={styles.viewAllbtn}>
+                        <Fontisto name="preview" size={16} color="white" />
+                        <Text style={{fontSize:14,color:"white",}}>View All</Text>
+                    </TouchableOpacity>
+                </View>
+                
+                {/* All Data */}
+                <View style={styles.dataContainer}>
+                {isSunday(selectedDate) && FilteredData.length==0? 
+                    (
+                        <HolidayCard  />
+                    ) :(
+                        <ScrollView>
+                            <View>
+                                {
+                                    FilteredData.length>0 ? FilteredData?.map((item,index)=>{
+                                        return(
+                                            <DataCard navigation={navigation} item={item} />
+                                        )
+                                    }) : (
+                                        <DataCard item={false} />
+                                    )
+                                }
+                            </View>                     
+                        </ScrollView>
+                    )
+                }               
+                </View>
             </View>
         :
         <View style={styles.Indicator}>

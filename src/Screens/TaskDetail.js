@@ -29,7 +29,6 @@ const TaskDetail = ({navigation , route}) => {
 
      /* Remove this when fethc data */
     useEffect(()=>{
-      console.log(items?.task_status)
       setData([
         {
           label:"Company",
