@@ -6,7 +6,7 @@ const Context = props => {
 
 
   const setLOGINSTATE=(value)=>{
-SetLoginState(true)
+    SetLoginState(true)
   }
 
   return (

@@ -1,4 +1,4 @@
-import React,{useState} from 'react'
+import React,{useEffect, useState} from 'react'
 import { StyleSheet, Text, View, TextInput, ScrollView, TouchableOpacity } from 'react-native'
 import { vh,vw } from '../utils/ScreenSize'
 import { FontAwesome } from '@expo/vector-icons';
@@ -29,11 +29,15 @@ const NewProblemReport = ({navigation,route}) => {
         setData({...data, [field]: value})
     }
 
+    useEffect(()=>{
+        console.log(items)
+    }, [items])
+
     const submitProblem = async ()=>{
         const authToken = await AsyncStorage.getItem('token');
         const param = {
             params:{
-                ticketreply_text: data.project_id,
+                ticket_created: data.date,
                 ticketresource_type: "project",
                 ticketresource_id: data.project_id,
             },
@@ -77,16 +81,14 @@ const NewProblemReport = ({navigation,route}) => {
                 </View>
                 <View>
                     <Text style={styles.label}>Status</Text>
-
                     <SelectDropdown
                         data={dataOption}
                         buttonStyle={{height:vh*5,width:vw*90,backgroundColor:'#DFE1ED',borderRadius:10}}
-                        dropdownStyle={{marginTop: -(vh*4),height:48*vh,fontSize:12}}
+                        dropdownStyle={{marginTop: -(vh*4),fontSize:12}}
                         buttonTextStyle={{fontSize:15}}
                         renderDropdownIcon={isOpened => {
                             return <FontAwesome name={isOpened ? 'chevron-up' : 'chevron-down'} color={'#5A5A5A'} size={14} />;
                         }}
-                        /* Change the default value */
                         defaultValue={dataOption[0]}
                         onSelect={(selectedItem, index) => {
                             (text)=>handleData(text, 'Status')
