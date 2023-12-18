@@ -27,10 +27,11 @@ const NewProblemReport = ({navigation,route}) => {
 
     const handleData = (value, field)=> {
         setData({...data, [field]: value})
+        console.log(data);
     }
 
     useEffect(()=>{
-        console.log(items)
+        // console.log(items)
     }, [items])
 
     const submitProblem = async ()=>{
