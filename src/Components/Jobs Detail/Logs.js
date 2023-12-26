@@ -18,7 +18,6 @@ const Logs = ({data, screenName}) => {
 
   /* Remove this when fethc data */
   useEffect(() => {
-    console.log(screenName, data?.project_id);
     (async ()=>{
       const authToken = await AsyncStorage.getItem('token');
       if(screenName == "notification" || screenName == "LatestActivity"){

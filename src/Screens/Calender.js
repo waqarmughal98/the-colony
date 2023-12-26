@@ -15,7 +15,6 @@ const Calender = ({navigation,route}) => {
     const [AllDates, setAllDates] = useState();
     const [loading, setLoading]=useState(true)
 
-
     useEffect(()=>{
         (async ()=>{
             const authToken = await AsyncStorage.getItem("token");
@@ -35,22 +34,19 @@ const Calender = ({navigation,route}) => {
             })
         })()
     },[])
-
-
-
     
- useEffect(() => {
-    const currentDate = new Date();
-    const year = currentDate.getFullYear();
-    const month = String(currentDate.getMonth() + 1).padStart(2, '0'); 
-    const day = String(currentDate.getDate()).padStart(2, '0');
-    const formattedDate = `${year}-${month}-${day}`;
-    setSelectedDate(formattedDate);
+    useEffect(() => {
+        const currentDate = new Date();
+        const year = currentDate.getFullYear();
+        const month = String(currentDate.getMonth() + 1).padStart(2, '0'); 
+        const day = String(currentDate.getDate()).padStart(2, '0');
+        const formattedDate = `${year}-${month}-${day}`;
+        setSelectedDate(formattedDate);
     }, []); 
 
-  useEffect(()=>{
-    filterData();
-  }, [selectedDate])
+    useEffect(()=>{
+        filterData();
+    }, [selectedDate])
 
   useEffect(()=>{
     console.log(AllDates,"dates..")
@@ -64,18 +60,13 @@ const Calender = ({navigation,route}) => {
     setFilteredData(filterDate);
   };
 
-  function isSunday(dateString) {
-    // Convert the string to a Date object
-    const date = new Date(dateString);
-    
-    // Check if the day of the week is Sunday (0 corresponds to Sunday)
-    return date.getDay() === 0;
-  }
-  
+    const isSunday = (dateString) => {
+        const date = new Date(dateString);
+        return date.getDay() === 0;
+    }
 
-  console.log(FilteredData,"FilteredData...")
-  console.log(selectedDate,"selectedDate...")
-
+//   console.log(FilteredData,"FilteredData...")
+//   console.log(selectedDate,"selectedDate...")
   return (
     <View>
         <View style={styles.container}>

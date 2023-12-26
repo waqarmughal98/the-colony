@@ -15,7 +15,6 @@ const AllJobs = ({navigation,route}) => {
     useEffect(()=>{
         (async ()=>{
             const authToken = await AsyncStorage.getItem("token");
-            console.log(authToken)
             axios.get(URL + '/job-status',{
                 headers: {
                     Authorization: `Bearer ${authToken}`

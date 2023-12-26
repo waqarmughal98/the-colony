@@ -36,13 +36,13 @@ function App() {
   return (
     <Context>
        <NavigationContainer>
-       <Drawer.Navigator initialRouteName="Dashboard"  drawerContent={(props) => <CustomDrawerContent {...props} />}>
-        <Drawer.Screen name="Back to Dashboard" options={{
-              headerShown:false,
-            }} component={MainStackScreen} />
-        {/* Add more screens as needed */}
-      </Drawer.Navigator>
-    </NavigationContainer>
+        <Drawer.Navigator initialRouteName="Dashboard"  drawerContent={(props) => <CustomDrawerContent {...props} />}>
+          <Drawer.Screen name="Back to Dashboard" options={{
+                headerShown:false,
+              }} component={MainStackScreen} />
+          {/* Add more screens as needed */}
+        </Drawer.Navigator>
+      </NavigationContainer>
     </Context>
   );
  
@@ -61,6 +61,7 @@ const Tab = createBottomTabNavigator();
         headerTitleAlign: 'center',
         tabBarActiveTintColor:"white",
         gestureEnabled: true,
+        tabBarHideOnKeyboard: true,
         tabBarStyle: {
           height: 65,
           backgroundColor: 'black',
@@ -68,10 +69,10 @@ const Tab = createBottomTabNavigator();
           paddingTop:10,
           position: 'absolute',
           borderTopWidth: 0,
-      },
-      labelStyle: {
-        fontSize: 11,
-      },
+        },
+        labelStyle: {
+          fontSize: 11,
+        },
       }}
     >
       <Tab.Screen

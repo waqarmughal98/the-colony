@@ -27,8 +27,7 @@ const Login = ({ navigation }) => {
         }
       )
       .then((res) => {
-   
-        console.log(res.data.token);
+        // console.log(res.data.token);
         (async function () {
           await AsyncStorage.setItem("token", res.data.token);
           navigation.navigate("Dashboard");
