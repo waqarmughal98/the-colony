@@ -10,14 +10,14 @@ const DataCard = ({navigation,item,index}) => {
     {
         item?
         (
-            <TouchableOpacity key={index} onPress={()=>navigation.navigate("jobs-detail",{items: item})} key={index}
+            <TouchableOpacity onPress={()=>navigation.navigate("jobs-detail",{items: item})} key={index}
              activeOpacity={0.6} >
                 <View style={styles.individual}>
                     <View style={styles.individualLeft}>  
                         <Text style={styles.line}></Text>
                         <View style={styles.textContainer}>
-                            <Text style={styles.dataText}>{item.project_title}</Text>
-                            <Text style={styles.dataText2}>({item.client_company_name})</Text>
+                            <Text style={styles.dataText}>{item.project_title.trim()}</Text>
+                            <Text style={styles.dataText2}>({item.client_company_name.trim()})</Text>
                             {/* <Text style={styles.dataText2}>({item.project_date_start})</Text> */}
                         </View>
                     </View>
@@ -90,11 +90,12 @@ const styles = StyleSheet.create({
 
     },
     line:{
-        height:  5*vh,
+        height: 5*vh,
         width:3,
         borderRadius:3,
         backgroundColor:Color.darkOrange,
         marginVertical:10,
+        marginRight:10
     },
     textContainer:{
         height:  5*vh,
@@ -102,6 +103,7 @@ const styles = StyleSheet.create({
         display:"flex",
         flexDirection:'row',
         justifyContent:"center",
-        alignItems:"center"
+        alignItems:"center",
+        justifyContent:"flex-start"
     }
 })

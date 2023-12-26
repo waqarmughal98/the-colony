@@ -12,6 +12,7 @@ const Calender = ({navigation,route}) => {
     const [data, setData] = useState([]);
     const [FilteredData,setFilteredData ] = useState([]);
     const [selectedDate, setSelectedDate] = useState();
+    const [AllDates, setAllDates] = useState();
     const [loading, setLoading]=useState(true)
 
 
@@ -24,8 +25,10 @@ const Calender = ({navigation,route}) => {
                     Authorization: `Bearer ${authToken}`
                 }
             }).then((res)=>{
-                setData(res.data.projects.data);
-               
+                let responseData=res.data
+                setData(responseData.projects.data);
+                const extractedDates = responseData.projects.data.map(project => project.project_date_start).filter(value => value !== null)
+                setAllDates(extractedDates);
                 setLoading(false)
             }).catch((err)=>{
                 console.log(err);
@@ -48,6 +51,10 @@ const Calender = ({navigation,route}) => {
   useEffect(()=>{
     filterData();
   }, [selectedDate])
+
+  useEffect(()=>{
+    console.log(AllDates,"dates..")
+  }, [AllDates])
 
   const filterData = ()=> {
     const copyData = [...data];
@@ -75,8 +82,9 @@ const Calender = ({navigation,route}) => {
         {
         !loading ? 
             <View style={styles.mainContainer}>
+                    <ScrollView >
                         <View>
-                            <CalendarComponent setSelectedDate={setSelectedDate}/>
+                            <CalendarComponent AllDates={AllDates} setSelectedDate={setSelectedDate}/>
                             <TouchableOpacity activeOpacity={0.6} onPress={()=>setFilteredData(data)}   style={styles.viewAllbtn}>
                                 <Fontisto name="preview" size={16} color="white" />
                                 <Text style={{fontSize:14,color:"white",}}>View All</Text>
@@ -84,22 +92,19 @@ const Calender = ({navigation,route}) => {
                         </View>
                      
                         {/* All Data */}
-                        <View style={styles.dataContainer}>
+                         <View style={styles.dataContainer}>
                         {
                                 isSunday(selectedDate) && FilteredData.length==0? 
                                 (
-                                 <HolidayCard  />
-                                ):
+                                   <HolidayCard/>
+                                )
+                                :
                                 ( 
-                                    <ScrollView >
                                     <View>
-                                    {
+                                        {
                                             FilteredData.length>0 ? FilteredData?.map((item,index)=>{
                                                 return(
-                                                    <>
-                                                        <DataCard   navigation={navigation} item={item} />
-                                                    </>
-                                                )
+                                                        <DataCard key={index} index={index}  navigation={navigation} item={item} />              )
                                             }) 
                                             :
                                             (
@@ -107,13 +112,12 @@ const Calender = ({navigation,route}) => {
                                             )
                                         }
                                     </View>                     
-                             </ScrollView>
-
                                 )
                             }               
                                  
                         </View>
-            
+                
+                    </ScrollView>  
             </View>
         :
         <View style={styles.Indicator}>
@@ -143,6 +147,9 @@ const styles = StyleSheet.create({
         justifyContent:"center",
         alignItems:"center",
         alignContent:"center"
+      },
+      container:{
+        flexGrow:1,
       },
       fetchingData:{
         color:'black',
@@ -178,7 +185,6 @@ const styles = StyleSheet.create({
         paddingVertical:10,
         flexGrow:1,
         paddingBottom:120,
-        height:20*vh
     },
     individual:{
         height:45,
@@ -191,10 +197,10 @@ const styles = StyleSheet.create({
     },
     mainContainer:{
         display:"flex",
-        height:100*vh
+        
     },
     AllData:{
-        paddingBottom:100,
+
     },
     viewAllbtn:{
         backgroundColor:"black",

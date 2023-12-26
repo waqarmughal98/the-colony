@@ -1,19 +1,23 @@
-import { StyleSheet, Text, View, TextInput, ScrollView, TouchableOpacity } from 'react-native'
+import { StyleSheet, Text, View, TextInput, ScrollView, TouchableOpacity,Alert } from 'react-native'
 import React,{useState} from 'react'
 import { vh,vw } from '../../utils/ScreenSize'
 const UpdateModal = () => {
     const [Update,setUpdate]=useState("")
+    const handleSubmit=()=>{
+        Alert.alert("yppp")
+    }
   return (
     <View style={styles.mainContainer}>
       <Text style={styles.heading} >Add Update</Text>
       <View>
             <TextInput value={Update} placeholder='Write an Update...' multiline={true} textAlignVertical="top"  numberOfLines={14} style={styles.discInput} onChangeText={(text)=>setUpdate(text)}  />
       </View >
-        <View style={styles.btnContainer}>
-            <TouchableOpacity activeOpacity={0.6}>
-                <Text style={styles.submitTxt}>Submit</Text>
-            </TouchableOpacity>
-        </View>
+        <TouchableOpacity activeOpacity={0.6} onPress={()=>handleSubmit()}>
+            <Text style={styles.submitTxt}>Submit</Text>
+        </TouchableOpacity>
+        <TouchableOpacity activeOpacity={0.6}>
+            <Text>dsf</Text>
+        </TouchableOpacity>
     </View>
   )
 }
