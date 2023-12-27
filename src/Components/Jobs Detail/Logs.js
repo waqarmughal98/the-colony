@@ -98,6 +98,7 @@ const styles = StyleSheet.create({
   Container: {
     height: '100%',
     backgroundColor: 'white',
+    paddingBottom:170
   },
   Indicator: {
     flexGrow: 1,

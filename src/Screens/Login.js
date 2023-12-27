@@ -1,14 +1,17 @@
-import { StyleSheet, Text, View, ImageBackground, TextInput, Image, Dimensions, TouchableOpacity, Alert, KeyboardAvoidingView, Platform } from 'react-native';
-import React, { useEffect, useState } from 'react';
+import { StyleSheet, Text, View, ImageBackground, TextInput, Image,ActivityIndicator, Dimensions, TouchableOpacity, Alert, KeyboardAvoidingView, Platform } from 'react-native';
+import React, { useEffect, useState,useRef } from 'react';
 import { FontAwesome, Ionicons } from '@expo/vector-icons';
 import { vh, vw } from '../utils/ScreenSize';
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { URL } from '../utils/Constant';
+import Toast from 'react-native-toast-message';
 const Login = ({ navigation }) => {
   const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [loading, setLoading] = useState(false);
+
   useEffect(() => {
     (async()=>{
       const authToken = await AsyncStorage.getItem("token");
@@ -18,7 +21,10 @@ const Login = ({ navigation }) => {
     })()
   }, []);
 
+
+
   const Login = () => {
+    setLoading(true); 
     axios.post(URL + "/login",{},{
           params: {
             email: email,
@@ -30,13 +36,28 @@ const Login = ({ navigation }) => {
         // console.log(res.data.token);
         (async function () {
           await AsyncStorage.setItem("token", res.data.token);
-          navigation.navigate("Dashboard");
+            Toast.show({
+            type: 'success',
+            text1: 'Login Successfully!',
+            text2: 'we are moving you toward dashboard',
+             visibilityTime:1000
+          });
+          setTimeout(() => {
+            navigation.navigate("Dashboard");
+          }, 1000); 
         })();
       })
       .catch((err) => {
-        Alert.alert("Invalid credentials");
+        Toast.show({
+          type: 'error',
+          text1: 'Error while Login',
+          text2: 'Might be due to invalid Credentials',
+          visibilityTime:2000
+        });
         console.log(err);
-      });
+      }).finally(()=>{
+        setLoading(false)
+      })
   };
 
   const togglePasswordVisibility = () => {
@@ -82,11 +103,19 @@ const Login = ({ navigation }) => {
             </View>
             
           </View>
-          <TouchableOpacity onPress={() => Login()} activeOpacity={0.6} style={styles.signInButton}>
-            <Text style={styles.textSignIn}>Sign In</Text>
+          <TouchableOpacity onPress={() => Login()} activeOpacity={0.6} style={styles.signInButton} disabled={loading}>
+            {loading ? (
+              <View style={styles.loaderContainer}>
+                 <Text style={styles.textSignIn}>Signing In</Text>
+                <ActivityIndicator  size="small" color="white" />
+              </View> 
+            ) : (
+              <Text style={styles.textSignIn}>Sign In</Text>
+            )}
           </TouchableOpacity>
         </View>
       </KeyboardAvoidingView>
+      <Toast/>
     </ImageBackground>
   );
 };
@@ -158,6 +187,11 @@ const styles = StyleSheet.create({
   },
   textSignIn: {
     color: "white",
-    fontSize: 20,
+    fontSize: 18,
   },
+  loaderContainer:{
+    display:"flex",
+    flexDirection:"row",
+    gap:5
+  }
 });

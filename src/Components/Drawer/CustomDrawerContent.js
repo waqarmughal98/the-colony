@@ -3,13 +3,23 @@ import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { DrawerContentScrollView, DrawerItemList } from '@react-navigation/drawer';
 import { vh,vw } from '../../utils/ScreenSize';
 import Color from '../../Color';
+import Toast from 'react-native-toast-message';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 const CustomDrawerContent = (props) => {
   const { navigation } = props;
   const HandleLogout= async()=>{
     try {
       await AsyncStorage.removeItem('token')
-      await navigation.navigate("LoginScreen") 
+      navigation.toggleDrawer()
+      Toast.show({
+        type: 'success',
+        text1: 'logout Successfully!',
+        text2: 'we are moving you toward Login Screen',
+         visibilityTime:1000
+      });
+      setTimeout(() => {
+        navigation.navigate("LoginScreen");
+      }, 1000); 
       // Additional logout logic or navigation here
     } catch (error) {
       console.error('Error removing token:', error);

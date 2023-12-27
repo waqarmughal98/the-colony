@@ -1,22 +1,55 @@
 import { StyleSheet, Text, View, TextInput, ScrollView, TouchableOpacity,Alert } from 'react-native'
 import React,{useState} from 'react'
 import { vh,vw } from '../../utils/ScreenSize'
-const UpdateModal = () => {
+import axios from "axios";
+import { URL } from "../../utils/Constant";
+import Toast from 'react-native-toast-message';
+import AsyncStorage from "@react-native-async-storage/async-storage";
+ 
+const UpdateModal = ({data,toggleModal,setUdateItem}) => {
     const [Update,setUpdate]=useState("")
-    const handleSubmit=()=>{
-        Alert.alert("yppp")
+    const [Error,setError]=useState("")
+    const handleSubmit= async()=>{
+        const authToken = await AsyncStorage.getItem("token");
+       if(Update!="")
+       {
+        axios.post(URL + "/comments/store", {}, {
+            params: {
+              project_id: data?.project_id,
+              commentresource_type: "project",
+              comment_text:Update,
+              commentresource_id: data?.project_id,
+            },
+            headers: {
+              Authorization: `Bearer ${authToken}`,
+            },
+          }
+        ).then((res) => {
+            toggleModal()
+            Toast.show({
+            type: 'success',
+            text1: 'Update added Successfully!',
+            text2: 'Great!',
+             visibilityTime:2000
+          });
+          setUdateItem(Update)
+            setError("");
+        }).catch((err) => {
+          console.log(err);
+        });
+       }else{
+        setError("Kindly enter some update test")
+       }
     }
   return (
     <View style={styles.mainContainer}>
       <Text style={styles.heading} >Add Update</Text>
       <View>
-            <TextInput value={Update} placeholder='Write an Update...' multiline={true} textAlignVertical="top"  numberOfLines={14} style={styles.discInput} onChangeText={(text)=>setUpdate(text)}  />
+            <TextInput value={Update} placeholder='Write an Update...' multiline={true} textAlignVertical="top"  numberOfLines={14} style={styles.discInput} onChangeText={(text)=>{setUpdate(text); setError("")}}  />
       </View >
-        <TouchableOpacity activeOpacity={0.6} onPress={()=>handleSubmit()}>
+       {Error!="" && <Text style={styles.error}>{Error}</Text>}
+        <TouchableOpacity style={styles.btnContainer} activeOpacity={0.6} onPress={()=>handleSubmit()}>
             <Text style={styles.submitTxt}>Submit</Text>
-        </TouchableOpacity>
-        <TouchableOpacity activeOpacity={0.6}>
-            <Text>dsf</Text>
         </TouchableOpacity>
     </View>
   )
@@ -68,5 +101,11 @@ const styles = StyleSheet.create({
     submitTxt:{
         color:"white",
         fontSize:17,
+    },
+    error:{
+        textAlign:"center",
+        marginTop:10,
+        marginBottom:-10,
+        color:"white"
     }
 })

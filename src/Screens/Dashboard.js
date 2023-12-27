@@ -8,6 +8,7 @@ import DashboardBottom from '../Components/Dasboard/DashboardBottom';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 import { URL } from '../utils/Constant';
+import Toast from 'react-native-toast-message';
 function Dashboard({ navigation }) {
 ;
   const [data, setData] = useState([]);
@@ -69,7 +70,7 @@ function Dashboard({ navigation }) {
           <DashboardBottom navigation={navigation} status={data}/>
         </View>
         </View>
-
+        <Toast/>
       </View>
     );
   }

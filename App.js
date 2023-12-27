@@ -16,6 +16,7 @@ import TaskDetail from './src/Screens/TaskDetail';
 import JobStatus from './src/Screens/JobStatus';
 import { SimpleLineIcons, Ionicons,Entypo } from "@expo/vector-icons";
 import Requests from './src/Screens/Requests';
+import Toast from 'react-native-toast-message'
 import AddRequest from './src/Screens/AddRequest';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import Context from './src/Global/Context';
@@ -27,12 +28,13 @@ import LatestActivity from './src/Screens/LatestActivity';
 import AllProblemReports from './src/Screens/AllProblemReports';
 import ReplyTicket from './src/Screens/ReplyTicket';
 import Calender from './src/Screens/Calender';
+import Color from './src/Color';
 const Stack = createNativeStackNavigator();
 const Drawer = createDrawerNavigator();
-
 function App() {
 
   StatusBar.setBarStyle('light-content');
+  StatusBar.setBackgroundColor(Color.darkOrange);
   return (
     <Context>
        <NavigationContainer>
@@ -42,7 +44,8 @@ function App() {
               }} component={MainStackScreen} />
           {/* Add more screens as needed */}
         </Drawer.Navigator>
-      </NavigationContainer>
+        </NavigationContainer>
+        <Toast/>
     </Context>
   );
  

@@ -20,9 +20,13 @@ import Notes from '../Components/Jobs Detail/Notes';
 import Logs from '../Components/Jobs Detail/Logs';
 import ProblemReports from '../Components/Jobs Detail/ProblemReports';
 import NoteModal from '../Components/Modals/NoteModal';
+import Toast from 'react-native-toast-message';
 import UpdateModal from '../Components/Modals/UpdateModal';
 const JobsDetail = ({route, navigation}) => {
   const { items } = route.params;
+  const [updateItem, setUdateItem]=useState("")
+  const [noteTitle, setNoteTitle]=useState("")
+  const [noteDisc, setNoteDisc]=useState("")
   const navbarOptions = [
     {
       id: 0,
@@ -71,6 +75,11 @@ const JobsDetail = ({route, navigation}) => {
   const toggleModal = () => {
     setModalVisible(!isModalVisible);
   };
+
+  const saveNote=(title,disc)=>{
+    setNoteDisc(disc)
+    setNoteTitle(title)
+  }
 
   React.useLayoutEffect(() => {
     navigation.setOptions({
@@ -138,9 +147,9 @@ const JobsDetail = ({route, navigation}) => {
         ) : selectedOptionID == 4 ? (
           <Files data={items} />
         ) : selectedOptionID == 5 ? (
-          <Update data={items}  />
+          <Update data={items} updateItem={updateItem} />
         ) : selectedOptionID == 6 ? (
-          <Notes data={items}  />
+          <Notes data={items} noteDic={noteDisc} noteTitle={noteTitle}  />
         ) : selectedOptionID == 7 ? (
           <Logs data={items} />
         ) : selectedOptionID == 8 ? (
@@ -149,10 +158,8 @@ const JobsDetail = ({route, navigation}) => {
       </View>
       <Modal isVisible={isModalVisible}>
       <View style={{ height: 400, backgroundColor: Color.brightOrange, justifyContent: 'center', alignItems: 'center' ,borderRadius:20 }}>
-        {
-          selectedOptionID === 5 ? <UpdateModal/> :
-            selectedOptionID === 6 ? <NoteModal/> : null
-        }
+        { selectedOptionID == 5 && <UpdateModal toggleModal={toggleModal} data={items}  setUdateItem={setUdateItem}/> }
+        { selectedOptionID == 6 && <NoteModal toggleModal={toggleModal} data={items}  saveNote={saveNote} /> }
         {/* Close button */}
         <TouchableOpacity
           style={{ position: 'absolute', top: 10, right: 10 }}
@@ -162,6 +169,7 @@ const JobsDetail = ({route, navigation}) => {
         </TouchableOpacity>
       </View>
     </Modal>
+    <Toast/>
     </View>
   );
 };

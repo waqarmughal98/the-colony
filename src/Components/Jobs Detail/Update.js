@@ -4,9 +4,17 @@ import Color from '../../Color'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import axios from 'axios'
 import { URL } from '../../utils/Constant'
-const Update = ({data}) => {
+const Update = ({data,updateItem}) => {
   const [loading, setLoading]=useState(true)
   const [update, setUpdate] = useState([]);
+
+  useEffect(()=>{
+        const currentDate = new Date();
+    const formattedDate = `${currentDate.getFullYear()}-${currentDate.getMonth() + 1}-${currentDate.getDate()}`;
+
+
+  setUpdate((preData)=>[...preData,{ comment_text:updateItem,comment_created:formattedDate ,first_name:"Mark",last_name:"Niasham"}])
+  },[updateItem])
 
   useEffect(()=>{
     (async ()=>{

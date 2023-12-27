@@ -5,10 +5,9 @@ import { Dimensions } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
 import { URL } from "../../utils/Constant";
-const F = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
 
-const Notes = ({ data }) => {
+const Notes = ({ data ,noteDisc, noteTitle}) => {
   const headerOption = ["Title", "Description", "Date"];
   const [loading, setLoading] = useState(true);
   const [notes, setNotes] = useState([]);
@@ -34,6 +33,12 @@ const Notes = ({ data }) => {
       });
     })();
   }, []);
+
+  useEffect(()=>{
+    const currentDate = new Date();
+    const formattedDate = `${currentDate.getFullYear()}-${currentDate.getMonth() + 1}-${currentDate.getDate()}`;
+    setNotes((preData)=>[...preData,{ note_title:noteTitle,note_created:formattedDate ,note_description:noteDisc}])
+},[noteDisc,noteTitle])
 
   return (
     <>
