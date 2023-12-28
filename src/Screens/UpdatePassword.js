@@ -1,14 +1,14 @@
 import { StyleSheet, Text, View, TextInput } from 'react-native'
 import React,{useState,useEffect} from 'react'
-import { FontAwesome5 } from '@expo/vector-icons'; 
+import { FontAwesome5,Foundation } from '@expo/vector-icons'; 
 import { vh, vw  } from '../utils/ScreenSize';
 import Color from '../Color';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 const UpdatePassword = () => {
     const [oldPassword, setOldPassword]=useState()
     const [newPassword, setNewPassword]=useState()
   return (
     <View style={styles.mainContainer}>
-        <Text style={styles.title} >Reset Password</Text>
         <View style={[styles.individual,{marginTop:20}]}>
               <View style={styles.topIndividual} >
                <View style={styles.iconContainer} >
@@ -17,18 +17,22 @@ const UpdatePassword = () => {
                
                 <Text style={styles.iconText}>Old Password</Text>
               </View>
-              <TextInput style={styles.input} value={oldPassword} onChangeText={(txt)=>setOldPassword(txt)}/>
+              <TextInput type="password" style={styles.input} value={oldPassword} onChangeText={(txt)=>setOldPassword(txt)}/>
            </View>
 
            <View style={styles.individual}>
               <View style={styles.topIndividual} >
                <View style={styles.iconContainer} >
-               <FontAwesome5 style={styles.icon}  name="user-lock" size={24} color="black" />
+               <Foundation style={styles.icon} name="lock" size={20} color="black" />
                </View>
                 <Text style={styles.iconText}>New Password</Text>
               </View>
               <TextInput style={styles.input} value={newPassword} onChangeText={(txt)=>setNewPassword(txt)}/>
            </View>
+
+            <TouchableOpacity style={styles.btn} activeOpacity={0.6}>
+                <Text style={styles.btnText}>Update Password</Text>
+            </TouchableOpacity>
    
     </View>
   )
@@ -133,5 +137,18 @@ const styles = StyleSheet.create({
       display:"flex",
       gap:20,
       marginVertical:20
+      },
+      btn:{
+        backgroundColor:Color.darkOrange,
+        borderRadius:20,
+        paddingVertical:10,
+        marginHorizontal:30,
+        marginTop:20
+      },
+      btnText:{
+        textAlign:"center",
+        color:"white",
+        fontWeight:"bold",
+        fontSize:15
       }
 })
