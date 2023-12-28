@@ -1,45 +1,73 @@
-import { StyleSheet, Text, View, TextInput } from 'react-native'
-import React,{useState,useEffect} from 'react'
-import { FontAwesome5,Foundation } from '@expo/vector-icons'; 
-import { vh, vw  } from '../utils/ScreenSize';
+import { StyleSheet, Text, View, TextInput, TouchableOpacity } from 'react-native';
+import React, { useState } from 'react';
+import { FontAwesome5, Foundation } from '@expo/vector-icons';
+import { vh } from '../utils/ScreenSize';
 import Color from '../Color';
-import { TouchableOpacity } from 'react-native-gesture-handler';
+
 const UpdatePassword = () => {
-    const [oldPassword, setOldPassword]=useState()
-    const [newPassword, setNewPassword]=useState()
+  const [oldPassword, setOldPassword] = useState('');
+  const [newPassword, setNewPassword] = useState('');
+  const [showOldPassword, setShowOldPassword] = useState(false);
+  const [showNewPassword, setShowNewPassword] = useState(false);
+
+  const toggleShowOldPassword = () => {
+    setShowOldPassword(!showOldPassword);
+  };
+
+  const toggleShowNewPassword = () => {
+    setShowNewPassword(!showNewPassword);
+  };
+
   return (
     <View style={styles.mainContainer}>
-        <View style={[styles.individual,{marginTop:20}]}>
-              <View style={styles.topIndividual} >
-               <View style={styles.iconContainer} >
-                 <FontAwesome5 style={styles.icon}  name="user-lock" size={14} color="black" />
-               </View>
-               
+      <View style={[styles.individual, { marginTop: 20 }]}>
+        <View style={styles.topIndividual}>
+            <View style={styles.topArea}>
+                <View style={styles.iconContainer}>
+                    <FontAwesome5 style={styles.icon} name="user-lock" size={14} color="black" />
+                </View>
                 <Text style={styles.iconText}>Old Password</Text>
-              </View>
-              <TextInput type="password" style={styles.input} value={oldPassword} onChangeText={(txt)=>setOldPassword(txt)}/>
-           </View>
+            </View>
+            <TouchableOpacity onPress={toggleShowOldPassword}>
+            <FontAwesome5 style={styles.eyeIcon} name={showOldPassword ? 'eye' : 'eye-slash'} size={16} color="black" />
+          </TouchableOpacity>
+        </View>
+        <TextInput
+          style={styles.input}
+          value={oldPassword}
+          onChangeText={(txt) => setOldPassword(txt)}
+          secureTextEntry={!showOldPassword}
+        />
+      </View>
 
-           <View style={styles.individual}>
-              <View style={styles.topIndividual} >
-               <View style={styles.iconContainer} >
-               <Foundation style={styles.icon} name="lock" size={20} color="black" />
-               </View>
-                <Text style={styles.iconText}>New Password</Text>
-              </View>
-              <TextInput style={styles.input} value={newPassword} onChangeText={(txt)=>setNewPassword(txt)}/>
-           </View>
+      <View style={styles.individual}>
+        <View style={styles.topIndividual}>
+         <View style={styles.topArea}> 
+            <View style={styles.iconContainer}>
+                <Foundation style={styles.icon} name="lock" size={20} color="black" />
+            </View>
+            <Text style={styles.iconText}>New Password</Text>
+         </View>
+          <TouchableOpacity onPress={toggleShowNewPassword}>
+            <FontAwesome5 style={styles.eyeIcon} name={showNewPassword ? 'eye' : 'eye-slash'} size={16} color="black" />
+          </TouchableOpacity>
+        </View>
+        <TextInput
+          style={styles.input}
+          value={newPassword}
+          onChangeText={(txt) => setNewPassword(txt)}
+          secureTextEntry={!showNewPassword}
+        />
+      </View>
 
-            <TouchableOpacity style={styles.btn} activeOpacity={0.6}>
-                <Text style={styles.btnText}>Update Password</Text>
-            </TouchableOpacity>
-   
+      <TouchableOpacity style={styles.btn} activeOpacity={0.6}>
+        <Text style={styles.btnText}>Update Password</Text>
+      </TouchableOpacity>
     </View>
-  )
-}
+  );
+};
 
-export default UpdatePassword
-
+export default UpdatePassword;
 const styles = StyleSheet.create({
     mainContainer:{
         padding:20,
@@ -109,6 +137,7 @@ const styles = StyleSheet.create({
          display:"flex",
          flexDirection:"row",
          alignItems:"center",
+         justifyContent:"space-between",
       },
       icon:{
            
@@ -150,5 +179,11 @@ const styles = StyleSheet.create({
         color:"white",
         fontWeight:"bold",
         fontSize:15
+      },
+      topArea:{
+        display:"flex",
+        flexDirection:"row",
+        justifyContent:"space-between",
+        alignItems:'center'
       }
 })
