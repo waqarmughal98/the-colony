@@ -40,7 +40,7 @@ const ProblemReports = ({navigation, data}) => {
             <Text style={styles.text2}>Job</Text>
           </View>   
           {/* All Data */}
-          <View style={styles.allData} >
+          <View style={styles.allData}>
             <ScrollView style={{flexGrow:1}}>
               {
                 items?.map((item,index)=>{
