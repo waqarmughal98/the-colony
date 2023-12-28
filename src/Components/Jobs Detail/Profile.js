@@ -1,13 +1,26 @@
 import { StyleSheet,TouchableOpacity, ImageBackground,Text, View,Image } from 'react-native'
-import React from 'react'
+import React,{useState,useEffect} from 'react'
 import {Foundation,Zocial,Ionicons } from '@expo/vector-icons';
 import Color from '../../Color';
+import { StatusBar } from 'react-native';
 import { vh, vw  } from '../../utils/ScreenSize';
-
+import AsyncStorage from '@react-native-async-storage/async-storage';
 const Profile = ({navigation}) => {
+  const [userDetail, setUserDetail]=useState()
+  useEffect(()=>{
+    (async ()=>{
+     const userData=await AsyncStorage.getItem("userDetail")
+     const parsedUserData = JSON.parse(userData);
+     setUserDetail(parsedUserData);
+  })()
+}, [])
 
+useEffect(()=>{
+  console.log(userDetail,"userDetail")
+},[userDetail])
   return (
     <ImageBackground source={require('../../../assets/imgs/Bg.png')} style={styles.backgroundImage}>
+    <StatusBar translucent backgroundColor="transparent" />
     <View style={styles.mainContainer}>
        <View style={styles.top}>
        <View style={{ marginHorizontal: 20 ,marginTop:5*vh,display:"flex",flexDirection:"row",alignItems:"center",justifyContent:"space-between"}}>
@@ -26,7 +39,7 @@ const Profile = ({navigation}) => {
         </View>
         <View style={styles.imgContainer}>
             <Image source={require('../../../assets/imgs/mark.png')} style={styles.Image} />
-            <Text style={styles.markTitle}>Mark Nisham</Text>
+            <Text style={styles.markTitle}>{userDetail?.fname} {userDetail?.lname}</Text>
           </View>
        </View>
        <View style={styles.bottom}>
@@ -40,7 +53,7 @@ const Profile = ({navigation}) => {
                 </View>
                  <Text style={styles.iconText}>Email</Text>
                </View>
-              <Text style={styles.text3}>mark@imaginedesigns.co</Text>
+              <Text style={styles.text3}>{userDetail?.email}</Text>
             </View>
             
              <View style={styles.individual}>
@@ -50,7 +63,7 @@ const Profile = ({navigation}) => {
                 </View>
                  <Text style={styles.iconText}>Phone</Text>
                </View>
-              <Text style={styles.text3}>321 455 2222</Text>
+              <Text style={styles.text3}>{userDetail?.phone}</Text>
             </View>
           </View>
 

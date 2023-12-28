@@ -30,7 +30,8 @@ const UpdateModal = ({data,toggleModal,setUdateItem}) => {
             type: 'success',
             text1: 'Update added Successfully!',
             text2: 'Great!',
-             visibilityTime:2000
+             visibilityTime:2000,
+             topOffset:5
           });
           setUdateItem(Update)
             setError("");

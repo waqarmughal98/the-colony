@@ -29,6 +29,7 @@ import AllProblemReports from './src/Screens/AllProblemReports';
 import ReplyTicket from './src/Screens/ReplyTicket';
 import Calender from './src/Screens/Calender';
 import Color from './src/Color';
+import UpdatePassword from './src/Screens/UpdatePassword';
 const Stack = createNativeStackNavigator();
 const Drawer = createDrawerNavigator();
 function App() {
@@ -166,6 +167,13 @@ function HomeScreenStack() {
             component={AllJobs}
             options={{
               title: 'All Jobs'
+            }}
+          />
+          <HomeStack.Screen
+            name="update-password"
+            component={UpdatePassword}
+            options={{
+              title: 'Update Password'
             }}
           />
           <HomeStack.Screen

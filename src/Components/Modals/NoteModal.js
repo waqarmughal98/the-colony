@@ -33,7 +33,8 @@ const NoteModal = ({data,toggleModal,saveNote}) => {
             type: 'success',
             text1: 'Note added Successfully!',
             text2: 'Great!',
-             visibilityTime:2000
+             visibilityTime:2000,
+             topOffset:5
           });
             setError("");
         }).catch((err) => {
@@ -84,7 +85,7 @@ const styles = StyleSheet.create({
     label:{
         fontSize:16,
         marginBottom:10,
-        
+        fontWeight:"bold"
     },
     discInput:{
         width:"100%",

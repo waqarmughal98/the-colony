@@ -1,25 +1,35 @@
-import React from 'react';
+import React ,{useEffect, useState} from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { DrawerContentScrollView, DrawerItemList } from '@react-navigation/drawer';
 import { vh,vw } from '../../utils/ScreenSize';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import Color from '../../Color';
 import Toast from 'react-native-toast-message';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 const CustomDrawerContent = (props) => {
+  const [userDetail, setUserDetail]=useState()
+  useEffect(()=>{
+    (async ()=>{
+     const userData=await AsyncStorage.getItem("userDetail")
+     const parsedUserData = JSON.parse(userData);
+     setUserDetail(parsedUserData);
+  })()
+}, [])
   const { navigation } = props;
   const HandleLogout= async()=>{
     try {
       await AsyncStorage.removeItem('token')
+      await AsyncStorage.removeItem('userDetail')
       navigation.toggleDrawer()
       Toast.show({
         type: 'success',
         text1: 'logout Successfully!',
         text2: 'we are moving you toward Login Screen',
-         visibilityTime:1000
+         visibilityTime:700,
+         topOffset:5
       });
       setTimeout(() => {
         navigation.navigate("LoginScreen");
-      }, 1000); 
+      }, 700); 
       // Additional logout logic or navigation here
     } catch (error) {
       console.error('Error removing token:', error);
@@ -31,8 +41,8 @@ const CustomDrawerContent = (props) => {
     <DrawerContentScrollView {...props}>
       {/* Your custom drawer content */}
       <View style={styles.drawerHeader}>
-        <Text style={styles.drawerHeaderText}>Mark Nisham</Text>
-        <Text style={styles.drawerSubHeaderText}>mark@imaginedesings.co</Text>
+        <Text style={styles.drawerHeaderText}>{userDetail?.fname} {userDetail?.lname}</Text>
+        <Text style={styles.drawerSubHeaderText}>{userDetail?.email}</Text>
       </View>
 
       {/* Default drawer items */}
@@ -40,7 +50,7 @@ const CustomDrawerContent = (props) => {
 
       {/* Custom options */}
       <View style={styles.drawerFooter}>
-        <TouchableOpacity >
+        <TouchableOpacity onPress={()=>navigation.navigate("update-password")} >
           <Text style={styles.drawerFooterText}>Update Password</Text>
         </TouchableOpacity>
         <TouchableOpacity onPress={()=>HandleLogout()}>

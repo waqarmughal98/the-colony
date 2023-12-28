@@ -41,8 +41,9 @@ const Update = ({data,updateItem}) => {
     <View style={styles.mainContainer}>
      {
         !loading ? 
-        <View style={[styles.Container,{paddingBottom:100}]}>
+        <View style={styles.Container}>
             <ScrollView >
+              <View style={{paddingBottom:170}}>
             {
               update.map((item,index)=>
                 <View style={styles.individual}  key={index}>
@@ -56,6 +57,7 @@ const Update = ({data,updateItem}) => {
                   </View>
                 </View>)
             }
+            </View>
             </ScrollView>
          </View>
       :

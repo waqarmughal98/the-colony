@@ -7,7 +7,7 @@ import axios from "axios";
 import { URL } from "../../utils/Constant";
 const windowHeight = Dimensions.get("window").height;
 
-const Notes = ({ data ,noteDisc, noteTitle}) => {
+const Notes = ({ data ,noteitem}) => {
   const headerOption = ["Title", "Description", "Date"];
   const [loading, setLoading] = useState(true);
   const [notes, setNotes] = useState([]);
@@ -32,13 +32,16 @@ const Notes = ({ data ,noteDisc, noteTitle}) => {
         console.log(err);
       });
     })();
-  }, []);
+  }, [noteitem]);
 
-  useEffect(()=>{
-    const currentDate = new Date();
-    const formattedDate = `${currentDate.getFullYear()}-${currentDate.getMonth() + 1}-${currentDate.getDate()}`;
-    setNotes((preData)=>[...preData,{ note_title:noteTitle,note_created:formattedDate ,note_description:noteDisc}])
-},[noteDisc,noteTitle])
+  // useEffect(()=>{
+  //   const currentDate = new Date();
+  //   console.log(noteitem)
+  //   const formattedDate = `${currentDate.getFullYear()}-${currentDate.getMonth() + 1}-${currentDate.getDate()}`;
+  //   if(noteitem){
+  //     setNotes((preData)=>[...preData,{ note_title:noteitem.noteTitle, note_created:formattedDate , note_description : noteitem.noteDisc }])
+  //   }
+  //  },[noteitem])
 
   return (
     <>
@@ -59,6 +62,7 @@ const Notes = ({ data ,noteDisc, noteTitle}) => {
           </View>
           <View style={styles.notesDataContaier}>
             <ScrollView contentContainerStyle={styles.mainContainer}>
+              <View style={{paddingBottom:150}}>
               {notes.map((item, index) => (
                 <View style={styles.individualRow} key={index}>
                   <Text style={styles.containerText}>{item.note_title}</Text>
@@ -72,6 +76,7 @@ const Notes = ({ data ,noteDisc, noteTitle}) => {
                   </View>
                 </View>
               ))}
+              </View>
               <Text>{/* For space */}</Text>
             </ScrollView>
           </View>

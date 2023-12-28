@@ -6,8 +6,9 @@ import SelectDropdown from 'react-native-select-dropdown'
 import ImagePickerComponent from '../Components/Picker/ImagePickerComponent'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
+import Toast from 'react-native-toast-message';
 import { URL } from '../utils/Constant';
-const NewProblemReport = ({navigation,route}) => {
+const NewProblemReport = ({navigation,route,Data}) => {
     const { items } = route.params;
     const getCurrentDate = () => {
         const today = new Date();
@@ -31,28 +32,50 @@ const NewProblemReport = ({navigation,route}) => {
     }
 
     useEffect(()=>{
-        // console.log(items)
+        console.log(items.project_clientid,"client")
     }, [items])
 
     const submitProblem = async ()=>{
-        const authToken = await AsyncStorage.getItem('token');
+        if(items && data.Subject!="" && data.Problem!=""){
+            const authToken = await AsyncStorage.getItem('token');
         const param = {
             params:{
-                ticket_created: data.date,
-                ticketresource_type: "project",
-                ticketresource_id: data.project_id,
+                ticket_created: getCurrentDate(),
+                ticket_clientid:items.project_clientid,
+                ticket_projectid: items.project_id,
+                ticket_subject:data.Subject,
+                ticket_message:data.Problem,
+                ticket_priority:"normal",
+                ticket_client_visibility:"0",
+                ticket_categoryid:9,
             },
         }
-        axios.post(URL + '/problemreports/' + 10 + "/store", {
+        axios.post(URL + '/problemreports/store', {
             params : param.params,
             headers:{
                 Authorization: `Bearer ${authToken}`
             }
         }).then((res)=>{
             console.log(res.data)
+            Toast.show({
+                type: 'success',
+                text1: 'Report Submitted Successfully',
+                text2: '',
+                visibilityTime:2000,
+                topOffset: 5,
+              });
         }).catch((err)=>{
             console.log(err)
-        })
+        })}
+        else{
+            Toast.show({
+                type: 'error',
+                text1: 'Error',
+                text2: 'Kindly fill all the data',
+                visibilityTime:2000,
+                topOffset: 5,
+              });
+        }
     }
 
     const dataOption=['Open','On Hold','Answered','Closed']
@@ -105,13 +128,12 @@ const NewProblemReport = ({navigation,route}) => {
                 <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
                     <ImagePickerComponent />
                 </View>
-                <View style={styles.btnContainer}>
-                    <TouchableOpacity activeOpacity={0.6}>
+                    <TouchableOpacity style={styles.btnContainer} activeOpacity={0.6} onPress={()=>{submitProblem()}}>
                         <Text style={styles.submitTxt}>Report Problem</Text>
                     </TouchableOpacity>
-                </View>
             </View> 
         </ScrollView>
+                <Toast/>
     </View>
   )
 }

@@ -149,11 +149,11 @@ const JobsDetail = ({route, navigation}) => {
         ) : selectedOptionID == 5 ? (
           <Update data={items} updateItem={updateItem} />
         ) : selectedOptionID == 6 ? (
-          <Notes data={items} noteDic={noteDisc} noteTitle={noteTitle}  />
+          <Notes data={items} noteitem={{noteDisc,noteTitle}}  />
         ) : selectedOptionID == 7 ? (
           <Logs data={items} />
         ) : selectedOptionID == 8 ? (
-          <ProblemReports navigation={navigation} data={items} />
+          <ProblemReports navigation={navigation} Data={items} />
         ) : null}
       </View>
       <Modal isVisible={isModalVisible}>

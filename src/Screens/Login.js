@@ -3,6 +3,7 @@ import React, { useEffect, useState,useRef } from 'react';
 import { FontAwesome, Ionicons } from '@expo/vector-icons';
 import { vh, vw } from '../utils/ScreenSize';
 import axios from 'axios';
+import { StatusBar } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { URL } from '../utils/Constant';
 import Toast from 'react-native-toast-message';
@@ -36,6 +37,14 @@ const Login = ({ navigation }) => {
         // console.log(res.data.token);
         (async function () {
           await AsyncStorage.setItem("token", res.data.token);
+          const userDetail = {
+            fname: res.data.user.first_name,
+            lname: res.data.user.last_name,
+            phone: res.data.user.phone,
+            email: res.data.user.email,
+          };
+          const userDetailString = JSON.stringify(userDetail);
+          await AsyncStorage.setItem("userDetail", userDetailString);
             Toast.show({
             type: 'success',
             text1: 'Login Successfully!',
@@ -66,6 +75,7 @@ const Login = ({ navigation }) => {
 
   return (
     <ImageBackground source={require('../../assets/imgs/Bg.png')} style={styles.backgroundImage}>
+      <StatusBar translucent backgroundColor="transparent" />
       <KeyboardAvoidingView  behavior={Platform.OS === 'ios' ? 'padding' : 'height'} enabled  style={styles.container}>
         <View style={styles.container}>
           <Image source={require('../../assets/imgs/logoLogin.png')} style={styles.Image} />
