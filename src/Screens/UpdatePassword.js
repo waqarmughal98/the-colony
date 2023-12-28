@@ -28,16 +28,19 @@ const UpdatePassword = () => {
                 </View>
                 <Text style={styles.iconText}>Old Password</Text>
             </View>
-            <TouchableOpacity onPress={toggleShowOldPassword}>
-            <FontAwesome5 style={styles.eyeIcon} name={showOldPassword ? 'eye' : 'eye-slash'} size={16} color="black" />
-          </TouchableOpacity>
+         
         </View>
-        <TextInput
-          style={styles.input}
-          value={oldPassword}
-          onChangeText={(txt) => setOldPassword(txt)}
-          secureTextEntry={!showOldPassword}
-        />
+          <View style={styles.inputContainer} >
+            <TextInput
+            style={styles.input}
+            value={oldPassword}
+            onChangeText={(txt) => setOldPassword(txt)}
+            secureTextEntry={!showOldPassword}
+            />
+            <TouchableOpacity onPress={toggleShowOldPassword}>
+                <FontAwesome5 style={styles.eyeIcon} name={showOldPassword ? 'eye' : 'eye-slash'} size={16} color="black" />
+            </TouchableOpacity>
+          </View>
       </View>
 
       <View style={styles.individual}>
@@ -48,16 +51,20 @@ const UpdatePassword = () => {
             </View>
             <Text style={styles.iconText}>New Password</Text>
          </View>
-          <TouchableOpacity onPress={toggleShowNewPassword}>
+      
+        </View>
+        <View style={styles.inputContainer}>
+            <TextInput
+            style={styles.input}
+            value={newPassword}
+            onChangeText={(txt) => setNewPassword(txt)}
+            secureTextEntry={!showNewPassword}
+            />
+             <TouchableOpacity onPress={toggleShowNewPassword}>
             <FontAwesome5 style={styles.eyeIcon} name={showNewPassword ? 'eye' : 'eye-slash'} size={16} color="black" />
           </TouchableOpacity>
         </View>
-        <TextInput
-          style={styles.input}
-          value={newPassword}
-          onChangeText={(txt) => setNewPassword(txt)}
-          secureTextEntry={!showNewPassword}
-        />
+     
       </View>
 
       <TouchableOpacity style={styles.btn} activeOpacity={0.6}>
@@ -129,9 +136,17 @@ const styles = StyleSheet.create({
         paddingBottom:10,
         marginVertical:5,
       },
-      input:{
+      inputContainer:{
         borderBottomColor:"#d3d3d3",
         borderBottomWidth:1,
+        display:"flex",
+        alignItems:'center',
+        flexDirection:"row",
+        alignItems:"center",
+        paddingBottom:5
+      },
+      input:{
+        flex:1
       },
       topIndividual:{
          display:"flex",
