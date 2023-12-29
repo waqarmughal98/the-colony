@@ -5,7 +5,7 @@ import Color from '../../Color'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 import { URL } from '../../utils/Constant';
-const ProblemReports = ({navigation, data}) => {
+const ProblemReports = ({navigation, data,ID}) => {
   const [loading, setLoading]=useState(true)
   const [items, setItems] = useState([]);
 
@@ -28,7 +28,7 @@ const ProblemReports = ({navigation, data}) => {
         console.log(err);
       })
     })()
-  },[])
+  },[ID])
     
   return (
     <View>    
@@ -42,6 +42,7 @@ const ProblemReports = ({navigation, data}) => {
           {/* All Data */}
           <View style={styles.allData}>
             <ScrollView style={{flexGrow:1}}>
+              <View style={{paddingBottom:80}}>
               {
                 items?.map((item,index)=>{
                   return(
@@ -58,6 +59,7 @@ const ProblemReports = ({navigation, data}) => {
                   )
                 })
               }
+              </View>
             </ScrollView>
           </View>
         </View>

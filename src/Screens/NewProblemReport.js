@@ -38,8 +38,8 @@ const NewProblemReport = ({navigation,route,Data}) => {
     const submitProblem = async ()=>{
         if(items && data.Subject!="" && data.Problem!=""){
             const authToken = await AsyncStorage.getItem('token');
-        const param = {
-            params:{
+        const body = {
+                ticketreply_text:data.Problem,
                 ticket_created: getCurrentDate(),
                 ticket_clientid:items.project_clientid,
                 ticket_projectid: items.project_id,
@@ -48,15 +48,13 @@ const NewProblemReport = ({navigation,route,Data}) => {
                 ticket_priority:"normal",
                 ticket_client_visibility:"0",
                 ticket_categoryid:9,
-            },
         }
-        axios.post(URL + '/problemreports/store', {
-            params : param.params,
+        axios.post(URL + '/problemreports/store',body, {
             headers:{
                 Authorization: `Bearer ${authToken}`
             }
         }).then((res)=>{
-            console.log(res.data)
+            console.log(res,"res...")
             Toast.show({
                 type: 'success',
                 text1: 'Report Submitted Successfully',
@@ -64,6 +62,9 @@ const NewProblemReport = ({navigation,route,Data}) => {
                 visibilityTime:2000,
                 topOffset: 5,
               });
+              setTimeout(() => {
+                navigation.navigate("jobs-detail",{items:items,ID:8})
+              }, 1000);
         }).catch((err)=>{
             console.log(err)
         })}

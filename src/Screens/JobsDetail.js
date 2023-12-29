@@ -23,10 +23,11 @@ import NoteModal from '../Components/Modals/NoteModal';
 import Toast from 'react-native-toast-message';
 import UpdateModal from '../Components/Modals/UpdateModal';
 const JobsDetail = ({route, navigation}) => {
-  const { items } = route.params;
+  const { items ,ID} = route.params;
   const [updateItem, setUdateItem]=useState("")
   const [noteTitle, setNoteTitle]=useState("")
   const [noteDisc, setNoteDisc]=useState("")
+  const [subject, setsubject]=useState("")
   const navbarOptions = [
     {
       id: 0,
@@ -70,6 +71,8 @@ const JobsDetail = ({route, navigation}) => {
     navbarOptions[0].id
   );
 
+
+  useEffect(()=>{},[])
   const [isModalVisible, setModalVisible] = useState(false);
 
   const toggleModal = () => {
@@ -88,7 +91,7 @@ const JobsDetail = ({route, navigation}) => {
           {(selectedOptionID==5 || selectedOptionID==6   )  &&  <TouchableOpacity onPress={toggleModal} activeOpacity={0.6}>
             <AntDesign name="pluscircleo" size={24} color="white" />
           </TouchableOpacity>}
-          {(selectedOptionID==8  )  &&  <TouchableOpacity onPress={()=>navigation.navigate("new-problem-report",{items:items})} activeOpacity={0.6}>
+          {(selectedOptionID==8  )  &&  <TouchableOpacity onPress={()=>navigation.navigate("new-problem-report",{items:items,})} activeOpacity={0.6}>
             <AntDesign name="pluscircleo" size={24} color="white" />
           </TouchableOpacity>}
         </View>
@@ -153,7 +156,7 @@ const JobsDetail = ({route, navigation}) => {
         ) : selectedOptionID == 7 ? (
           <Logs data={items} />
         ) : selectedOptionID == 8 ? (
-          <ProblemReports navigation={navigation} Data={items} />
+        <ProblemReports navigation={navigation} Data={items} ID={ID} />
         ) : null}
       </View>
       <Modal isVisible={isModalVisible}>
