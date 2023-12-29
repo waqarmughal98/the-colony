@@ -30,12 +30,18 @@ const NewProblemReport = ({navigation,route,Data}) => {
         setData({...data, [field]: value})
         console.log(data);
     }
-
+    const [btnDisables,setBtnDisabled]=useState(false)
     useEffect(()=>{
         console.log(items.project_clientid,"client")
     }, [items])
 
     const submitProblem = async ()=>{
+        if (btnDisables) {
+            return; // Disable button if already clicked
+        }
+    
+        setBtnDisabled(true); // Disable the button
+    
         if(items && data.Subject!="" && data.Problem!=""){
             const authToken = await AsyncStorage.getItem('token');
         const body = {
@@ -59,15 +65,18 @@ const NewProblemReport = ({navigation,route,Data}) => {
                 type: 'success',
                 text1: 'Report Submitted Successfully',
                 text2: '',
-                visibilityTime:2000,
+                visibilityTime:1000,
                 topOffset: 5,
               });
               setTimeout(() => {
-                navigation.navigate("jobs-detail",{items:items,ID:8})
+                navigation.navigate("jobs-detail",{items:items,ID: data.Problem})
               }, 1000);
-        }).catch((err)=>{
-            console.log(err)
-        })}
+              setBtnDisabled(false)
+              seterror("")
+            }).catch((err)=>{
+                console.log(err)
+                setBtnDisabled(false)
+            })}
         else{
             Toast.show({
                 type: 'error',
@@ -76,6 +85,7 @@ const NewProblemReport = ({navigation,route,Data}) => {
                 visibilityTime:2000,
                 topOffset: 5,
               });
+              setBtnDisabled(false)
         }
     }
 
@@ -130,7 +140,9 @@ const NewProblemReport = ({navigation,route,Data}) => {
                     <ImagePickerComponent />
                 </View>
                     <TouchableOpacity style={styles.btnContainer} activeOpacity={0.6} onPress={()=>{submitProblem()}}>
-                        <Text style={styles.submitTxt}>Report Problem</Text>
+                       {
+                        !btnDisables ?  <Text style={styles.submitTxt}>Report Problem</Text>  : <Text style={styles.submitTxt}>Submitting...</Text>
+                       } 
                     </TouchableOpacity>
             </View> 
         </ScrollView>
