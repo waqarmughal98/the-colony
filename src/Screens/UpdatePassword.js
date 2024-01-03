@@ -3,78 +3,139 @@ import React, { useState } from 'react';
 import { FontAwesome5, Foundation } from '@expo/vector-icons';
 import { vh } from '../utils/ScreenSize';
 import Color from '../Color';
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import axios from "axios";
+import Toast from 'react-native-toast-message';
+import { URL } from "../utils/Constant";
 
-const UpdatePassword = () => {
-  const [oldPassword, setOldPassword] = useState('');
+const UpdatePassword = ({navigation}) => {
   const [newPassword, setNewPassword] = useState('');
-  const [showOldPassword, setShowOldPassword] = useState(false);
+  const [confirmPassword, setConfirmPassword] = useState('');
   const [showNewPassword, setShowNewPassword] = useState(false);
-
-  const toggleShowOldPassword = () => {
-    setShowOldPassword(!showOldPassword);
-  };
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   const toggleShowNewPassword = () => {
     setShowNewPassword(!showNewPassword);
   };
 
+  const toggleShowConfirmPassword = () => {
+    setShowConfirmPassword(!showConfirmPassword);
+  };
+
+  const isvalidation=()=>{
+    if(newPassword=='' || confirmPassword==''){
+      Toast.show({
+        type: 'error',
+        text1: 'Error!',
+        text2: 'kindly enter password',
+         visibilityTime:1000,
+         topOffset:5,
+      });
+    
+      return false
+    }
+    else if (newPassword!=confirmPassword){
+      Toast.show({
+        type: 'error',
+        text1: 'Password not match!',
+        text2: 'kindly check your passwords',
+         visibilityTime:1000,
+         topOffset:5,
+      });
+      return false
+    }
+
+    return true
+    }
+
+
+  const UpdatePass=()=>{
+    if(isvalidation()==true){
+      (async () => {
+        const authToken = await AsyncStorage.getItem("token");
+        await axios.post(URL + "/update-password", {password: newPassword}, {
+            headers: {
+              Authorization: `Bearer ${authToken}`,
+            },
+          }
+        ).then((res) => {
+          Toast.show({
+            type: 'success',
+            text1: 'Password Updated Successfully!',
+            text2: 'We are redirecting to Dashboard',
+            visibilityTime:500,
+            topOffset:5,
+          });
+          setTimeout(() => {
+            navigation.navigate("Dashboard")
+          }, 500);
+         
+        }).catch((err) => {
+          console.log(err);
+        });
+      })();
+    }
+    
+  }
+
   return (
     <View style={styles.mainContainer}>
       <View style={[styles.individual, { marginTop: 20 }]}>
         <View style={styles.topIndividual}>
-            <View style={styles.topArea}>
-                <View style={styles.iconContainer}>
-                    <FontAwesome5 style={styles.icon} name="user-lock" size={14} color="black" />
-                </View>
-                <Text style={styles.iconText}>Old Password</Text>
-            </View>
-         
-        </View>
-          <View style={styles.inputContainer} >
-            <TextInput
-            style={styles.input}
-            value={oldPassword}
-            onChangeText={(txt) => setOldPassword(txt)}
-            secureTextEntry={!showOldPassword}
-            />
-            <TouchableOpacity onPress={toggleShowOldPassword}>
-                <FontAwesome5 style={styles.eyeIcon} name={showOldPassword ? 'eye' : 'eye-slash'} size={16} color="black" />
-            </TouchableOpacity>
-          </View>
-      </View>
-
-      <View style={styles.individual}>
-        <View style={styles.topIndividual}>
-         <View style={styles.topArea}> 
+          <View style={styles.topArea}>
             <View style={styles.iconContainer}>
-                <Foundation style={styles.icon} name="lock" size={20} color="black" />
+              <Foundation style={styles.icon} name="lock" size={20} color="black" />
             </View>
             <Text style={styles.iconText}>New Password</Text>
-         </View>
-      
+          </View>
         </View>
         <View style={styles.inputContainer}>
-            <TextInput
+          <TextInput
             style={styles.input}
             value={newPassword}
             onChangeText={(txt) => setNewPassword(txt)}
             secureTextEntry={!showNewPassword}
-            />
-             <TouchableOpacity onPress={toggleShowNewPassword}>
+          />
+          <TouchableOpacity onPress={toggleShowNewPassword}>
             <FontAwesome5 style={styles.eyeIcon} name={showNewPassword ? 'eye' : 'eye-slash'} size={16} color="black" />
           </TouchableOpacity>
         </View>
-     
       </View>
 
-      <TouchableOpacity style={styles.btn} activeOpacity={0.6}>
+      <View style={styles.individual}>
+        <View style={styles.topIndividual}>
+          <View style={styles.topArea}>
+            <View style={styles.iconContainer}>
+              <Foundation style={styles.icon} name="lock" size={20} color="black" />
+            </View>
+            <Text style={styles.iconText}>Confirm Password</Text>
+          </View>
+        </View>
+        <View style={styles.inputContainer}>
+          <TextInput
+            style={styles.input}
+            value={confirmPassword}
+            onChangeText={(txt) => setConfirmPassword(txt)}
+            secureTextEntry={!showConfirmPassword}
+          />
+          <TouchableOpacity onPress={toggleShowConfirmPassword}>
+            <FontAwesome5 style={styles.eyeIcon} name={showConfirmPassword ? 'eye' : 'eye-slash'} size={16} color="black" />
+          </TouchableOpacity>
+        </View>
+      </View>
+
+      <TouchableOpacity style={styles.btn} onPress={UpdatePass} activeOpacity={0.6}>
         <Text style={styles.btnText}>Update Password</Text>
       </TouchableOpacity>
+      <Toast/>
     </View>
   );
 };
 
 export default UpdatePassword;
+
+
+
 const styles = StyleSheet.create({
     mainContainer:{
         padding:20,

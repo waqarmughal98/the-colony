@@ -6,14 +6,14 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import Color from '../../Color';
 import Toast from 'react-native-toast-message';
 const CustomDrawerContent = (props) => {
-  const [userDetail, setUserDetail]=useState()
   useEffect(()=>{
     (async ()=>{
-     const userData=await AsyncStorage.getItem("userDetail")
-     const parsedUserData = JSON.parse(userData);
-     setUserDetail(parsedUserData);
-  })()
-}, [])
+      const userData=await AsyncStorage.getItem("userDetail")
+      const parsedUserData = JSON.parse(userData);
+      setUserDetail(parsedUserData);
+    })()
+  }, [])
+  const [userDetail, setUserDetail]=useState()
   const { navigation } = props;
   const HandleLogout= async()=>{
     try {
@@ -25,7 +25,7 @@ const CustomDrawerContent = (props) => {
         text1: 'logout Successfully!',
         text2: 'we are moving you toward Login Screen',
          visibilityTime:700,
-         topOffset:5
+         topOffset:50
       });
       setTimeout(() => {
         navigation.navigate("LoginScreen");

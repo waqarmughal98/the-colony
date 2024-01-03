@@ -62,7 +62,7 @@ const Notes = ({ data ,noteitem}) => {
           </View>
           <View style={styles.notesDataContaier}>
             <ScrollView contentContainerStyle={styles.mainContainer}>
-              <View style={{paddingBottom:150}}>
+              <View style={{paddingBottom:250}}>
               {notes.map((item, index) => (
                 <View style={styles.individualRow} key={index}>
                   <Text style={styles.containerText}>{item.note_title}</Text>

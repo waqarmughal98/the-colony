@@ -40,6 +40,8 @@ const AddRequest = () => {
         })
     }
 
+    console.log(leave,"leave")
+
     const data=["Holiday","Sickness","Overtime"]
     /* Check this data */
     const departmentData=["Office", "Topo Surveyor", "Utilities Surveyor", 'CAD Team']
@@ -81,11 +83,11 @@ const AddRequest = () => {
                 </View>
                 <View>
                     <Text style={styles.label}>Start Date*</Text>
-                    <DateInput editable={true}  setLeave={setLeave} name="startDate"  handleDateChange={handleDateChange}/>
+                    <DateInput editable={true}  setLeave={setLeave} name="startDate"  />
                 </View>
                 <View>
                     <Text style={styles.label}>End Date*</Text>
-                    <DateInput editable={true} setLeave={setLeave} name="endDate"  handleDateChange={handleDateChange}/>
+                    <DateInput editable={true} setLeave={setLeave} name="endDate"  />
                 </View>
                 <View>
                     <Text style={styles.label}>Days to be taken*</Text>

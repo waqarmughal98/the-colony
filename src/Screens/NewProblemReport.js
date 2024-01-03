@@ -146,7 +146,7 @@ const NewProblemReport = ({navigation,route,Data}) => {
                     </TouchableOpacity>
             </View> 
         </ScrollView>
-                <Toast/>
+     <Toast/>
     </View>
   )
 }

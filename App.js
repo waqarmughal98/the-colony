@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { AppState, Modal, View, Text, Button,Image } from 'react-native';
+import { AppState, Modal, View, Text, Button,Image,Platform} from 'react-native';
 import { NavigationContainer , useNavigationState} from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createDrawerNavigator } from '@react-navigation/drawer';
@@ -33,9 +33,11 @@ import UpdatePassword from './src/Screens/UpdatePassword';
 const Stack = createNativeStackNavigator();
 const Drawer = createDrawerNavigator();
 function App() {
-
+  
   StatusBar.setBarStyle('light-content');
-  StatusBar.setBackgroundColor(Color.darkOrange);
+  if (Platform.OS === 'android') {
+    StatusBar.setBackgroundColor(Color.darkOrange);
+  }
   return (
     <Context>
        <NavigationContainer>

@@ -126,7 +126,7 @@ const Requests = ({ navigation }) => {
                 >
                   <Text
                     style={styles.dataText}
-                  >{`From: ${item.leave_start_date} To: ${item.leave_end_date}`}</Text>
+                  >{`From: ${item?.leave_start_date} To: ${item?.leave_end_date}`}</Text>
                   <Text style={[styles.dataText2, { color: Color.darkOrange }]}>
                     {item.leave_type}
                   </Text>
