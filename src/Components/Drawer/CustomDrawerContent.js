@@ -24,8 +24,8 @@ const CustomDrawerContent = (props) => {
         type: 'success',
         text1: 'logout Successfully!',
         text2: 'we are moving you toward Login Screen',
-         visibilityTime:700,
-         topOffset:50
+        visibilityTime:700,
+        topOffset:5
       });
       setTimeout(() => {
         navigation.navigate("LoginScreen");
@@ -41,8 +41,8 @@ const CustomDrawerContent = (props) => {
     <DrawerContentScrollView {...props}>
       {/* Your custom drawer content */}
       <View style={styles.drawerHeader}>
-        <Text style={styles.drawerHeaderText}>{userDetail?.fname} {userDetail?.lname}</Text>
-        <Text style={styles.drawerSubHeaderText}>{userDetail?.email}</Text>
+        <Text style={styles.drawerHeaderText}>{userDetail?.fname || ""} {userDetail?.lname || ""}</Text>
+        <Text style={styles.drawerSubHeaderText}>{userDetail?.email || ""}</Text>
       </View>
 
       {/* Default drawer items */}

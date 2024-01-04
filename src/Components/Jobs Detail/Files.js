@@ -77,7 +77,7 @@ const Files = ({data}) => {
           <View style={styles.FolderMainContainer}>
           {
             items.map((item,index)=>
-              <View>
+              <View key={index}>
                 <View style={styles.individual}>
                   <TouchableOpacity activeOpacity={0.6} style={styles.leftBtmContainer} onPress={()=>hendleOpen(index)}>
                     <View style={styles.leftBtm}>
@@ -110,7 +110,7 @@ const Files = ({data}) => {
 
           <Modal isVisible={isModalVisible}>
             <View style={{ height: 250, backgroundColor: Color.brightOrange, justifyContent: 'center', alignItems: 'center' ,borderRadius:10 }}>
-              <AddFolder toggleModal={toggleModal} setData={setItems}/> 
+              <AddFolder toggleModal={toggleModal} data={data}  setData={setItems}/> 
             
               {/* Close button */}
               <TouchableOpacity

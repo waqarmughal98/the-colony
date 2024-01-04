@@ -1,17 +1,63 @@
 import { StyleSheet, Text, View, TextInput, ScrollView, TouchableOpacity, Alert } from 'react-native'
 import React,{useState} from 'react'
-import { vh,vw } from '../../utils/ScreenSize'
-const AddFolder = ({toggleModal,setData}) => {
+import axios from 'axios';
+import { vh,vw } from '../../utils/ScreenSize';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import Toast from 'react-native-toast-message';
+import { URL } from '../../utils/Constant';
+const AddFolder = ({toggleModal,setData,data}) => {
     const [Folder,setFolder]=useState("")
 
     const handleAdd=()=>{
         if(Folder){
           
-            setData((preData)=>[...preData, {
-                FolderName:Folder,
-                images:[]
-              }])
-              toggleModal()
+          
+
+              (async ()=>{
+                const authToken = await AsyncStorage.getItem("token");
+                if(!authToken){
+                   navigation.navigate("LoginScreen")
+                }
+           
+                axios.post(URL + "/files/savefolder",{},{
+                    params: {
+                        folderName: Folder,
+                        fileresource_type: "project",
+                        fileresource_id:data?.project_id
+                    },
+                     headers: {
+                        Authorization: `Bearer ${authToken}`
+                    }
+                  }
+                )
+                .then((res) => {
+                   console.log(res.data.token);
+                    toggleModal()
+                    setData((preData)=>[...preData, {
+                        FolderName:Folder,
+                        images:[]
+                      }])
+                      Toast.show({
+                      type: 'success',
+                      text1: 'Folder added successfully!',
+                       visibilityTime:1000,
+                       topOffset:5,
+                    });
+                })
+                .catch((err) => {
+                  Toast.show({
+                    type: 'error',
+                    text1: 'Error',
+                    text2: 'Folder did not add ',
+                    visibilityTime:2000
+                  });
+                  console.log(err);
+                })
+
+            })()
+
+         
+            
         }else{
             Alert.alert("Enter Folder Name first")
         }

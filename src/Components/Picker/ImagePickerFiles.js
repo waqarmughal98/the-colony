@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { View, Image, TouchableOpacity, Button, Text, StyleSheet } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
+import Toast from 'react-native-toast-message';
+import { URL } from '../../utils/Constant';
+import axios from 'axios';
 import { vh,vw } from '../../utils/ScreenSize';
-import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 const ImagePickerFiles = ({setData,index,data}) => {
   const [image, setImage] = useState(null);
   useEffect(() => {
@@ -25,15 +27,17 @@ const ImagePickerFiles = ({setData,index,data}) => {
 
     console.log(result);
 
-    if (!result.canceled) {
+    if (!result) {
       setImage(result.assets[0].uri);
       setData((prevData) => {
-        const newData = [...prevData]; // Create a shallow copy of the array
-        const updatedImages = [...newData[index]?.images || []]; // Create a shallow copy of the images array
+  
+        const newData = [...prevData]; 
+        const updatedImages = [...newData[index]?.images || []]; 
 
-        updatedImages.push(result.assets[0].uri); // Add the new image URI to the images array
+        updatedImages.push(result.assets[0].uri); 
 
-        // Update the images array in the object at the specified index
+
+
         newData[index] = {
           ...newData[index],
           images: updatedImages,
@@ -41,6 +45,45 @@ const ImagePickerFiles = ({setData,index,data}) => {
 
         return newData; // Return the updated array
       });
+      (async ()=>{
+        const authToken = await AsyncStorage.getItem("token");
+        if(!authToken){
+           navigation.navigate("LoginScreen")
+        }
+   
+        axios.post(URL + "/files/fileupload",{},{
+            params: {
+         
+            },
+             headers: {
+                Authorization: `Bearer ${authToken}`
+            }
+          }
+        )
+        .then(() => {
+          // console.log(res.data.token);
+          
+         Toast.show({
+              type: 'success',
+              text1: 'Image uploaded successfully!',
+               visibilityTime:1000,
+               topOffset:5,
+            });
+        })
+        .catch((err) => {
+          Toast.show({
+            type: 'error',
+            text1: 'Error',
+            text2: 'Image not uplaoded ',
+            visibilityTime:2000
+          });
+          console.log(err);
+        })
+
+    })()
+
+
+ 
     }
   };
 

@@ -34,27 +34,38 @@ const Login = ({ navigation }) => {
         }
       )
       .then((res) => {
-        // console.log(res.data.token);
-        (async function () {
-          await AsyncStorage.setItem("token", res.data.token);
-          const userDetail = {
-            fname: res.data.user.first_name,
-            lname: res.data.user.last_name,
-            phone: res.data.user.phone,
-            email: res.data.user.email,
-          };
-          const userDetailString = JSON.stringify(userDetail);
-          await AsyncStorage.setItem("userDetail", userDetailString);
-            Toast.show({
-            type: 'success',
-            text1: 'Login Successfully!',
-            text2: 'we are moving you toward dashboard',
-             visibilityTime:1000
+        const token=res.data.token
+        if(token){
+          (async function () {
+            await AsyncStorage.setItem("token", res.data.token);
+            const userDetail = {
+              fname: res.data.user.first_name,
+              lname: res.data.user.last_name,
+              phone: res.data.user.phone,
+              email: res.data.user.email,
+            };
+            const userDetailString = JSON.stringify(userDetail);
+            await AsyncStorage.setItem("userDetail", userDetailString);
+              Toast.show({
+              type: 'success',
+              text1: 'Login Successfully!',
+              text2: 'we are moving you toward dashboard',
+               visibilityTime:1000
+            });
+            setTimeout(() => {
+              navigation.navigate("Dashboard");
+            }, 1000); 
+          })();
+        }
+        else{
+          Toast.show({
+            type: 'error',
+            text1: 'Error while Login',
+            text2: 'Might be due to invalid Credentials',
+            visibilityTime:2000
           });
-          setTimeout(() => {
-            navigation.navigate("Dashboard");
-          }, 1000); 
-        })();
+        }
+    
       })
       .catch((err) => {
         Toast.show({
