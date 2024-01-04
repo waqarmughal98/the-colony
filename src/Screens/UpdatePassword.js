@@ -53,7 +53,10 @@ const UpdatePassword = ({navigation}) => {
     if(isvalidation()==true){
       (async () => {
         const authToken = await AsyncStorage.getItem("token");
-        await axios.post(URL + "/update-password", {password: newPassword}, {
+        await axios.post(URL + "/update-password", {
+          password: newPassword,
+          password_confirmation: newPassword,
+        }, {
             headers: {
               Authorization: `Bearer ${authToken}`,
             },

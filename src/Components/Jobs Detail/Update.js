@@ -9,7 +9,7 @@ const Update = ({data,updateItem}) => {
   const [update, setUpdate] = useState([]);
 
   useEffect(()=>{
-        const currentDate = new Date();
+    const currentDate = new Date();
     const formattedDate = `${currentDate.getFullYear()}-${currentDate.getMonth() + 1}-${currentDate.getDate()}`;
 
 
@@ -19,7 +19,9 @@ const Update = ({data,updateItem}) => {
   useEffect(()=>{
     (async ()=>{
       const authToken = await AsyncStorage.getItem('token');
-      await axios.post(URL + '/comments/search', {}, {
+      await axios.post(URL + '/comments/search', {
+        
+      }, {
         params:{
           project_id: data?.project_id,
           commentresource_type: "project",

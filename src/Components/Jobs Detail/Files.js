@@ -25,19 +25,22 @@ const Files = ({data}) => {
       setcurrentIndex(ind)
     }
   }
+ 
 
   useEffect(()=>{
     (async ()=>{
       const authToken = await AsyncStorage.getItem('token');
-      axios.get(URL + '/files', {}, {
-        params:{
-          source: "ext",
+      await axios.get(URL + '/files', {
+
+      }, {
+        params: {
+          source: 'ext',
           ref: 'list',
           fileresource_type: 'project',
-          fileresource_id: data?.project_id
+          fileresource_id: 133
         },
         headers: {
-          Authorization: `Bearer ${authToken}`,
+          Authorization: `Bearer ${authToken}`
         }
       }).then((res)=>{
         setItems(res.data.files.data);
@@ -46,7 +49,7 @@ const Files = ({data}) => {
         console.log(err);
       })
     })()
-  }, [])
+  }, [data])
 
   const fileName=(text)=>{
     const pathParts = text.split("/");
