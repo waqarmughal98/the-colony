@@ -25,36 +25,20 @@ const ImagePickerFiles = ({setData,index,data}) => {
       quality: 1,
     });
 
-    console.log(result);
-
+    
     if (!result) {
       setImage(result.assets[0].uri);
-      setData((prevData) => {
-  
-        const newData = [...prevData]; 
-        const updatedImages = [...newData[index]?.images || []]; 
-
-        updatedImages.push(result.assets[0].uri); 
-
-
-
-        newData[index] = {
-          ...newData[index],
-          images: updatedImages,
-        };
-
-        return newData; // Return the updated array
-      });
+      
+      console.log(result.assets[0].uri);
       (async ()=>{
         const authToken = await AsyncStorage.getItem("token");
         if(!authToken){
            navigation.navigate("LoginScreen")
         }
    
-        axios.post(URL + "/files/fileupload",{},{
-            params: {
-         
-            },
+        axios.post(URL + "/fileupload",{
+          file:result.assets[0].uri
+        },{
              headers: {
                 Authorization: `Bearer ${authToken}`
             }
@@ -62,7 +46,22 @@ const ImagePickerFiles = ({setData,index,data}) => {
         )
         .then(() => {
           // console.log(res.data.token);
-          
+          setData((prevData) => {
+  
+            const newData = [...prevData]; 
+            const updatedImages = [...newData[index]?.images || []]; 
+    
+            updatedImages.push(result.assets[0].uri); 
+    
+    
+    
+            newData[index] = {
+              ...newData[index],
+              images: updatedImages,
+            };
+    
+            return newData; // Return the updated array
+          });
          Toast.show({
               type: 'success',
               text1: 'Image uploaded successfully!',

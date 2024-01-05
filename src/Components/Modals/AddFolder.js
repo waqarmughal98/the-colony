@@ -19,9 +19,9 @@ const AddFolder = ({toggleModal,setData,data}) => {
                    navigation.navigate("LoginScreen")
                 }
            
-                axios.post(URL + "/files/savefolder",{},{
+                axios.post(URL + "/filegroups/savefolder",{},{
                     params: {
-                        folderName: Folder,
+                        filefolder_name: Folder,
                         fileresource_type: "project",
                         fileresource_id:data?.project_id
                     },

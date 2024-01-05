@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View , TouchableOpacity, Image,ScrollView} from 'react-native'
+import { StyleSheet, Text, View , TouchableOpacity, Image,ScrollView,ActivityIndicator } from 'react-native'
 import React,{useEffect, useState} from 'react'
 import { vh,vw } from '../../utils/ScreenSize'
 import Modal from "react-native-modal";
@@ -13,6 +13,8 @@ const Files = ({data}) => {
   const [items, setItems]=useState([])
   const [isModalVisible, setModalVisible] = useState(false);
   const [currentIndex, setcurrentIndex] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [FolderName,setFolderNames] =useState([])
 
   const toggleModal = () => {
     setModalVisible(!isModalVisible);
@@ -25,31 +27,51 @@ const Files = ({data}) => {
       setcurrentIndex(ind)
     }
   }
- 
+  
 
-  useEffect(()=>{
-    (async ()=>{
-      const authToken = await AsyncStorage.getItem('token');
-      await axios.get(URL + '/files', {
-
-      }, {
-        params: {
-          source: 'ext',
-          ref: 'list',
-          fileresource_type: 'project',
-          fileresource_id: 133
-        },
-        headers: {
-          Authorization: `Bearer ${authToken}`
+  useEffect(() => {
+    (async () => {
+      const authToken = await AsyncStorage.getItem("token");
+      if (!authToken) {
+        navigation.navigate("LoginScreen");
+      }
+     const ID=data?.project_id
+      try {
+        const response = await fetch(
+          `${URL}/files?source=ext&ref=list&fileresource_type=project&fileresource_id=${ID}`,
+          {
+            method: "GET",
+            headers: {
+              Authorization: `Bearer ${authToken}`,
+            },
+          }
+        );
+  
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
         }
-      }).then((res)=>{
-        setItems(res.data.files.data);
-        console.log(res.data.files.data);
-      }).catch((err)=>{
-        console.log(err);
-      })
-    })()
-  }, [data])
+  
+        const data = await response.json();
+        const FolderData=data.folders.data;
+        const FilesData=data.files.data;
+        const newData=FolderData.map((item,index)=>{
+          const relatedFiles= FilesData.filter((i)=>{
+           return i.file_group_id==item.file_group_id 
+          })
+            return {
+              ...item,images:  relatedFiles
+            }
+        })
+        setItems(newData)
+        if(data){
+          setLoading(false);
+        }
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    })();
+  }, [FolderName]);
+  
 
   const fileName=(text)=>{
     const pathParts = text.split("/");
@@ -58,7 +80,9 @@ const Files = ({data}) => {
   }
   return (
     <View>
-      <ScrollView>
+        {
+          !loading?(
+        <ScrollView>
         <View style={{paddingBottom:100}}>
           {/* Add folder section */}
           <View style={styles.addFolder}>
@@ -85,7 +109,7 @@ const Files = ({data}) => {
                   <TouchableOpacity activeOpacity={0.6} style={styles.leftBtmContainer} onPress={()=>hendleOpen(index)}>
                     <View style={styles.leftBtm}>
                       <Image source={currentIndex==index?  require('../../../assets/imgs/opened_folder.png'): require('../../../assets/imgs/close_folder.png')} style={styles.Image3} />
-                      <Text>{item.FolderName}</Text>
+                      <Text>{item.file_group_name}</Text>
                     </View>
                   </TouchableOpacity>
                   <View style={styles.rightBtmContainer}>
@@ -113,7 +137,7 @@ const Files = ({data}) => {
 
           <Modal isVisible={isModalVisible}>
             <View style={{ height: 250, backgroundColor: Color.brightOrange, justifyContent: 'center', alignItems: 'center' ,borderRadius:10 }}>
-              <AddFolder toggleModal={toggleModal} data={data}  setData={setItems}/> 
+              <AddFolder toggleModal={toggleModal} data={data}   setData={setFolderNames}/> 
             
               {/* Close button */}
               <TouchableOpacity
@@ -126,6 +150,14 @@ const Files = ({data}) => {
           </Modal>
         </View>
       </ScrollView>
+          ):(
+            <View style={styles.indicator}>
+            <ActivityIndicator size="large" color={'black'} />
+            <Text style={styles.fetchingData}>Fetching Data</Text>
+            <Text >Fetching Data</Text>
+          </View>
+          )
+        }
     </View>
   )
 }
@@ -251,6 +283,16 @@ const styles = StyleSheet.create({
     fontSize:12,
     color:"#5A5A5A",
     flex:0.85
+  },
+  indicator: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop:"60%"
+  },
+  fetchingData: {
+    color: 'black',
+    fontWeight: 'bold',
   },
 
 })
