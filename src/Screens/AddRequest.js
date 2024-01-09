@@ -13,8 +13,8 @@ import { useNavigation } from '@react-navigation/native';
 const AddRequest = () => {
     const [leave, setLeave] = useState({
         leave_title: "",
-        leave_start_date: "",
-        leave_end_date: "",
+        leave_start_date: new Date().toDateString(),
+        leave_end_date: new Date().toDateString(),
         leave_reason: "",
         leave_type: "",
         day_to_taken: "",
@@ -39,24 +39,29 @@ const AddRequest = () => {
                     Authorization: `Bearer ${authToken}`
                 }
             }).then((res)=>{
-                console.log(res,"res.......")
                 Toast.show({
                     type: 'success',
                     text1: 'Request Added Successfully!',
                     text2: 'we are redirect you to previous screen',
-                     visibilityTime:500
+                     visibilityTime:1000,
+                     topOffset:5
                   });
                 setTimeout(() => {
-                    navigation.push('requests')  
-                }, 500);
+                    navigation.push('requests',{leave:leave})  
+                }, 1000);
                 
             }).catch((err)=>{
                 console.log(err);
             })
         }
         else{
-            Alert.alert("Error","kindly fill all the form fields!")
-        
+           // Alert.alert("Error","kindly fill all the form fields!")
+            Toast.show({
+                type: 'error',
+                text1: 'kindly fill all the form fields!',
+                 topOffset:5,
+                 visibilityTime:1500
+              });
         }
 
        
@@ -71,7 +76,7 @@ const AddRequest = () => {
     <View style={styles.mainContainer}>
         <ScrollView>
             <View style={styles.fieldsContainer}>
-               <Toast/>
+              
                 <View>
                     <Text style={styles.label}>Request Type*</Text>
                     <SelectDropdown
@@ -146,6 +151,7 @@ const AddRequest = () => {
                 </TouchableOpacity>       
             </View>
         </ScrollView>
+        <Toast/>
     </View>
   )
 }

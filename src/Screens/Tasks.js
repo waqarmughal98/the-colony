@@ -9,7 +9,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 const Tasks = ({navigation,route}) => {
     const [loading, setLoading]=useState(true)
     const [data, setData] = useState([]);
-    const { item } = route.params;
+    const { item ,  Task} = route.params;
     React.useLayoutEffect(() => {
        navigation.setOptions({
           headerTintColor: 'white',
@@ -59,7 +59,7 @@ const Tasks = ({navigation,route}) => {
                 })
             }
         })()
-    },[])
+    },[Task])
   return (
     <View>
         {

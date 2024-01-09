@@ -149,7 +149,6 @@ const Files = ({data}) => {
             <View style={styles.indicator}>
             <ActivityIndicator size="large" color={'black'} />
             <Text style={styles.fetchingData}>Fetching Data</Text>
-            <Text >Fetching Data</Text>
           </View>
           )
         }
@@ -280,7 +279,6 @@ const styles = StyleSheet.create({
     flex:0.85
   },
   indicator: {
-    flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
     marginTop:"60%"

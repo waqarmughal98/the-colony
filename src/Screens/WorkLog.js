@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, ScrollView, Image, FlatList } from 'react-native'
+import { StyleSheet, Text, View, TouchableOpacity, ScrollView, Image, FlatList, ActivityIndicator } from 'react-native'
 import { vw,vh } from '../utils/ScreenSize';
 import { MaterialIcons,Ionicons } from '@expo/vector-icons';
 import Color from '../Color';

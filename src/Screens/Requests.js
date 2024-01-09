@@ -11,11 +11,13 @@ import {
 import { vw, vh } from "../utils/ScreenSize";
 import { MaterialIcons, AntDesign } from "@expo/vector-icons";
 import Color from "../Color";
+import Toast from 'react-native-toast-message';
 import axios from "axios";
 import { URL } from "../utils/Constant";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-const Requests = ({ navigation }) => {
+const Requests = ({ navigation,route }) => {
   const [data, setData] = useState([]);
+  const { leave }=route.params
   const [filteredData, setfilteredData] = useState([]);
   React.useLayoutEffect(() => {
     navigation.setOptions({
@@ -34,7 +36,7 @@ const Requests = ({ navigation }) => {
       const authToken = await AsyncStorage.getItem("token");
       await axios
         .get(URL + "/leave", {
-          headers: {
+          headers: {  
             Authorization: `Bearer ${authToken}`,
           },
         })
@@ -45,7 +47,7 @@ const Requests = ({ navigation }) => {
           console.log(err);
         });
     })();
-  }, []);
+  }, [leave]);
 
   useEffect(()=>{
     filterLeaves();
@@ -132,6 +134,7 @@ const Requests = ({ navigation }) => {
                   </Text>
                   <Text style={styles.dataText2}>{item.leave_status}</Text>
                 </View>
+                <Toast/>
               </View>
             );
           })}

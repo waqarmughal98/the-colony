@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react'
 import { FontAwesome } from '@expo/vector-icons';
 import SelectDropdown from 'react-native-select-dropdown'
 import Color from '../Color'
+import Toast from 'react-native-toast-message';
 // import { Picker } from '@react-native-picker/picker';
 import { vw,vh } from '../utils/ScreenSize'
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -12,20 +13,6 @@ const TaskDetail = ({navigation , route}) => {
   const { items } = route.params;
   const [data, setData] = useState()
   const [loading, setLoading]=useState(true)
-  React.useLayoutEffect(() => {
-    navigation.setOptions({
-      headerTintColor: 'white',
-      title:"Task Detail",
-      headerTitleAlign: 'center',
-      headerRight: () => (
-        <View style={{ marginRight: 5 }}>
-          <TouchableOpacity activeOpacity={0.6}>
-           <Text style={{color:"white"}}>Update</Text>
-          </TouchableOpacity>
-        </View>
-      ),
-    });
-  }, [navigation]);
 
      /* Remove this when fethc data */
     useEffect(()=>{
@@ -60,7 +47,9 @@ const TaskDetail = ({navigation , route}) => {
            setLoading(false) 
         }, 1000);
     },[])
-    
+    useEffect(()=>{
+      console.log(data,"data....")
+    },[data])
     const options =['New (Unassigned)', 'Not Started', 'In Progress', 'On Hold','Query Resolved','Query Raised','Completed']
 
     const selectOption = async (value, index)=>{
@@ -82,6 +71,16 @@ const TaskDetail = ({navigation , route}) => {
           Authorization: `Bearer ${authToken}`
         }
       }).then((res)=>{
+        Toast.show({
+          type: 'success',
+          text1: 'Task Updated Successfully!',
+          text2: 'we are redirect you to previous screen',
+           visibilityTime:1000,
+           topOffset:5
+        });
+      setTimeout(() => {
+          navigation.push('tasks',{Task:data})  
+      }, 1000);
         console.log(res.data);
       }).catch((err)=>{
         console.log(err);
@@ -144,6 +143,7 @@ const TaskDetail = ({navigation , route}) => {
              <Text style={styles.submitTxt} onPress={updateTask}>Update</Text>
            </TouchableOpacity>
         </ScrollView>
+        <Toast/>
       </View>
       :
       <View style={styles.Indicator}>

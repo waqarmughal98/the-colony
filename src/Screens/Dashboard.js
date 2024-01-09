@@ -11,6 +11,7 @@ import Toast from 'react-native-toast-message';
 function Dashboard({ navigation }) {
 ;
   const [data, setData] = useState([]);
+  
     React.useLayoutEffect(() => {
       navigation.setOptions({
         headerTitle: 'Dashboard',

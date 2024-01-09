@@ -32,6 +32,7 @@ const DateInput = ({editable,name,setLeave, dateValue,setData}) => {
     }
   };
 
+  
   const showDatePickerContainer = () => {
     setShowDatePicker(true);
   };
@@ -41,7 +42,7 @@ const DateInput = ({editable,name,setLeave, dateValue,setData}) => {
       <TouchableOpacity activeOpacity={0.6} onPress={showDatePickerContainer} style={{marginTop:-10 }}>
         <View style={[styles.container,{borderRadius: 10,width:vw*90,backgroundColor: name=="replyTicket" ? '#DFE1ED' : "white"}]}>
           {/* Left side: Date value */}
-          <Text style={styles.dateValue}>{date?.toDateString()}</Text>
+          <Text style={styles.dateValue}>{  date?.toDateString()  }</Text>
           {/* Right side: Calendar icon */}   
             <AntDesign name="calendar" size={22} color="black" />
           {/* Date Picker */}
