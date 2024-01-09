@@ -99,42 +99,52 @@ const WorkLog = ({navigation}) => {
 
   return (
     <View style={styles.container}>
-      {/* Horizontal FlatList */}
-      <FlatList
-        data={options}
-        renderItem={renderItem}
-        keyExtractor={(item, index) => index.toString()}
-        horizontal
-        showsHorizontalScrollIndicator={false}
-        contentContainerStyle={styles.flatListContainer}
-      />
-      {/* Display selected card title */}
-      <View style={styles.selectedCardContainer}>
-        <Text style={styles.selectedCardText}>{selectedTitle}</Text>
-      </View>
-      {/* Header */}
-      <View style={styles.containerHeader}>
-        <Text style={styles.text}>Job Name</Text>
-        <Text style={[styles.text2]}>Company</Text>
-      </View>
-      {/* All Data */}
-      <View>
-        <ScrollView>
-          {filteredData.map((item,index)=>
-            {
-              return(
-                <TouchableOpacity onPress={()=>navigation.navigate("jobs-detail",{items: item})} activeOpacity={0.6} key={index}>
-                  <View style={[styles.individual,{backgroundColor:index%2==0 ? '#D2CBBC' : '#F2F1CF'}]}>
-                    <Text style={styles.dataText}>{item.project_title}</Text>
-                    <Text style={styles.dataText2}>{item.client_company_name}</Text> 
-                    <MaterialIcons name={'keyboard-arrow-right'} size={28} color="black" />
-                  </View>
-                </TouchableOpacity>
-              )
-            }
-          )}
-        </ScrollView>
-      </View>
+      {
+        data.length>0 ? ( 
+          <>
+          <FlatList
+          data={options}
+          renderItem={renderItem}
+          keyExtractor={(item, index) => index.toString()}
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          contentContainerStyle={styles.flatListContainer}
+        />
+        <View style={styles.selectedCardContainer}>
+          <Text style={styles.selectedCardText}>{selectedTitle}</Text>
+        </View>
+        {/* Header */}
+        <View style={styles.containerHeader}>
+          <Text style={styles.text}>Job Name</Text>
+          <Text style={[styles.text2]}>Company</Text>
+        </View>
+        {/* All Data */}
+        <View>
+          <ScrollView>
+            {filteredData.map((item,index)=>
+              {
+                return(
+                  <TouchableOpacity onPress={()=>navigation.navigate("jobs-detail",{items: item})} activeOpacity={0.6} key={index}>
+                    <View style={[styles.individual,{backgroundColor:index%2==0 ? '#D2CBBC' : '#F2F1CF'}]}>
+                      <Text style={styles.dataText}>{item.project_title}</Text>
+                      <Text style={styles.dataText2}>{item.client_company_name}</Text> 
+                      <MaterialIcons name={'keyboard-arrow-right'} size={28} color="black" />
+                    </View>
+                  </TouchableOpacity>
+                )
+              }
+            )}
+          </ScrollView>
+        </View>
+        </>
+        ): (
+          <View style={styles.Indicator}>
+          <ActivityIndicator size="large" color={"black"} />
+          <Text style={styles.fetchingData}>Fetching Data</Text>
+        </View>
+        )
+      }
+
     </View>
   );
 };
@@ -221,7 +231,19 @@ individual:{
     borderBottomColor:Color.brightOrange,
     borderBottomWidth:1
 },
-
+Indicator:
+{
+     flexGrow:1,
+    display:"flex",
+    justifyContent:"center",
+    alignItems:"center",
+    alignContent:"center",
+    marginTop:"60%"
+},
+fetchingData:{
+    color:'black',
+    fontWeight:"bold"
+}
 });
 
 export default WorkLog;

@@ -1,9 +1,10 @@
-import { StyleSheet, Text, View, TextInput, ScrollView, TouchableOpacity } from 'react-native'
+import { StyleSheet, Text, View, TextInput,Alert, ScrollView, TouchableOpacity } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import Color from '../Color'
 import { vw,vh } from '../utils/ScreenSize'
 import { FontAwesome } from '@expo/vector-icons';
 import SelectDropdown from 'react-native-select-dropdown'
+import Toast from 'react-native-toast-message';
 import DateInput from '../Components/Date/DateInput'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
@@ -25,19 +26,40 @@ const AddRequest = () => {
         setLeave({...leave, [field]: value})
     }
 
+    const validations=()=>{
+       return Object.values(leave).every((item)=>item!="")
+    }
     const submitRequest = async ()=>{
-        const authToken = await AsyncStorage.getItem('token');
-        await axios.post(URL + '/leave',{} ,{
-            params:leave,
-            headers:{
-                Authorization: `Bearer ${authToken}`
-            }
-        }).then(()=>{
-            setLeave('')
-            navigation.push('requests')
-        }).catch((err)=>{
-            console.log(err);
-        })
+     
+        if(validations()==true){
+            const authToken = await AsyncStorage.getItem('token');
+            await axios.post(URL + '/leave',{} ,{
+                params:leave,
+                headers:{
+                    Authorization: `Bearer ${authToken}`
+                }
+            }).then((res)=>{
+                console.log(res,"res.......")
+                Toast.show({
+                    type: 'success',
+                    text1: 'Request Added Successfully!',
+                    text2: 'we are redirect you to previous screen',
+                     visibilityTime:500
+                  });
+                setTimeout(() => {
+                    navigation.push('requests')  
+                }, 500);
+                
+            }).catch((err)=>{
+                console.log(err);
+            })
+        }
+        else{
+            Alert.alert("Error","kindly fill all the form fields!")
+        
+        }
+
+       
     }
 
     console.log(leave,"leave")
@@ -49,6 +71,7 @@ const AddRequest = () => {
     <View style={styles.mainContainer}>
         <ScrollView>
             <View style={styles.fieldsContainer}>
+               <Toast/>
                 <View>
                     <Text style={styles.label}>Request Type*</Text>
                     <SelectDropdown
@@ -117,6 +140,7 @@ const AddRequest = () => {
                         }}
                         />
                 </View>
+                
                 <TouchableOpacity style={styles.btnContainer} activeOpacity={0.6} onPress={submitRequest}>
                     <Text style={styles.submitTxt}>Submit</Text>
                 </TouchableOpacity>       

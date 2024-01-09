@@ -136,9 +136,9 @@ const NewProblemReport = ({navigation,route,Data}) => {
                         }}
                     />
                 </View>
-                <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+                {/* <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
                     <ImagePickerComponent />
-                </View>
+                </View> */}
                     <TouchableOpacity style={styles.btnContainer} activeOpacity={0.6} onPress={()=>{submitProblem()}}>
                        {
                         !btnDisables ?  <Text style={styles.submitTxt}>Report Problem</Text>  : <Text style={styles.submitTxt}>Submitting...</Text>

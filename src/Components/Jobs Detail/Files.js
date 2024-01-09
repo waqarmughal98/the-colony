@@ -15,6 +15,7 @@ const Files = ({data}) => {
   const [currentIndex, setcurrentIndex] = useState(null);
   const [loading, setLoading] = useState(true);
   const [FolderName,setFolderNames] =useState([])
+  const [FileName,setFileName] =useState([])
 
   const toggleModal = () => {
     setModalVisible(!isModalVisible);
@@ -70,14 +71,8 @@ const Files = ({data}) => {
         console.error("Error fetching data:", error);
       }
     })();
-  }, [FolderName]);
+  }, [FolderName,FileName]);
   
-
-  const fileName=(text)=>{
-    const pathParts = text.split("/");
-    const fileName = pathParts[pathParts.length - 1];
-    return fileName
-  }
   return (
     <View>
         {
@@ -113,15 +108,15 @@ const Files = ({data}) => {
                     </View>
                   </TouchableOpacity>
                   <View style={styles.rightBtmContainer}>
-                      <ImagePickerFiles index={index} data={data} setData={setItems} />
+                      <ImagePickerFiles index={index} data={data} setData={setFileName} currentIndex={currentIndex}  items={items}/>
                   </View>
                 </View>
                 {currentIndex==index && (
                   <View style={styles.imageContainer}>
                       {item.images.length>0 ? (item.images.map((image, i) => (
                       <View style={styles.ImageWrapper} key={i}>
-                        <Image source={{ uri: image }} style={styles.imageFolder} />
-                        <Text style={styles.fileName}>{fileName(image)}</Text>
+                        <Image source={{ uri:  `{https://geomap.imaginedesigns.co/storage/files/${image.file_directory}/${image.file_filename}}` }} style={styles.imageFolder} />
+                        <Text style={styles.fileName}>{image.file_filename}</Text>
                       </View>
                     ))):(
                       <View style={styles.ImageWrapper}>

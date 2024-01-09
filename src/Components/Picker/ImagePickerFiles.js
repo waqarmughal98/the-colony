@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { View, Image, TouchableOpacity, Button, Text, StyleSheet } from 'react-native';
+import { View, Image, TouchableOpacity, Text, StyleSheet } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 import Toast from 'react-native-toast-message';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { URL } from '../../utils/Constant';
 import axios from 'axios';
-import { vh,vw } from '../../utils/ScreenSize';
-const ImagePickerFiles = ({setData,index,data}) => {
+
+const ImagePickerFiles = ({setData,index,data,items,currentIndex}) => {
   const [image, setImage] = useState(null);
   useEffect(() => {
     (async () => {
@@ -16,80 +17,109 @@ const ImagePickerFiles = ({setData,index,data}) => {
     })();
   }, []);
 
+  console.log(items[currentIndex]?.file_group_id)
+
   const pickImage = async () => {
     // No permissions request is necessary for launching the image library
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,
       allowsEditing: true,
-      aspect: [4, 3],
+      aspect: [4,3],
       quality: 1,
     });
 
-    
-    if (!result) {
+    if (result) {
+      console.log("ok");
       setImage(result.assets[0].uri);
-      
-      console.log(result.assets[0].uri);
-      (async ()=>{
-        const authToken = await AsyncStorage.getItem("token");
-        if(!authToken){
-           navigation.navigate("LoginScreen")
+    
+      const authToken = await AsyncStorage.getItem("token");
+    
+      if (!authToken) {
+        navigation.navigate("LoginScreen");
+        return;
+      }
+    
+      const photo = {
+        uri: result.assets[0].uri,
+        type: 'image/jpeg',
+        name: 'photo.jpg',
+      };
+    
+      const form = new FormData();
+      form.append("file", photo);
+      console.log(form, "form");
+    
+      fetch(`${URL}/fileupload`, {
+        method: "POST",
+        body: form,
+        headers: {
+          'Content-Type': 'multipart/form-data',
+          'Authorization': `Bearer ${authToken}`
         }
-   
-        axios.post(URL + "/fileupload",{
-          file:result.assets[0].uri
-        },{
-             headers: {
-                Authorization: `Bearer ${authToken}`
-            }
-          }
-        )
-        .then(() => {
-          // console.log(res.data.token);
+      })
+      .then((response) => response.json())
+      .then(async (res) => {
+        console.log(res, "res...");
+    
+        const authToken = await AsyncStorage.getItem("token");
+
+        const requestData = {
+          uniqueid: res.directory,
+          file_name: res.filename,
+          attachments: "yes",
+          fileresource_type: "project",
+          fileresource_id: data?.project_id,
+          filegroup_id: items[currentIndex]?.file_group_id,
+        };
+        
+        try {
+          const response = await axios.post(`${URL}/files/upload`, requestData, {
+            headers: {
+              'Authorization': `Bearer ${authToken}`
+            },
+          });
+        
+          console.log(response, "response...........");
+        
           setData((prevData) => {
-  
-            const newData = [...prevData]; 
-            const updatedImages = [...newData[index]?.images || []]; 
-    
-            updatedImages.push(result.assets[0].uri); 
-    
-    
-    
+            const newData = [...prevData];
+            const updatedImages = [...newData[index]?.images || []];
+        
+            updatedImages.push(result.assets[0].uri);
+        
             newData[index] = {
               ...newData[index],
               images: updatedImages,
             };
-    
-            return newData; // Return the updated array
+        
+            return newData;
           });
-         Toast.show({
-              type: 'success',
-              text1: 'Image uploaded successfully!',
-               visibilityTime:1000,
-               topOffset:5,
-            });
-        })
-        .catch((err) => {
+        
           Toast.show({
-            type: 'error',
-            text1: 'Error',
-            text2: 'Image not uplaoded ',
-            visibilityTime:2000
+            type: 'success',
+            text1: 'Image uploaded successfully!',
+            visibilityTime: 1000,
+            topOffset: 5,
           });
-          console.log(err);
-        })
+        } catch (error) {
+          console.error(error);
+        }
+      })
 
-    })()
-
-
- 
+      .catch((error) => {
+        Toast.show({
+          type: 'error',
+          text1: 'Error',
+          text2: 'Image not uploaded',
+          visibilityTime: 2000
+        });
+        console.error(error);
+      });
     }
+    
   };
 
 
-  const handleRemoveImage = () => {
-    setImage(null);
-  };
 
   return (
     <View>
