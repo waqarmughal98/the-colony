@@ -4,6 +4,7 @@ import * as ImagePicker from 'expo-image-picker';
 import Toast from 'react-native-toast-message';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { URL } from '../../utils/Constant';
+import { Ionicons } from '@expo/vector-icons';
 import axios from 'axios';
 
 const ImagePickerFiles = ({setData,index,data,items,currentIndex}) => {
@@ -19,17 +20,29 @@ const ImagePickerFiles = ({setData,index,data,items,currentIndex}) => {
 
   console.log(items[currentIndex]?.file_group_id)
 
-  const pickImage = async () => {
+  const pickImage = async (sourceType) => {
     // No permissions request is necessary for launching the image library
-    let result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.All,
-      allowsEditing: true,
-      aspect: [4,3],
-      quality: 1,
-    });
+    var result 
+    if(sourceType=="gallery"){
+      result= await ImagePicker.launchImageLibraryAsync({
+        mediaTypes: ImagePicker.MediaTypeOptions.All,
+        allowsEditing: true,
+        aspect: [4,3],
+        quality: 1,
+      });
+    }
+    if(sourceType=="camera"){
+      result = await ImagePicker.launchCameraAsync({
+        mediaTypes: ImagePicker.MediaTypeOptions.All,
+        allowsEditing: true,
+        aspect: [4, 3],
+        quality: 1,
+      });
+    }
+    
 
     if (result) {
-      console.log("ok");
+     
       setImage(result.assets[0].uri);
     
       const authToken = await AsyncStorage.getItem("token");
@@ -122,21 +135,14 @@ const ImagePickerFiles = ({setData,index,data,items,currentIndex}) => {
 
 
   return (
-    <View>
-      <TouchableOpacity onPress={pickImage}>
-        <View style={styles.right}>
-          <Image source={require('../../../assets/imgs/addfile.png')} style={styles.Image4} />
-        </View>
+    <View style={styles.container}>
+      <TouchableOpacity onPress={() => pickImage('camera')}>
+        <Ionicons name="md-camera" size={25} color="#5A5A5A" style={styles.icon} />
       </TouchableOpacity>
-    {/*   {image && (
-        <TouchableOpacity style={styles.removeBtn} onPress={handleRemoveImage}>
-          <View style={styles.removeContainer}>
-            <Text style={styles.text2}> Remove Image</Text>
-            <MaterialCommunityIcons name="delete-forever" size={20} color="white" />
-          </View>
-        </TouchableOpacity>
-      )} */}
-    </View>
+      <TouchableOpacity onPress={() => pickImage('gallery')}>
+        <Ionicons name="md-images" size={20} color="#5A5A5A" style={styles.icon} />
+      </TouchableOpacity>
+</View>
   );
 };
 
@@ -174,4 +180,10 @@ const styles = StyleSheet.create({
     height:25,
     width:25,
   },
+  container:{
+    display:"flex",
+    flexDirection:"row",
+    gap:10,
+    alignItems:"center"
+  }
 })

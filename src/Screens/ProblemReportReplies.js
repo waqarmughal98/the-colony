@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, TouchableOpacity , Dimensions , Image } from 'react-native'
+import { StyleSheet, Text, View, TouchableOpacity , Dimensions , Image , ScrollView} from 'react-native'
 import React,{useEffect,useState} from 'react'
 const { width, height } = Dimensions.get('window');
 const vw = width / 100;
@@ -8,7 +8,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 import { URL } from '../utils/Constant';
 const ProblemReportReplies = ({navigation,route}) => {
-  const { id, jobTitle } = route.params;
+  const { id, jobTitle ,reply} = route.params;
   const [items, setItems] = useState([]);
   const [loading, setLoading]=useState(true)
   React.useLayoutEffect(() => {
@@ -17,7 +17,7 @@ const ProblemReportReplies = ({navigation,route}) => {
       headerTitleAlign: 'center',
       headerRight: () => (
         <View style={{ marginRight: 5 }}>
-          <TouchableOpacity activeOpacity={0.6} onPress={()=>navigation.navigate("reply-ticket",{items:items[0], jobTitle: jobTitle})}>
+          <TouchableOpacity activeOpacity={0.6} onPress={()=>navigation.navigate("reply-ticket",{items:items[0], jobTitle: jobTitle,id:id})}>
            <Text style={{color:"white"}}>Reply</Text>
           </TouchableOpacity>
         </View>
@@ -38,10 +38,14 @@ const ProblemReportReplies = ({navigation,route}) => {
         console.log(err);
       })
     })()
-  },[id])
-
+  },[id,reply])
+  
+  console.log(id,"id...")
+  console.log(items,"items....")
   return (
     <View>
+      <ScrollView>
+        <View style={styles.container}>
       {items.map((item,index)=>
         <View style={styles.individual} key={index}>
           <View style={styles.left}>
@@ -54,7 +58,10 @@ const ProblemReportReplies = ({navigation,route}) => {
           </View>
         </View>
       )}
+      </View>
+       </ScrollView>
     </View>
+   
   )
 }
 
@@ -88,5 +95,8 @@ const styles = StyleSheet.create({
     fontSize:16,
     fontWeight:"700",
     color:"#625E57"
+  },
+  container:{
+    paddingBottom:75
   }
 })

@@ -12,11 +12,12 @@ import { URL } from '../../utils/Constant';
 const Files = ({data}) => {
   const [items, setItems]=useState([])
   const [isModalVisible, setModalVisible] = useState(false);
+  const [isFileModalVisible, setFileModalVisible] = useState(false);
   const [currentIndex, setcurrentIndex] = useState(null);
   const [loading, setLoading] = useState(true);
   const [FolderName,setFolderNames] =useState([])
   const [FileName,setFileName] =useState([])
-
+  const [selectedImage, setSelectedImage] = useState(null);
   const toggleModal = () => {
     setModalVisible(!isModalVisible);
   };
@@ -72,6 +73,11 @@ const Files = ({data}) => {
       }
     })();
   }, [FolderName,FileName]);
+
+  const handleImageClick = (image) => {
+    setSelectedImage(image.file_directory + '/' + image.file_filename);
+    setFileModalVisible(true);
+  }
   
   return (
     <View>
@@ -108,16 +114,28 @@ const Files = ({data}) => {
                     </View>
                   </TouchableOpacity>
                   <View style={styles.rightBtmContainer}>
-                      <ImagePickerFiles index={index} data={data} setData={setFileName} currentIndex={currentIndex}  items={items}/>
+                      <ImagePickerFiles key={index} index={index} data={data} setData={setFileName} currentIndex={currentIndex}  items={items}/>
                   </View>
                 </View>
                 {currentIndex==index && (
                   <View style={styles.imageContainer}>
                       {item.images.length>0 ? (item.images.map((image, i) => (
-                      <View style={styles.ImageWrapper} key={i}>
-                        <Image source={{ uri:  `{https://geomap.imaginedesigns.co/storage/files/${image.file_directory}/${image.file_filename}}` }} style={styles.imageFolder} />
-                        <Text style={styles.fileName}>{image.file_filename}</Text>
-                      </View>
+                        <TouchableOpacity
+                        key={i}
+                        onPress={() => handleImageClick(image)}
+                      >
+                        <View style={styles.ImageWrapper}>
+                          <Image
+                            source={{
+                              uri: `https://geomap.imaginedesigns.co/storage/files/${image.file_directory}/${image.file_filename}`,
+                            }}
+                            style={styles.imageFolder}
+                          />
+                          <Text style={styles.fileName}>
+                            {image.file_filename}
+                          </Text>
+                        </View>
+                      </TouchableOpacity>
                     ))):(
                       <View style={styles.ImageWrapper}>
                         <Text>There is no image in this folder</Text>
@@ -143,6 +161,23 @@ const Files = ({data}) => {
               </TouchableOpacity>
             </View>
           </Modal>
+          <Modal isVisible={isFileModalVisible}  >
+          <View style={{height:300,display:"flex",flexDirection:"column"}}>
+                <Image
+                  source={{
+                    uri: `https://geomap.imaginedesigns.co/storage/files/${selectedImage}`,
+                  }}
+                  style={styles.modalImage}
+                />
+                <TouchableOpacity
+                    style={{ position: 'absolute', top: -10, right: 0,backgroundColor:"white",borderRadius:5, }}
+                    onPress={()=>setFileModalVisible(false)}
+                  >   
+                <Ionicons name="md-close" size={25} color="black" />
+              </TouchableOpacity>
+              </View>
+          </Modal>
+
         </View>
       </ScrollView>
           ):(
@@ -287,5 +322,9 @@ const styles = StyleSheet.create({
     color: 'black',
     fontWeight: 'bold',
   },
-
+  modalImage:{
+    width: '100%',
+    height: '100%',
+    resizeMode: 'contain', 
+  }
 })

@@ -3,13 +3,14 @@ import { StyleSheet, Text, View, TextInput, ScrollView, TouchableOpacity } from 
 import { vh,vw } from '../utils/ScreenSize'
 import DateInput from '../Components/Date/DateInput';
 import { FontAwesome } from '@expo/vector-icons';
+import Toast from 'react-native-toast-message';
 import SelectDropdown from 'react-native-select-dropdown'
 import ImagePickerComponent from '../Components/Picker/ImagePickerComponent'
 import axios from 'axios';
 import { URL } from '../utils/Constant';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 const ReplyTicket = ({navigation,route}) => {
-    const { items, jobTitle } = route.params;
+    const { items, jobTitle,id } = route.params;
     const getCurrentDate = () => {
         const today = new Date();
         const year = today.getFullYear();
@@ -39,10 +40,25 @@ const ReplyTicket = ({navigation,route}) => {
                 Authorization: `Bearer ${authToken}`,
             },
         }).then((res)=>{
-            console.log(res.data);
-            setData('')
+            Toast.show({
+                type: 'success',
+                text1: 'Reply  submitted successfully!',
+                text2: 'we are redirect you to previous screen',
+                 visibilityTime:1000,
+                 topOffset:5
+              });
+            setTimeout(() => {
+                navigation.push('problem-report-replies',{reply:data,id:id})  
+            }, 1000);
+            
         }).catch((err)=>{
             console.log(err)
+            Toast.show({
+                type: 'error',
+                text1: 'Error while subitting!',
+                 visibilityTime:1000,
+                 topOffset:5
+              });
         })
     }
    
@@ -80,6 +96,7 @@ const ReplyTicket = ({navigation,route}) => {
                     </TouchableOpacity>
             </View> 
         </ScrollView>
+        <Toast/>
     </View>
   )
 }

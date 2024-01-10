@@ -7,6 +7,7 @@ import {
   ScrollView,
   Image,
   FlatList,
+  ActivityIndicator
 } from "react-native";
 import { vw, vh } from "../utils/ScreenSize";
 import { MaterialIcons, AntDesign } from "@expo/vector-icons";
@@ -93,8 +94,11 @@ const Requests = ({ navigation,route }) => {
 
   return (
     <View style={styles.container}>
-      {/* Horizontal FlatList */}
-      <FlatList
+    {
+      data.length>0 ?
+      (
+        <>
+        <FlatList
         data={options}
         renderItem={renderItem}
         keyExtractor={(item, index) => index.toString()}
@@ -140,6 +144,15 @@ const Requests = ({ navigation,route }) => {
           })}
         </ScrollView>
       </View>
+      </>
+      ) :
+      (
+        <View style={styles.Indicator}>
+          <ActivityIndicator size="large" color={"black"} />
+          <Text style={styles.fetchingData}>Fetching Data</Text>
+      </View>
+      )
+    }
     </View>
   );
 };
@@ -236,6 +249,19 @@ const styles = StyleSheet.create({
     borderBottomColor: Color.brightOrange,
     borderBottomWidth: 1,
   },
+  Indicator:
+{
+     flexGrow:1,
+    display:"flex",
+    justifyContent:"center",
+    alignItems:"center",
+    alignContent:"center",
+    marginTop:"60%"
+},
+fetchingData:{
+    color:'black',
+    fontWeight:"bold"
+}
 });
 
 export default Requests;
