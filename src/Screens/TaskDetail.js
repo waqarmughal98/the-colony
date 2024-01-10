@@ -76,7 +76,10 @@ const TaskDetail = ({navigation , route}) => {
           text1: 'Task Updated Successfully!',
           text2: 'we are redirect you to previous screen',
            visibilityTime:1000,
-           topOffset:5
+           topOffset:5,
+           style: {
+            width: 100*vw, // Set the width to 100% to take up the full width
+          },
         });
       setTimeout(() => {
           navigation.push('tasks',{Task:data})  

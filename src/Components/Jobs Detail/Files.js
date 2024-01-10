@@ -84,7 +84,7 @@ const Files = ({data}) => {
         {
           !loading?(
         <ScrollView>
-        <View style={{paddingBottom:100}}>
+        <View style={{paddingBottom:150}}>
           {/* Add folder section */}
           <View style={styles.addFolder}>
             <View style={styles.left}>

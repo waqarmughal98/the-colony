@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Image, TouchableOpacity, Text, StyleSheet } from 'react-native';
+import { View,Alert, Image, TouchableOpacity, Text, StyleSheet } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 import Toast from 'react-native-toast-message';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -9,21 +9,38 @@ import axios from 'axios';
 
 const ImagePickerFiles = ({setData,index,data,items,currentIndex}) => {
   const [image, setImage] = useState(null);
+  const [mediaLibraryStatus, setMediaLibraryStatus] = useState(null);
+  const [cameraStatus, setCameraStatus] = useState(null);
   useEffect(() => {
     (async () => {
-      const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
-      if (status !== 'granted') {
-        alert('Sorry, we need camera roll permissions to make this work!');
-      }
+      const requestPermissions = async () => {
+        const { status: mediaLibraryPermission } = await ImagePicker.requestMediaLibraryPermissionsAsync();
+        const { status: cameraPermission } = await ImagePicker.requestCameraPermissionsAsync();
+  
+        setMediaLibraryStatus(mediaLibraryPermission);
+        setCameraStatus(cameraPermission);
+  
+        if (mediaLibraryPermission !== 'granted') {
+          Alert.alert('Sorry, we need camera roll permissions to make this work!');
+        }
+  
+        if (cameraPermission !== 'granted') {
+          Alert.alert('Sorry, we need camera permissions to make this work!');
+        }
+      };
+  
+      requestPermissions();
     })();
   }, []);
 
+  
   console.log(items[currentIndex]?.file_group_id)
 
   const pickImage = async (sourceType) => {
+    
     // No permissions request is necessary for launching the image library
     var result 
-    if(sourceType=="gallery"){
+    if(sourceType=="gallery" && mediaLibraryStatus=="granted"){
       result= await ImagePicker.launchImageLibraryAsync({
         mediaTypes: ImagePicker.MediaTypeOptions.All,
         allowsEditing: true,
@@ -31,7 +48,7 @@ const ImagePickerFiles = ({setData,index,data,items,currentIndex}) => {
         quality: 1,
       });
     }
-    if(sourceType=="camera"){
+    if(sourceType=="camera" && cameraStatus=="granted"){
       result = await ImagePicker.launchCameraAsync({
         mediaTypes: ImagePicker.MediaTypeOptions.All,
         allowsEditing: true,
@@ -61,7 +78,14 @@ const ImagePickerFiles = ({setData,index,data,items,currentIndex}) => {
       const form = new FormData();
       form.append("file", photo);
       console.log(form, "form");
-    
+     
+      Toast.show({
+        type: 'success',
+        text1: 'Image is ready to Upload!',
+        text2: 'Wait! It takes some time',
+        visibilityTime: 2000,
+        topOffset: 5,
+      });
       fetch(`${URL}/fileupload`, {
         method: "POST",
         body: form,
@@ -122,7 +146,7 @@ const ImagePickerFiles = ({setData,index,data,items,currentIndex}) => {
       .catch((error) => {
         Toast.show({
           type: 'error',
-          text1: 'Error',
+          text1: 'Error While Uploading Image',
           text2: 'Image not uploaded',
           visibilityTime: 2000
         });

@@ -80,6 +80,7 @@ const styles = StyleSheet.create({
         backgroundColor:"white",
         borderRadius:10,
         padding:12,
+        height:25*vh
     },
     titleInput:{
         height:45,
