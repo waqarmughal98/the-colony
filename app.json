@@ -19,22 +19,34 @@
       "config": {
         "usesNonExemptEncryption": false
       }
-},
+    },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "permissions": [
+        "android.permission.CAMERA",
+        "android.permission.RECORD_AUDIO"
+      ],
+      "package": "com.abdullah_naveed.thecolony"
     },
     "web": {
       "favicon": "./assets/favicon.png"
     },
     "plugins": [
-      ["expo-camera", { "cameraPermission": "Allow The Colony to access your camera." }],
-      ["expo-image-picker", {
-        "photosPermission": "Allow The Colony to access your photos",
-        "cameraPermission": "Allow The Colony to access your Camera"
-      }]
-    ]
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "Allow The Colony to access your photos",
+          "cameraPermission": "Allow The Colony to access your Camera"
+        }
+      ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "d3f35e2e-b54f-4292-85bb-7f000a3de62c"
+      }
+    }
   }
 }
