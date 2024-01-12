@@ -150,7 +150,6 @@ const styles = StyleSheet.create({
   iconContainer:{
     backgroundColor:Color.darkOrange,
     height:30,
-    borderRadius:50,
     width:30,
     borderRadius:50,
     display:"flex",

@@ -98,14 +98,16 @@ const Requests = ({ navigation,route }) => {
       data.length>0 ?
       (
         <>
-        <FlatList
-        data={options}
-        renderItem={renderItem}
-        keyExtractor={(item, index) => index.toString()}
-        horizontal
-        showsHorizontalScrollIndicator={false}
-        contentContainerStyle={styles.flatListContainer}
-      />
+         <View style={{height:15*vh}}>        
+          <FlatList
+          data={options}
+          renderItem={renderItem}
+          keyExtractor={(item, index) => index.toString()}
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          contentContainerStyle={styles.flatListContainer}
+        />
+       </View>
 
       {/* Display selected card title */}
       <View style={styles.selectedCardContainer}>
@@ -119,8 +121,9 @@ const Requests = ({ navigation,route }) => {
         <Text style={[styles.text2]}>Status</Text>
       </View>
       {/* All items */}
-      <View>
-        <ScrollView>
+      <View style={{flex:1}}>
+        <ScrollView >
+          <View style={{paddingBottom:100}}>
           {filteredData.map((item, index) => {
             return (
               <View key={index}>
@@ -142,6 +145,7 @@ const Requests = ({ navigation,route }) => {
               </View>
             );
           })}
+          </View>
         </ScrollView>
       </View>
       </>
@@ -160,6 +164,7 @@ const Requests = ({ navigation,route }) => {
 const styles = StyleSheet.create({
   container: {
     paddingTop: 20,
+    flex:1
   },
   flatListContainer: {
     paddingHorizontal: 5,

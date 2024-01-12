@@ -148,7 +148,6 @@ const styles = StyleSheet.create({
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
-    alignContent: "center",
     marginTop: "60%",
   },
   fetchingData: {

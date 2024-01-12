@@ -59,7 +59,6 @@ const styles = StyleSheet.create({
         color:'black',
     },
     individual:{
-        height:20,
         display:"flex",
         flexDirection:'row',
         alignItems:"center",
@@ -102,8 +101,6 @@ const styles = StyleSheet.create({
         width:"85%",
         display:"flex",
         flexDirection:'row',
-        justifyContent:"center",
         alignItems:"center",
-        justifyContent:"flex-start"
     }
 })

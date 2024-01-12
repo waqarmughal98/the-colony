@@ -195,14 +195,8 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         marginRight: 10,
       },
-      value: {
-        fontSize: 16,
-      },
-   
-      picker: {
-        flex:1,
-        width: '40%',
-      },
+    
+
       value: {
         fontSize: 16,
       },
@@ -245,17 +239,6 @@ const styles = StyleSheet.create({
         borderBottomColor:Color.brightOrange,
         borderBottomWidth:1
     },
-    
-    picker: {
-        height: 20, // Adjust the height as needed
-        width: 200, // Adjust the width as needed
-        backgroundColor: 'white', // Set the background color
-        color: '#000', // Set the text color
-      },
-      pickerItem: {
-        color: 'black', // Set the text color of items
-        fontSize: 12
-      },
       btnContainer:{
         backgroundColor:"black",
         display:"flex",

@@ -33,7 +33,6 @@ const CalendarComponent = ({setSelectedDate,AllDates}) => {
         hideExtraDays={true}
         enableSwipeMonths={true}
         theme={{
-          todayTextColor: "white",
           selectedDayTextColor: '#000000',
           selectedDayBackgroundColor: "white", // Selected date background color
           selectedDotColor: 'white',

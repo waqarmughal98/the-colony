@@ -102,14 +102,17 @@ const WorkLog = ({navigation}) => {
       {
         data.length>0 ? ( 
           <>
-          <FlatList
-          data={options}
-          renderItem={renderItem}
-          keyExtractor={(item, index) => index.toString()}
-          horizontal
-          showsHorizontalScrollIndicator={false}
-          contentContainerStyle={styles.flatListContainer}
-        />
+          <View style={{height:20*vh}}>
+            <FlatList
+            data={options}
+            renderItem={renderItem}
+            keyExtractor={(item, index) => index.toString()}
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            contentContainerStyle={styles.flatListContainer}
+          />
+          </View>
+
         <View style={styles.selectedCardContainer}>
           <Text style={styles.selectedCardText}>{selectedTitle}</Text>
         </View>
@@ -119,8 +122,9 @@ const WorkLog = ({navigation}) => {
           <Text style={[styles.text2]}>Company</Text>
         </View>
         {/* All Data */}
-        <View>
+        <View style={{flex:1}}>
           <ScrollView>
+            <View style={{paddingBottom:80,}}>
             {filteredData.map((item,index)=>
               {
                 return(
@@ -134,6 +138,7 @@ const WorkLog = ({navigation}) => {
                 )
               }
             )}
+            </View>
           </ScrollView>
         </View>
         </>
@@ -151,7 +156,7 @@ const WorkLog = ({navigation}) => {
 
 const styles = StyleSheet.create({
   container: {
-
+    flex:1,
     paddingTop: 20,
   },
   flatListContainer: {

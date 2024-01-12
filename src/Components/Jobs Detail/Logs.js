@@ -121,10 +121,6 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'row',
   },
-  Image: {
-    height: 50,
-    width: 50,
-  },
   updateBg:{
     alignSelf: 'flex-start'
   },

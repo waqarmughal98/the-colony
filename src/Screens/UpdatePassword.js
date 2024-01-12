@@ -184,10 +184,8 @@ const styles = StyleSheet.create({
       },
       text2:{
         fontSize:17,
-        marginTop:20,
         fontWeight:"bold",
         color:"#383c4a",
-      
         borderBottomWidth:1,
         paddingBottom:17,
         marginTop:10*vh,
@@ -224,7 +222,6 @@ const styles = StyleSheet.create({
       iconContainer:{
         backgroundColor:Color.darkOrange,
         height:30,
-        borderRadius:50,
         width:30,
         borderRadius:50,
         display:"flex",

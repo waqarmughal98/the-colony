@@ -163,10 +163,6 @@ const styles = StyleSheet.create({
     height: 200,
     borderRadius: 10,
   },
-  mapContainer:{
-      height: 200,
-      borderRadius: 10,
-  },
   buttonContainer: {
       flexDirection: 'row',
       justifyContent: 'space-around',
