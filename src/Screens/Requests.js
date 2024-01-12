@@ -123,7 +123,7 @@ const Requests = ({ navigation,route }) => {
       {/* All items */}
       <View style={{flex:1}}>
         <ScrollView >
-          <View style={{paddingBottom:100}}>
+          <View style={{paddingBottom:65}}>
           {filteredData.map((item, index) => {
             return (
               <View key={index}>

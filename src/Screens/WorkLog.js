@@ -124,7 +124,7 @@ const WorkLog = ({navigation}) => {
         {/* All Data */}
         <View style={{flex:1}}>
           <ScrollView>
-            <View style={{paddingBottom:80,}}>
+            <View style={{paddingBottom:65,}}>
             {filteredData.map((item,index)=>
               {
                 return(

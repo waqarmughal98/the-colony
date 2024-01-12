@@ -202,7 +202,6 @@ const styles = StyleSheet.create({
         borderBottomColor:"#d3d3d3",
         borderBottomWidth:1,
         display:"flex",
-        alignItems:'center',
         flexDirection:"row",
         alignItems:"center",
         paddingBottom:5
