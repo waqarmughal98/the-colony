@@ -16,7 +16,7 @@ const Profile = ({navigation}) => {
 }, [])
 
 useEffect(()=>{
-  console.log(userDetail,"userDetail")
+  // console.log(userDetail,"userDetail")
 },[userDetail])
   return (
     <ImageBackground source={require('../../../assets/imgs/Bg.png')} style={styles.backgroundImage}>
