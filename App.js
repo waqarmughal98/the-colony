@@ -106,8 +106,8 @@ const Tab = createBottomTabNavigator();
           headerShown:false,
           tabBarIcon: ({ color, size }) => (
             <Image
-              source={require('./assets/imgs/lb.png')}
-              style={{ height: 55, width: 55, marginTop: 10 }}
+              source={require('./assets/imgs/logo.png')}
+              style={{ height: 50, width: 50, marginTop: 10 ,borderRadius:100,}}
             />
           ),
         }}
