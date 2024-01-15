@@ -18,7 +18,8 @@
       "supportsTablet": true,
       "config": {
         "usesNonExemptEncryption": false
-      }
+      },
+      "bundleIdentifier": "com.waqarmughal005.thecolony"
     },
     "android": {
       "adaptiveIcon": {
@@ -29,7 +30,7 @@
         "android.permission.CAMERA",
         "android.permission.RECORD_AUDIO"
       ],
-      "package": "com.abdullah_naveed.thecolony"
+      "package": "com.waqarmughal005.thecolony"
     },
     "web": {
       "favicon": "./assets/favicon.png"
@@ -45,7 +46,7 @@
     ],
     "extra": {
       "eas": {
-        "projectId": "d3f35e2e-b54f-4292-85bb-7f000a3de62c"
+        "projectId": "1c87c96f-155c-4857-a182-45051abeff28"
       }
     }
   }
