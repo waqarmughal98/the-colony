@@ -154,13 +154,6 @@ const styles = StyleSheet.create({
         zIndex:1
         
       },
-      Image:{
-        marginTop:-10*vh,
-        height:20*vh,
-        width:20*vh,
-        borderColor:"white",
-    
-      },
       markTitle:{
         fontSize:22,
         fontWeight:"400",
@@ -176,11 +169,6 @@ const styles = StyleSheet.create({
         position: "absolute",
         top:12*vh,
         zIndex:100
-      },
-      Image:{
-        width: 22*vh,
-        height:22*vh,
-        borderRadius:500
       },
       text2:{
         fontSize:17,

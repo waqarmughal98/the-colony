@@ -33,13 +33,11 @@ const styles = StyleSheet.create({
         color:'white',
     },
     individual:{
-        height:45,
         display:"flex",
         flexDirection:'row',
         alignItems:"center",
         paddingHorizontal:6,
         justifyContent:"space-between",
-
         marginBottom:10,
         borderRadius:10,
         backgroundColor:'#EC1423',
