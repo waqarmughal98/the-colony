@@ -4,7 +4,6 @@ import { FontAwesome } from '@expo/vector-icons';
 import SelectDropdown from 'react-native-select-dropdown'
 import Color from '../Color'
 import Toast from 'react-native-toast-message';
-// import { Picker } from '@react-native-picker/picker';
 import { vw,vh } from '../utils/ScreenSize'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
