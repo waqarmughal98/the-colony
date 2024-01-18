@@ -150,7 +150,7 @@ function MainStackScreen() {
   );
 }
 
-const HomeStack= createNativeStackNavigator();
+const HomeStack = createNativeStackNavigator();
 function HomeScreenStack() {
   const screenOptions = {
     headerStyle: { backgroundColor: '#FBA200' },
