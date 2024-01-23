@@ -28,7 +28,7 @@ const WorkLog = ({navigation}) => {
 
   React.useLayoutEffect(() => {
     navigation.setOptions({
-      headerTitle: 'Work Log',
+      headerTitle: 'Dashboard',
       headerStyle: { backgroundColor: Color.darkOrange },
       headerTintColor: 'white',
       headerTitleAlign: 'center',
@@ -243,7 +243,7 @@ Indicator:
     justifyContent:"center",
     alignItems:"center",
     alignContent:"center",
-    marginTop:-20,
+    marginTop:"60%"
 },
 fetchingData:{
     color:'black',
