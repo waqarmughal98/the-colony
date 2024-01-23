@@ -46,8 +46,9 @@
     ],
     "extra": {
       "eas": {
-        "projectId": "1c87c96f-155c-4857-a182-45051abeff28"
+        "projectId": "ff9571e6-9a9b-4785-9d42-8032d146b4ac"
       }
-    }
+    },
+    "owner": "abdullah_naveed"
   }
 }

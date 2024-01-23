@@ -1,4 +1,4 @@
-module.exports = function(api) {
+m odule.exports = function(api) {
   api.cache(true);
   return {
     presets: ['babel-preset-expo'],

@@ -195,25 +195,27 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginLeft: 20,
   },
-  navbar: {
+
+  navbarContainer: {
     backgroundColor: '#382504',
-    height: 50,
+    height: 45,
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
-  },
-  navbarContainer: {
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'space-around',
+    justifyContent: 'center',
+    gap:20,
+    paddingHorizontal:10,
+    
   },
   navbarOption: {
-    paddingVertical: 10,
-    borderRadius: 5,
+    height:50,
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   navbarOptionText: {
     color: 'black',
     fontWeight: 'bold',
-    marginHorizontal: 15,
   },
 });
