@@ -1,3 +1,4 @@
+import 'react-native-gesture-handler';
 import React, { useState, useEffect } from 'react';
 import { AppState, Modal, View, Text, Button,Image,Platform} from 'react-native';
 import { NavigationContainer , useNavigationState} from '@react-navigation/native';
@@ -12,6 +13,8 @@ import Login from './src/Screens/Login';
 import ProblemReports from './src/Components/Jobs Detail/ProblemReports';
 import WorkLog from './src/Screens/WorkLog';
 import Tasks from './src/Screens/Tasks';
+import TaskInProgress from './src/Screens/TaskInProgress';
+import TasksInPending from './src/Screens/TasksInPending';
 import TaskDetail from './src/Screens/TaskDetail';
 import JobStatus from './src/Screens/JobStatus';
 import { SimpleLineIcons, Ionicons,Entypo } from "@expo/vector-icons";
@@ -58,7 +61,9 @@ export default App;
 
 
 const Tab = createBottomTabNavigator();
-  const TabNavigator = () => (
+  const TabNavigator = () => 
+  {
+    return(
     <Tab.Navigator
       initialRouteName="Home"
       screenOptions={{
@@ -82,11 +87,10 @@ const Tab = createBottomTabNavigator();
       }}
     >
       <Tab.Screen
-        name="WorkLog"
-        component={WorkLogStackScreen}
+        name="Workog"
+        component={WorkLog}
         options={{
           tabBarLabel: 'Work Log',
-          headerShown:false,
           tabBarIcon: ({ color, size,focused }) => (
             <>
             {
@@ -126,7 +130,7 @@ const Tab = createBottomTabNavigator();
       />
       
     </Tab.Navigator>
-  );
+  )}
 
 function MainStackScreen() {
   const screenOptions = {
@@ -144,8 +148,6 @@ function MainStackScreen() {
           options={{ headerShown: false }}
       />
         <Stack.Screen name="Dashboard"  options={{headerShown:false}} component={TabNavigator} />
-      
-   
     </Stack.Navigator>
   );
 }
@@ -171,6 +173,7 @@ function HomeScreenStack() {
               title: 'All Jobs'
             }}
           />
+           
           <HomeStack.Screen
             name="update-password"
             component={UpdatePassword}
@@ -199,6 +202,13 @@ function HomeScreenStack() {
               title: 'Problem Reports'
             }}
           />
+          <HomeStack.Screen
+          name="WorkLog"
+          component={WorkLog}
+          options={{
+            title: 'Work Logs'
+          }}
+        />
         
           <HomeStack.Screen
             name="latest-activity"
@@ -215,10 +225,24 @@ function HomeScreenStack() {
             }}
           />
             <HomeStack.Screen
-            name="tasks"
+          name="tasks"
             component={Tasks}
             options={{
               title: 'Tasks'
+            }}
+          />
+            <HomeStack.Screen
+            name="task-in-progress"
+            component={TaskInProgress}
+            options={{
+              title: 'Tasks In Progress'
+            }}
+          />
+            <HomeStack.Screen
+            name="task-in-pending"
+            component={TasksInPending}
+            options={{
+              title: 'Tasks In Pending'
             }}
           />
             <HomeStack.Screen
@@ -284,28 +308,7 @@ function HomeScreenStack() {
   );
 }
 
-const WorkLogStack = createNativeStackNavigator();
-function WorkLogStackScreen() {
-  const screenOptions = {
-    headerStyle: { backgroundColor: '#FBA200' },
-    headerTintColor: 'white',
-    headerTitleAlign: 'center',
-    gestureEnabled: true,
 
-  }
-  return (
-    <WorkLogStack.Navigator  screenOptions={screenOptions} initialRouteName="work-logs">
-         <WorkLogStack.Screen
-          name="work-logs"
-          component={WorkLog}
-          options={{
-            title: 'Work Logs'
-          }}
-        />
-      {/*  <WorkLogStack.Screen name="Dashboard"  component={Dashboard} /> */}
-  </WorkLogStack.Navigator>
-  );
-}
 
 const ProfileStack = createNativeStackNavigator();
 function ProfileStackScreen() {

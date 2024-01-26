@@ -47,7 +47,7 @@ const AddRequest = () => {
                      topOffset:5
                   });
                 setTimeout(() => {
-                    navigation.push('requests',{leave:leave})  
+                    navigation.navigate('requests',{leave:leave})  
                 }, 1000);
                 
             }).catch((err)=>{

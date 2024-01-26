@@ -6,9 +6,11 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import TaskContainer from '../Tasks/TaskContainer';
 
 
-const Tasks = ({navigation, data}) => {
+const Tasks = ({navigation, data,screenName}) => {
     const [loading, setLoading]=useState(true)
     const[item, setItem] = useState([])
+
+    
     useEffect(()=>{
       (async ()=>{
         const authToken = await AsyncStorage.getItem("token");
@@ -27,13 +29,14 @@ const Tasks = ({navigation, data}) => {
             console.log(err);
         })
       })()
-    },[])
+    },[data])
+    
   return (
     <View>
     {
-     !loading ? 
+     !loading ?
       <View>
-        <TaskContainer navigation={navigation} data={item}/>
+        <TaskContainer screenName={"jobs-detail"} navigation={navigation} allData={data} data={item}/>
       </View>
      :
      <View style={styles.Indicator}>

@@ -6,14 +6,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import Color from '../../Color';
 import Toast from 'react-native-toast-message';
 const CustomDrawerContent = (props) => {
-  useEffect(()=>{
-    (async ()=>{
-      const userData=await AsyncStorage.getItem("userDetail")
-      const parsedUserData = JSON.parse(userData);
-      setUserDetail(parsedUserData);
-    })()
-  }, [])
-  const [userDetail, setUserDetail]=useState()
+
   const { navigation } = props;
   const HandleLogout= async()=>{
     try {
@@ -41,8 +34,8 @@ const CustomDrawerContent = (props) => {
     <DrawerContentScrollView {...props}>
       {/* Your custom drawer content */}
       <View style={styles.drawerHeader}>
-        <Text style={styles.drawerHeaderText}>{userDetail?.fname || ""} {userDetail?.lname || ""}</Text>
-        <Text style={styles.drawerSubHeaderText}>{userDetail?.email || ""}</Text>
+        <Text style={styles.drawerHeaderText}>Mark Nisham</Text>
+        <Text style={styles.drawerSubHeaderText}>mark@imaginedesigns.co</Text>
       </View>
 
       {/* Default drawer items */}

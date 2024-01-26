@@ -51,7 +51,7 @@ const DashboardTop = ({ navigation, data }) => {
       color: "#B8780C",
       iconName: "pluscircleo",
       iconType: "ant",
-      screen: "tasks",
+      screen: "task-in-pending",
       ScreenTitle:"Task In Pending",
     },
     {
@@ -61,7 +61,7 @@ const DashboardTop = ({ navigation, data }) => {
       color: "#774F07",
       iconName: "arrow-with-circle-right",
       iconType: "entypo",
-      screen: "tasks",
+      screen: "task-in-progress",
       ScreenTitle:"Task In Progress",
     },
     {

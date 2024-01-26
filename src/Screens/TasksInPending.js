@@ -8,30 +8,31 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Tasks = ({navigation,route}) => {
     const [loading, setLoading]=useState(true)
-    const {Task}=route.params;
     const [data, setData] = useState([]);
+    const {Task}=route.params;
     React.useLayoutEffect(() => {
        navigation.setOptions({
           headerTintColor: 'white',
           headerTitleAlign: 'center',
-          headerTitle: "All Tasks",
+          headerTitle: "Tasks In Pending",
         });
       }, [navigation]);
 
     useEffect(()=>{
         (async ()=>{
             const authToken = await AsyncStorage.getItem("token");
-            axios.get(URL + '/task/all', {
+            axios.get(URL + '/task/all?filter_single_task_status=7', {
                 headers: {
                     Authorization: `Bearer ${authToken}`
                 }
             }).then((res)=>{
-                // console.log(res.data.tasks.data, 'All Task');
+                // console.log(res.data.tasks.data, 'Task In Pending');
                 setData(res.data.tasks.data);
                 setLoading(false)
             }).catch((err)=>{
                 console.log(err);
             })
+
         })()
     },[Task])
   return (
@@ -39,7 +40,7 @@ const Tasks = ({navigation,route}) => {
         {
         !loading ? 
             <View>
-                <TaskContainer screenName={"tasks"} navigation={navigation} data={data}/>
+                <TaskContainer screenName={"task-in-pending"} navigation={navigation} data={data}/>
             </View>
             :
             <View style={styles.Indicator}>

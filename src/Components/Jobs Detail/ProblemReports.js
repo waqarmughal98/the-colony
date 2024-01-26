@@ -5,6 +5,7 @@ import Color from '../../Color'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 import { URL } from '../../utils/Constant';
+import { vw,vh } from '../../utils/ScreenSize';
 const ProblemReports = ({navigation, data,ID}) => {
   const [loading, setLoading]=useState(true)
   const [items, setItems] = useState([]);
@@ -22,6 +23,7 @@ const ProblemReports = ({navigation, data,ID}) => {
           Authorization: `Bearer ${authToken}`,
         },
       }).then((res)=>{
+        console.log(res.data.tickets,"res...")
         setItems(res.data.tickets.data)
         setLoading(false) 
       }).catch((err)=>{
@@ -29,6 +31,8 @@ const ProblemReports = ({navigation, data,ID}) => {
       })
     })()
   },[ID])
+
+  console.log(data?.project_id,"id...")
     
   return (
     <View>    
@@ -44,20 +48,28 @@ const ProblemReports = ({navigation, data,ID}) => {
             <ScrollView style={{flexGrow:1}}>
               <View style={{paddingBottom:80}}>
               {
-                items?.map((item,index)=>{
-                  return(
-                    <TouchableOpacity onPress={()=>navigation.navigate("problem-report-replies", {id: item.ticket_id, jobTitle: item.project_title})} activeOpacity={0.6} key={index}>
-                      <View style={[styles.mainIndividual,{backgroundColor:index%2==0 ? '#D2CBBC' : '#F2F1CF'}]}>
-                        <View style={styles.individual}>
-                          <Text style={styles.dataText}>{item.ticket_subject}</Text>
-                          <Text style={styles.dataText2}>{item.project_title}</Text> 
-                          <MaterialIcons name={'keyboard-arrow-right'} size={28} color="black" />
+                items.length > 0 ?  
+                (
+                  items?.map((item,index)=>{
+                    return(
+                      <TouchableOpacity onPress={()=>navigation.navigate("problem-report-replies", {id: item.ticket_id, jobTitle: item.project_title})} activeOpacity={0.6} key={index}>
+                        <View style={[styles.mainIndividual,{backgroundColor:index%2==0 ? '#D2CBBC' : '#F2F1CF'}]}>
+                          <View style={styles.individual}>
+                            <Text style={styles.dataText}>{item.ticket_subject}</Text>
+                            <Text style={styles.dataText2}>{item.project_title}</Text> 
+                            <MaterialIcons name={'keyboard-arrow-right'} size={28} color="black" />
+                          </View>
+                          {item.ticket_status && <Text style={styles.opentext}>{item.ticket_status}</Text>}
                         </View>
-                        {item.ticket_status && <Text style={styles.opentext}>{item.ticket_status}</Text>}
-                      </View>
-                    </TouchableOpacity>
-                  )
-                })
+                      </TouchableOpacity>
+                    )
+                  })
+                )
+                :
+                (
+                  <Text style={styles.noRecord}>No Record Found</Text>
+                )
+                
               }
               </View>
             </ScrollView>
@@ -142,6 +154,15 @@ const styles = StyleSheet.create({
   },
   allData:{
     paddingBottom:140
+  },
+  noRecord:{
+    color: "black",
+    fontSize: 22,
+    width: vw * 100,
+    height: vh * 100,
+    textAlign: "center",
+    paddingVertical: vh * 25,
+    fontWeight: "bold",
   }
 
 })

@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View , ActivityIndicator} from 'react-native'
+import { StyleSheet, Text, View ,ScrollView, ActivityIndicator} from 'react-native'
 import React, { useState, useEffect } from 'react'
 import Color from '../../Color'
 import AsyncStorage from '@react-native-async-storage/async-storage'
@@ -52,6 +52,7 @@ const Team = ({ data }) => {
      {
       !loading ? 
         <View style={styles.Container}>
+          <ScrollView   showsVerticalScrollIndicator={false}>
           {
             items.map((item,index)=>
             <View key={index} style={styles.individualContainer}>
@@ -61,6 +62,7 @@ const Team = ({ data }) => {
               </View>
             </View>)
           }
+          </ScrollView>
         </View>
       :
         <View style={styles.Indicator}>
@@ -78,6 +80,7 @@ const styles = StyleSheet.create({
   Container:{
     height: '100%',
     paddingHorizontal:30,
+    paddingBottom:50,
     backgroundColor:Color.brightOrange
   },
   Indicator:{

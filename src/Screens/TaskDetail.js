@@ -9,9 +9,10 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 import { URL } from '../utils/Constant';
 const TaskDetail = ({navigation , route}) => {
-  const { items } = route.params;
+  const { items ,Alldata ,screenName} = route.params;
   const [data, setData] = useState()
   const [loading, setLoading]=useState(true)
+ 
 
      /* Remove this when fethc data */
     useEffect(()=>{
@@ -47,8 +48,8 @@ const TaskDetail = ({navigation , route}) => {
         }, 1000);
     },[])
     useEffect(()=>{
-      console.log(data,"data....")
-    },[data])
+      console.log(screenName,"screenName....")
+    },[screenName])
     const options =['New (Unassigned)', 'Not Started', 'In Progress', 'On Hold','Query Resolved','Query Raised','Completed']
 
     const selectOption = async (value, index)=>{
@@ -73,7 +74,6 @@ const TaskDetail = ({navigation , route}) => {
         Toast.show({
           type: 'success',
           text1: 'Task Updated Successfully!',
-          text2: 'we are redirect you to previous screen',
            visibilityTime:1000,
            topOffset:5,
            style: {
@@ -81,7 +81,12 @@ const TaskDetail = ({navigation , route}) => {
           },
         });
       setTimeout(() => {
-          navigation.push('tasks',{Task:data})  
+        // navigation.goBack(data)
+          navigation.navigate(screenName,{Task:data,items:Alldata})  
+          // navigation.state.params.updateParent(  
+          //   {item:Alldata}
+          // )
+
       }, 1000);
         console.log(res.data);
       }).catch((err)=>{

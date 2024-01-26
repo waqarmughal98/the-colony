@@ -1,11 +1,11 @@
 import React,{useEffect, useState} from 'react'
 import { StyleSheet, Text, View, TextInput, ScrollView, TouchableOpacity } from 'react-native'
-import { vh,vw } from '../utils/ScreenSize'
+// import { vh,vw } from '../utils/ScreenSize'
 import DateInput from '../Components/Date/DateInput';
-import { FontAwesome } from '@expo/vector-icons';
+// import { FontAwesome } from '@expo/vector-icons';
 import Toast from 'react-native-toast-message';
-import SelectDropdown from 'react-native-select-dropdown'
-import ImagePickerComponent from '../Components/Picker/ImagePickerComponent'
+// import SelectDropdown from 'react-native-select-dropdown'
+// import ImagePickerComponent from '../Components/Picker/ImagePickerComponent'
 import axios from 'axios';
 import { URL } from '../utils/Constant';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -29,17 +29,20 @@ const ReplyTicket = ({navigation,route}) => {
         setData({...data, [field]: value})
     }
 
+    console.log(id,"ticket id........")
+
     const submitReply = async ()=>{
         const authToken = await AsyncStorage.getItem('token');
-        await axios.post(URL + '/problemreports/' + items?.ticket?.ticket_id + '/postreply', {},  {
+        await axios.post(URL + '/problemreports/' + id + '/postreply', {},  {
             params: {
-                ticketreply_ticketid: items?.ticket?.ticket_id,
+                ticketreply_ticketid: id,
                 ticketreply_text: data?.Problem,
             },
             headers: {
                 Authorization: `Bearer ${authToken}`,
             },
         }).then((res)=>{
+            console.log(res,"res..")
             Toast.show({
                 type: 'success',
                 text1: 'Reply  submitted successfully!',
@@ -48,7 +51,7 @@ const ReplyTicket = ({navigation,route}) => {
                  topOffset:5
               });
             setTimeout(() => {
-                navigation.push('problem-report-replies',{reply:data,id:id})  
+                navigation.navigate('problem-report-replies',{id:id,reply:data})  
             }, 1000);
             
         }).catch((err)=>{
@@ -62,9 +65,6 @@ const ReplyTicket = ({navigation,route}) => {
         })
     }
    
-    useEffect(()=>{
-        console.log(items,"items....")
-    },[items])
   return (
     <View style={styles.container}>
         <ScrollView>

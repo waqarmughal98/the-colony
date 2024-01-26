@@ -1,6 +1,5 @@
 import { StyleSheet, Text, View , ScrollView, ActivityIndicator, Image, TextInput} from 'react-native'
 import React, { useState, useEffect } from 'react'
-import Color from '../../Color'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import axios from 'axios'
 import { URL } from '../../utils/Constant'
@@ -11,9 +10,7 @@ const Update = ({data,updateItem}) => {
   useEffect(()=>{
     const currentDate = new Date();
     const formattedDate = `${currentDate.getFullYear()}-${currentDate.getMonth() + 1}-${currentDate.getDate()}`;
-
-
-  setUpdate((preData)=>[...preData,{ comment_text:updateItem,comment_created:formattedDate ,first_name:"Mark",last_name:"Niasham"}])
+    setUpdate((preData)=>[...preData,{ comment_text:updateItem,comment_created:formattedDate ,first_name:"Mark",last_name:"Niasham"}])
   },[updateItem])
 
   useEffect(()=>{
@@ -45,17 +42,17 @@ const Update = ({data,updateItem}) => {
         !loading ? 
         <View style={styles.Container}>
             <ScrollView >
-              <View style={{paddingBottom:170}}>
+              <View style={[{paddingBottom:170}]}>
             {
               update.map((item,index)=>
-                <View style={styles.individual}  key={index}>
+                <View style={[styles.individual,{backgroundColor:index%2!=0? "#F0F4F7":"#FFE6AE"}]}  key={index}>
                   <View>
                     <Image source={require('../../../assets/imgs/avator.png')} style={styles.Image} />
                   </View>
                   <View style={styles.textContainer} >
                       <Text>{item.comment_text}</Text>
-                      <Text>{`${item.first_name} ${item.last_name}`}</Text>
-                      <Text>{item?.comment_created?.slice(0,10)}</Text>
+                      <Text style={{fontWeight:"bold"}}>{`${item.first_name} ${item.last_name}`}</Text>
+                      <Text style={{ fontStyle: 'italic'}}>{item?.comment_created?.slice(0,10)}</Text>
                   </View>
                 </View>)
             }
@@ -80,7 +77,7 @@ const styles = StyleSheet.create({
     },
     Container:{
         height: '100%',
-        backgroundColor:"white"
+        backgroundColor:"white",
     },
     Indicator:
     {
@@ -96,17 +93,22 @@ const styles = StyleSheet.create({
         fontWeight:"bold"
     }
     ,individual:{
-        display:"flex",
-        flexDirection:"row",
-        paddingHorizontal:5,
-        paddingTop:5,
-        borderBottomColor:"gray",
-        borderBottomWidth:1,
-        backgroundColor:"white"
+      backgroundColor: '#FFE6AE',
+      height: 100,
+      marginHorizontal: 10,
+      marginTop: 10,
+      borderRadius: 5,
+      display: 'flex',
+      flexDirection: 'row',
+      padding:20,
+      alignItems:"center",
+    
     },
     Image:{
-        width:75,
-        height:75,
+        width:60,
+        height:60,
+        borderRadius:100,
+        marginLeft:-5
     },
     textContainer:{
         padding:10

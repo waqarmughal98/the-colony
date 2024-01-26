@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, TouchableOpacity, Alert } from 'react-native'
+import { StyleSheet, Text, View, TouchableOpacity, Alert, BackHandler } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { Ionicons } from '@expo/vector-icons';
 import Color from '../Color';
@@ -8,9 +8,10 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 import { URL } from '../utils/Constant';
 import Toast from 'react-native-toast-message';
+import { useFocusEffect, useRoute } from '@react-navigation/native';
 function Dashboard({ navigation }) {
-;
   const [data, setData] = useState([]);
+  const route = useRoute();
   
     React.useLayoutEffect(() => {
       navigation.setOptions({
@@ -37,6 +38,9 @@ function Dashboard({ navigation }) {
         ),
       });
     }, [navigation]);
+    console.log(route.name,"routename...")
+    console.log(route,"route...")
+    console.log(navigation,"navigation...")
 
     useEffect(()=>{
         (async ()=>{
@@ -45,7 +49,7 @@ function Dashboard({ navigation }) {
              navigation.navigate("LoginScreen")
           }
           console.log(authToken)
-          axios.get(URL + '/dashboard',{
+          await axios.get(URL + '/dashboard',{
               headers: {
                   Authorization: `Bearer ${authToken}`
               }
@@ -55,7 +59,32 @@ function Dashboard({ navigation }) {
               console.log(err);
           })
       })()
-    }, [])
+    }, [navigation])
+
+    // useEffect(() => {
+    //   const backAction = () => {
+    //     if (route.name === 'Dashboard') {
+    //       Alert.alert('Hold on!', 'Are you sure you want to go back?', [
+    //       {
+    //         text: 'Cancel',
+    //         onPress: () => null,
+    //         style: 'cancel',
+    //       },
+    //       {text: 'YES', onPress: () => BackHandler.exitApp()},
+    //     ]);
+    //       return true;
+    //     } else {
+    //       return false;
+    //     }
+    //   };
+  
+    //   const backHandler = BackHandler.addEventListener(
+    //     'hardwareBackPress',
+    //     backAction,
+    //   );
+  
+    //   return () => backHandler.remove();
+    // }, [route.name=="Dashboard"]);
 
 
     return (

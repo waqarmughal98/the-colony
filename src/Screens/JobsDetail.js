@@ -23,7 +23,7 @@ import NoteModal from '../Components/Modals/NoteModal';
 import Toast from 'react-native-toast-message';
 import UpdateModal from '../Components/Modals/UpdateModal';
 const JobsDetail = ({route, navigation}) => {
-  const { items ,ID} = route.params;
+  const { items ,ID,Alldata} = route.params;
   const [updateItem, setUdateItem]=useState("")
   const [noteTitle, setNoteTitle]=useState("")
   const [noteDisc, setNoteDisc]=useState("")
@@ -144,7 +144,7 @@ const JobsDetail = ({route, navigation}) => {
         ) : selectedOptionID == 1 ? (
           <Team data={items} />
         ) : selectedOptionID == 2 ? (
-          <Task navigation={navigation} data={items} />
+          <Task navigation={navigation} screenName={"jobs-detail"} Task={items} data={items} />
         ) : selectedOptionID == 3 ? (
           <Address data={items} />
         ) : selectedOptionID == 4 ? (
@@ -156,7 +156,7 @@ const JobsDetail = ({route, navigation}) => {
         ) : selectedOptionID == 7 ? (
           <Logs data={items} />
         ) : selectedOptionID == 8 ? (
-        <ProblemReports navigation={navigation} Data={items} ID={ID} />
+        <ProblemReports navigation={navigation} data={items} ID={ID} />
         ) : null}
       </View>
       <Modal isVisible={isModalVisible}>
@@ -195,25 +195,27 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginLeft: 20,
   },
-  navbar: {
+
+  navbarContainer: {
     backgroundColor: '#382504',
     height: 50,
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
-  },
-  navbarContainer: {
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'space-around',
+    justifyContent: 'center',
+    gap:20,
+    paddingHorizontal:10,
+    
   },
   navbarOption: {
-    paddingVertical: 10,
-    borderRadius: 5,
+    height:50,
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   navbarOptionText: {
     color: 'black',
     fontWeight: 'bold',
-    marginHorizontal: 15,
   },
 });

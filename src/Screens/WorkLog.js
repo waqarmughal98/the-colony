@@ -25,15 +25,16 @@ const WorkLog = ({navigation}) => {
       })
     })()
   }, [])
+  
 
   React.useLayoutEffect(() => {
     navigation.setOptions({
-      headerTitle: 'Dashboard',
+      headerTitle: 'Work Log',
       headerStyle: { backgroundColor: Color.darkOrange },
       headerTintColor: 'white',
       headerTitleAlign: 'center',
       headerLeft: () => (
-        <View style={{ marginLeft: 10 }}>
+        <View style={{ marginLeft: 0 }}>
          <TouchableOpacity
             onPress={() =>navigation.navigate("Home",{
               screen:"Dashboard"
@@ -243,7 +244,7 @@ Indicator:
     justifyContent:"center",
     alignItems:"center",
     alignContent:"center",
-    marginTop:"60%"
+    marginTop:-20,
 },
 fetchingData:{
     color:'black',

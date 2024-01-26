@@ -1,9 +1,8 @@
-import { StyleSheet, Text, View, TouchableOpacity , Dimensions , Image , ScrollView} from 'react-native'
+import { StyleSheet, Text, View, TouchableOpacity , Dimensions , Image , ScrollView,ActivityIndicator} from 'react-native'
 import React,{useEffect,useState} from 'react'
 const { width, height } = Dimensions.get('window');
 const vw = width / 100;
 const vh = height / 100;
-import Color from '../Color'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 import { URL } from '../utils/Constant';
@@ -24,6 +23,7 @@ const ProblemReportReplies = ({navigation,route}) => {
       ),
     });
   }, [navigation,items]);
+
   useEffect(()=>{
     (async ()=>{
       const authToken = await AsyncStorage.getItem('token');
@@ -32,33 +32,58 @@ const ProblemReportReplies = ({navigation,route}) => {
           Authorization: `Bearer ${authToken}`,
         },
       }).then((res)=>{
+        console.log("api call...")
         setItems(res.data.replies)
         setLoading(false) 
       }).catch((err)=>{
         console.log(err);
       })
     })()
-  },[id,reply])
+  },[reply,id])
   
-  console.log(id,"id...")
-  console.log(items,"items....")
+  console.log(id,"repliesid")
   return (
     <View>
       <ScrollView>
-        <View style={styles.container}>
-      {items.map((item,index)=>
-        <View style={styles.individual} key={index}>
-          <View style={styles.left}>
-          {/* Change the img */}
-          <Image source={require('../../assets/imgs/avator.png')} style={styles.Image} />
+        {
+          !loading ? 
+          (
+            <View style={styles.container}>
+            {
+              items.length > 0 ? 
+              (
+                items.map((item,index)=>
+              <View style={styles.individual} key={index}>
+                <View style={styles.left}>
+                {/* Change the img */}
+                <Image source={require('../../assets/imgs/avator.png')} style={styles.Image} />
+                </View>
+                <View style={styles.right}>
+                  <Text style={styles.text}>{`by ${item.first_name} on ${item.ticketreply_created.slice(0,10)}`}</Text>
+                  <Text style={styles.text}>{item.ticketreply_text}</Text>
+                </View>
+              </View>
+            )
+              )
+              :
+              (
+                <Text style={styles.noRecord}>No Record Found</Text>
+              )
+            
+            
+            }
+            </View>
+
+          )
+          :
+          (
+            <View style={styles.Indicator}>
+            <ActivityIndicator size="large" color={'black'} />
+            <Text style={styles.fetchingData}>Fetching Data</Text>
           </View>
-          <View style={styles.right}>
-            <Text style={styles.text}>{`by ${item.first_name} on ${item.ticketreply_created.slice(0,10)}`}</Text>
-            <Text style={styles.text}>{item.ticketreply_text}</Text>
-          </View>
-        </View>
-      )}
-      </View>
+          )
+        }
+      
        </ScrollView>
     </View>
    
@@ -98,5 +123,35 @@ const styles = StyleSheet.create({
   },
   container:{
     paddingBottom:75
-  }
+  },
+  noRecord:{
+    color: "black",
+    fontSize: 22,
+    width: vw * 100,
+    height: vh * 100,
+    textAlign: "center",
+    paddingVertical: vh * 25,
+    fontWeight: "bold",
+  },
+  noRecord:{
+    color: "black",
+    fontSize: 22,
+    width: vw * 100,
+    height: vh * 100,
+    textAlign: "center",
+    paddingVertical: vh * 37,
+    fontWeight: "bold",
+  },
+  Indicator: {
+    flexGrow: 1,
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    alignContent: 'center',
+    marginTop: '70%',
+  },
+  fetchingData: {
+    color: 'black',
+    fontWeight: 'bold',
+  },
 })
