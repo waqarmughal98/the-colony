@@ -86,8 +86,8 @@ const Tab = createBottomTabNavigator();
         },
       }}
     >
-      <Tab.Screen
-        name="Workog"
+         <Tab.Screen
+        name="WorkLog"
         component={WorkLog}
         options={{
           tabBarLabel: 'Work Log',
@@ -102,7 +102,8 @@ const Tab = createBottomTabNavigator();
           ),
         }}
       />
-      <Tab.Screen
+      
+        <Tab.Screen
         name="Home"
         component={HomeScreenStack}
         options={{
@@ -116,9 +117,11 @@ const Tab = createBottomTabNavigator();
           ),
         }}
       />
+   
+    
       <Tab.Screen
         name="ProfileScreen"
-        component={ProfileStackScreen}
+        component={Profile}
         options={{
           // title: 'Profile',
           tabBarLabel: 'Profile',
@@ -207,6 +210,15 @@ function HomeScreenStack() {
           component={WorkLog}
           options={{
             title: 'Work Logs'
+          }}
+        />
+
+        <HomeStack.Screen
+          name="Profile"
+          component={Profile}
+          options={{
+            title: 'Profile',
+            headerShown:false
           }}
         />
         

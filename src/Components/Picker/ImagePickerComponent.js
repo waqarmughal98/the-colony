@@ -70,6 +70,8 @@ const ImagePickerFiles = ({setData,index,data,items,currentIndex}) => {
       }
     
       console.log(result.assets[0].uri,"log....")
+      console.log(result,"result....")
+      console.log(result.uri,"uri....")
       const uriParts = result.assets[0].uri.split('/');
 
       const photo = {
