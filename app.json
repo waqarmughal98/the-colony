@@ -42,6 +42,12 @@
           "photosPermission": "Allow The Colony to access your photos",
           "cameraPermission": "Allow The Colony to access your Camera"
         }
+      ],
+      [
+        "expo-location",
+        {
+          "locationAlwaysAndWhenInUsePermission": "Allow The Colony to use your location."
+        }
       ]
     ],
     "extra": {

@@ -157,7 +157,7 @@ const Files = ({data}) => {
                 style={{ position: 'absolute', top: 10, right: 10 }}
                 onPress={toggleModal}
               >
-                <Ionicons name="md-close" size={27} color="white" />
+                <Ionicons name="close" size={27} color="white" />
               </TouchableOpacity>
             </View>
           </Modal>
@@ -173,7 +173,7 @@ const Files = ({data}) => {
                     style={{ position: 'absolute', top: -10, right: 0,backgroundColor:"white",borderRadius:5, }}
                     onPress={()=>setFileModalVisible(false)}
                   >   
-                <Ionicons name="md-close" size={25} color="black" />
+                <Ionicons name="close" size={25} color="black" />
               </TouchableOpacity>
               </View>
           </Modal>
