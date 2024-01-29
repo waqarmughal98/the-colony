@@ -34,7 +34,7 @@ useEffect(()=>{
           </TouchableOpacity>
           <Text style={{fontWeight:"400",color:"white",textAlign:"center",fontSize:20}}>Profile</Text>
           <TouchableOpacity activeOpacity={0.6} onPress={()=>navigation.navigate("notifications")} >
-              <Ionicons name="ios-notifications" size={24} color="white" />
+              <Ionicons name="notifications-circle-outline" size={24} color="white" />
             </TouchableOpacity>
         </View>
         <View style={styles.imgContainer}>

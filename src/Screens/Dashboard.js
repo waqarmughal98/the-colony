@@ -8,6 +8,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 import { URL } from '../utils/Constant';
 import Toast from 'react-native-toast-message';
+import { Entypo } from '@expo/vector-icons';
 import { useFocusEffect, useRoute } from '@react-navigation/native';
 function Dashboard({ navigation }) {
   const [data, setData] = useState([]);
@@ -25,14 +26,14 @@ function Dashboard({ navigation }) {
             onPress={() =>navigation.toggleDrawer()}
             activeOpacity={0.6}
           >
-            <Ionicons name="ios-menu" size={27} color="white" />
+            <Entypo name="menu" size={27} color="white" />
           </TouchableOpacity>
         </View>
         ),
         headerRight: () => (
           <View style={{ marginRight: 10 }}>
             <TouchableOpacity activeOpacity={0.6} onPress={()=>navigation.navigate("notifications")} >
-              <Ionicons name="ios-notifications" size={24} color="white" />
+              <Ionicons name="notifications-circle-outline" size={24} color="white" />
             </TouchableOpacity>
           </View>
         ),
