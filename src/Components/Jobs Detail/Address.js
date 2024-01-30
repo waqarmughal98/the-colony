@@ -1,9 +1,7 @@
   import {StyleSheet, Text, View, ActivityIndicator, TextInput, Switch, ScrollView, TouchableOpacity } from 'react-native';
   import React, { useState, useEffect } from 'react';
   import Color from '../../Color';
-  import MapView, { Marker } from 'react-native-maps';
-  import axios from 'axios';
-  import * as Location from 'expo-location';
+  import { WebView } from 'react-native-webview';
   const Address = ({ data }) => {
     const inputFields = [
       { label: 'Street', value: '', key: 'street' },
@@ -12,8 +10,7 @@
       { label: 'Postcode', value: '', key: 'postcode' },
     ];
 
-    const [location, setLocation] = useState(null);
-    const [errorMsg, setErrorMsg] = useState(null);
+
     const [inputData, setInputData] = useState({
       street: data.lead_street,
       city: data.lead_city,
@@ -23,15 +20,7 @@
 
     const [loading, setLoading] = useState(true);
     const [showMap, setShowMap] = useState(false);
-    const [coordinates, setCoordinates] = useState(null);
-
-    const handleInputChange = (key, text) => {
-      setInputData((prevInputData) => ({
-        ...prevInputData,
-        [key]: text,
-      }));
-    };
-
+   
     /* Remove this when fetch data */
     useEffect(() => {
       setTimeout(() => {
@@ -39,54 +28,10 @@
       }, 1000);
     }, []);
 
-    useEffect(() => {
-      const fetchCoordinates = async () => {
-        try {
-          const response = await axios.get(
-            `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(
-              inputData.city
-            )}&key=AIzaSyB41DRUbKWJHPxaFjMAwdrzWzbVKartNGg`
-          );  
-          const { results } = response.data;
   
-          if (results.length > 0) {
-            const { lat, lng } = results[0].geometry.location;
-            setCoordinates({ latitude: lat, longitude: lng });
-          }
-        } catch (error) {
-          console.error('Error fetching coordinates:', error.message);
-        }
-      };
-  
-      fetchCoordinates();
-    }, [inputData.city])
-
-    useEffect(()=>{
-      console.log(coordinates,"cordinates...")
-    },[coordinates])
-
 
     
-  useEffect(() => {
-    (async () => {
-      
-      let { status } = await Location.requestForegroundPermissionsAsync();
-      if (status !== 'granted') {
-        setErrorMsg('Permission to access location was denied');
-        return;
-      }
 
-      let location = await Location.getCurrentPositionAsync({});
-      setLocation(location);
-    })();
-  }, []);
-
-  let text = 'Waiting..';
-  if (errorMsg) {
-    text = errorMsg;
-  } else if (location) {
-    text = JSON.stringify(location);
-  }
 
     return (
       <ScrollView contentContainerStyle={styles.scrollViewContainer}>
@@ -111,26 +56,12 @@
 
             {showMap ? (
               <View style={[styles.mapContainer]}>
-                {/* Your map component goes here */}
-                <MapView
-                  style={{ flex: 1, borderRadius:15 }}
-                  initialRegion={{
-                    latitude: 37.78825, // Replace with the initial latitude of your map
-                    longitude: -122.4324, // Replace with the initial longitude of your map
-                    latitudeDelta: 0.0922,
-                    longitudeDelta: 0.0421,
-                  }}
-                >
-                  {/* You can add a marker if needed */}
-                  <Marker
-                    coordinate={{
-                      latitude: 37.78825, // Replace with the marker's latitude
-                      longitude: -122.4324, // Replace with the marker's longitude
-                    }}
-                    title="Marker Title"
-                    description="Marker Description"
-                  />
-                </MapView>
+                <WebView
+                  scrollEnabled={false}
+                  style={styles.map_container}
+                  originWhitelist={['*']}
+                  source={{ html: `<iframe width="1100" height="700" src="http://maps.google.de/maps?hl=en&q=${inputData.street} ${inputData.city} ${inputData.locationDetail} ${inputData.locationDetail} ${inputData.postcode}&ie=UTF8&t=&z=17&iwloc=B&output=embed" frameborder="0" scrolling="auto" marginheight="0" marginwidth="0"></iframe>` }}
+                />
               </View>
             ) : (
               <View style={styles.emptyMap}></View>
@@ -199,7 +130,7 @@
     },
     mapContainer: {
       backgroundColor: 'white',
-      height: 200,
+      height: 190,
       borderRadius: 10,
       overflow:"hidden"
     },
@@ -224,4 +155,6 @@
         color: 'white',
         fontWeight: 'bold',
       },
+      map_container:{
+      }
   });
