@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, ScrollView, Image, FlatList, ActivityIndicator } from 'react-native'
 import { vw,vh } from '../utils/ScreenSize';
-import { MaterialIcons,Ionicons } from '@expo/vector-icons';
+import { MaterialIcons,Ionicons, AntDesign } from '@expo/vector-icons';
 import Color from '../Color';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
@@ -41,7 +41,7 @@ const WorkLog = ({navigation}) => {
             })}
             activeOpacity={0.6}
           >
-          <Ionicons name="ios-arrow-back-sharp" size={24} color="white" style={{marginLeft:12}} />
+          <AntDesign name="arrowleft" size={24} color="white" style={{marginLeft:15}} />
           </TouchableOpacity>
       </View>
       ),

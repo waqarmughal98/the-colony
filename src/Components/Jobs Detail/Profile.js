@@ -1,6 +1,6 @@
 import { StyleSheet,TouchableOpacity, ImageBackground,Text, View,Image } from 'react-native'
 import React,{useState,useEffect} from 'react'
-import {Foundation,Zocial,Ionicons } from '@expo/vector-icons';
+import {Foundation,Zocial,Ionicons,AntDesign } from '@expo/vector-icons';
 import Color from '../../Color';
 import { StatusBar } from 'react-native';
 import { vh, vw  } from '../../utils/ScreenSize';
@@ -30,7 +30,7 @@ useEffect(()=>{
             })}
             activeOpacity={0.6}
           >
-          <Ionicons name="ios-arrow-back-sharp" size={24} color="white" style={{marginLeft:12}} />
+          <AntDesign name="arrowleft" size={24} color="white" style={{marginLeft:12}} />
           </TouchableOpacity>
           <Text style={{fontWeight:"400",color:"white",textAlign:"center",fontSize:20}}>Profile</Text>
           <TouchableOpacity activeOpacity={0.6} onPress={()=>navigation.navigate("notifications")} >

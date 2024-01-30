@@ -168,7 +168,7 @@ const JobsDetail = ({route, navigation}) => {
           style={{ position: 'absolute', top: 10, right: 10 }}
           onPress={toggleModal}
         >
-          <Ionicons name="md-close" size={27} color="white" />
+          <Ionicons name="close" size={27} color="white" />
         </TouchableOpacity>
       </View>
     </Modal>

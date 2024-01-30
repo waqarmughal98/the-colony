@@ -4,7 +4,7 @@ import * as ImagePicker from 'expo-image-picker';
 import Toast from 'react-native-toast-message';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { URL } from '../../utils/Constant';
-import { Ionicons } from '@expo/vector-icons';
+import { Entypo, Ionicons } from '@expo/vector-icons';
 import axios from 'axios';
 
 const ImagePickerFiles = ({setData,index,data,items,currentIndex}) => {
@@ -161,10 +161,10 @@ const ImagePickerFiles = ({setData,index,data,items,currentIndex}) => {
   return (
     <View style={styles.container}>
       <TouchableOpacity onPress={() => pickImage('camera')}>
-        <Ionicons name="md-camera" size={25} color="#5A5A5A" style={styles.icon} />
+        <Entypo name="camera" size={20} color="#5A5A5A" style={styles.icon} />
       </TouchableOpacity>
       <TouchableOpacity onPress={() => pickImage('gallery')}>
-        <Ionicons name="md-images" size={20} color="#5A5A5A" style={styles.icon} />
+        <Ionicons name="images" size={20} color="#5A5A5A" style={styles.icon} />
       </TouchableOpacity>
 </View>
   );

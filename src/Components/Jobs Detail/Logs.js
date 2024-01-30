@@ -114,12 +114,14 @@ const styles = StyleSheet.create({
   },
   individual: {
     backgroundColor: '#FFE6AE',
-    height: 150,
+    paddingBottom:10,
+    paddingHorizontal:20,
     marginHorizontal: 10,
     marginTop: 10,
     borderRadius: 5,
     display: 'flex',
     flexDirection: 'row',
+
   },
   updateBg:{
     alignSelf: 'flex-start'
