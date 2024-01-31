@@ -67,8 +67,6 @@ const AddRequest = () => {
        
     }
 
-    console.log(leave,"leave")
-
     const data=["Holiday","Sickness","Overtime"]
     /* Check this data */
     const departmentData=["Office", "Topo Surveyor", "Utilities Surveyor", 'CAD Team']

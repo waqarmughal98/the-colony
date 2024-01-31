@@ -28,7 +28,6 @@ const FileModal = ({ toggleModal, setData, data }) => {
         axios
           .post(URL + '/filegroups/savefolder', {}, { params, headers: { Authorization: `Bearer ${authToken}` } })
           .then((res) => {
-            console.log(res.data.token);
             toggleModal();
             setData((preData) => [
               ...preData,

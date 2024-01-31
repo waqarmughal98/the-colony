@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "The Colony",
+    "name": "The Colony Solutions",
     "slug": "the-colony",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -11,9 +11,7 @@
       "resizeMode": "contain",
       "backgroundColor": "#FAA91C"
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true,
       "config": {
@@ -22,6 +20,9 @@
       "bundleIdentifier": "com.waqarmughal005.thecolony"
     },
     "android": {
+      "config": {
+        "usesCleartextTraffic": true
+      },
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"

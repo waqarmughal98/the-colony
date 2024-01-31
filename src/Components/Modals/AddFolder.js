@@ -31,7 +31,6 @@ const AddFolder = ({toggleModal,setData,data}) => {
                   }
                 )
                 .then((res) => {
-                   console.log(res.data.token);
                     toggleModal()
                     setData((preData)=>[...preData, {
                         FolderName:Folder,

@@ -88,7 +88,6 @@ const TaskDetail = ({navigation , route}) => {
           // )
 
       }, 1000);
-        console.log(res.data);
       }).catch((err)=>{
         console.log(err);
       })

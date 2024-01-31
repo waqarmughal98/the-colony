@@ -22,8 +22,6 @@ const Login = ({ navigation }) => {
     })()
   }, []);
 
-
-
   const Login = () => {
     setLoading(true); 
     axios.post(URL + "/login",{},{
@@ -54,6 +52,8 @@ const Login = ({ navigation }) => {
             });
             setTimeout(() => {
               navigation.navigate("Dashboard");
+              setEmail('');
+              setPassword('');
             }, 1000); 
           })();
         }

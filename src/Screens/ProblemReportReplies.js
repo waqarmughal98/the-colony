@@ -32,7 +32,6 @@ const ProblemReportReplies = ({navigation,route}) => {
           Authorization: `Bearer ${authToken}`,
         },
       }).then((res)=>{
-        console.log("api call...")
         setItems(res.data.replies)
         setLoading(false) 
       }).catch((err)=>{
@@ -41,7 +40,6 @@ const ProblemReportReplies = ({navigation,route}) => {
     })()
   },[reply,id])
   
-  console.log(id,"repliesid")
   return (
     <View>
       <ScrollView>

@@ -60,7 +60,7 @@
                   scrollEnabled={false}
                   style={styles.map_container}
                   originWhitelist={['*']}
-                  source={{ html: `<iframe width="1100" height="700" src="http://maps.google.de/maps?hl=en&q=${inputData.street} ${inputData.city} ${inputData.locationDetail} ${inputData.locationDetail} ${inputData.postcode}&ie=UTF8&t=&z=17&iwloc=B&output=embed" frameborder="0" scrolling="auto" marginheight="0" marginwidth="0"></iframe>` }}
+                  source={{ html: `<iframe width="1100" height="700" src="http://maps.google.de/maps?hl=en&q=${inputData.street} ${inputData.city} ${inputData.locationDetail} ${inputData.postcode}&ie=UTF8&t=&z=17&iwloc=B&output=embed" frameborder="0" scrolling="auto" marginheight="0" marginwidth="0"></iframe>` }}
                 />
               </View>
             ) : (

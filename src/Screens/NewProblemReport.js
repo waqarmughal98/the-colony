@@ -28,11 +28,10 @@ const NewProblemReport = ({navigation,route,Data}) => {
 
     const handleData = (value, field)=> {
         setData({...data, [field]: value})
-        console.log(data);
     }
     const [btnDisables,setBtnDisabled]=useState(false)
     useEffect(()=>{
-        console.log(items.project_clientid,"client")
+        console.log(items?.project_clientid,"client")
     }, [items])
 
     const submitProblem = async ()=>{
@@ -60,7 +59,6 @@ const NewProblemReport = ({navigation,route,Data}) => {
                 Authorization: `Bearer ${authToken}`
             }
         }).then((res)=>{
-            console.log(res,"res...")
             Toast.show({
                 type: 'success',
                 text1: 'Report Submitted Successfully',

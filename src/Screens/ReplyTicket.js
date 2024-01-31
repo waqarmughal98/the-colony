@@ -29,7 +29,6 @@ const ReplyTicket = ({navigation,route}) => {
         setData({...data, [field]: value})
     }
 
-    console.log(id,"ticket id........")
 
     const submitReply = async ()=>{
         const authToken = await AsyncStorage.getItem('token');
@@ -42,7 +41,6 @@ const ReplyTicket = ({navigation,route}) => {
                 Authorization: `Bearer ${authToken}`,
             },
         }).then((res)=>{
-            console.log(res,"res..")
             Toast.show({
                 type: 'success',
                 text1: 'Reply  submitted successfully!',

@@ -43,22 +43,20 @@ function App() {
   }
   return (
     <Context>
-       <NavigationContainer>
-        <Drawer.Navigator initialRouteName="Dashboard"  drawerContent={(props) => <CustomDrawerContent {...props} />}>
+      <NavigationContainer>
+        <Drawer.Navigator drawerContent={(props) => <CustomDrawerContent {...props} />}>
           <Drawer.Screen name="Back to Dashboard" options={{
                 headerShown:false,
               }} component={MainStackScreen} />
           {/* Add more screens as needed */}
         </Drawer.Navigator>
-        </NavigationContainer>
-        <Toast/>
+      </NavigationContainer>
+      <Toast/>
     </Context>
   );
- 
 }
 
 export default App;
-
 
 const Tab = createBottomTabNavigator();
   const TabNavigator = () => 
@@ -86,7 +84,7 @@ const Tab = createBottomTabNavigator();
         },
       }}
     >
-         <Tab.Screen
+      <Tab.Screen
         name="WorkLog"
         component={WorkLog}
         options={{
@@ -103,7 +101,7 @@ const Tab = createBottomTabNavigator();
         }}
       />
       
-        <Tab.Screen
+      <Tab.Screen
         name="Home"
         component={HomeScreenStack}
         options={{
@@ -117,8 +115,6 @@ const Tab = createBottomTabNavigator();
           ),
         }}
       />
-   
-    
       <Tab.Screen
         name="ProfileScreen"
         component={Profile}
@@ -144,7 +140,7 @@ function MainStackScreen() {
 
   }
   return (
-    <Stack.Navigator screenOptions={screenOptions} initialRouteName="Dashboard">
+    <Stack.Navigator screenOptions={screenOptions} initialRouteName="LoginScreen">
         <Stack.Screen
           name="LoginScreen"
           component={LoginStackScreen}

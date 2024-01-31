@@ -34,7 +34,6 @@ const ImagePickerFiles = ({setData,index,data,items,currentIndex}) => {
   }, []);
 
   
-  console.log(items[currentIndex]?.file_group_id)
 
   const pickImage = async (sourceType) => {
     
@@ -77,7 +76,6 @@ const ImagePickerFiles = ({setData,index,data,items,currentIndex}) => {
     
       const form = new FormData();
       form.append("file", photo);
-      console.log(form, "form");
      
       Toast.show({
         type: 'success',
@@ -96,8 +94,6 @@ const ImagePickerFiles = ({setData,index,data,items,currentIndex}) => {
       })
       .then((response) => response.json())
       .then(async (res) => {
-        console.log(res, "res...");
-    
         const authToken = await AsyncStorage.getItem("token");
 
         const requestData = {
@@ -116,7 +112,6 @@ const ImagePickerFiles = ({setData,index,data,items,currentIndex}) => {
             },
           });
         
-          console.log(response, "response...........");
         
           setData((prevData) => {
             const newData = [...prevData];

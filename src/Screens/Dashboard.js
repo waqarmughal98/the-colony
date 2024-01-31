@@ -12,6 +12,7 @@ import { Entypo } from '@expo/vector-icons';
 import { useFocusEffect, useRoute } from '@react-navigation/native';
 function Dashboard({ navigation }) {
   const [data, setData] = useState([]);
+  const [authToken, setAuthToken] = useState();
   const route = useRoute();
   
     React.useLayoutEffect(() => {
@@ -39,28 +40,26 @@ function Dashboard({ navigation }) {
         ),
       });
     }, [navigation]);
-    console.log(route.name,"routename...")
-    console.log(route,"route...")
-    console.log(navigation,"navigation...")
 
     useEffect(()=>{
         (async ()=>{
-          const authToken = await AsyncStorage.getItem("token");
-          if(!authToken){
+          const Token = await AsyncStorage.getItem("token");
+          setAuthToken(Token)
+          if(!Token){
              navigation.navigate("LoginScreen")
+          }else{
+            await axios.get(URL + '/dashboard',{
+                headers: {
+                    Authorization: `Bearer ${authToken}`
+                }
+            }).then((res)=>{
+                setData(res.data);
+              }).catch((err)=>{
+                console.log(err);
+            })
           }
-          console.log(authToken)
-          await axios.get(URL + '/dashboard',{
-              headers: {
-                  Authorization: `Bearer ${authToken}`
-              }
-          }).then((res)=>{
-              setData(res.data);
-          }).catch((err)=>{
-              console.log(err);
-          })
       })()
-    }, [navigation])
+    }, [authToken])
 
     // useEffect(() => {
     //   const backAction = () => {

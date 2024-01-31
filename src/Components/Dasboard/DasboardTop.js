@@ -23,8 +23,8 @@ const DashboardTopItem = ({ item, navigation }) => {
           )}
         </View>
         <View style={styles.containerText}>
-          <Text style={styles.number}>{item.number}</Text>
-          <Text style={styles.title}>{item.title}</Text>
+          <Text style={styles.number}>{item?.number}</Text>
+          <Text style={styles.title}>{item?.title}</Text>
         </View>
       </View>
     </TouchableOpacity>

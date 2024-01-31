@@ -23,7 +23,6 @@ const ProblemReports = ({navigation, data,ID}) => {
           Authorization: `Bearer ${authToken}`,
         },
       }).then((res)=>{
-        console.log(res.data.tickets,"res...")
         setItems(res.data.tickets.data)
         setLoading(false) 
       }).catch((err)=>{
@@ -32,7 +31,6 @@ const ProblemReports = ({navigation, data,ID}) => {
     })()
   },[ID])
 
-  console.log(data?.project_id,"id...")
     
   return (
     <View>    
