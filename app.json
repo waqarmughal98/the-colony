@@ -20,9 +20,6 @@
       "bundleIdentifier": "com.waqarmughal005.thecolony"
     },
     "android": {
-      "config": {
-        "usesCleartextTraffic": true
-      },
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
@@ -44,12 +41,11 @@
           "cameraPermission": "Allow The Colony to access your Camera"
         }
       ],
-      [
-        "expo-location",
-        {
-          "locationAlwaysAndWhenInUsePermission": "Allow The Colony to use your location."
+      ["expo-build-properties", {
+        "android": {
+          "usesCleartextTraffic": true
         }
-      ]
+      }]
     ],
     "extra": {
       "eas": {
