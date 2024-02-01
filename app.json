@@ -11,7 +11,9 @@
       "resizeMode": "contain",
       "backgroundColor": "#FAA91C"
     },
-    "assetBundlePatterns": ["**/*"],
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "ios": {
       "supportsTablet": true,
       "config": {
@@ -41,16 +43,20 @@
           "cameraPermission": "Allow The Colony to access your Camera"
         }
       ],
-      ["expo-build-properties", {
-        "android": {
-          "usesCleartextTraffic": true
+      [
+        "expo-build-properties",
+        {
+          "android": {
+            "usesCleartextTraffic": true
+          }
         }
-      }]
+      ]
     ],
     "extra": {
       "eas": {
-        "projectId": "1c87c96f-155c-4857-a182-45051abeff28"
+        "projectId": "1873c7ad-3dff-4dcc-9d79-3c1eee1274fa"
       }
-    }
+    },
+    "owner": "artanistic"
   }
 }

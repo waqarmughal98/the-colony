@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View, ImageBackground, TextInput, Image,ActivityIndicator, Dimensions, TouchableOpacity, Alert, KeyboardAvoidingView, Platform } from 'react-native';
-import React, { useEffect, useState,useRef } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { FontAwesome, Ionicons } from '@expo/vector-icons';
 import { vh, vw } from '../utils/ScreenSize';
 import axios from 'axios';
@@ -7,11 +7,13 @@ import { StatusBar } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { URL } from '../utils/Constant';
 import Toast from 'react-native-toast-message';
+import { ContextProvider } from '../Global/Context';
 const Login = ({ navigation }) => {
   const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
+  const { TokenSetter,setLOGINSTATE } = useContext(ContextProvider);
 
   useEffect(() => {
     (async()=>{
@@ -48,13 +50,17 @@ const Login = ({ navigation }) => {
               type: 'success',
               text1: 'Login Successfully!',
               text2: 'we are moving you toward dashboard',
-               visibilityTime:1000
+               visibilityTime:1200
             });
             setTimeout(() => {
               navigation.navigate("Dashboard");
               setEmail('');
               setPassword('');
-            }, 1000); 
+            }, 1400); 
+            setTimeout(() => {
+              setLOGINSTATE(true)
+            }, 1200); 
+            TokenSetter(token)
           })();
         }
         else{

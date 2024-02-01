@@ -1,12 +1,13 @@
-import React ,{useEffect, useState} from 'react';
+import React ,{useContext, useEffect, useState} from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { DrawerContentScrollView, DrawerItemList } from '@react-navigation/drawer';
 import { vh,vw } from '../../utils/ScreenSize';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Color from '../../Color';
 import Toast from 'react-native-toast-message';
+import { ContextProvider } from '../../Global/Context';
 const CustomDrawerContent = (props) => {
-
+  const { setLOGINSTATE } = useContext(ContextProvider);
   const { navigation } = props;
   const HandleLogout= async()=>{
     try {
@@ -20,9 +21,13 @@ const CustomDrawerContent = (props) => {
         visibilityTime:700,
         topOffset:5
       });
+      
+      setTimeout(() => {
+        setLOGINSTATE(false)
+      }, 800); 
       setTimeout(() => {
         navigation.navigate("LoginScreen");
-      }, 700); 
+      }, 900); 
       // Additional logout logic or navigation here
     } catch (error) {
       console.error('Error removing token:', error);

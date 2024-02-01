@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View, TouchableOpacity, Alert, BackHandler } from 'react-native'
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { Ionicons } from '@expo/vector-icons';
 import Color from '../Color';
 import DasboardTop from '../Components/Dasboard/DasboardTop';
@@ -9,12 +9,12 @@ import axios from 'axios';
 import { URL } from '../utils/Constant';
 import Toast from 'react-native-toast-message';
 import { Entypo } from '@expo/vector-icons';
-import { useFocusEffect, useRoute } from '@react-navigation/native';
-function Dashboard({ navigation }) {
+import { ContextProvider } from '../Global/Context';
+function Dashboard({ navigation,route }) {
   const [data, setData] = useState([]);
   const [authToken, setAuthToken] = useState();
-  const route = useRoute();
-  
+  const { LoginState } = useContext(ContextProvider);
+
     React.useLayoutEffect(() => {
       navigation.setOptions({
         headerTitle: 'Dashboard',
@@ -45,12 +45,14 @@ function Dashboard({ navigation }) {
         (async ()=>{
           const Token = await AsyncStorage.getItem("token");
           setAuthToken(Token)
+          console.log("api call")
+          console.log(Token)
           if(!Token){
              navigation.navigate("LoginScreen")
           }else{
             await axios.get(URL + '/dashboard',{
                 headers: {
-                    Authorization: `Bearer ${authToken}`
+                    Authorization: `Bearer ${Token}`
                 }
             }).then((res)=>{
                 setData(res.data);
@@ -59,7 +61,7 @@ function Dashboard({ navigation }) {
             })
           }
       })()
-    }, [authToken])
+    }, [])
 
     // useEffect(() => {
     //   const backAction = () => {

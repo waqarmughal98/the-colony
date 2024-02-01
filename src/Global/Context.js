@@ -3,10 +3,15 @@ import React, {createContext, useEffect, useState} from 'react';
 export const ContextProvider = createContext();
 const Context = props => {
   const [LoginState, SetLoginState] = useState(false);
+  const [TOKEN,setToken] =useState("")
 
 
   const setLOGINSTATE=(value)=>{
-    SetLoginState(true)
+    SetLoginState(value)
+  }
+
+  const TokenSetter=(value)=>{
+ setToken(value)
   }
 
   return (
@@ -14,7 +19,9 @@ const Context = props => {
       <ContextProvider.Provider
         value={{
           LoginState,
-          setLOGINSTATE
+          setLOGINSTATE,
+          TOKEN,
+          TokenSetter
         }}>
         {props.children}
       </ContextProvider.Provider>
