@@ -2,7 +2,7 @@
   "expo": {
     "name": "The Colony Solutions",
     "slug": "the-colony",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "orientation": "portrait",
     "icon": "./assets/imgs/lb.png",
     "userInterfaceStyle": "light",

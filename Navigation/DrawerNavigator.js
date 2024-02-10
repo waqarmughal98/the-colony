@@ -5,7 +5,7 @@ const Drawer = createDrawerNavigator();
 
 const DrawerNavigator=()=>{
     return (
-        <Drawer.Navigator drawerContent={(props) => <CustomDrawerContent {...props} />}>
+      <Drawer.Navigator drawerContent={(props) => <CustomDrawerContent {...props} />}>
         <Drawer.Screen name="Main"  options={{drawerLabel:"Back to Dashboard", headerShown:false}} component={MainStackNavigator} />
       </Drawer.Navigator>
     )
