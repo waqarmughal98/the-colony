@@ -9,6 +9,7 @@ import { ContextProvider } from '../../Global/Context';
 const CustomDrawerContent = (props) => {
   const { setLOGINSTATE } = useContext(ContextProvider);
   const { navigation } = props;
+  const [userDetail, setUserDetail]=useState()
   const HandleLogout= async()=>{
     try {
       await AsyncStorage.removeItem('token')
@@ -35,12 +36,19 @@ const CustomDrawerContent = (props) => {
  
   
   }
+  useEffect(()=>{
+    (async ()=>{
+     const userData=await AsyncStorage.getItem("userDetail")
+     const parsedUserData = JSON.parse(userData);
+     setUserDetail(parsedUserData);
+  })()
+}, [])
   return (
     <DrawerContentScrollView {...props}>
       {/* Your custom drawer content */}
       <View style={styles.drawerHeader}>
-        <Text style={styles.drawerHeaderText}>Mark Nisham</Text>
-        <Text style={styles.drawerSubHeaderText}>mark@imaginedesigns.co</Text>
+        <Text style={styles.drawerHeaderText}>{userDetail?.fname || "Mark"} {userDetail?.lname || "Nisham"}  </Text>
+        <Text style={styles.drawerSubHeaderText}>{userDetail?.email || "mark@imaginedesigns.c0"} </Text>
       </View>
 
       {/* Default drawer items */}

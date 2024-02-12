@@ -1,4 +1,4 @@
-  import {StyleSheet, Text, View, ActivityIndicator, TextInput, Switch, ScrollView, TouchableOpacity } from 'react-native';
+  import {StyleSheet, Text, View, ActivityIndicator, Linking, Switch, ScrollView, TouchableOpacity } from 'react-native';
   import React, { useState, useEffect } from 'react';
   import Color from '../../Color';
   import { WebView } from 'react-native-webview';
@@ -37,7 +37,7 @@
       <ScrollView contentContainerStyle={styles.scrollViewContainer}>
         {!loading ? (
           <View style={styles.container}>
-            {inputFields.map((field) => (
+            {!showMap && inputFields.map((field) => (
               <View style={styles.inputContainer} key={field.key}>
                 <Text style={styles.label}>{field.label}*</Text>
                 <View style={styles.textContainer}>
@@ -54,15 +54,23 @@
               />
             </View>
 
+           {showMap && <Text style={{marginBottom:13,marginHorizontal:5,marginTop:-5,fontSize:12,textAlign:"center",fontWeight:"bold", fontStyle: 'italic',}}> Click anywhere on MapView to open google maps</Text>
+}
+
             {showMap ? (
-              <View style={[styles.mapContainer]}>
-                <WebView
-                  scrollEnabled={false}
-                  style={styles.map_container}
-                  originWhitelist={['*']}
-                  source={{ html: `<iframe width="1100" height="700" src="http://maps.google.de/maps?hl=en&q=${inputData.street} ${inputData.city} ${inputData.locationDetail} ${inputData.postcode}&ie=UTF8&t=&z=17&iwloc=B&output=embed" frameborder="0" scrolling="auto" marginheight="0" marginwidth="0"></iframe>` }}
-                />
-              </View>
+            <TouchableOpacity
+            style={styles.mapContainer}
+            onPress={() => {
+              const url = `http://maps.google.de/maps?hl=en&q=${inputData.street} ${inputData.city} ${inputData.locationDetail} ${inputData.postcode}&ie=UTF8&t=&z=17&iwloc=B&output=embed`;
+              Linking.openURL(url);
+            }}>
+            <WebView
+              scrollEnabled={false}
+              style={styles.map_container}
+              originWhitelist={['*']}
+              source={{ html: `<iframe style="width: 100%; height: 100%;" src="http://maps.google.de/maps?hl=en&q=${inputData.street} ${inputData.city} ${inputData.locationDetail} ${inputData.postcode}&ie=UTF8&t=&z=17&iwloc=B&output=embed" frameborder="0" scrolling="auto" marginheight="0" marginwidth="0"></iframe>` }}
+            />
+          </TouchableOpacity>
             ) : (
               <View style={styles.emptyMap}></View>
             )}
@@ -130,9 +138,11 @@
     },
     mapContainer: {
       backgroundColor: 'white',
-      height: 190,
+      height: 450,
       borderRadius: 10,
-      overflow:"hidden"
+      overflow:"hidden",
+      marginHorizontal:0,
+      paddingHorizontal:0,
     },
     emptyMap: {
       backgroundColor: 'white',
@@ -147,8 +157,6 @@
       },
       button: {
         backgroundColor: 'black',
-        paddingVertical: 10,
-        paddingHorizontal: 20,
         borderRadius: 5,
       },
       buttonText: {

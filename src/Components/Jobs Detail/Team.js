@@ -97,7 +97,8 @@ const styles = StyleSheet.create({
   Container: {
     height: "100%",
     paddingHorizontal: 30,
-    paddingBottom: 80,
+    paddingBottom: 100,
+    paddingTop:30,
     backgroundColor: Color.brightOrange,
   },
   Indicator: {
@@ -131,6 +132,6 @@ const styles = StyleSheet.create({
     color: "black",
   },
   individualContainer: {
-    marginTop: 30,
+    marginBottom: 30,
   },
 });

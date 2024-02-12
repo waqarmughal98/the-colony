@@ -15,9 +15,12 @@ const DataCard = ({navigation,item,index}) => {
                 <View style={styles.individual}>
                     <View style={styles.individualLeft}>  
                         <Text style={styles.line}></Text>
-                        <View style={styles.textContainer}>
-                            <Text style={styles.dataText}>{item.project_title.trim()}</Text>
-                            <Text style={styles.dataText2}>({item.client_company_name.trim()})</Text>
+                        <View >
+                            <View style={styles.textContainer}>
+                                <Text style={styles.dataText}>{item.project_title.trim()}</Text>
+                                <Text style={styles.dataText2}>({item.client_company_name.trim()})</Text>
+                            </View>
+                            <Text style={styles.dataText3}>{item.project_date_start} - {item.project_date_due}</Text>
                             {/* <Text style={styles.dataText2}>({item.project_date_start})</Text> */}
                         </View>
                     </View>
@@ -102,5 +105,10 @@ const styles = StyleSheet.create({
         display:"flex",
         flexDirection:'row',
         alignItems:"center",
+        marginTop:-12,
+    },
+    dataText3:{
+        fontSize:12,
+        marginTop:-10,
     }
 })
