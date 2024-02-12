@@ -76,7 +76,6 @@ function ProfileStackScreen() {
 
 const HomeStack = createNativeStackNavigator();
 function HomeScreenStack() {
-    const { LoginState } = useContext(ContextProvider);
   const screenOptions = {
     headerStyle: { backgroundColor: '#FBA200' },
     headerTintColor: 'white',
@@ -87,10 +86,6 @@ function HomeScreenStack() {
     <HomeStack.Navigator
       screenOptions={screenOptions}
     >
-      <>
-           {LoginState==true && 
-           (
-            <>
            <HomeStack.Screen
               name="Dashboard"
               component={Dashboard}
@@ -239,10 +234,6 @@ function HomeScreenStack() {
                 title: 'Team Calender',
               }}
             />
-            </>
-           )
-            }
-      </>
     </HomeStack.Navigator>
   );
 }

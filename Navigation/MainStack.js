@@ -3,10 +3,10 @@ import { useContext } from 'react';
 import { ContextProvider } from '../src/Global/Context';
 import Login from '../src/Screens/Login';
 import TabNavigator from './TabNavigator';
-
 const MainStack = createNativeStackNavigator();
 const MainStackNavigator = () => {
-  const { LoginState } = useContext(ContextProvider);
+  const {LoginState  } = useContext(ContextProvider);
+
   return (
     <MainStack.Navigator initialRouteName='LoginScreen'>
       <>

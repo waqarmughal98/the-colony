@@ -13,13 +13,16 @@ const Login = ({ navigation }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
-  const { TokenSetter,setLOGINSTATE } = useContext(ContextProvider);
+  const { TokenSetter,setLOGINSTATE,  } = useContext(ContextProvider);
 
   useEffect(() => {
     (async()=>{
       const authToken = await AsyncStorage.getItem("token");
       if (authToken && authToken !== "") {
-        await navigation.navigate("Dashboard");
+        setLOGINSTATE(true)
+        navigation.navigate("Dashboard");   
+        // setTimeout(() => {
+        // }, 300);
       }
     })()
   }, []);
