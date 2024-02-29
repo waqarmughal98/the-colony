@@ -2,7 +2,7 @@
   "expo": {
     "name": "The Colony Solutions",
     "slug": "the-colony",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "orientation": "portrait",
     "icon": "./assets/imgs/lb.png",
     "userInterfaceStyle": "light",
@@ -19,7 +19,8 @@
       "config": {
         "usesNonExemptEncryption": false
       },
-      "bundleIdentifier": "com.waqarmughal005.thecolony"
+      "bundleIdentifier": "com.waqarmughal005.thecolony",
+      "buildNumber": "2"
     },
     "android": {
       "adaptiveIcon": {
@@ -30,7 +31,8 @@
         "android.permission.CAMERA",
         "android.permission.RECORD_AUDIO"
       ],
-      "package": "com.waqarmughal005.thecolony"
+      "package": "com.waqarmughal005.thecolony",
+      "versionCode": 2
     },
     "web": {
       "favicon": "./assets/favicon.png"
