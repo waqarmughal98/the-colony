@@ -10,7 +10,6 @@
       { label: 'Postcode', value: '', key: 'postcode' },
     ];
 
-
     const [inputData, setInputData] = useState({
       street: data.lead_street,
       city: data.lead_city,
@@ -59,18 +58,18 @@
 
             {showMap ? (
             <TouchableOpacity
-            style={styles.mapContainer}
-            onPress={() => {
-              const url = `http://maps.google.de/maps?hl=en&q=${inputData.street} ${inputData.city} ${inputData.locationDetail} ${inputData.postcode}&ie=UTF8&t=&z=17&iwloc=B&output=embed`;
-              Linking.openURL(url);
-            }}>
-            <WebView
-              scrollEnabled={false}
-              style={styles.map_container}
-              originWhitelist={['*']}
-              source={{ html: `<iframe style="width: 100%; height: 100%;" src="http://maps.google.de/maps?hl=en&q=${inputData.street} ${inputData.city} ${inputData.locationDetail} ${inputData.postcode}&ie=UTF8&t=&z=17&iwloc=B&output=embed" frameborder="0" scrolling="auto" marginheight="0" marginwidth="0"></iframe>` }}
-            />
-          </TouchableOpacity>
+              style={styles.mapContainer}
+              onPress={() => {
+                const url = `http://maps.google.de/maps?hl=en&q=${inputData.street} ${inputData.city} ${inputData.locationDetail} ${inputData.postcode}&ie=UTF8&t=&z=17&iwloc=B&output=embed`;
+                Linking.openURL(url);
+              }}>
+              <WebView
+                scrollEnabled={false}
+                style={styles.map_container}
+                originWhitelist={['*']}
+                source={{ html: `<iframe style="width: 100%; height: 100%;" src="http://maps.google.de/maps?hl=en&q=${inputData.street} ${inputData.city} ${inputData.locationDetail} ${inputData.postcode}&ie=UTF8&t=&z=17&iwloc=B&output=embed" frameborder="0" scrolling="auto" marginheight="0" marginwidth="0"></iframe>` }}
+              />
+            </TouchableOpacity>
             ) : (
               <View style={styles.emptyMap}></View>
             )}
