@@ -66,7 +66,7 @@ const Team = ({ data }) => {
       {!loading ? (
         <View style={styles.Container}>
           <ScrollView showsVerticalScrollIndicator={false}>
-            {items.map((item, index) => (
+            {items?.map((item, index) => (
               <View key={index} style={styles.individualContainer}>
                 <Text style={styles.label}>{item.label}</Text>
                 <View style={styles.textContainer}>

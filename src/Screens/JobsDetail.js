@@ -22,6 +22,7 @@ import ProblemReports from '../Components/Jobs Detail/ProblemReports';
 import NoteModal from '../Components/Modals/NoteModal';
 import Toast from 'react-native-toast-message';
 import UpdateModal from '../Components/Modals/UpdateModal';
+import { vw } from '../utils/ScreenSize';
 const JobsDetail = ({route, navigation}) => {
   const { items ,ID,Alldata} = route.params;
   const [updateItem, setUdateItem]=useState("")
@@ -195,9 +196,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginLeft: 20,
   },
+  navbar: {
+    width: vw*100,
+    backgroundColor: '#382504',
+  },
 
   navbarContainer: {
-    backgroundColor: '#382504',
     height: 50,
     display: 'flex',
     flexDirection: 'row',

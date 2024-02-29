@@ -168,11 +168,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   Image: {
-    height: vh * 38,
-    width: vw * 73,
+    height: 250,
+    width: 250,
     marginTop: -50,
+    marginBottom:20
   },
-  text1: {
+text1: {
     fontSize: 22,
     fontWeight: "800",
     marginTop: -20,

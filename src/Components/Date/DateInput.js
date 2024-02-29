@@ -2,11 +2,13 @@ import React, { useEffect, useState } from 'react';
 import { StyleSheet, View, TouchableOpacity, Text, Alert } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { AntDesign } from '@expo/vector-icons';
-import { vw } from '../../utils/ScreenSize';
+import { vh, vw } from '../../utils/ScreenSize';
+import { Dimensions } from 'react-native';
 const DateInput = ({editable,name,setLeave, dateValue,setData}) => {
   const [date, setDate] = useState(new Date());
   const [showDatePicker, setShowDatePicker] = useState(false);
-
+  const { width, height } = Dimensions.get('window');
+  const isTablet = width > 800 || height > 800;
   const handleDateChange = (event, selectedDate) => {
     setShowDatePicker(false);
     if (selectedDate !== undefined) {
@@ -40,7 +42,7 @@ const DateInput = ({editable,name,setLeave, dateValue,setData}) => {
   return (
     editable?(
       <TouchableOpacity activeOpacity={0.6} onPress={showDatePickerContainer} style={{marginTop:-10 }}>
-        <View style={[styles.container,{borderRadius: 10,width:vw*90,backgroundColor: name=="replyTicket" ? '#DFE1ED' : "white"}]}>
+        <View style={[styles.container,{borderRadius: 10,width:isTablet? vw*95: vw*90,backgroundColor: name=="replyTicket" ? '#DFE1ED' : "white"}]}>
           {/* Left side: Date value */}
           <Text style={styles.dateValue}>{  date?.toDateString()  }</Text>
           {/* Right side: Calendar icon */}   
@@ -60,7 +62,7 @@ const DateInput = ({editable,name,setLeave, dateValue,setData}) => {
         </View>
       </TouchableOpacity>
     ):(
-    <View style={[styles.container,{borderRadius: 40, marginHorizontal:  60, width:vw*86,backgroundColor: "white"}]}>
+    <View style={[styles.container,{borderRadius: 40, marginHorizontal:20, width:'100%',backgroundColor: "white"}]}>
       {/* Left side: Date value */}
       <Text style={styles.dateValue}>{dateValue}</Text>
       {/* Right side: Calendar icon */}   
@@ -89,7 +91,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
     marginVertical: 10,
-    paddingHorizontal: 10,
     alignSelf:"center",
   },
   dateValue: {

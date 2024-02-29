@@ -44,7 +44,7 @@ const DashboardBottom = ({navigation, status}) => {
         {data.map((item, index) => (
           <TouchableOpacity onPress={()=>navigation.navigate(item.screenName,{item:{ScreenTitle:"Tasks"}, status: status})} activeOpacity={0.6} key={index}>
             <View style={[styles.individualContainer,{backgroundColor: item.color || 'white'}]} >
-            {item.img ? <Image style={styles.containerImg} source={item.img}  /> : <Entypo name="calendar" style={styles.calendar}  size={45} color="#FBA200" /> }
+            {item.img ? <Image style={styles.containerImg} source={item.img}  /> : <Entypo name="calendar" style={styles.calendar} color="#FBA200" /> }
               <Text style={[styles.containerTitle,{color: item.color ? 'white' : 'black' }]}>{item.title}</Text>
             </View>
           </TouchableOpacity>
@@ -58,21 +58,22 @@ export default DashboardBottom
 
 const styles = StyleSheet.create({
   mainContainer:{
-    backgroundColor: Color.cream,
-    marginHorizontal:13,
-    marginVertical:10,
+    overflow: 'hidden',
     borderRadius:10,
-    height:vh * 31,
-    padding:5,
-    justifyContent: 'center',
+    height:vh*30,
+    backgroundColor: Color.cream,
+    marginHorizontal: vw*4, 
   }
   ,
   subContainer:{
     display:"flex",
     flexDirection:"row",
-    gap:12,
+    paddingVertical: vh*2,
+    gap:vw*4,
     flexWrap:"wrap",
-    justifyContent: "center"
+    justifyContent: "center",
+    alignItems: 'center',
+    margin: 'auto'
   },
   individualContainer:{
     height:vh*12,
@@ -87,16 +88,17 @@ const styles = StyleSheet.create({
   }
   ,
   containerImg:{
-    height:50,
-    width:50,
+    height:vh*5,
+    width:vw*10,
     alignSelf:"center"
   },
   containerTitle:{
-    fontSize:12,
+    fontSize:vw*3,
     textAlign:'center'
   },
   calendar:{
-    marginLeft:2
+    marginLeft:2,
+    fontSize: vw*8,
   }
 
 })

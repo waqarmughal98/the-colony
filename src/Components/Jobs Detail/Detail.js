@@ -11,6 +11,7 @@ import {
 import React, { useState, useEffect } from 'react';
 import Color from '../../Color';
 import DateInput from '../Date/DateInput';
+import { vw } from '../../utils/ScreenSize';
 
 const Address = ({data}) => {
   const inputFields = [
@@ -84,7 +85,7 @@ const Address = ({data}) => {
               return (
                 <View style={styles.inputContainer} key={index}>
                 <Text style={styles.label}>{field.label}</Text>
-                <DateInput dateValue={inputData[field.key]} editable={false}/>
+                <DateInput style={styles.dateInput} dateValue={inputData[field.key]} editable={false}/>
               </View>
               );
             }
@@ -141,6 +142,9 @@ const styles = StyleSheet.create({
   fetchingData: {
     color: 'black',
     fontWeight: 'bold',
+  },
+  dateInput:{
+    paddingHorizontal:20,
   },
   inputContainer: {
     marginTop: 25,

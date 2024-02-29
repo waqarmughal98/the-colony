@@ -92,27 +92,27 @@ const styles = StyleSheet.create({
     height: vh * 40
   },
   subContainer: {
-    display: "flex",
+    flex: 1,
     flexDirection: "row",
     flexWrap: "wrap",
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: vw*3,
     marginHorizontal: 6,
   },
   itemContainer: {
-    margin: 6,
     height: vh*18.5,
     width: vw * 45,
-    display: "flex",
-    flexDirection: "column",
     borderRadius: 10,
     padding: 17,
   },
   number: {
     color: "white",
-    fontSize: 22,
+    fontSize: vw*7,
   },
   title: {
     color: "white",
-    fontSize: 20,
+    fontSize: vw*4,
   },
   containerIcon: {
     display: "flex",

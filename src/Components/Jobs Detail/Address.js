@@ -96,7 +96,7 @@
       minHeight: '100%',
       backgroundColor: Color.brightOrange,
       paddingHorizontal: 30,
-      paddingBottom:250
+      paddingBottom:400
     },
     indicator: {
       flex: 1,
