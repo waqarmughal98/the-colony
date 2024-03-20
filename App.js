@@ -1,4 +1,5 @@
 
+import 'react-native-gesture-handler';
 import { NavigationContainer } from '@react-navigation/native';
 import DrawerNavigator from './Navigation/DrawerNavigator';
 import Context, { ContextProvider } from './src/Global/Context';
