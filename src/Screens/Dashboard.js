@@ -13,7 +13,7 @@ import { ContextProvider } from '../Global/Context';
 function Dashboard({ navigation,route }) {
   const [data, setData] = useState([]);
   const [authToken, setAuthToken] = useState();
-  const { LoginState } = useContext(ContextProvider);
+  const { LoginState ,updation} = useContext(ContextProvider);
 
     React.useLayoutEffect(() => {
       navigation.setOptions({
@@ -34,7 +34,7 @@ function Dashboard({ navigation,route }) {
         headerRight: () => (
           <View style={{ marginRight: 10 }}>
             <TouchableOpacity activeOpacity={0.6} onPress={()=>navigation.navigate("notifications")} >
-              <Ionicons name="notifications-circle-outline" size={24} color="white" />
+              <Ionicons name="notifications-circle-outline" size={28} color="white" />
             </TouchableOpacity>
           </View>
         ),
@@ -61,7 +61,7 @@ function Dashboard({ navigation,route }) {
             })
           }
       })()
-    }, [])
+    }, [updation])
 
     // useEffect(() => {
     //   const backAction = () => {

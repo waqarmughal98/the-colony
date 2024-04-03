@@ -4,7 +4,8 @@ export const ContextProvider = createContext();
 const Context = props => {
   const [LoginState, SetLoginState] = useState(false);
   const [TOKEN,setToken] =useState("")
-
+ const [updation,setUpdation]=useState([])
+ const [selectedRequestCategory,setselectedRequestCategory] = useState("")
 
   const setLOGINSTATE=(value)=>{
     SetLoginState(value)
@@ -21,7 +22,9 @@ const Context = props => {
           LoginState,
           setLOGINSTATE,
           TOKEN,
-          TokenSetter
+          TokenSetter,
+          updation,setUpdation,
+          selectedRequestCategory,setselectedRequestCategory
         }}>
         {props.children}
       </ContextProvider.Provider>

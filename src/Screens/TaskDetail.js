@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View , ScrollView, ActivityIndicator,TouchableOpacity } from 'react-native'
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import { FontAwesome } from '@expo/vector-icons';
 import SelectDropdown from 'react-native-select-dropdown'
 import Color from '../Color'
@@ -8,11 +8,13 @@ import { vw,vh } from '../utils/ScreenSize'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 import { URL } from '../utils/Constant';
+import { ContextProvider } from '../Global/Context';
 const TaskDetail = ({navigation , route}) => {
   const { items ,Alldata ,screenName} = route.params;
   const [data, setData] = useState()
   const [loading, setLoading]=useState(true)
- 
+  const { setUpdation  } = useContext(ContextProvider);
+
 
      /* Remove this when fethc data */
     useEffect(()=>{
@@ -80,6 +82,7 @@ const TaskDetail = ({navigation , route}) => {
             width: 100*vw, // Set the width to 100% to take up the full width
           },
         });
+        setUpdation((pre)=>[...pre,])
       setTimeout(() => {
         // navigation.goBack(data)
           navigation.navigate(screenName,{Task:data,items:Alldata})  

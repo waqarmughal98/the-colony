@@ -1,7 +1,6 @@
 import { StyleSheet, Text, View, TouchableOpacity, ScrollView , ActivityIndicator} from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { URL } from '../utils/Constant';
-import { vh } from '../utils/ScreenSize';
 import axios from 'axios';
 import { Fontisto } from '@expo/vector-icons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -25,7 +24,9 @@ const Calender = ({navigation,route}) => {
             }).then((res)=>{
                 let responseData=res.data
                 setData(responseData.projects.data);
-                const extractedDates = responseData.projects.data.map(project => project.project_date_start).filter(value => value !== null)
+                const extractedDates = responseData.projects.data.map(project => {
+                    return [project.project_date_start, project.project_date_due];
+                }).filter(pair => pair.every(date => date !== null));
                 setAllDates(extractedDates);
                 setLoading(false)
             }).catch((err)=>{

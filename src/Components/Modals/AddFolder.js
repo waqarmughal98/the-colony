@@ -5,13 +5,31 @@ import { vh,vw } from '../../utils/ScreenSize';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Toast from 'react-native-toast-message';
 import { URL } from '../../utils/Constant';
-const AddFolder = ({toggleModal,setData,data}) => {
+const AddFolder = ({toggleModal,setData,data,items}) => {
     const [Folder,setFolder]=useState("")
+    const [error,setError]=useState("")
 
+
+    const checkFolder=()=>{
+        let result=false
+         items.forEach((item)=>{
+            if(item.file_group_name==Folder){
+                Toast.show({
+                    type:'error',
+                    text1: 'Folder name already exist!',
+                    text2: 'kindly change name of folder!',
+                     visibilityTime:1000,
+                     topOffset:5,
+                  }); 
+                  result= true
+                  setError('Folder name already exist!')
+            }
+        })
+        return result
+    }
     const handleAdd=()=>{
-        if(Folder){
-          
-          
+
+        if(Folder && checkFolder()==false){
 
               (async ()=>{
                 const authToken = await AsyncStorage.getItem("token");
@@ -36,6 +54,7 @@ const AddFolder = ({toggleModal,setData,data}) => {
                         FolderName:Folder,
                         images:[]
                       }])
+                      setFolder("")
                       Toast.show({
                       type: 'success',
                       text1: 'Folder added successfully!',
@@ -57,7 +76,7 @@ const AddFolder = ({toggleModal,setData,data}) => {
 
          
             
-        }else{
+        }else if(Folder==""){
             Alert.alert("Enter Folder Name first")
         }
     }
@@ -67,6 +86,9 @@ const AddFolder = ({toggleModal,setData,data}) => {
       <View>
             <TextInput value={Folder} placeholder='Write Folder Name...' multiline={true} textAlignVertical="top"  numberOfLines={5} style={styles.discInput} onChangeText={(text)=>setFolder(text)}  />
       </View >
+      {
+        error && <Text style={{textAlign:"center",color:'red',fontWeight:'600',marginTop:5}}>{error}</Text>
+      }
         <TouchableOpacity  style={styles.btnContainer} activeOpacity={0.6} onPress={()=>handleAdd()}>
             <Text style={styles.submitTxt} >Save</Text>
         </TouchableOpacity>
@@ -113,7 +135,7 @@ const styles = StyleSheet.create({
         justifyContent:'center',
         alignItems:"center",
         marginBottom:1*vh,
-        marginTop:2.4*vh,
+        marginTop:1.2*vh,
         height:45,
         borderRadius:10,
     },

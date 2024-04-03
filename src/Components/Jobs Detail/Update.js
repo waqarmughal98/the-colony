@@ -7,11 +7,6 @@ const Update = ({data,updateItem}) => {
   const [loading, setLoading]=useState(true)
   const [update, setUpdate] = useState([]);
 
-  useEffect(()=>{
-    const currentDate = new Date();
-    const formattedDate = `${currentDate.getFullYear()}-${currentDate.getMonth() + 1}-${currentDate.getDate()}`;
-    setUpdate((preData)=>[...preData,{ comment_text:updateItem,comment_created:formattedDate ,first_name:"Mark",last_name:"Niasham"}])
-  },[updateItem])
 
   useEffect(()=>{
     (async ()=>{
@@ -28,13 +23,18 @@ const Update = ({data,updateItem}) => {
           Authorization: `Bearer ${authToken}`
         }
       }).then((res)=>{
-        setUpdate(res.data.comments.data)
+        const responseData=res.data.comments.data.sort((a, b) => {
+          const dateA = new Date(a.comment_created);
+          const dateB = new Date(b.comment_created);
+          return dateB - dateA;
+      });
+        setUpdate(responseData)
         setLoading(false) 
       }).catch((err)=>{
         console.log(err)
       })
     })()
-  }, [])
+  }, [updateItem])
     
   return (
     <View style={styles.mainContainer}>

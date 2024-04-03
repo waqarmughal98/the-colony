@@ -25,6 +25,7 @@ const Team = ({ data }) => {
         })
         .then((res) => {
           const response = res.data;
+          console.log(response,"response")
           setItems([
             {
               label: "Quote Responsibility",

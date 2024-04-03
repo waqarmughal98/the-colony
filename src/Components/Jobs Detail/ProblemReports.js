@@ -39,7 +39,8 @@ const ProblemReports = ({navigation, data,ID}) => {
         <View style={styles.Container}>
           <View style={styles.headerContainer}> 
             <Text style={styles.text1}>Subject</Text>
-            <Text style={styles.text2}>Job</Text>
+            <Text style={styles.textDate}>Date</Text>
+            <Text style={styles.text2}>Job Name</Text>
           </View>   
           {/* All Data */}
           <View style={styles.allData}>
@@ -49,11 +50,13 @@ const ProblemReports = ({navigation, data,ID}) => {
                 items.length > 0 ?  
                 (
                   items?.map((item,index)=>{
+                    console.log(item,"item")
                     return(
                       <TouchableOpacity onPress={()=>navigation.navigate("problem-report-replies", {id: item.ticket_id, jobTitle: item.project_title})} activeOpacity={0.6} key={index}>
                         <View style={[styles.mainIndividual,{backgroundColor:index%2==0 ? '#D2CBBC' : '#F2F1CF'}]}>
                           <View style={styles.individual}>
                             <Text style={styles.dataText}>{item.ticket_subject}</Text>
+                            <Text style={styles.dataTextMiddle}>{item.project_date_start || "N/A"}</Text>
                             <Text style={styles.dataText2}>{item.project_title}</Text> 
                             <MaterialIcons name={'keyboard-arrow-right'} size={28} color="black" />
                           </View>
@@ -114,7 +117,12 @@ const styles = StyleSheet.create({
     },
     text1:{
       color:Color.brightOrange,
-      flex:0.3
+      flex:0.5,
+    },
+    textDate:{
+      color:Color.brightOrange,
+      flex:0.5,
+      textAlign:'center'
     },
     text2:{
       color:Color.brightOrange,
@@ -138,6 +146,12 @@ const styles = StyleSheet.create({
     fontSize:14,
     color:'black',
     flex:0.4
+  },
+  dataTextMiddle:{
+    fontSize:14,
+    color:'black',
+    flex:0.4,
+    textAlign:'center'
   },
   dataText2:{
       fontSize:14,

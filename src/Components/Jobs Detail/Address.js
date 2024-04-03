@@ -36,7 +36,7 @@
       <ScrollView contentContainerStyle={styles.scrollViewContainer}>
         {!loading ? (
           <View style={styles.container}>
-            {!showMap && inputFields.map((field) => (
+            {inputFields.map((field) => (
               <View style={styles.inputContainer} key={field.key}>
                 <Text style={styles.label}>{field.label}*</Text>
                 <View style={styles.textContainer}>

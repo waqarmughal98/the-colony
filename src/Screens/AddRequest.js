@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View, TextInput,Alert, ScrollView, TouchableOpacity } from 'react-native'
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import Color from '../Color'
 import { vw,vh } from '../utils/ScreenSize'
 import { FontAwesome } from '@expo/vector-icons';
@@ -10,22 +10,24 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 import { URL } from '../utils/Constant';
 import { useNavigation } from '@react-navigation/native';
+import { ContextProvider } from '../Global/Context';
 const AddRequest = () => {
+    const { setUpdation ,selectedRequestCategory  } = useContext(ContextProvider);
     const [leave, setLeave] = useState({
         leave_title: "",
         leave_start_date: new Date().toDateString(),
         leave_end_date: new Date().toDateString(),
         leave_reason: "",
-        leave_type: "",
+        leave_type: selectedRequestCategory,
         day_to_taken: "",
         department: "",
     })
     const navigation = useNavigation();
-
     const updateLeave = (value, field)=> {
         setLeave({...leave, [field]: value})
     }
 
+    console.log(selectedRequestCategory,"selectedRequestCategory")
     const validations=()=>{
        return Object.values(leave).every((item)=>item!="")
     }
@@ -49,6 +51,7 @@ const AddRequest = () => {
                 setTimeout(() => {
                     navigation.navigate('requests',{leave:leave})  
                 }, 1000);
+                setUpdation((pre)=>[...pre,leave])
                 
             }).catch((err)=>{
                 console.log(err);

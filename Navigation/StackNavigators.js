@@ -24,7 +24,6 @@ import Calender from '../src/Screens/Calender';
 import { useContext } from 'react';
 import { ContextProvider } from '../src/Global/Context';
 
-
 const LoginStack = createNativeStackNavigator();
 function LoginStackScreen() {
   const screenOptions = {
@@ -83,157 +82,152 @@ function HomeScreenStack() {
     gestureEnabled: true,
   };
   return (
-    <HomeStack.Navigator
-      screenOptions={screenOptions}
-    >
-           <HomeStack.Screen
-              name="Dashboard"
-              component={Dashboard}
-            />
-            <HomeStack.Screen
-              name="All-Job"
-              component={AllJobs}
-              options={{
-                title: 'All Jobs',
-              }}
-            />
+    <HomeStack.Navigator screenOptions={screenOptions}>
+      <HomeStack.Screen name="Dashboard" component={Dashboard} />
+      <HomeStack.Screen
+        name="All-Job"
+        component={AllJobs}
+        options={{
+          title: 'All Jobs',
+        }}
+      />
 
-            <HomeStack.Screen
-              name="update-password"
-              component={UpdatePassword}
-              options={{
-                title: 'Update Password',
-              }}
-            />
-            <HomeStack.Screen
-              name="jobs-detail"
-              component={JobsDetail}
-              options={{
-                title: 'Jobs Detail',
-              }}
-            />
-            <HomeStack.Screen
-              name="problem-report-replies"
-              component={ProblemReportReplies}
-              options={{
-                title: 'Problem Report Replies',
-              }}
-            />
-            <HomeStack.Screen
-              name="problem-reports"
-              component={ProblemReports}
-              options={{
-                title: 'Problem Reports',
-              }}
-            />
-            <HomeStack.Screen
-              name="WorkLog"
-              component={WorkLog}
-              options={{
-                title: 'Work Logs',
-              }}
-            />
-            <HomeStack.Screen
-              name="Profile"
-              component={Profile}
-              options={{
-                title: 'Profile',
-                headerShown: false,
-              }}
-            />
-            <HomeStack.Screen
-              name="latest-activity"
-              component={LatestActivity}
-              options={{
-                title: 'Latest Activity',
-              }}
-            />
-            <HomeStack.Screen
-              name="notifications"
-              component={Notifications}
-              options={{
-                title: 'Notifications',
-              }}
-            />
-            <HomeStack.Screen
-              name="tasks"
-              component={Tasks}
-              options={{
-                title: 'Tasks',
-              }}
-            />
-            <HomeStack.Screen
-              name="task-in-progress"
-              component={TaskInProgress}
-              options={{
-                title: 'Tasks In Progress',
-              }}
-            />
-            <HomeStack.Screen
-              name="task-in-pending"
-              component={TasksInPending}
-              options={{
-                title: 'Tasks In Pending',
-              }}
-            />
-            <HomeStack.Screen
-              name="task-details"
-              component={TaskDetail}
-              options={{
-                title: 'Tasks',
-              }}
-            />
+      <HomeStack.Screen
+        name="update-password"
+        component={UpdatePassword}
+        options={{
+          title: 'Update Password',
+        }}
+      />
+      <HomeStack.Screen
+        name="jobs-detail"
+        component={JobsDetail}
+        options={{
+          title: 'Job Info',
+        }}
+      />
+      <HomeStack.Screen
+        name="problem-report-replies"
+        component={ProblemReportReplies}
+        options={{
+          title: 'Problem Report Replies',
+        }}
+      />
+      <HomeStack.Screen
+        name="problem-reports"
+        component={ProblemReports}
+        options={{
+          title: 'Problem Reports',
+        }}
+      />
+      <HomeStack.Screen
+        name="WorkLog"
+        component={WorkLog}
+        options={{
+          title: 'Work Logs',
+        }}
+      />
+      <HomeStack.Screen
+        name="Profile"
+        component={Profile}
+        options={{
+          title: 'Profile',
+          headerShown: false,
+        }}
+      />
+      <HomeStack.Screen
+        name="latest-activity"
+        component={LatestActivity}
+        options={{
+          title: 'Latest Activity',
+        }}
+      />
+      <HomeStack.Screen
+        name="notifications"
+        component={Notifications}
+        options={{
+          title: 'Notifications',
+        }}
+      />
+      <HomeStack.Screen
+        name="tasks"
+        component={Tasks}
+        options={{
+          title: 'Tasks',
+        }}
+      />
+      <HomeStack.Screen
+        name="task-in-progress"
+        component={TaskInProgress}
+        options={{
+          title: 'Tasks In Progress',
+        }}
+      />
+      <HomeStack.Screen
+        name="task-in-pending"
+        component={TasksInPending}
+        options={{
+          title: 'Tasks In Pending',
+        }}
+      />
+      <HomeStack.Screen
+        name="task-details"
+        component={TaskDetail}
+        options={{
+          title: 'Tasks',
+        }}
+      />
 
-            <HomeStack.Screen
-              name="job-Status"
-              component={JobStatus}
-              options={{
-                title: 'Job Status',
-              }}
-            />
+      <HomeStack.Screen
+        name="job-Status"
+        component={JobStatus}
+        options={{
+          title: 'Job Status',
+        }}
+      />
 
-            <HomeStack.Screen
-              name="requests"
-              component={Requests}
-              options={{
-                title: 'Requests',
-              }}
-            />
-            <HomeStack.Screen
-              name="add-request"
-              component={AddRequest}
-              options={{
-                title: 'Add Request',
-              }}
-            />
-            <HomeStack.Screen
-              name="new-problem-report"
-              component={NewProblemReport}
-              options={{
-                title: 'New Problem Report',
-              }}
-            />
-            <HomeStack.Screen
-              name="all-problem-report"
-              component={AllProblemReports}
-              options={{
-                title: 'All Problem Report',
-              }}
-            />
-            <HomeStack.Screen
-              name="reply-ticket"
-              component={ReplyTicket}
-              options={{
-                title: 'Reply Ticket',
-              }}
-            />
-            <HomeStack.Screen
-              name="calender"
-              component={Calender}
-              options={{
-                title: 'Team Calender',
-              }}
-            />
+      <HomeStack.Screen
+        name="requests"
+        component={Requests}
+        options={{
+          title: 'Requests',
+        }}
+      />
+      <HomeStack.Screen
+        name="add-request"
+        component={AddRequest}
+        options={{
+          title: 'Add Request',
+        }}
+      />
+      <HomeStack.Screen
+        name="new-problem-report"
+        component={NewProblemReport}
+        options={{
+          title: 'New Problem Report',
+        }}
+      />
+      <HomeStack.Screen
+        name="all-problem-report"
+        component={AllProblemReports}
+        options={{
+          title: 'All Problem Report',
+        }}
+      />
+      <HomeStack.Screen
+        name="reply-ticket"
+        component={ReplyTicket}
+        options={{
+          title: 'Reply Ticket',
+        }}
+      />
+      <HomeStack.Screen
+        name="calender"
+        component={Calender}
+        options={{
+          title: 'Team Calendar',
+        }}
+      />
     </HomeStack.Navigator>
   );
 }

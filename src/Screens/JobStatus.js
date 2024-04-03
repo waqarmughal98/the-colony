@@ -42,10 +42,10 @@ const JobStatus = ({ navigation, route }) => {
                     <TouchableOpacity key={index}   activeOpacity={0.6} onPress={()=>navigation.navigate("All-Job",{screenName:"jobStatus",status:item.title })} style={styles.individual}>
                       <View style={styles.left}>
                         <Text style={styles.leftText1}>{transformAndCapitalize(item.title)}</Text>   
-                        <Text style={styles.leftText2}>{`Assigned to me : ${my_projects_states[`${item.title}`]}`}</Text> 
+                        <Text style={styles.leftText2}>{`Total : ${item.number} `}</Text> 
                       </View>
                       <View style={styles.right}>   
-                        <Text style={styles.rightText}>{item.number}</Text> 
+                        <Text style={styles.rightText}>{my_projects_states[`${item.title}`]}</Text> 
                       </View>  
                     </TouchableOpacity> 
                     )

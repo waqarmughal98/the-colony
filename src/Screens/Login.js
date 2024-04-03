@@ -99,7 +99,7 @@ const Login = ({ navigation }) => {
       <KeyboardAvoidingView  behavior={Platform.OS === 'ios' ? 'padding' : 'height'} enabled  style={styles.container}>
         <View style={styles.container}>
           <Image source={require('../../assets/imgs/logoLogin.png')} style={styles.Image} />
-          <Text style={styles.text1}>Welcome back! Let's build</Text>
+          <Text style={styles.text1}>Welcome back!</Text>
           <Text style={styles.text2}>Sign in to view the project</Text>
           <View style={styles.inputMainContainer}>
             <View style={styles.inputContainer}>

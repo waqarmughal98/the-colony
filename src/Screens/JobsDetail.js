@@ -52,7 +52,7 @@ const JobsDetail = ({route, navigation}) => {
     },
     {
       id: 5,
-      optionName: 'Update',
+      optionName: 'Updates',
     },
     {
       id: 6,

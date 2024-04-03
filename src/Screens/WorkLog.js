@@ -50,22 +50,30 @@ const WorkLog = ({navigation}) => {
 
   useEffect(()=>{
     filterJobs();
+    setSelectedTitle("All Jobs");
+    setFilteredData(data);
   }, [data])
 
-  const filterJobs = (item="Un-Categorised")=> {
-    setSelectedTitle(item);
-    const copyData = [...data];
-    const filterDate = copyData.filter((items) => {
-      return items.category_name == item;
-    });
-    setFilteredData(filterDate);
+  const filterJobs = (item="All Jobs")=> {
+    if(item=="All Jobs"){
+      setSelectedTitle(item);
+      setFilteredData(data);
+    }else{
+      setSelectedTitle(item);
+      const copyData = [...data];
+      const filterDate = copyData.filter((items) => {
+        return items.category_name == item;
+      });
+      setFilteredData(filterDate);
+    }
+   
   };
 
   const options = [
     {
       img: require('../../assets/imgs/ic_project_severn_trent.png'),
-      color:"#30D9D6",
-      title: "Un-Categorised",
+      color:"#E2445B",
+      title: "Severn Trent",
     },
     {
       img: require('../../assets/imgs/commercial.png'),
@@ -79,39 +87,34 @@ const WorkLog = ({navigation}) => {
     },
     {
       img: require('../../assets/imgs/ic_project_severn_trent.png'),
-      color:"#E2445B",
-      title: "Severn Trent",
+      color:"#30D9D6",
+      title: "Un-Categorised",
     },
   ];
 
 
-  const renderItem = ({item, index}) => {
-    return (
-      <TouchableOpacity
-        style={[styles.card,{backgroundColor:item.color}]}
-        onPress={() => filterJobs(item.title)}
-        key={index}
-      >
-        <Image style={styles.cardImage} source={item.img} />
-        <Text style={[styles.cardTitle]}>{item.title}</Text>
-      </TouchableOpacity>
-    );
-  };
+
 
   return (
     <View style={styles.container}>
       {
         data.length>0 ? ( 
           <>
-          <View style={{height:20*vh}}>
-            <FlatList
-            data={options}
-            renderItem={renderItem}
-            keyExtractor={(item, index) => index.toString()}
-            horizontal
-            showsHorizontalScrollIndicator={false}
-            contentContainerStyle={styles.flatListContainer}
-          />
+          <View style={styles.mainContainer}>
+            {
+              options && options?.map((item,index)=>{
+                return (
+                  <TouchableOpacity
+                    style={[styles.card,{backgroundColor:item.color}]}
+                    onPress={() => filterJobs(item.title)}
+                    key={index}
+                  >
+                    <Image style={styles.cardImage} source={item.img} />
+                    <Text style={[styles.cardTitle]}>{item.title}</Text>
+                  </TouchableOpacity>
+                );
+              })
+            }
           </View>
 
         <View style={styles.selectedCardContainer}>
@@ -158,23 +161,27 @@ const WorkLog = ({navigation}) => {
 const styles = StyleSheet.create({
   container: {
     flex:1,
-    paddingTop: 20,
+    paddingTop: 3.3*vw,
+  },mainContainer:{
+    display:'flex',
+    flexDirection:'row',
+    flexWrap:'wrap',
+    gap:3.3*vw,
+    marginHorizontal:3.3*vw
+
   },
-  flatListContainer: {
-    paddingHorizontal: 5,
-  },
+
   card: {
     width: vw*45,
-    height: vh*20,
+    paddingVertical:10,
     borderRadius: 10,
     alignItems: 'center',
     justifyContent: 'center',
-    marginHorizontal: 5,
     backgroundColor:Color.brightOrange
   },
   cardImage: {
-    width: vw*25,
-    height: vh*10,
+    width: vw*18,
+    height: vh*7,
     resizeMode: 'contain',
   },
   cardTitle: {
@@ -184,7 +191,7 @@ const styles = StyleSheet.create({
   selectedCardContainer: {
     backgroundColor: 'black',
     padding: 10,
-    marginTop: 20,
+    marginTop: 3.3*vw,
     paddingHorizontal:20,
     height:50,
     display:"flex",

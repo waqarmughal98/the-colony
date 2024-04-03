@@ -8,7 +8,7 @@ const CalendarComponent = ({setSelectedDate,AllDates}) => {
   const onDayPress = (day) => {
     // Update the state when a date is selected
     setSelecteddate(day.dateString);
-    setSelectedDate(day.dateString);
+    setSelectedDate(day.dateString)
   };
   function hexToRgbA(hex, alpha){
     var c;
@@ -22,7 +22,54 @@ const CalendarComponent = ({setSelectedDate,AllDates}) => {
     }
     throw new Error('Bad Hex');
   }
-  
+
+ markedDates = {};
+ const colorsArray=generateRandomColors(AllDates.length)
+  AllDates.forEach((dateRange,index) => {
+      
+      const dates = generateDateRangeArray(dateRange[0], dateRange[1]);
+          dates.forEach((date) => {
+              markedDates[date] = {
+                  periods: [
+                { startingDay: date== dateRange[0] ?true: false, endingDay: date==dateRange[1]?true:false, color: colorsArray[index] },
+                  ]
+              };
+          });
+  });
+
+  function generateRandomColors(length) {
+    const colors = [];
+    const hexChars = '0123456789ABCDEF';
+
+    for (let i = 0; i < length; i++) {
+        let color = '#';
+        for (let j = 0; j < 6; j++) {
+            color += hexChars[Math.floor(Math.random() * 16)];
+        }
+        colors.push(color);
+    }
+
+    return colors;
+}
+
+  function generateDateRangeArray(startDate, endDate) {
+    let dateArray = [];
+    let currentDate = new Date(startDate);
+   let EndDate=new Date(endDate)
+
+    while (currentDate <= EndDate) {
+        let year = currentDate.getFullYear();
+        let month = (currentDate.getMonth() + 1).toString().padStart(2, '0');
+        let day = currentDate.getDate().toString().padStart(2, '0');
+        let dateString = `${year}-${month}-${day}`;
+        dateArray.push(dateString);
+        currentDate.setDate(currentDate.getDate() + 1);
+    }
+
+    return dateArray;
+}
+
+  console.log(AllDates,"alldates")
 
   const todayBackgroundColor = hexToRgbA('#FFFFFF', 0.5);
   const markColor = hexToRgbA('#FFFFFF', 0.6);
@@ -47,18 +94,11 @@ const CalendarComponent = ({setSelectedDate,AllDates}) => {
           textDayStyle:{fontSize:15,fontWeight:"800"},
           calendarBackground:Color.darkOrange,
           textSectionTitleColor:"black",
+          dayTextColor:"black"
    
         }}
-        markedDates={{
-          ...AllDates.reduce((markedDatesObj, date) => {
-            if (date) {
-              markedDatesObj[date] = { marked: true, dotColor: 'black' ,fontWeight:"900",    selected: true,
-              selectedColor: markColor,color:"white",};
-            }
-            return markedDatesObj;
-          }, {}),
-          ...(selecteddate ? { [selecteddate]: { selected: true } } : {}),
-        }}
+        markingType="multi-period" 
+        markedDates={markedDates}
       />
     </View>
   );

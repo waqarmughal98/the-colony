@@ -57,6 +57,7 @@ const DateInput = ({editable,name,setLeave, dateValue,setData}) => {
               textColor="red"
               accentColor='yellow'
               themeVariant='dark'
+              firstDayOfWeek={5} 
             />
           )}
         </View>

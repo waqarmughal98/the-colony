@@ -18,6 +18,7 @@ const Files = ({data}) => {
   const [FolderName,setFolderNames] =useState([])
   const [FileName,setFileName] =useState([])
   const [selectedImage, setSelectedImage] = useState(null);
+  const [folderData, setFolderData] = useState()
   const toggleModal = () => {
     setModalVisible(!isModalVisible);
   };
@@ -55,6 +56,7 @@ const Files = ({data}) => {
   
         const data = await response.json();
         const FolderData=data.folders.data;
+        setFolderData(FolderData)
         const FilesData=data.files.data;
         const newData=FolderData.map((item,index)=>{
           const relatedFiles= FilesData.filter((i)=>{
@@ -78,6 +80,7 @@ const Files = ({data}) => {
     setSelectedImage(image.file_directory + '/' + image.file_filename);
     setFileModalVisible(true);
   }
+
   
   return (
     <View>
@@ -150,7 +153,7 @@ const Files = ({data}) => {
 
           <Modal isVisible={isModalVisible}>
             <View style={{ height: 250, backgroundColor: Color.brightOrange, justifyContent: 'center', alignItems: 'center' ,borderRadius:10 }}>
-              <AddFolder toggleModal={toggleModal} data={data}   setData={setFolderNames}/> 
+              <AddFolder toggleModal={toggleModal} data={data} items={items}   setData={setFolderNames}/> 
             
               {/* Close button */}
               <TouchableOpacity
