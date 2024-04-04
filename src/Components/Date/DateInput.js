@@ -79,7 +79,7 @@ const DateInput = ({editable,name,setLeave, dateValue,setData}) => {
               textColor="red"
               accentColor='yellow'
               themeVariant='dark'
-              firstDayOfWeek={5} 
+              firstDayOfWeek={1} 
             />
           )}
         </View>
@@ -97,6 +97,9 @@ const DateInput = ({editable,name,setLeave, dateValue,setData}) => {
           textColor="red"
           accentColor='yellow'
           themeVariant='dark'
+          firstDayOfWeek={1}
+
+          
         />
       )}
     </View>

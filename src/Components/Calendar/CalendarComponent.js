@@ -77,6 +77,8 @@ const CalendarComponent = ({ setSelectedDate, AllDates }) => {
     }
   }, [datesArray]);
 
+  
+
   const extractDateRange = async () => {
     AllDates.forEach((dateRange, index) => {
       const dates = generateDateRangeArray(
@@ -159,6 +161,7 @@ const CalendarComponent = ({ setSelectedDate, AllDates }) => {
         onDayPress={onDayPress}
         hideExtraDays={true}
         enableSwipeMonths={true}
+        firstDay={1} 
         theme={{
           selectedDayBackgroundColor: 'white',
           selectedDotColor: 'white',
