@@ -24,7 +24,7 @@ const Calender = ({navigation,route}) => {
             }).then((res)=>{
                 let responseData=res.data
                 setData(responseData.projects.data);
-                const extractedDates = responseData.projects.data.map(project => {
+                       const extractedDates = responseData.projects.data.map(project => {
                     return [project.project_date_start, project.project_date_due];
                 }).filter(pair => pair.every(date => date !== null));
                 setAllDates(extractedDates);
@@ -55,14 +55,35 @@ const Calender = ({navigation,route}) => {
   const filterData = ()=> {
     const copyData = [...data];
     const filterDate = copyData.filter((items) => {
-      return items.project_date_start == selectedDate;
+      return isDateInRange(selectedDate,items.project_date_start,items.project_date_due);
     });
     setFilteredData(filterDate);
   };
 
+
+
     const isSunday = (dateString) => {
         const date = new Date(dateString);
         return date.getDay() === 0;
+    }
+
+    function isDateInRange(targetDate, startDate, endDate) {
+        if(targetDate && startDate && endDate){
+            const target = new Date(targetDate);
+            const start = new Date(startDate);
+            const end = new Date(endDate);
+            if (target >= start && target <= end) {
+                return true;
+            }
+            if (target.getTime() === start.getTime() || target.getTime() === end.getTime()) {
+                return true;
+            }
+            return false;
+        }
+        else{
+            return false
+        }
+   
     }
 
 //   console.log(FilteredData,"FilteredData...")

@@ -20,7 +20,7 @@ const DataCard = ({navigation,item,index}) => {
                                 <Text style={styles.dataText}>{item.project_title.trim()}</Text>
                                 <Text style={styles.dataText2}>({item.client_company_name.trim()})</Text>
                             </View>
-                            <Text style={styles.dataText3}>{item.project_date_start} - {item.project_date_due}</Text>
+                            <Text style={styles.dataText3}>{item.project_date_start || "N/A"} - {item.project_date_due || "N/A"}</Text>
                             {/* <Text style={styles.dataText2}>({item.project_date_start})</Text> */}
                         </View>
                     </View>

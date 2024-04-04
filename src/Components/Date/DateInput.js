@@ -38,13 +38,35 @@ const DateInput = ({editable,name,setLeave, dateValue,setData}) => {
   const showDatePickerContainer = () => {
     setShowDatePicker(true);
   };
+
+  function formatDate(inputDate) {
+    const dateParts = inputDate.split(' ');
+    const day = dateParts[2];
+    const month = dateParts[1];
+    const monthMap = {
+        "Jan": "January",
+        "Feb": "February",
+        "Mar": "March",
+        "Apr": "April",
+        "May": "May",
+        "Jun": "June",
+        "Jul": "July",
+        "Aug": "August",
+        "Sep": "September",
+        "Oct": "October",
+        "Nov": "November",
+        "Dec": "December"
+    };
+    const formattedDate = `${day} ${monthMap[month]}`;
+    return formattedDate;
+}
  
   return (
     editable?(
       <TouchableOpacity activeOpacity={0.6} onPress={showDatePickerContainer} style={{marginTop:-10 }}>
         <View style={[styles.container,{borderRadius: 10,width:isTablet? vw*95: vw*90,backgroundColor: name=="replyTicket" ? '#DFE1ED' : "white"}]}>
           {/* Left side: Date value */}
-          <Text style={styles.dateValue}>{  date?.toDateString()  }</Text>
+          <Text style={styles.dateValue}>{  formatDate(date?.toDateString())  }</Text>
           {/* Right side: Calendar icon */}   
             <AntDesign name="calendar" size={22} color="black" />
           {/* Date Picker */}
@@ -64,11 +86,8 @@ const DateInput = ({editable,name,setLeave, dateValue,setData}) => {
       </TouchableOpacity>
     ):(
     <View style={[styles.container,{borderRadius: 40, marginHorizontal:20, width:'100%',backgroundColor: "white"}]}>
-      {/* Left side: Date value */}
       <Text style={styles.dateValue}>{dateValue}</Text>
-      {/* Right side: Calendar icon */}   
         <AntDesign name="calendar" size={22} color="black" />
-      {/* Date Picker */}
       {showDatePicker && (
         <DateTimePicker
           value={date}
