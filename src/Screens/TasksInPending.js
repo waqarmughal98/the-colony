@@ -40,7 +40,7 @@ const Tasks = ({navigation,route}) => {
         {
         !loading ? 
             <View>
-                <TaskContainer screenName={"task-in-pending"} navigation={navigation} data={data}/>
+                <TaskContainer screenName={"New Task"} navigation={navigation} data={data}/>
             </View>
             :
             <View style={styles.Indicator}>
