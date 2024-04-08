@@ -2,7 +2,7 @@
   "expo": {
     "name": "The Colony Solutions",
     "slug": "the-colony",
-    "version": "1.4.0",
+    "version": "1.6.0",
     "orientation": "portrait",
     "icon": "./assets/imgs/lb.png",
     "userInterfaceStyle": "light",
@@ -32,7 +32,7 @@
         "android.permission.RECORD_AUDIO"
       ],
       "package": "com.waqarmughal005.thecolony",
-      "versionCode": 5
+      "versionCode": 7
     },
     "web": {
       "favicon": "./assets/favicon.png"
