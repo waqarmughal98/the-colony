@@ -14,7 +14,7 @@ const Tasks = ({navigation,route}) => {
        navigation.setOptions({
           headerTintColor: 'white',
           headerTitleAlign: 'center',
-          headerTitle: "Tasks In Pending",
+          headerTitle: "New Task",
         });
       }, [navigation]);
 
@@ -40,7 +40,7 @@ const Tasks = ({navigation,route}) => {
         {
         !loading ? 
             <View>
-                <TaskContainer screenName={"New Task"} navigation={navigation} data={data}/>
+                <TaskContainer screenName={"task-in-pending"} navigation={navigation} data={data}/>
             </View>
             :
             <View style={styles.Indicator}>
