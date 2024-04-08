@@ -71,7 +71,7 @@ const WorkLog = ({navigation}) => {
 
   const options = [
     {
-      img: require('../../assets/imgs/ic_project_severn_trent.png'),
+      img: require('../../assets/imgs/trent.png'),
       color:"#E2445B",
       title: "Severn Trent",
     },
@@ -81,7 +81,7 @@ const WorkLog = ({navigation}) => {
       title: "Commercial",
     },
     {
-      img: require('../../assets/imgs/ic_private_project.png'),
+      img: require('../../assets/imgs/private.png'),
       color:"#FE158A",
       title: "Private",
     },

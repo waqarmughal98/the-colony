@@ -23,6 +23,7 @@ const Calender = ({navigation,route}) => {
                 }
             }).then((res)=>{
                 let responseData=res.data
+                console.log(responseData.projects.data,"responseData")
                 setData(responseData.projects.data);
                        const extractedDates = responseData.projects.data.map(project => {
                     return [project.project_date_start, project.project_date_due];

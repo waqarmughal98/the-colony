@@ -5,6 +5,7 @@ import {
   ScrollView,
   Image,
   ActivityIndicator,
+  TouchableOpacity
 } from 'react-native';
 import React, { useState, useEffect } from 'react';
 import Color from '../../Color';
@@ -12,7 +13,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 import { URL } from '../../utils/Constant';
 import { vh } from '../../utils/ScreenSize';
-const Logs = ({data, screenName}) => {
+const Logs = ({data, screenName, navigation}) => {
   const [loading, setLoading] = useState(true);
   const [items, setItems] = useState([])
 
@@ -33,7 +34,7 @@ const Logs = ({data, screenName}) => {
           setLoading(false);
         })
       } else{
-        await axios.get(URL + '/job-activity/' + data?.project_id, {
+        await axios.get(URL + '/comments/list', {
           headers: {
             Authorization: `Bearer ${authToken}`,
           }
@@ -48,6 +49,37 @@ const Logs = ({data, screenName}) => {
     })()
   }, []);
 
+  
+  const tabData={
+    "assigned": 1,
+    "comment":5,
+    "file":4
+  }
+  const FilterData=async(Id,item)=>{
+      console.log(Id,"id")
+      const authToken = await AsyncStorage.getItem('token');
+      axios
+        .get(URL + '/job-status', {
+          headers: {
+            Authorization: `Bearer ${authToken}`,
+          },
+        })
+        .then((res) => {
+          let filteredData = res?.data?.projects?.data?.filter(
+            (item) => item?.project_id == Id
+          );
+          if(filteredData.length>0){
+            console.log(filteredData,"filteredData")
+            navigation.navigate("jobs-detail",{items: filteredData[0],tabId:tabData[item.event_item]})
+          }
+          setLoading(false);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+
+
+  }
   return (
     <ScrollView style={styles.mainContainer}>
       {!loading ? (
@@ -55,7 +87,7 @@ const Logs = ({data, screenName}) => {
           {items.map((item, index) => {
             const update = item?.event_item_lang.replace(/_/g, ' ');
             return(
-              <View style={[styles.individual,{backgroundColor:index%2!=0? "#F0F4F7":"#FFE6AE"}]} key={index}> 
+              <TouchableOpacity activeOpacity={0.6}  onPress={()=>FilterData(item?.parent_id,item)} style={[styles.individual,{backgroundColor:index%2!=0? "#F0F4F7":"#FFE6AE"}]} key={index}> 
                 <View style={styles.individual_left}>
                   <Image
                     source={require('../../../assets/imgs/perosn.png')}
@@ -65,7 +97,7 @@ const Logs = ({data, screenName}) => {
                 <View style={styles.individual_right}>
                   <View style={styles.text1container}>
                     <Text style={styles.text1}>{screenName == "notification" ? item?.first_name : item?.creator?.first_name}</Text>
-                    <Text>on {item?.event_created?.slice(0, 10)} </Text>
+                    <Text>Updated on {item?.event_created?.slice(0, 10)} </Text>
                   </View>
                   <Text style={styles.text2}>{update}</Text>
                   <Text style={styles.text3}>{item?.event_parent_title}</Text>
@@ -75,7 +107,7 @@ const Logs = ({data, screenName}) => {
                     </Text>
                   </View>
                 </View>
-              </View>
+              </TouchableOpacity>
             )
           })}
         </View>

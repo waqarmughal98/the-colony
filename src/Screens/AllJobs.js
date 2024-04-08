@@ -6,7 +6,6 @@ import { URL } from '../utils/Constant';
 import { vh } from '../utils/ScreenSize';
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import CalendarComponent from '../Components/Calendar/CalendarComponent';
 const AllJobs = ({navigation,route}) => {
     const {screenName ,status }= route.params;
     const [data, setData] = useState([]);

@@ -2,10 +2,10 @@ import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 import Logs from '../Components/Jobs Detail/Logs'
 import { vh,vw } from '../utils/ScreenSize'
-const Notifications = () => {
+const Notifications = ({navigation}) => {
   return (
     <View>
-      <Logs screenName="notification" />
+      <Logs navigation={navigation} screenName="notification" />
     </View>
   )
 }

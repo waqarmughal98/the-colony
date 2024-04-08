@@ -24,7 +24,7 @@ import Toast from 'react-native-toast-message';
 import UpdateModal from '../Components/Modals/UpdateModal';
 import { vw } from '../utils/ScreenSize';
 const JobsDetail = ({route, navigation}) => {
-  const { items ,ID,Alldata} = route.params;
+  const { items ,ID,tabId} = route.params;
   const [updateItem, setUdateItem]=useState("")
   const [noteTitle, setNoteTitle]=useState("")
   const [noteDisc, setNoteDisc]=useState("")
@@ -69,7 +69,7 @@ const JobsDetail = ({route, navigation}) => {
   ];
 
   const [selectedOptionID, setSelectedOptionID] = useState(
-    navbarOptions[0].id
+    tabId ||  navbarOptions[0].id
   );
 
 
@@ -121,11 +121,11 @@ const JobsDetail = ({route, navigation}) => {
     </TouchableOpacity>
   );
 
-  return (
+  return items?.project_title!=null && (
     <View style={styles.mainContainer}>
       {/* Heading */}
       <View style={styles.heading}>
-        <Text style={styles.textHeading}>{items.project_title}</Text>
+        <Text style={styles.textHeading}>{items?.project_title}</Text>
       </View>
       {/* Navbar */}
       <View style={styles.navbar}>

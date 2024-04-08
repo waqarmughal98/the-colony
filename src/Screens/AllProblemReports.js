@@ -30,6 +30,22 @@ const AllProblemReports = ({navigation, data}) => {
       })
     })()
   },[])
+
+  function formatDate(inputDate) {
+    if(inputDate){
+      const [year, month, day] = inputDate?.split('-');
+      const date = new Date(year, month - 1, day);
+      const formattedMonth = (date.getMonth() + 1).toString().padStart(2, '0');
+      const formattedDay = date.getDate().toString().padStart(2, '0');
+      const formattedYear = date.getFullYear().toString().slice(2);
+      const formattedDate = `${formattedMonth}-${formattedDay}-${formattedYear}`;
+      return formattedDate;
+    }else{
+      return null
+    }
+  
+  }
+    
     
   return (
     <View>    
@@ -38,6 +54,7 @@ const AllProblemReports = ({navigation, data}) => {
         <View style={styles.Container}>
           <View style={styles.headerContainer}> 
             <Text style={styles.text1}>Subject</Text>
+            <Text style={styles.textDate}>Date</Text>
             <Text style={styles.text2}>Job</Text>
           </View>   
           {/* All Data */}
@@ -51,6 +68,7 @@ const AllProblemReports = ({navigation, data}) => {
                       <View style={[styles.mainIndividual,{backgroundColor:index%2==0 ? '#D2CBBC' : '#F2F1CF'}]}>
                         <View style={styles.individual}>
                           <Text style={styles.dataText}>{item.ticket_subject}</Text>
+                          <Text style={styles.dataTextMiddle}>{formatDate(item.project_date_start) || "N/A"}</Text>
                           <Text style={styles.dataText2}>{item.project_title}</Text> 
                           <MaterialIcons name={'keyboard-arrow-right'} size={28} color="black" />
                         </View>
@@ -143,6 +161,17 @@ const styles = StyleSheet.create({
   },
   container:{
     paddingBottom:140
-  }
+  },
+  textDate:{
+    color:Color.brightOrange,
+    flex:0.5,
+    textAlign:'right',
+  },
 
+  dataTextMiddle:{
+    fontSize:14,
+    color:'black',
+    flex:0.4,
+    textAlign:'center'
+  },
 })
