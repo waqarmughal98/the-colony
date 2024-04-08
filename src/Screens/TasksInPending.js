@@ -14,7 +14,7 @@ const Tasks = ({navigation,route}) => {
        navigation.setOptions({
           headerTintColor: 'white',
           headerTitleAlign: 'center',
-          headerTitle: "Tasks In Pending",
+          headerTitle: "New Task",
         });
       }, [navigation]);
 
