@@ -155,7 +155,7 @@ const JobsDetail = ({route, navigation}) => {
         ) : selectedOptionID == 6 ? (
           <Notes data={items} noteitem={{noteDisc,noteTitle}}  />
         ) : selectedOptionID == 7 ? (
-          <Logs data={items} />
+          <Logs screenName={"ProjectDetail"} data={items} />
         ) : selectedOptionID == 8 ? (
         <ProblemReports navigation={navigation} data={items} ID={ID} />
         ) : null}
