@@ -64,7 +64,15 @@ const AllProblemReports = ({navigation, data}) => {
               {
                 items?.map((item,index)=>{
                   return(
-                    <TouchableOpacity onPress={()=>navigation.navigate("problem-report-replies", {id: item.ticket_id, jobTitle: item.project_title})} activeOpacity={0.6} key={index}>
+                    <TouchableOpacity onPress={()=>navigation.navigate("problem-report-replies", {
+                      id: item.ticket_id, 
+                      jobTitle: item.project_title,
+                      ticket_subject: item.ticket_subject,
+                      ticket_message: item.ticket_message,
+                      ticket_priority: item.ticket_priority,
+                      ticket_status: item.ticket_status,
+
+                    })} activeOpacity={0.6} key={index}>
                       <View style={[styles.mainIndividual,{backgroundColor:index%2==0 ? '#D2CBBC' : '#F2F1CF'}]}>
                         <View style={styles.individual}>
                           <Text style={styles.dataText}>{item.ticket_subject}</Text>

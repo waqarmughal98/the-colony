@@ -4,10 +4,17 @@ const { width, height } = Dimensions.get('window');
 const vw = width / 100;
 const vh = height / 100;
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import ViewProblemReport from "./ViewProblemReport"
 import axios from 'axios';
 import { URL } from '../utils/Constant';
 const ProblemReportReplies = ({navigation,route}) => {
-  const { id, jobTitle ,reply} = route.params;
+  const { id, jobTitle, reply, ticket_subject, ticket_message, ticket_priority, ticket_status} = route.params;
+  const ticketDetails = {
+    ticket_subject: ticket_subject, 
+    ticket_message: ticket_message, 
+    ticket_priority: ticket_priority, 
+    ticket_status: ticket_status
+  }
   const [items, setItems] = useState([]);
   const [loading, setLoading]=useState(true)
   React.useLayoutEffect(() => {
@@ -47,6 +54,7 @@ const ProblemReportReplies = ({navigation,route}) => {
           !loading ? 
           (
             <View style={styles.container}>
+            <ViewProblemReport ticketDetails={ticketDetails} />
             {
               items.length > 0 ? 
               (
