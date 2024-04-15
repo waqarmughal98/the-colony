@@ -138,10 +138,10 @@ const styles = StyleSheet.create({
   },
   noRecord:{
     color: "black",
-    fontSize: 22,
+    fontSize: 19,
     flex:1,
     textAlign: "center",
-    paddingVertical: vh * 25,
+    paddingVertical: vh * 1,
     fontWeight: "bold",
   },
   Indicator: {
