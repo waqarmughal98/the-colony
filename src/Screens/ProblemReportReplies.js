@@ -7,6 +7,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import ViewProblemReport from "./ViewProblemReport"
 import axios from 'axios';
 import { URL } from '../utils/Constant';
+import Color from '../Color';
 const ProblemReportReplies = ({navigation,route}) => {
   const { id, jobTitle, reply, ticket_subject, ticket_message, ticket_priority, ticket_status} = route.params;
   const ticketDetails = {
@@ -55,6 +56,11 @@ const ProblemReportReplies = ({navigation,route}) => {
           (
             <View style={styles.container}>
             <ViewProblemReport ticketDetails={ticketDetails} />
+            <View style={styles.header}>
+              <Text style={styles.headerText}>
+                All Replies
+              </Text>
+            </View>
             {
               items.length > 0 ? 
               (
@@ -73,7 +79,7 @@ const ProblemReportReplies = ({navigation,route}) => {
               )
               :
               (
-                <Text style={styles.noRecord}>No Record Found</Text>
+                <Text style={styles.noRecord}>No Reply Found!</Text>
               )
             
             
@@ -133,19 +139,9 @@ const styles = StyleSheet.create({
   noRecord:{
     color: "black",
     fontSize: 22,
-    width: vw * 100,
-    height: vh * 100,
+    flex:1,
     textAlign: "center",
     paddingVertical: vh * 25,
-    fontWeight: "bold",
-  },
-  noRecord:{
-    color: "black",
-    fontSize: 22,
-    width: vw * 100,
-    height: vh * 100,
-    textAlign: "center",
-    paddingVertical: vh * 37,
     fontWeight: "bold",
   },
   Indicator: {
@@ -160,4 +156,14 @@ const styles = StyleSheet.create({
     color: 'black',
     fontWeight: 'bold',
   },
+  header:{
+    backgroundColor:Color.darkOrange,
+    padding:15,
+    marginBottom:15
+  },
+  headerText:{
+    color:'white',
+    fontSize:17,
+    fontWeight:'bold',
+  }
 })
