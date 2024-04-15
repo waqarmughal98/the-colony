@@ -141,7 +141,7 @@ const styles = StyleSheet.create({
     fontSize: 19,
     flex:1,
     textAlign: "center",
-    paddingVertical: vh * 1,
+    paddingVertical: vh * 0.5,
     fontWeight: "bold",
   },
   Indicator: {
