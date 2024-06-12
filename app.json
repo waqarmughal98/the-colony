@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "The Colony Solutions",
+    "name": "The Colony Solution ltd",
     "slug": "the-colony",
     "version": "1.6.0",
     "orientation": "portrait",
@@ -19,8 +19,8 @@
       "config": {
         "usesNonExemptEncryption": false
       },
-      "bundleIdentifier": "com.waqarmughal005.thecolony",
-      "buildNumber": "2"
+      "bundleIdentifier": "com.geomapltd.thecolony",
+      "buildNumber": "6"
     },
     "android": {
       "adaptiveIcon": {
@@ -31,7 +31,7 @@
         "android.permission.CAMERA",
         "android.permission.RECORD_AUDIO"
       ],
-      "package": "com.waqarmughal005.thecolony",
+      "package": "com.geomapltd.thecolony",
       "versionCode": 8
     },
     "web": {
