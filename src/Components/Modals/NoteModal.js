@@ -105,25 +105,27 @@ const styles = StyleSheet.create({
   heading: {
     fontSize: 19,
     color: 'white',
-    fontWeight: '700',
+    fontFamily: "Sommet-Black",
     textAlign: 'center',
     marginBottom: 10,
   },
   label: {
     fontSize: 16,
     marginBottom: 10,
-    fontWeight: 'bold',
+    fontFamily: "Sommet-Black",
   },
   discInput: {
     width: '100%',
     backgroundColor: 'white',
     borderRadius: 10,
+    fontFamily: "Sommet-Regular",
     padding: 12,
   },
   titleInput: {
     height: 45,
     width: '100%',
     backgroundColor: 'white',
+    fontFamily: "Sommet-Regular",
     borderRadius: 10,
     paddingHorizontal: 15,
     marginBottom: 15,
@@ -140,6 +142,7 @@ const styles = StyleSheet.create({
   },
   submitTxt: {
     color: 'white',
+    fontFamily: "Sommet-Regular",
     fontSize: 17,
   },
   error: {
@@ -147,5 +150,6 @@ const styles = StyleSheet.create({
     marginTop: 10,
     marginBottom: -10,
     color: 'white',
+    fontFamily: "Sommet-Regular",
   },
 });

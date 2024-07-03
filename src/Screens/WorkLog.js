@@ -186,6 +186,7 @@ const styles = StyleSheet.create({
   },
   cardTitle: {
     marginTop: 5,
+    fontFamily: "Sommet-Regular",
     color:"white"
   },
   selectedCardContainer: {
@@ -200,6 +201,7 @@ const styles = StyleSheet.create({
   },
   selectedCardText: {
     color: 'white',
+    fontFamily: "Sommet-Regular",
     fontSize: 17,
     textAlign:"left"
   },
@@ -214,24 +216,26 @@ const styles = StyleSheet.create({
 text:{
     fontSize:16,
     color:'black',
-    fontWeight:'bold',
+    fontFamily: "Sommet-Black",
     flex:0.25
 },
 text2:{
     fontSize:16,
     color:'black',
-    fontWeight:'bold',
+    fontFamily: "Sommet-Black",
     flex:0.75,
     textAlign:"center"
 },
 dataText:{
     fontSize:14,
     color:'black',
+    fontFamily: "Sommet-Regular",
     flex:0.4
 },
 dataText2:{
     fontSize:14,
     color:'black',
+    fontFamily: "Sommet-Regular",
     flex:0.6,
     textAlign:"center"
 },
@@ -255,7 +259,7 @@ Indicator:
 },
 fetchingData:{
     color:'black',
-    fontWeight:"bold"
+    fontFamily: "Sommet-Black",
 }
 });
 

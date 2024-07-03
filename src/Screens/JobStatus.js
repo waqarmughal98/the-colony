@@ -4,7 +4,7 @@ import {
   View,
   ScrollView,
   ActivityIndicator,
-  TouchableOpacity
+  TouchableOpacity,
 } from "react-native";
 import React, { useState, useEffect } from "react";
 import { vh, vw } from "../utils/ScreenSize";
@@ -19,38 +19,56 @@ const JobStatus = ({ navigation, route }) => {
   const { item, status } = route.params;
 
   useEffect(() => {
-    setMy_projects_states(status.my_projects_states)
-    const resultArray = Object.entries(status.all_projects).map(([title, number]) => ({ title, number }));
-    setData(resultArray)
-    setLoading(false)
+    setMy_projects_states(status.my_projects_states);
+    const resultArray = Object.entries(status.all_projects).map(
+      ([title, number]) => ({ title, number })
+    );
+    setData(resultArray);
+    setLoading(false);
   }, [status]);
 
   const transformAndCapitalize = (inputString) => {
-    const words = inputString.split('_');
-    const capitalizedWords = words.map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase());
-    return capitalizedWords.join(' ');
+    const words = inputString.split("_");
+    const capitalizedWords = words.map(
+      (word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
+    );
+    return capitalizedWords.join(" ");
   };
 
   return (
     <View style={styles.mainContainer}>
       {!loading ? (
         <View style={styles.Container}>
-            <ScrollView>
-                <View style={styles.allData} >
-                   {
-                    data.map((item,index)=>
-                    <TouchableOpacity key={index}   activeOpacity={0.6} onPress={()=>navigation.navigate("All-Job",{screenName:"jobStatus",status:item.title })} style={styles.individual}>
-                      <View style={styles.left}>
-                        <Text style={styles.leftText1}>{transformAndCapitalize(item.title)}</Text>   
-                        <Text style={styles.leftText2}>{`Total : ${item.number} `}</Text> 
-                      </View>
-                      <View style={styles.right}>   
-                        <Text style={styles.rightText}>{my_projects_states[`${item.title}`]}</Text> 
-                      </View>  
-                    </TouchableOpacity> 
-                    )
-                   }
-                </View>
+          <ScrollView>
+            <View style={styles.allData}>
+              {data.map((item, index) => (
+                <TouchableOpacity
+                  key={index}
+                  activeOpacity={0.6}
+                  onPress={() =>
+                    navigation.navigate("All-Job", {
+                      screenName: "jobStatus",
+                      status: item.title,
+                    })
+                  }
+                  style={styles.individual}
+                >
+                  <View style={styles.left}>
+                    <Text style={styles.leftText1}>
+                      {transformAndCapitalize(item.title)}
+                    </Text>
+                    <Text
+                      style={styles.leftText2}
+                    >{`Total : ${item.number} `}</Text>
+                  </View>
+                  <View style={styles.right}>
+                    <Text style={styles.rightText}>
+                      {my_projects_states[`${item.title}`]}
+                    </Text>
+                  </View>
+                </TouchableOpacity>
+              ))}
+            </View>
           </ScrollView>
         </View>
       ) : (
@@ -99,14 +117,15 @@ const styles = StyleSheet.create({
     display: "flex",
     gap: 15,
     marginTop: 15,
-    paddingBottom:80
+    paddingBottom: 80,
   },
   leftText1: {
     fontSize: 16,
-    fontWeight: "600",
+    fontFamily: "Sommet-Black",
   },
   leftText2: {
     fontSize: 12,
+    fontFamily: "Sommet-Regular",
   },
   right: {
     height: 35,
@@ -120,6 +139,6 @@ const styles = StyleSheet.create({
   },
   rightText: {
     fontSize: 16,
-    fontWeight: "bold",
+    fontFamily: "Sommet-Black",
   },
 });

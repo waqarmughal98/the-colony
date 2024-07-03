@@ -34,7 +34,8 @@
     "react-native-screens": "^3.29.0",
     "react-native-select-dropdown": "^3.4.0",
     "react-native-toast-message": "^2.2.0",
-    "react-native-webview": "^13.6.4"
+    "react-native-webview": "^13.6.4",
+    "expo-font": "~11.10.3"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0"

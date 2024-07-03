@@ -25,11 +25,12 @@ const styles = StyleSheet.create({
     text2:{
         fontSize:16,
         color:'white',
-        fontWeight:'bold',
+        fontFamily: "Sommet-Black",
         textAlign:"center"
     },
     dataText:{
         fontSize:13,
+        fontFamily: "Sommet-Regular",
         color:'white',
     },
     individual:{

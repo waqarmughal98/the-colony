@@ -10,7 +10,7 @@ import axios from 'axios';
 import { URL } from '../utils/Constant';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 const ReplyTicket = ({navigation,route}) => {
-    const { items, jobTitle,id } = route.params;
+    const { items, jobTitle, id, subject, ticketDetails } = route.params;
     const getCurrentDate = () => {
         const today = new Date();
         const year = today.getFullYear();
@@ -20,7 +20,7 @@ const ReplyTicket = ({navigation,route}) => {
       };
     const [data, setData] = useState({
         date: getCurrentDate(),
-        Subject: "",
+        Subject: subject,
         Job: jobTitle,
         Problem: "",
     })
@@ -49,7 +49,7 @@ const ReplyTicket = ({navigation,route}) => {
                  topOffset:5
               });
             setTimeout(() => {
-                navigation.navigate('problem-report-replies',{id:id,reply:data})  
+                navigation.navigate('problem-report-replies',{id:id,reply:data, ticketDetail: ticketDetails})  
             }, 1000);
             
         }).catch((err)=>{
@@ -114,7 +114,7 @@ const styles = StyleSheet.create({
     },
     label:{
         fontSize:15,
-        fontWeight:"500"
+        fontFamily: "Sommet-Regular",
     },
     input:{
         backgroundColor:'#DFE1ED',
@@ -122,6 +122,7 @@ const styles = StyleSheet.create({
         marginTop:5,
         borderRadius:7,
         paddingHorizontal:10,
+        fontFamily: "Sommet-Regular",
     },
     dateInput:{
         backgroundColor:'#DFE1ED',
@@ -130,12 +131,14 @@ const styles = StyleSheet.create({
         borderRadius:7,
         paddingHorizontal:10,
         display:"flex",
+        fontFamily: "Sommet-Regular",
         justifyContent:"center"
     },
     input2:{
         backgroundColor:'#DFE1ED',
         height:150,
         marginTop:5,
+        fontFamily: "Sommet-Regular",
         borderRadius:7,
         paddingHorizontal:10,
         paddingVertical:10,
@@ -146,10 +149,12 @@ const styles = StyleSheet.create({
         justifyContent:'center',
         alignItems:"center",
         height:45,
+        fontFamily: "Sommet-Regular",
         borderRadius:10,
     },
     submitTxt:{
         color:"white",
+        fontFamily: "Sommet-Regular",
         fontSize:17,
     }
 })

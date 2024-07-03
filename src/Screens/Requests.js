@@ -117,8 +117,6 @@ const Requests = ({ navigation, route }) => {
 
     return formattedDate;
   }
-
-  console.log(filteredData, 'filteredData');
   return (
     <View style={styles.container}>
       {data.length > 0 ? (
@@ -248,6 +246,7 @@ const styles = StyleSheet.create({
   },
   cardTitle: {
     marginTop: 5,
+    fontFamily: "Sommet-Regular",
     color: 'white',
   },
   selectedCardContainer: {
@@ -262,6 +261,7 @@ const styles = StyleSheet.create({
   },
   selectedCardText: {
     color: 'white',
+    fontFamily: "Sommet-Regular",
     fontSize: 17,
     textAlign: 'left',
   },
@@ -276,20 +276,20 @@ const styles = StyleSheet.create({
   text: {
     fontSize: 15,
     color: 'black',
-    fontWeight: 'bold',
+    fontFamily: "Sommet-Black",
     flex: 0.4,
   },
   text1: {
     fontSize: 15,
     color: 'black',
-    fontWeight: 'bold',
+    fontFamily: "Sommet-Black",
     textAlign: 'center',
     flex: 0.3,
   },
   text2: {
     fontSize: 15,
     color: 'black',
-    fontWeight: 'bold',
+    fontFamily: "Sommet-Black",
     textAlign: 'center',
     flex: 0.3,
   },
@@ -298,17 +298,20 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: 'black',
     flex: 0.4,
+    fontFamily: "Sommet-Regular",
   },
 
   text5: {
     fontSize: 12,
     color: 'black',
+    fontFamily: "Sommet-Regular",
     flex: 0.4,
   },
   dataText2: {
     fontSize: 13,
     color: 'black',
     flex: 0.3,
+    fontFamily: "Sommet-Regular",
     textAlign: 'center',
   },
   icon: {
@@ -333,7 +336,7 @@ const styles = StyleSheet.create({
   },
   fetchingData: {
     color: 'black',
-    fontWeight: 'bold',
+    fontFamily: "Sommet-Black",
   },
 });
 

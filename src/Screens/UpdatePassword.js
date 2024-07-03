@@ -144,7 +144,7 @@ const styles = StyleSheet.create({
         padding:20,
     },
     title:{
-        fontWeight:"bold",
+        fontFamily: "Sommet-Black",
         fontSize:19,
     },
     bottom:{
@@ -156,7 +156,7 @@ const styles = StyleSheet.create({
       },
       markTitle:{
         fontSize:22,
-        fontWeight:"400",
+        fontFamily: "Sommet-Regular",
         color:"white",
         marginLeft:20,
         marginTop:5*vh
@@ -172,7 +172,7 @@ const styles = StyleSheet.create({
       },
       text2:{
         fontSize:17,
-        fontWeight:"bold",
+        fontFamily: "Sommet-Black",
         color:"#383c4a",
         borderBottomWidth:1,
         paddingBottom:17,
@@ -195,7 +195,8 @@ const styles = StyleSheet.create({
         paddingBottom:5
       },
       input:{
-        flex:1
+        flex:1,
+        fontFamily: "Sommet-Regular",
       },
       topIndividual:{
          display:"flex",
@@ -218,10 +219,12 @@ const styles = StyleSheet.create({
         marginRight:10
       },
       iconText:{
-        fontSize:16
+        fontSize:16,
+        fontFamily: "Sommet-Regular",
       },
       text3:{
          fontSize:15,
+         fontFamily: "Sommet-Regular",
          color:"black",
         marginTop:10 
       },
@@ -240,7 +243,7 @@ const styles = StyleSheet.create({
       btnText:{
         textAlign:"center",
         color:"white",
-        fontWeight:"bold",
+        fontFamily: "Sommet-Black",
         fontSize:15
       },
       topArea:{

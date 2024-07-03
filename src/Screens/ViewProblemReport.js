@@ -60,11 +60,12 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
   },
   label: {
-    fontWeight: 'bold',
+    fontFamily: "Sommet-Black",
     color: 'white',
     fontSize: 16,
   },
   text: {
     color: 'white',
+    fontFamily: "Sommet-Regular",
   },
 });

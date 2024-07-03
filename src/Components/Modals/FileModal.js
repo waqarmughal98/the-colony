@@ -97,7 +97,7 @@ const styles = StyleSheet.create({
   heading: {
     fontSize: 19,
     color: 'white',
-    fontWeight: '700',
+    fontFamily: "Sommet-Black",
     textAlign: 'center',
     marginBottom: 15,
   },
@@ -106,6 +106,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     borderRadius: 10,
     padding: 12,
+    fontFamily: "Sommet-Regular",
   },
   iconContainer: {
     flexDirection: 'row',
@@ -124,6 +125,7 @@ const styles = StyleSheet.create({
   },
   submitTxt: {
     color: 'white',
+    fontFamily: "Sommet-Regular",
     fontSize: 17,
   },
 });

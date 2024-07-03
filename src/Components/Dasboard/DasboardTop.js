@@ -108,10 +108,12 @@ const styles = StyleSheet.create({
   },
   number: {
     color: "white",
+    fontFamily: "Sommet-Black",
     fontSize: vw*7,
   },
   title: {
     color: "white",
+    fontFamily: "Sommet-Regular",
     fontSize: vw*4,
   },
   containerIcon: {

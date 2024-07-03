@@ -23,7 +23,6 @@ const Calender = ({navigation,route}) => {
                 }
             }).then((res)=>{
                 let responseData=res.data
-                console.log(responseData.projects.data,"responseData")
                 setData(responseData.projects.data);
                        const extractedDates = responseData.projects.data.map(project => {
                     return [project.project_date_start, project.project_date_due];
@@ -41,7 +40,7 @@ const Calender = ({navigation,route}) => {
         const year = currentDate.getFullYear();
         const month = String(currentDate.getMonth() + 1).padStart(2, '0'); 
         const day = String(currentDate.getDate()).padStart(2, '0');
-        const formattedDate = `${year}-${month}-${day}`;
+        const formattedDate = `${day}-${month}-${year}`;
         setSelectedDate(formattedDate);
     }, []); 
 
@@ -50,7 +49,7 @@ const Calender = ({navigation,route}) => {
     }, [selectedDate])
 
   useEffect(()=>{
-    console.log(AllDates,"dates..")
+    // console.log(AllDates,"dates..")
   }, [AllDates])
 
   const filterData = ()=> {
@@ -100,7 +99,7 @@ const Calender = ({navigation,route}) => {
                             <CalendarComponent AllDates={AllDates} setSelectedDate={setSelectedDate}/>
                             <TouchableOpacity activeOpacity={0.6} onPress={()=>setFilteredData(data)}   style={styles.viewAllbtn}>
                                 <Fontisto name="preview" size={16} color="white" />
-                                <Text style={{fontSize:14,color:"white",}}>View All</Text>
+                                <Text style={{fontSize:14,color:"white",fontFamily: "Sommet-Regular",}}>View All</Text>
                             </TouchableOpacity>
                         </View>
                      
@@ -117,7 +116,7 @@ const Calender = ({navigation,route}) => {
                                         {
                                             FilteredData.length>0 ? FilteredData?.map((item,index)=>{
                                                 return(
-                                                        <DataCard key={index} index={index}  navigation={navigation} item={item} />              )
+                                                        <DataCard key={index} index={index}  navigation={navigation} item={item} />)
                                             }) 
                                             :
                                             (
@@ -166,28 +165,30 @@ const styles = StyleSheet.create({
       },
       fetchingData:{
         color:'black',
-        fontWeight:"bold"
+        fontFamily: "Sommet-Black",
       },
     text:{
         fontSize:16,
         color:'white',
-        fontWeight:'bold',
+        fontFamily: "Sommet-Black",
         flex:0.25
     },
     text2:{
         fontSize:16,
         color:'white',
-        fontWeight:'bold',
+        fontFamily: "Sommet-Black",
         flex:0.75,
         textAlign:"center"
     },
     dataText:{
         fontSize:14,
         color:'black',
+        fontFamily: "Sommet-Regular",
         flex:0.4
     },
     dataText2:{
         fontSize:14,
+        fontFamily: "Sommet-Regular",
         color:'black',
         flex:0.6,
         textAlign:"center"
@@ -225,6 +226,7 @@ const styles = StyleSheet.create({
         alignSelf: 'flex-start',
         display:"flex",
         flexDirection:"row",
+        fontFamily: "Sommet-Regular",
         gap:4
     }
 

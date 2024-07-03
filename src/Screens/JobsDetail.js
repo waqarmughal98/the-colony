@@ -193,6 +193,7 @@ const styles = StyleSheet.create({
   },
   textHeading: {
     fontSize: 16,
+    fontFamily: "Sommet-Regular",
     alignItems: 'center',
     marginLeft: 20,
   },
@@ -220,6 +221,6 @@ const styles = StyleSheet.create({
   },
   navbarOptionText: {
     color: 'black',
-    fontWeight: 'bold',
+    fontFamily: "Sommet-Black",
   },
 });

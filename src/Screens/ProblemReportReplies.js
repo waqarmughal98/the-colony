@@ -9,12 +9,12 @@ import axios from 'axios';
 import { URL } from '../utils/Constant';
 import Color from '../Color';
 const ProblemReportReplies = ({navigation,route}) => {
-  const { id, jobTitle, reply, ticket_subject, ticket_message, ticket_priority, ticket_status} = route.params;
+  const { id, jobTitle, reply, ticket_subject, ticket_message, ticket_priority, ticket_status, ticketDetail} = route.params;
   const ticketDetails = {
-    ticket_subject: ticket_subject, 
-    ticket_message: ticket_message, 
-    ticket_priority: ticket_priority, 
-    ticket_status: ticket_status
+    ticket_subject: ticket_subject || ticketDetail.ticket_subject, 
+    ticket_message: ticket_message || ticketDetail.ticket_message, 
+    ticket_priority: ticket_priority || ticketDetail.ticket_priority, 
+    ticket_status: ticket_status || ticketDetail.ticket_status
   }
   const [items, setItems] = useState([]);
   const [loading, setLoading]=useState(true)
@@ -24,7 +24,7 @@ const ProblemReportReplies = ({navigation,route}) => {
       headerTitleAlign: 'center',
       headerRight: () => (
         <View style={{ marginRight: 5 }}>
-          <TouchableOpacity activeOpacity={0.6} onPress={()=>navigation.navigate("reply-ticket",{items:items[0], jobTitle: jobTitle,id:id})}>
+          <TouchableOpacity activeOpacity={0.6} onPress={()=>navigation.navigate("reply-ticket",{items:items[0], jobTitle: jobTitle,id:id, subject: ticket_subject, ticketDetails: ticketDetails})}>
            <Text style={{color:"white"}}>Reply</Text>
           </TouchableOpacity>
         </View>
@@ -130,7 +130,7 @@ const styles = StyleSheet.create({
   },
   text:{
     fontSize:16,
-    fontWeight:"700",
+    fontFamily: "Sommet-Black",
     color:"#625E57"
   },
   container:{
@@ -142,7 +142,7 @@ const styles = StyleSheet.create({
     flex:1,
     textAlign: "center",
     paddingVertical: vh * 0.5,
-    fontWeight: "bold",
+    fontFamily: "Sommet-Black",
   },
   Indicator: {
     flexGrow: 1,
@@ -154,7 +154,7 @@ const styles = StyleSheet.create({
   },
   fetchingData: {
     color: 'black',
-    fontWeight: 'bold',
+    fontFamily: "Sommet-Black",
   },
   header:{
     backgroundColor:Color.darkOrange,
@@ -164,6 +164,6 @@ const styles = StyleSheet.create({
   headerText:{
     color:'white',
     fontSize:17,
-    fontWeight:'bold',
+    fontFamily: "Sommet-Black",
   }
 })

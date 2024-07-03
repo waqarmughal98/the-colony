@@ -94,7 +94,6 @@ const CalendarComponent = ({ setSelectedDate, AllDates }) => {
     datesArray.forEach((individual_array, index) => {
       individual_array.forEach((date) => {
         const resultData = checkDateInArray(date);
-        console.log(resultData, 'resultData');
         var periodArray = [];
             for (var i = 0; i <= Math.max(...resultData[0]); i++) {
               if (resultData[0].includes(i)) {
@@ -172,8 +171,7 @@ const CalendarComponent = ({ setSelectedDate, AllDates }) => {
           textSectionTitleDisabledColor: 'black',
           todayBackgroundColor: todayBackgroundColor,
           todayTextColor: 'black',
-          textDayFontWeight: '800',
-          textDayStyle: { fontSize: 15, fontWeight: '800' },
+          textDayStyle: { fontSize: 15, fontFamily: "Sommet-Black", },
           calendarBackground: Color.darkOrange,
           textSectionTitleColor: 'black',
           selectedDayTextColor:'white',
@@ -193,7 +191,7 @@ const CalendarComponent = ({ setSelectedDate, AllDates }) => {
         alignItems: 'center',
       }}
     >
-      <Text style={{ fontSize: 16, fontWeight: '500' }}>
+      <Text style={{ fontSize: 16, fontWeight: '500', fontFamily: "Sommet-Black", }}>
         Loading Calendar...
       </Text>
     </View>
@@ -209,13 +207,14 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 16,
-    fontWeight: '500',
+    fontFamily: "Sommet-Black",
     marginBottom: 12,
     textAlign: 'center',
   },
   selecteddate: {
     marginTop: 14,
     fontSize: 14,
+    fontFamily: "Sommet-Regular",
     fontWeight: '500',
     textAlign: 'center',
   },

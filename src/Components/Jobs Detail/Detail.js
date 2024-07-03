@@ -145,13 +145,14 @@ const styles = StyleSheet.create({
   },
   dateInput:{
     paddingHorizontal:20,
+    fontFamily: "Sommet-Regular",
   },
   inputContainer: {
     marginTop: 25,
   },
   label: {
     fontSize: 16,
-    fontWeight: '400',
+    fontFamily: "Sommet-Regular",
     marginLeft: 15,
   },
   textContainer:{
@@ -166,11 +167,13 @@ const styles = StyleSheet.create({
     paddingVertical: 6,
     justifyContent: 'center',
     width: '100%',
+    fontFamily: "Sommet-Regular",
     paddingHorizontal: 20,
   },
   inputTextArea:{
     backgroundColor: 'white',
     borderRadius: 13,
+    fontFamily: "Sommet-Regular",
     paddingVertical: 6,
     justifyContent: 'center',
     width: '100%',
@@ -198,8 +201,8 @@ const styles = StyleSheet.create({
   buttonContainer: {
       flexDirection: 'row',
       marginTop: 30,
+      fontFamily: "Sommet-Regular",
       paddingRight:20
-      
     },
     button: {
       backgroundColor: 'black',
@@ -210,6 +213,6 @@ const styles = StyleSheet.create({
     },
     buttonText: {
       color: 'white',
-      fontWeight: 'bold',
+      fontFamily: "Sommet-Regular",
     },
 });

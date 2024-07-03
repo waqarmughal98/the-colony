@@ -36,7 +36,6 @@ const Logs = ({ data, screenName, navigation }) => {
             setLoading(false);
           })
           .catch((err) => {
-            console.log(err);
             setLoading(false);
           });
       } else if (screenName == 'ProjectDetail') {
@@ -47,12 +46,10 @@ const Logs = ({ data, screenName, navigation }) => {
             },
           })
           .then((res) => {
-            console.log(res, 'res.,');
             setItems(res.data.logs);
             setLoading(false);
           })
           .catch((err) => {
-            console.log(err);
             setLoading(false);
           });
       }
@@ -65,7 +62,6 @@ const Logs = ({ data, screenName, navigation }) => {
     file: 4,
   };
   const FilterData = async (Id, item) => {
-    console.log(Id, 'id');
     const authToken = await AsyncStorage.getItem('token');
     axios
       .get(URL + '/job-status', {
@@ -78,7 +74,6 @@ const Logs = ({ data, screenName, navigation }) => {
           (item) => item?.project_id == Id
         );
         if (filteredData.length > 0) {
-          console.log(filteredData, 'filteredData');
           navigation.navigate('jobs-detail', {
             items: filteredData[0],
             tabId: tabData[item.event_item],
@@ -197,7 +192,7 @@ const styles = StyleSheet.create({
   },
   fetchingData: {
     color: 'black',
-    fontWeight: 'bold',
+    fontFamily: "Sommet-Black",
   },
   individual: {
     backgroundColor: '#FFE6AE',
@@ -215,6 +210,7 @@ const styles = StyleSheet.create({
   text4: {
     padding: 8,
     borderRadius: 5,
+    fontFamily: "Sommet-Regular",
   },
   individual_left: {
     flex: 0.3,
@@ -231,17 +227,21 @@ const styles = StyleSheet.create({
     alignContent: 'center',
     marginVertical: 8,
     alignItems: 'center',
+    fontFamily: "Sommet-Regular",
   },
   text1: {
     marginRight: 5,
     color: Color.darkOrange,
+    fontFamily: "Sommet-Regular",
   },
   text2: {
     marginBottom: 8,
     textTransform: 'capitalize',
+    fontFamily: "Sommet-Regular",
   },
   text3: {
     marginBottom: 8,
     color: Color.darkOrange,
+    fontFamily: "Sommet-Regular",
   },
 });

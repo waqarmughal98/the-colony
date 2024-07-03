@@ -23,9 +23,11 @@ const Tab = createBottomTabNavigator();
           paddingTop:10,
           position: 'absolute',
           borderTopWidth: 0,
+          fontFamily: "Sommet-Regular",
         },
         labelStyle: {
           fontSize: 11,
+          fontFamily: "Sommet-Regular",
         },
       }}
     >
