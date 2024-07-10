@@ -6,29 +6,32 @@ import {
   TextInput,
   ScrollView,
   TouchableOpacity,
+  Alert,
 } from "react-native";
 import DateInput from "../Components/Date/DateInput";
 import Toast from "react-native-toast-message";
 import * as ImagePicker from "expo-image-picker";
-import axios from "axios";
-import { URL } from "../utils/Constant";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Ionicons } from "@expo/vector-icons";
+import { URL } from "../utils/Constant";
 
 const ReplyTicket = ({ navigation, route }) => {
-  const { items, jobTitle, id, subject, ticketDetails } = route.params;
-  const [image, setImage] = useState(null);
+  const { jobTitle, id, subject, ticketDetails } = route.params;
   const [mediaLibraryStatus, setMediaLibraryStatus] = useState(null);
   const [cameraStatus, setCameraStatus] = useState(null);
-  const form = new FormData();
+ const [fileName, setFileName] = useState("")
+ const [fileUpload, setfileUpload] = useState(false)
+ const [fileData, setFileData] = useState()
+ const [imageData, setImageData] = useState()
 
   const getCurrentDate = () => {
     const today = new Date();
     const year = today.getFullYear();
-    const month = String(today.getMonth() + 1).padStart(2, "0"); // Adding 1 because months are zero-indexed
+    const month = String(today.getMonth() + 1).padStart(2, "0"); 
     const day = String(today.getDate()).padStart(2, "0");
     return `${year}-${month}-${day}`;
   };
+
   const [data, setData] = useState({
     date: getCurrentDate(),
     Subject: subject,
@@ -37,34 +40,32 @@ const ReplyTicket = ({ navigation, route }) => {
   });
 
   useEffect(() => {
-    (async () => {
-      const requestPermissions = async () => {
-        const { status: mediaLibraryPermission } =
-          await ImagePicker.requestMediaLibraryPermissionsAsync();
-        const { status: cameraPermission } =
-          await ImagePicker.requestCameraPermissionsAsync();
+    const requestPermissions = async () => {
+      const { status: mediaLibraryPermission } =
+        await ImagePicker.requestMediaLibraryPermissionsAsync();
+      const { status: cameraPermission } =
+        await ImagePicker.requestCameraPermissionsAsync();
 
-        setMediaLibraryStatus(mediaLibraryPermission);
-        setCameraStatus(cameraPermission);
+      setMediaLibraryStatus(mediaLibraryPermission);
+      setCameraStatus(cameraPermission);
 
-        if (mediaLibraryPermission !== "granted") {
-          Alert.alert(
-            "Sorry, we need camera roll permissions to make this work!"
-          );
-        }
+      if (mediaLibraryPermission !== "granted") {
+        Alert.alert(
+          "Sorry, we need camera roll permissions to make this work!"
+        );
+      }
 
-        if (cameraPermission !== "granted") {
-          Alert.alert("Sorry, we need camera permissions to make this work!");
-        }
-      };
+      if (cameraPermission !== "granted") {
+        Alert.alert("Sorry, we need camera permissions to make this work!");
+      }
+    };
 
-      requestPermissions();
-    })();
+    requestPermissions();
   }, []);
 
   const pickImage = async (sourceType) => {
-    var result;
-    if (sourceType == "gallery" && mediaLibraryStatus == "granted") {
+    let result;
+    if (sourceType === "gallery" && mediaLibraryStatus === "granted") {
       result = await ImagePicker.launchImageLibraryAsync({
         mediaTypes: ImagePicker.MediaTypeOptions.All,
         allowsEditing: true,
@@ -72,7 +73,7 @@ const ReplyTicket = ({ navigation, route }) => {
         quality: 1,
       });
     }
-    if (sourceType == "camera" && cameraStatus == "granted") {
+    if (sourceType === "camera" && cameraStatus === "granted") {
       result = await ImagePicker.launchCameraAsync({
         mediaTypes: ImagePicker.MediaTypeOptions.All,
         allowsEditing: true,
@@ -80,47 +81,87 @@ const ReplyTicket = ({ navigation, route }) => {
         quality: 1,
       });
     }
-    if (result) {
-      setImage(result.assets[0].uri);
+    if (!result.canceled) {
+      console.log(result.assets[0].uri);
+
       const uriParts = result.assets[0].uri.split("/");
+      const filename=uriParts[uriParts.length - 1]
+      setFileName(filename)
       const photo = {
         uri: result.assets[0].uri,
         type: "image/jpeg",
-        name: uriParts[uriParts.length - 1],
+        name: filename,
       };
-      form.append("ticketreply_ticketid", id);
-      form.append("ticketreply_text", data?.Problem);
-      form.append("attachments", photo);
+     
       Toast.show({
         type: "success",
-        text1: "Image is ready to Upload!",
-        text2: "Wait! It takes some time",
+        text1: "Image is ready to upload!",
+        text2: "kindly wait few seconds",
         visibilityTime: 2000,
         topOffset: 5,
       });
+      setImageData(photo)
+      await UploadFile(photo)    
     }
   };
+
+  const UploadFile=async(photo)=>{
+    const photoForm = new FormData();
+    photoForm.append("file", photo);
+    const authToken = await AsyncStorage.getItem("token");
+    fetch(`${URL}/fileupload`, {
+      method: "POST",
+      body: photoForm,
+      headers: {
+        'Content-Type': 'multipart/form-data',
+        'Authorization': `Bearer ${authToken}`
+      }
+    })
+    .then((response) => response.json())
+    .then(async (res) => {
+      Toast.show({
+        type: "success",
+        text1: "Image uploaded successfully!",
+        visibilityTime: 2000,
+        topOffset: 5,
+      });
+      setFileData(res)
+      setfileUpload(true)
+      console.log(res)
+    })
+    .catch((error)=>{
+       console.log(error)
+    }) 
+  }
 
   const handleData = (value, field) => {
     setData({ ...data, [field]: value });
   };
 
+  console.log(fileData,"fileData")
+
   const submitReply = async () => {
+    const replyFormData = new FormData();
+    replyFormData.append("ticketreply_ticketid", id);
+    replyFormData.append("ticketreply_text", data.Problem);
+    replyFormData.append("attachments", imageData);
+    console.log(replyFormData,"replyFormData")
     const authToken = await AsyncStorage.getItem("token");
-    await axios
-      .post(
-        URL + "/problemreports/" + id + "/postreply",
-        {},
-        {
-          params: form,
-          headers: {
-            Authorization: `Bearer ${authToken}`,
-            Accept: "multipart/form-data"
-          },
-        }
-      )
-      .then((res) => {
-        console.log(res);
+    try {
+      const response = await fetch(`${URL}/problemreports/${id}/postreply`, {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${authToken}`,
+          Accept: "application/json",
+          "Content-Type": "multipart/form-data",
+        },
+        body: replyFormData,
+      });
+
+      const responseData = await response.json();
+
+      if (response.ok) {
+        console.log(responseData);
         Toast.show({
           type: "success",
           text1: "Reply submitted successfully!",
@@ -128,23 +169,28 @@ const ReplyTicket = ({ navigation, route }) => {
           visibilityTime: 1000,
           topOffset: 5,
         });
+
         setTimeout(() => {
           navigation.navigate("problem-report-replies", {
-            id: id,
+            id2: id,
             reply: data,
             ticketDetail: ticketDetails,
+            jobTitle2:jobTitle,  
+            subject2:subject
           });
         }, 1000);
-      })
-      .catch((err) => {
-        console.log(err);
-        Toast.show({
-          type: "error",
-          text1: "Error while subitting!",
-          visibilityTime: 1000,
-          topOffset: 5,
-        });
+      } else {
+        throw new Error(responseData.message || "Error while submitting!");
+      }
+    } catch (err) {
+      console.error(err);
+      Toast.show({
+        type: "error",
+        text1: "Error while submitting!",
+        visibilityTime: 1000,
+        topOffset: 5,
       });
+    }
   };
 
   return (
@@ -199,6 +245,8 @@ const ReplyTicket = ({ navigation, route }) => {
                 style={styles.icon}
               />
             </TouchableOpacity>
+            {fileName && <Text>{fileName}</Text>}
+            {fileUpload && <Text style={{color:'green',fontWeight:'bold'}}>Image Uploaded Successfully!</Text>}
           </View>
           <TouchableOpacity activeOpacity={0.6} onPress={submitReply}>
             <View style={styles.btnContainer}>

@@ -9,7 +9,7 @@ import axios from 'axios';
 import { URL } from '../utils/Constant';
 import Color from '../Color';
 const ProblemReportReplies = ({navigation,route}) => {
-  const { id, jobTitle, reply, ticket_subject, ticket_message, ticket_priority, ticket_status, ticketDetail} = route.params;
+  const { id, jobTitle, reply, ticket_subject, ticket_message, ticket_priority, ticket_status, ticketDetail , id2 , subject2, jobTitle2} = route.params;
   const ticketDetails = {
     ticket_subject: ticket_subject || ticketDetail.ticket_subject, 
     ticket_message: ticket_message || ticketDetail.ticket_message, 
@@ -24,7 +24,7 @@ const ProblemReportReplies = ({navigation,route}) => {
       headerTitleAlign: 'center',
       headerRight: () => (
         <View style={{ marginRight: 5 }}>
-          <TouchableOpacity activeOpacity={0.6} onPress={()=>navigation.navigate("reply-ticket",{items:items[0], jobTitle: jobTitle,id:id, subject: ticket_subject, ticketDetails: ticketDetails})}>
+          <TouchableOpacity activeOpacity={0.6} onPress={()=>navigation.navigate("reply-ticket",{items:items[0], jobTitle: jobTitle || jobTitle2, id: id || id2, subject: ticket_subject || subject2, ticketDetails: ticketDetails})}>
            <Text style={{color:"white"}}>Reply</Text>
           </TouchableOpacity>
         </View>
@@ -34,8 +34,10 @@ const ProblemReportReplies = ({navigation,route}) => {
 
   useEffect(()=>{
     (async ()=>{
+      console.log("......reached........")
+      let tId = id || id2 
       const authToken = await AsyncStorage.getItem('token');
-      await axios.get(URL + '/problemreports/show/'+id, {
+      await axios.get(URL + '/problemreports/show/'+ tId, {
         headers: {
           Authorization: `Bearer ${authToken}`,
         },
@@ -46,7 +48,7 @@ const ProblemReportReplies = ({navigation,route}) => {
         console.log(err);
       })
     })()
-  },[reply,id])
+  },[reply,id,id2])
   
   return (
     <View>
@@ -81,7 +83,6 @@ const ProblemReportReplies = ({navigation,route}) => {
               (
                 <Text style={styles.noRecord}>No Reply Found!</Text>
               )
-            
             
             }
             </View>
