@@ -34,8 +34,6 @@ const Login = ({ navigation }) => {
       if (authToken && authToken !== "") {
         setLOGINSTATE(true);
         navigation.navigate("Dashboard");
-        // setTimeout(() => {
-        // }, 300);
       }
     })();
   }, []);

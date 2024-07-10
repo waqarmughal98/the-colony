@@ -36,8 +36,6 @@ const ImagePickerFiles = ({setData,index,data,items,currentIndex}) => {
   
 
   const pickImage = async (sourceType) => {
-    
-    // No permissions request is necessary for launching the image library
     var result 
     if(sourceType=="gallery" && mediaLibraryStatus=="granted"){
       result= await ImagePicker.launchImageLibraryAsync({
@@ -55,29 +53,21 @@ const ImagePickerFiles = ({setData,index,data,items,currentIndex}) => {
         quality: 1,
       });
     }
-    
-
     if (result) {
-     
       setImage(result.assets[0].uri);
-    
       const authToken = await AsyncStorage.getItem("token");
-    
       if (!authToken) {
         navigation.navigate("LoginScreen");
         return;
       }
       const uriParts = result.assets[0].uri.split('/');
-
       const photo = {
         uri: result.assets[0].uri,
         type: 'image/jpeg',
         name: uriParts[uriParts.length - 1],
       };
-    
       const form = new FormData();
       form.append("file", photo);
-     
       Toast.show({
         type: 'success',
         text1: 'Image is ready to Upload!',
@@ -112,8 +102,6 @@ const ImagePickerFiles = ({setData,index,data,items,currentIndex}) => {
               'Authorization': `Bearer ${authToken}`
             },
           });
-
-        
           setData((prevData) => {
             const newData = [...prevData];
             const updatedImages = [...newData[index]?.images || []];
@@ -127,7 +115,6 @@ const ImagePickerFiles = ({setData,index,data,items,currentIndex}) => {
         
             return newData;
           });
-        
           Toast.show({
             type: 'success',
             text1: 'Image uploaded successfully!',
@@ -138,7 +125,6 @@ const ImagePickerFiles = ({setData,index,data,items,currentIndex}) => {
           console.error(error);
         }
       })
-
       .catch((error) => {
         Toast.show({
           type: 'error',
@@ -149,10 +135,7 @@ const ImagePickerFiles = ({setData,index,data,items,currentIndex}) => {
         console.error(error);
       });
     }
-    
   };
-
-
 
   return (
     <View style={styles.container}>
