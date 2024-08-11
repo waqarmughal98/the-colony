@@ -20,7 +20,7 @@
         "usesNonExemptEncryption": false
       },
       "bundleIdentifier": "com.geomapltd.thecolony",
-      "buildNumber": "8"
+      "buildNumber": "9"
     },
     "android": {
       "adaptiveIcon": {
@@ -32,7 +32,7 @@
         "android.permission.RECORD_AUDIO"
       ],
       "package": "com.geomapltd.thecolony",
-      "versionCode": 9
+      "versionCode": 10
     },
     "web": {
       "favicon": "./assets/favicon.png"

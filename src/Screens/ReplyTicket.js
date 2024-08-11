@@ -19,15 +19,15 @@ const ReplyTicket = ({ navigation, route }) => {
   const { jobTitle, id, subject, ticketDetails } = route.params;
   const [mediaLibraryStatus, setMediaLibraryStatus] = useState(null);
   const [cameraStatus, setCameraStatus] = useState(null);
- const [fileName, setFileName] = useState("")
- const [fileUpload, setfileUpload] = useState(false)
- const [fileData, setFileData] = useState()
- const [imageData, setImageData] = useState()
+  const [fileName, setFileName] = useState("");
+  const [fileUpload, setfileUpload] = useState(false);
+  const [fileData, setFileData] = useState();
+  const [imageData, setImageData] = useState();
 
   const getCurrentDate = () => {
     const today = new Date();
     const year = today.getFullYear();
-    const month = String(today.getMonth() + 1).padStart(2, "0"); 
+    const month = String(today.getMonth() + 1).padStart(2, "0");
     const day = String(today.getDate()).padStart(2, "0");
     return `${year}-${month}-${day}`;
   };
@@ -85,14 +85,14 @@ const ReplyTicket = ({ navigation, route }) => {
       console.log(result.assets[0].uri);
 
       const uriParts = result.assets[0].uri.split("/");
-      const filename=uriParts[uriParts.length - 1]
-      setFileName(filename)
+      const filename = uriParts[uriParts.length - 1];
+      setFileName(filename);
       const photo = {
         uri: result.assets[0].uri,
         type: "image/jpeg",
         name: filename,
       };
-     
+
       Toast.show({
         type: "success",
         text1: "Image is ready to upload!",
@@ -100,12 +100,12 @@ const ReplyTicket = ({ navigation, route }) => {
         visibilityTime: 2000,
         topOffset: 5,
       });
-      setImageData(photo)
-      await UploadFile(photo)    
+      setImageData(photo);
+      await UploadFile(photo);
     }
   };
 
-  const UploadFile=async(photo)=>{
+  const UploadFile = async (photo) => {
     const photoForm = new FormData();
     photoForm.append("file", photo);
     const authToken = await AsyncStorage.getItem("token");
@@ -113,39 +113,35 @@ const ReplyTicket = ({ navigation, route }) => {
       method: "POST",
       body: photoForm,
       headers: {
-        'Content-Type': 'multipart/form-data',
-        'Authorization': `Bearer ${authToken}`
-      }
+        "Content-Type": "multipart/form-data",
+        Authorization: `Bearer ${authToken}`,
+      },
     })
-    .then((response) => response.json())
-    .then(async (res) => {
-      Toast.show({
-        type: "success",
-        text1: "Image uploaded successfully!",
-        visibilityTime: 2000,
-        topOffset: 5,
+      .then((response) => response.json())
+      .then(async (res) => {
+        Toast.show({
+          type: "success",
+          text1: "Image uploaded successfully!",
+          visibilityTime: 2000,
+          topOffset: 5,
+        });
+        setFileData(res);
+        setfileUpload(true);
+      })
+      .catch((error) => {
+        console.log(error);
       });
-      setFileData(res)
-      setfileUpload(true)
-      console.log(res)
-    })
-    .catch((error)=>{
-       console.log(error)
-    }) 
-  }
+  };
 
   const handleData = (value, field) => {
     setData({ ...data, [field]: value });
   };
 
-  console.log(fileData,"fileData")
-
   const submitReply = async () => {
     const replyFormData = new FormData();
     replyFormData.append("ticketreply_ticketid", id);
-    replyFormData.append("ticketreply_text", data.Problem);
+    replyFormData.append("ticketreply_text", data?.Problem);
     replyFormData.append("attachments", imageData);
-    console.log(replyFormData,"replyFormData")
     const authToken = await AsyncStorage.getItem("token");
     try {
       const response = await fetch(`${URL}/problemreports/${id}/postreply`, {
@@ -161,7 +157,6 @@ const ReplyTicket = ({ navigation, route }) => {
       const responseData = await response.json();
 
       if (response.ok) {
-        console.log(responseData);
         Toast.show({
           type: "success",
           text1: "Reply submitted successfully!",
@@ -175,8 +170,8 @@ const ReplyTicket = ({ navigation, route }) => {
             id2: id,
             reply: data,
             ticketDetail: ticketDetails,
-            jobTitle2:jobTitle,  
-            subject2:subject
+            jobTitle2: jobTitle,
+            subject2: subject,
           });
         }, 1000);
       } else {
@@ -224,7 +219,7 @@ const ReplyTicket = ({ navigation, route }) => {
           </View>
           <View>
             <Text style={styles.label}>
-              Please describe the problem in detail below:
+              Please describe the problem in detail below:*
             </Text>
             <TextInput
               value={data.Problem}
@@ -236,7 +231,7 @@ const ReplyTicket = ({ navigation, route }) => {
             />
           </View>
           <View>
-            <Text style={styles.label}>Upload Image:</Text>
+            <Text style={styles.label}>Upload Image:*</Text>
             <TouchableOpacity onPress={() => pickImage("gallery")}>
               <Ionicons
                 name="images"
@@ -245,10 +240,18 @@ const ReplyTicket = ({ navigation, route }) => {
                 style={styles.icon}
               />
             </TouchableOpacity>
-            {fileName && <Text>{fileName}</Text>}
-            {fileUpload && <Text style={{color:'green',fontWeight:'bold'}}>Image Uploaded Successfully!</Text>}
+            {fileName && fileUpload && <Text>{fileName}</Text>}
+            {fileUpload && (
+              <Text style={{ color: "green", fontWeight: "bold" }}>
+                Image Uploaded Successfully!
+              </Text>
+            )}
           </View>
-          <TouchableOpacity activeOpacity={0.6} onPress={submitReply}>
+          <TouchableOpacity
+            activeOpacity={0.6}
+            onPress={submitReply}
+            disabled={!fileUpload || !data?.Problem}
+          >
             <View style={styles.btnContainer}>
               <Text style={styles.submitTxt}>Reply</Text>
             </View>

@@ -124,7 +124,7 @@ const Login = ({ navigation }) => {
             style={styles.Image}
           />
           <Text style={styles.text1}>Welcome back!</Text>
-          <Text style={styles.text2}>Sign in to view the project</Text>
+          <Text style={styles.text2}>Sign in to view your projects</Text>
           <View style={styles.inputMainContainer}>
             <View style={styles.inputContainer}>
               <Ionicons
