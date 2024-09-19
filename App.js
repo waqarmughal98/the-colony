@@ -37,9 +37,9 @@ function App() {
     <Context>
       <StatusBar translucent backgroundColor="transparent" barStyle="light-content" />
       <NavigationContainer>
-        <DrawerNavigator />
+        <DrawerNavigator/>
       </NavigationContainer>
-      <Toast />
+      <Toast/>
     </Context>
   );
 }

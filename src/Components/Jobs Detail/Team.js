@@ -25,6 +25,7 @@ const Team = ({ data }) => {
         })
         .then((res) => {
           const response = res.data;
+          console.log(response,"response")
           setItems([
             {
               label: "Quote Responsibility",
@@ -98,7 +99,7 @@ const styles = StyleSheet.create({
     height: "100%",
     paddingHorizontal: 30,
     paddingBottom: 100,
-    paddingTop: 30,
+    paddingTop:30,
     backgroundColor: Color.brightOrange,
   },
   Indicator: {
@@ -110,11 +111,11 @@ const styles = StyleSheet.create({
   },
   fetchingData: {
     color: "black",
-    fontFamily: "Sommet-Regular",
+    fontWeight: "bold",
   },
   label: {
     fontSize: 16,
-    fontFamily: "Sommet-Regular",
+    fontWeight: "400",
     marginLeft: 15,
   },
   textContainer: {
@@ -130,7 +131,6 @@ const styles = StyleSheet.create({
   },
   text: {
     color: "black",
-    fontFamily: "Sommet-Regular",
   },
   individualContainer: {
     marginBottom: 30,

@@ -118,8 +118,6 @@ const styles = StyleSheet.create({
   },
   dateValue: {
     fontSize: 14,
-    fontFamily: "Sommet-Regular",
-    marginLeft: 10,
   },
   calendarIcon: {
     marginLeft: 10,

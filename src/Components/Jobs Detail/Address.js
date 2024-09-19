@@ -112,7 +112,7 @@
     },
     label: {
       fontSize: 16,
-      fontFamily: "Sommet-Regular",
+      fontWeight: '400',
       marginLeft: 15,
     },
     textContainer:{
@@ -128,7 +128,6 @@
       justifyContent: 'center',
       width: '100%',
       paddingHorizontal: 20,
-      fontFamily: "Sommet-Regular",
     },
     toggleContainer: {
       flexDirection: 'row',
@@ -161,7 +160,7 @@
       },
       buttonText: {
         color: 'white',
-        fontFamily: "Sommet-Regular",
+        fontWeight: 'bold',
       },
       map_container:{
       }

@@ -43,7 +43,6 @@ const styles = StyleSheet.create({
   },
   footerLabel: {
     color: 'white',
-    fontFamily: "Sommet-Regular",
   },
   individual:{
     display:"flex",
@@ -54,7 +53,6 @@ const styles = StyleSheet.create({
   ,
   text:{
     color:"white",
-    fontFamily: "Sommet-Regular",
     fontSize:11
   }
 });

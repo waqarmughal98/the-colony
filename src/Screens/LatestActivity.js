@@ -30,6 +30,7 @@ const LatestActivity = ({ navigation }) => {
           },
         })
         .then((res) => {
+          console.log(res);
           setItems(res.data);
           setLoading(false);
         })
@@ -41,6 +42,7 @@ const LatestActivity = ({ navigation }) => {
   }, []);
 
   const FilterData = async (Id) => {
+    console.log(Id, 'id');
     const authToken = await AsyncStorage.getItem('token');
     axios
       .get(URL + '/job-status', {
@@ -53,6 +55,7 @@ const LatestActivity = ({ navigation }) => {
           (item) => item?.project_id == Id
         );
         if (filteredData.length > 0) {
+          console.log(filteredData, 'filterData');
           navigation.navigate('jobs-detail', {
             items: filteredData[0],
             tabId: 5,
@@ -152,7 +155,7 @@ const styles = StyleSheet.create({
   },
   fetchingData: {
     color: 'black',
-    fontFamily: "Sommet-Black",
+    fontWeight: 'bold',
   },
   individual: {
     backgroundColor: '#FFE6AE',
@@ -169,7 +172,6 @@ const styles = StyleSheet.create({
   },
   text4: {
     padding: 8,
-    fontFamily: "Sommet-Regular",
     borderRadius: 5,
   },
   individual_left: {
@@ -190,17 +192,14 @@ const styles = StyleSheet.create({
   },
   text1: {
     marginRight: 5,
-    fontFamily: "Sommet-Regular",
     color: Color.darkOrange,
   },
   text2: {
     marginBottom: 8,
-    fontFamily: "Sommet-Regular",
     textTransform: 'capitalize',
   },
   text3: {
     marginBottom: 8,
-    fontFamily: "Sommet-Regular",
     color: Color.darkOrange,
   },
 });

@@ -31,7 +31,7 @@ const NewProblemReport = ({navigation,route,Data}) => {
     }
     const [btnDisables,setBtnDisabled]=useState(false)
     useEffect(()=>{
-        // console.log(items?.project_clientid,"client")
+        console.log(items?.project_clientid,"client")
     }, [items])
 
     const submitProblem = async ()=>{
@@ -117,8 +117,8 @@ const NewProblemReport = ({navigation,route,Data}) => {
                     <SelectDropdown
                         data={dataOption}
                         buttonStyle={{height:vh*5,width:vw*90,backgroundColor:'#DFE1ED',borderRadius:10}}
-                        dropdownStyle={{marginTop: -(vh*4),fontSize:12,fontFamily: "Sommet-Regular",}}
-                        buttonTextStyle={{fontSize:15,fontFamily: "Sommet-Regular",}}
+                        dropdownStyle={{marginTop: -(vh*4),fontSize:12}}
+                        buttonTextStyle={{fontSize:15}}
                         renderDropdownIcon={isOpened => {
                             return <FontAwesome name={isOpened ? 'chevron-up' : 'chevron-down'} color={'#5A5A5A'} size={14} />;
                         }}
@@ -164,14 +164,13 @@ const styles = StyleSheet.create({
     },
     label:{
         fontSize:15,
-        fontFamily: "Sommet-Regular",
+        fontWeight:"500"
     },
     input:{
         backgroundColor:'#DFE1ED',
         height:40,
         marginTop:5,
         borderRadius:7,
-        fontFamily: "Sommet-Regular",
         paddingHorizontal:10,
     },
     dateInput:{
@@ -181,7 +180,6 @@ const styles = StyleSheet.create({
         borderRadius:7,
         paddingHorizontal:10,
         display:"flex",
-        fontFamily: "Sommet-Regular",
         justifyContent:"center"
     },
     input2:{
@@ -189,7 +187,6 @@ const styles = StyleSheet.create({
         height:150,
         marginTop:5,
         borderRadius:7,
-        fontFamily: "Sommet-Regular",
         paddingHorizontal:10,
         paddingVertical:10,
     },
@@ -205,7 +202,6 @@ const styles = StyleSheet.create({
     },
     submitTxt:{
         color:"white",
-        fontFamily: "Sommet-Regular",
         fontSize:17,
     }
 })

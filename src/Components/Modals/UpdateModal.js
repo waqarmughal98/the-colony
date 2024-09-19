@@ -66,14 +66,13 @@ const styles = StyleSheet.create({
     heading:{
         fontSize:19,
         color:"white",
-        fontFamily: "Sommet-Black",
+        fontWeight:"700",
         textAlign:"center",
         marginBottom:10
     },
     label:{
         fontSize:16,
         marginBottom:10,
-        fontFamily: "Sommet-Regular",
         
     },
     discInput:{
@@ -81,7 +80,6 @@ const styles = StyleSheet.create({
         backgroundColor:"white",
         borderRadius:10,
         padding:12,
-        fontFamily: "Sommet-Regular",
         height:25*vh
     },
     titleInput:{
@@ -89,7 +87,6 @@ const styles = StyleSheet.create({
         width:"100%",
         backgroundColor:"white",
         borderRadius:10,
-        fontFamily: "Sommet-Regular",
         paddingHorizontal:15,
         marginBottom:15
     },
@@ -105,14 +102,12 @@ const styles = StyleSheet.create({
     },
     submitTxt:{
         color:"white",
-        fontFamily: "Sommet-Regular",
         fontSize:17,
     },
     error:{
         textAlign:"center",
         marginTop:10,
         marginBottom:-10,
-        fontFamily: "Sommet-Regular",
         color:"white"
     }
 })

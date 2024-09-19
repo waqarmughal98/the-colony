@@ -81,6 +81,7 @@ const Files = ({data}) => {
     setFileModalVisible(true);
   }
 
+  
   return (
     <View>
         {
@@ -239,12 +240,12 @@ const styles = StyleSheet.create({
   text:{
     color:"white",
     fontSize:17,
-    fontFamily: "Sommet-Regular",
+    fontWeight:"500"
   },
   text1:{
     color:"black",
     fontSize:14,
-    fontFamily: "Sommet-Regular",
+    fontWeight:"500"
   },
   addFolderContainer:{
     display:"flex",
@@ -265,7 +266,7 @@ const styles = StyleSheet.create({
   },
   nameText:{
     fontSize:17,
-    fontFamily: "Sommet-Black",
+    fontWeight:"600",
     borderBottomColor:"gray",
     borderBottomWidth:2,
     paddingHorizontal:15,
@@ -312,7 +313,6 @@ const styles = StyleSheet.create({
   },
   fileName:{
     fontSize:12,
-    fontFamily: "Sommet-Regular",
     color:"#5A5A5A",
     flex:0.85
   },
@@ -323,7 +323,7 @@ const styles = StyleSheet.create({
   },
   fetchingData: {
     color: 'black',
-    fontFamily: "Sommet-Black",
+    fontWeight: 'bold',
   },
   modalImage:{
     width: '100%',

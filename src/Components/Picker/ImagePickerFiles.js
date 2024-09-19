@@ -173,7 +173,7 @@ const styles = StyleSheet.create({
     alignItems:'center'
   },
   Text:{
-    fontFamily: "Sommet-Regular",
+    fontWeight:"600",
     textAlign:"center",
     marginVertical:10,
   },
@@ -193,7 +193,6 @@ const styles = StyleSheet.create({
   text2:{
     fontSize:15,
     color:"white",
-    fontFamily: "Sommet-Regular",
     marginRight:3
   },
   Image4:{

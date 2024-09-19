@@ -24,7 +24,7 @@ const DashboardBottom = ({navigation, status}) => {
     {
       img: require('../../../assets/imgs/problem.png'), 
       screenName:"all-problem-report",
-      title: "Problem Report",
+      title: "Problem Rep",
     },
     {
       img: require('../../../assets/imgs/latest.png'), 
@@ -93,13 +93,11 @@ const styles = StyleSheet.create({
     alignSelf:"center"
   },
   containerTitle:{
-    fontFamily: "Sommet-Regular",
     fontSize:vw*3,
     textAlign:'center'
   },
   calendar:{
     marginLeft:2,
-    fontFamily: "Sommet-Regular",
     fontSize: vw*8,
   }
 

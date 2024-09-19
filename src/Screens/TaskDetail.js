@@ -50,7 +50,7 @@ const TaskDetail = ({navigation , route}) => {
         }, 1000);
     },[])
     useEffect(()=>{
-      // console.log(screenName,"screenName....")
+      console.log(screenName,"screenName....")
     },[screenName])
     const options =['New (Unassigned)', 'Not Started', 'In Progress', 'On Hold','Query Resolved','Query Raised','Completed']
 
@@ -198,14 +198,13 @@ const styles = StyleSheet.create({
       },
       label: {
         fontSize: 16,
-        fontFamily: "Sommet-Black",
+        fontWeight: 'bold',
         marginRight: 10,
       },
     
 
       value: {
         fontSize: 16,
-        fontFamily: "Sommet-Regular",
       },
       optionText:{
         color:"black"
@@ -215,7 +214,6 @@ const styles = StyleSheet.create({
       },
       text1:{
         fontSize:16,
-        fontFamily: "Sommet-Regular",
         paddingHorizontal:15
       },
       TextContainer:{
@@ -229,13 +227,11 @@ const styles = StyleSheet.create({
       },
       dataText:{
         fontSize:14,
-        fontFamily: "Sommet-Regular",
         color:'black',
         flex:0.4
     },
     dataText2:{
         fontSize:14,
-        fontFamily: "Sommet-Regular",
         color:'black',
         flex:0.6,
         textAlign:"center"
@@ -263,7 +259,6 @@ const styles = StyleSheet.create({
     submitTxt:{
         color:"white",
         fontSize:17,
-        fontFamily: "Sommet-Regular",
     }
       
     

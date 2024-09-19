@@ -80,14 +80,13 @@ const styles = StyleSheet.create({
   },
   drawerHeaderText: {
     fontSize: 20,
-    fontFamily: "Sommet-Black",
+    fontWeight: 'bold',
     color:"white",
 
   },
   drawerSubHeaderText: {
     fontSize: 16,
     marginTop: 2,
-    fontFamily: "Sommet-Regular",
     color:"white"
   },
   drawerFooter: {
@@ -98,7 +97,7 @@ const styles = StyleSheet.create({
   drawerFooterText: {
     fontSize: 16,
     marginBottom: 8,
-    fontFamily: "Sommet-Black",
+    fontWeight:"600",
     marginVertical:15
   },
 });

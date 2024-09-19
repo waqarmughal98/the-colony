@@ -108,7 +108,6 @@ const styles = StyleSheet.create({
   },
   headerText: {
     color: Color.darkOrange,
-    fontFamily: "Sommet-Regular",
     flex: 1,
   },
   notesDataContaier: {
@@ -127,22 +126,18 @@ const styles = StyleSheet.create({
   },
   containerText: {
     flex: 1,
-    fontFamily: "Sommet-Regular",
   },
   containerText2: {
     color: Color.darkOrange,
-    fontFamily: "Sommet-Regular",
     flex: 1,
   },
   containerText3: {
     flex: 1,
     textAlign: "right",
     marginRight: "auto",
-    fontFamily: "Sommet-Regular",
   },
   containerText3Container: {
     flex: 1,
-    fontFamily: "Sommet-Regular",
     display: "flex",
     flexDirection: "row",
     alignItems: "center",
@@ -157,6 +152,6 @@ const styles = StyleSheet.create({
   },
   fetchingData: {
     color: "black",
-    fontFamily: "Sommet-Black",
+    fontWeight: "bold",
   },
 });

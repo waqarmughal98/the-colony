@@ -64,8 +64,9 @@ const ProblemReports = ({navigation, data,ID}) => {
                 items.length > 0 ?  
                 (
                   items?.map((item,index)=>{
+                    console.log(item,"item")
                     return(
-                      <TouchableOpacity onPress={()=>navigation.navigate("problem-report-replies", {id: item.ticket_id, jobTitle: item.project_title, ticket_subject: item.ticket_subject,ticket_message: item.ticket_message, ticket_priority: item.ticket_priority, ticket_status: item.ticket_status})} activeOpacity={0.6} key={index}>
+                      <TouchableOpacity onPress={()=>navigation.navigate("problem-report-replies", {id: item.ticket_id, jobTitle: item.project_title})} activeOpacity={0.6} key={index}>
                         <View style={[styles.mainIndividual,{backgroundColor:index%2==0 ? '#D2CBBC' : '#F2F1CF'}]}>
                           <View style={styles.individual}>
                             <Text style={styles.dataText}>{item.ticket_subject}</Text>
@@ -118,7 +119,7 @@ const styles = StyleSheet.create({
     },
     fetchingData:{
         color:'black',
-        fontFamily: "Sommet-Black",
+        fontWeight:"bold"
     },
     headerContainer:{
       backgroundColor:"black",
@@ -131,18 +132,15 @@ const styles = StyleSheet.create({
     text1:{
       color:Color.brightOrange,
       flex:0.5,
-      fontFamily: "Sommet-Black",
     },
     textDate:{
       color:Color.brightOrange,
       flex:0.5,
-      fontFamily: "Sommet-Black",
       textAlign:'center'
     },
     text2:{
       color:Color.brightOrange,
       flex:1,
-      fontFamily: "Sommet-Black",
       marginLeft:10,
       textAlign:"center"
     },
@@ -161,27 +159,23 @@ const styles = StyleSheet.create({
   dataText:{
     fontSize:14,
     color:'black',
-    fontFamily: "Sommet-Regular",
     flex:0.4
   },
   dataTextMiddle:{
     fontSize:14,
     color:'black',
     flex:0.4,
-    fontFamily: "Sommet-Regular",
     textAlign:'center'
   },
   dataText2:{
       fontSize:14,
       color:'black',
       flex:0.6,
-      fontFamily: "Sommet-Regular",
       textAlign:"center"
   },
   opentext:{
     color:"#FE98A9",
     paddingBottom:7,
-    fontFamily: "Sommet-Regular",
     marginTop:-10
   },
   allData:{
@@ -194,7 +188,7 @@ const styles = StyleSheet.create({
     height: vh * 100,
     textAlign: "center",
     paddingVertical: vh * 25,
-    fontFamily: "Sommet-Black",
+    fontWeight: "bold",
   }
 
 })

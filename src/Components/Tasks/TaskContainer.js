@@ -6,7 +6,7 @@ import { vh, vw } from '../../utils/ScreenSize';
 
 const TaskContainer = ({data,allData, navigation,screenName}) => {
   useEffect(()=>{
-    // console.log(screenName,"scsreen")
+    console.log(screenName,"scsreen")
 
   },[screenName])
   return (
@@ -53,25 +53,23 @@ const styles = StyleSheet.create({
     text:{
       fontSize:16,
       color:'white',
-      fontFamily: "Sommet-Black",
+      fontWeight:'bold',
       flex:0.25
     },
     text2:{
       fontSize:16,
       color:'white',
-      fontFamily: "Sommet-Black",
+      fontWeight:'bold',
       flex:0.75,
       textAlign:"center"
     },
     dataText:{
       fontSize:14,
       color:'black',
-      fontFamily: "Sommet-Regular",
       flex:0.4
     },
     dataText2:{
       fontSize:14,
-      fontFamily: "Sommet-Regular",
       color:'black',
       flex:0.6,
       textAlign:"center"
@@ -92,6 +90,6 @@ const styles = StyleSheet.create({
       height: vh * 100,
       textAlign: "center",
       paddingVertical: vh * 25,
-      fontFamily: "Sommet-Black",
+      fontWeight: "bold",
     }
 })

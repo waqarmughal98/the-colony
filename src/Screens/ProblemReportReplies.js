@@ -11,10 +11,10 @@ import Color from '../Color';
 const ProblemReportReplies = ({navigation,route}) => {
   const { id, jobTitle, reply, ticket_subject, ticket_message, ticket_priority, ticket_status, ticketDetail , id2 , subject2, jobTitle2} = route.params;
   const ticketDetails = {
-    ticket_subject: ticket_subject || ticketDetail.ticket_subject, 
-    ticket_message: ticket_message || ticketDetail.ticket_message, 
-    ticket_priority: ticket_priority || ticketDetail.ticket_priority, 
-    ticket_status: ticket_status || ticketDetail.ticket_status
+    ticket_subject: ticket_subject, 
+    ticket_message: ticket_message, 
+    ticket_priority: ticket_priority, 
+    ticket_status: ticket_status
   }
   const [items, setItems] = useState([]);
   const [loading, setLoading]=useState(true)
@@ -131,7 +131,7 @@ const styles = StyleSheet.create({
   },
   text:{
     fontSize:16,
-    fontFamily: "Sommet-Black",
+    fontWeight:"700",
     color:"#625E57"
   },
   container:{
@@ -143,7 +143,7 @@ const styles = StyleSheet.create({
     flex:1,
     textAlign: "center",
     paddingVertical: vh * 0.5,
-    fontFamily: "Sommet-Black",
+    fontWeight: "bold",
   },
   Indicator: {
     flexGrow: 1,
@@ -155,7 +155,7 @@ const styles = StyleSheet.create({
   },
   fetchingData: {
     color: 'black',
-    fontFamily: "Sommet-Black",
+    fontWeight: 'bold',
   },
   header:{
     backgroundColor:Color.darkOrange,
@@ -165,6 +165,6 @@ const styles = StyleSheet.create({
   headerText:{
     color:'white',
     fontSize:17,
-    fontFamily: "Sommet-Black",
+    fontWeight:'bold',
   }
 })

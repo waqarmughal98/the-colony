@@ -50,9 +50,9 @@ const Update = ({data,updateItem}) => {
                     <Image source={require('../../../assets/imgs/avator.png')} style={styles.Image} />
                   </View>
                   <View style={styles.textContainer} >
-                      <Text style={{fontFamily: "Sommet-Regular",}}>{item.comment_text}</Text>
-                      <Text style={{fontFamily: "Sommet-Black",}}>{`${item.first_name} ${item.last_name}`}</Text>
-                      <Text style={{fontFamily: "Sommet-Regular",fontStyle: 'italic'}}>{item?.comment_created?.slice(0,10)}</Text>
+                      <Text>{item.comment_text}</Text>
+                      <Text style={{fontWeight:"bold"}}>{`${item.first_name} ${item.last_name}`}</Text>
+                      <Text style={{ fontStyle: 'italic'}}>{item?.comment_created?.slice(0,10)}</Text>
                   </View>
                 </View>)
             }
@@ -81,7 +81,7 @@ const styles = StyleSheet.create({
     },
     Indicator:
     {
-        flexGrow:1,
+         flexGrow:1,
         display:"flex",
         justifyContent:"center",
         alignItems:"center",
@@ -90,7 +90,7 @@ const styles = StyleSheet.create({
     },
     fetchingData:{
         color:'black',
-        fontFamily: "Sommet-Regular"
+        fontWeight:"bold"
     }
     ,individual:{
       backgroundColor: '#FFE6AE',
