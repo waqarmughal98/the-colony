@@ -5,22 +5,22 @@ import DrawerNavigator from "./Navigation/DrawerNavigator";
 import Context from "./src/Global/Context";
 import { Platform, StatusBar } from "react-native";
 import Toast from "react-native-toast-message";
-import UseFont from "./src/utils/UseFont";
-import * as SplashScreen from 'expo-splash-screen';
+// import UseFont from "./src/utils/UseFont";
+// import * as SplashScreen from 'expo-splash-screen';
 
-SplashScreen.preventAutoHideAsync();
+// SplashScreen.preventAutoHideAsync();
 
 function App() {
-  const [fontsLoaded, setFontsLoaded] = useState(false);
+  // const [fontsLoaded, setFontsLoaded] = useState(false);
 
   useEffect(() => {
-    const loadFonts = async () => {
-      await UseFont();
-      setFontsLoaded(true);
-      SplashScreen.hideAsync();
-    };
+    // const loadFonts = async () => {
+    //   await UseFont();
+    //   setFontsLoaded(true);
+    //   SplashScreen.hideAsync();
+    // };
 
-    loadFonts();
+    // loadFonts();
 
     StatusBar.setBarStyle("light-content");
     if (Platform.OS === "android") {
@@ -29,9 +29,9 @@ function App() {
     }
   }, []);
 
-  if (!fontsLoaded) {
-    return null; 
-  }
+  // if (!fontsLoaded) {
+  //   return null; 
+  // }
 
   return (
     <Context>
