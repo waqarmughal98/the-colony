@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from 'react';
 import {
   StyleSheet,
   Text,
@@ -7,19 +7,19 @@ import {
   ScrollView,
   TouchableOpacity,
   Alert,
-} from "react-native";
-import DateInput from "../Components/Date/DateInput";
-import Toast from "react-native-toast-message";
-import * as ImagePicker from "expo-image-picker";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import { Ionicons } from "@expo/vector-icons";
-import { URL } from "../utils/Constant";
+} from 'react-native';
+import DateInput from '../Components/Date/DateInput';
+import Toast from 'react-native-toast-message';
+import * as ImagePicker from 'expo-image-picker';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { Ionicons } from '@expo/vector-icons';
+import { URL } from '../utils/Constant';
 
 const ReplyTicket = ({ navigation, route }) => {
   const { jobTitle, id, subject, ticketDetails } = route.params;
   const [mediaLibraryStatus, setMediaLibraryStatus] = useState(null);
   const [cameraStatus, setCameraStatus] = useState(null);
-  const [fileName, setFileName] = useState("");
+  const [fileName, setFileName] = useState('');
   const [fileUpload, setfileUpload] = useState(false);
   const [fileData, setFileData] = useState();
   const [imageData, setImageData] = useState();
@@ -27,8 +27,8 @@ const ReplyTicket = ({ navigation, route }) => {
   const getCurrentDate = () => {
     const today = new Date();
     const year = today.getFullYear();
-    const month = String(today.getMonth() + 1).padStart(2, "0");
-    const day = String(today.getDate()).padStart(2, "0");
+    const month = String(today.getMonth() + 1).padStart(2, '0');
+    const day = String(today.getDate()).padStart(2, '0');
     return `${year}-${month}-${day}`;
   };
 
@@ -36,7 +36,7 @@ const ReplyTicket = ({ navigation, route }) => {
     date: getCurrentDate(),
     Subject: subject,
     Job: jobTitle,
-    Problem: "",
+    Problem: '',
   });
 
   useEffect(() => {
@@ -49,14 +49,16 @@ const ReplyTicket = ({ navigation, route }) => {
       setMediaLibraryStatus(mediaLibraryPermission);
       setCameraStatus(cameraPermission);
 
-      if (mediaLibraryPermission !== "granted") {
+      if (mediaLibraryPermission !== 'granted') {
         Alert.alert(
-          "Sorry, we need camera roll permissions to make this work!"
+          'Sorry, we need camera roll permissions to make this work!'
         );
       }
 
-      if (cameraPermission !== "granted") {
-        Alert.alert("Sorry, we need camera permissions to make this work!");
+      if (cameraPermission !== 'granted') {
+        Alert.alert(
+          'Sorry, we need camera permissions to make this work!'
+        );
       }
     };
 
@@ -65,7 +67,10 @@ const ReplyTicket = ({ navigation, route }) => {
 
   const pickImage = async (sourceType) => {
     let result;
-    if (sourceType === "gallery" && mediaLibraryStatus === "granted") {
+    if (
+      sourceType === 'gallery' &&
+      mediaLibraryStatus === 'granted'
+    ) {
       result = await ImagePicker.launchImageLibraryAsync({
         mediaTypes: ImagePicker.MediaTypeOptions.All,
         allowsEditing: true,
@@ -73,7 +78,7 @@ const ReplyTicket = ({ navigation, route }) => {
         quality: 1,
       });
     }
-    if (sourceType === "camera" && cameraStatus === "granted") {
+    if (sourceType === 'camera' && cameraStatus === 'granted') {
       result = await ImagePicker.launchCameraAsync({
         mediaTypes: ImagePicker.MediaTypeOptions.All,
         allowsEditing: true,
@@ -84,19 +89,19 @@ const ReplyTicket = ({ navigation, route }) => {
     if (!result.canceled) {
       console.log(result.assets[0].uri);
 
-      const uriParts = result.assets[0].uri.split("/");
+      const uriParts = result.assets[0].uri.split('/');
       const filename = uriParts[uriParts.length - 1];
       setFileName(filename);
       const photo = {
         uri: result.assets[0].uri,
-        type: "image/jpeg",
+        type: 'image/jpeg',
         name: filename,
       };
 
       Toast.show({
-        type: "success",
-        text1: "Image is ready to upload!",
-        text2: "kindly wait few seconds",
+        type: 'success',
+        text1: 'Image is ready to upload!',
+        text2: 'kindly wait few seconds',
         visibilityTime: 2000,
         topOffset: 5,
       });
@@ -107,21 +112,21 @@ const ReplyTicket = ({ navigation, route }) => {
 
   const UploadFile = async (photo) => {
     const photoForm = new FormData();
-    photoForm.append("file", photo);
-    const authToken = await AsyncStorage.getItem("token");
+    photoForm.append('file', photo);
+    const authToken = await AsyncStorage.getItem('token');
     fetch(`${URL}/fileupload`, {
-      method: "POST",
+      method: 'POST',
       body: photoForm,
       headers: {
-        "Content-Type": "multipart/form-data",
+        'Content-Type': 'multipart/form-data',
         Authorization: `Bearer ${authToken}`,
       },
     })
       .then((response) => response.json())
       .then(async (res) => {
         Toast.show({
-          type: "success",
-          text1: "Image uploaded successfully!",
+          type: 'success',
+          text1: 'Image uploaded successfully!',
           visibilityTime: 2000,
           topOffset: 5,
         });
@@ -139,34 +144,37 @@ const ReplyTicket = ({ navigation, route }) => {
 
   const submitReply = async () => {
     const replyFormData = new FormData();
-    replyFormData.append("ticketreply_ticketid", id);
-    replyFormData.append("ticketreply_text", data?.Problem);
-    replyFormData.append("attachments", imageData);
-    const authToken = await AsyncStorage.getItem("token");
+    replyFormData.append('ticketreply_ticketid', id);
+    replyFormData.append('ticketreply_text', data?.Problem);
+    replyFormData.append('attachments', imageData);
+    const authToken = await AsyncStorage.getItem('token');
     try {
-      const response = await fetch(`${URL}/problemreports/${id}/postreply`, {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${authToken}`,
-          Accept: "application/json",
-          "Content-Type": "multipart/form-data",
-        },
-        body: replyFormData,
-      });
+      const response = await fetch(
+        `${URL}/problemreports/${id}/postreply`,
+        {
+          method: 'POST',
+          headers: {
+            Authorization: `Bearer ${authToken}`,
+            Accept: 'application/json',
+            'Content-Type': 'multipart/form-data',
+          },
+          body: replyFormData,
+        }
+      );
 
       const responseData = await response.json();
 
       if (response.ok) {
         Toast.show({
-          type: "success",
-          text1: "Reply submitted successfully!",
-          text2: "we are redirect you to previous screen",
+          type: 'success',
+          text1: 'Reply submitted successfully!',
+          text2: 'we are redirect you to previous screen',
           visibilityTime: 1000,
           topOffset: 5,
         });
 
         setTimeout(() => {
-          navigation.navigate("problem-report-replies", {
+          navigation.navigate('problem-report-replies', {
             id2: id,
             reply: data,
             ticketDetail: ticketDetails,
@@ -175,13 +183,15 @@ const ReplyTicket = ({ navigation, route }) => {
           });
         }, 1000);
       } else {
-        throw new Error(responseData.message || "Error while submitting!");
+        throw new Error(
+          responseData.message || 'Error while submitting!'
+        );
       }
     } catch (err) {
       console.error(err);
       Toast.show({
-        type: "error",
-        text1: "Error while submitting!",
+        type: 'error',
+        text1: 'Error while submitting!',
         visibilityTime: 1000,
         topOffset: 5,
       });
@@ -193,7 +203,9 @@ const ReplyTicket = ({ navigation, route }) => {
       <ScrollView>
         <View style={styles.mainContainer}>
           <View>
-            <Text style={[styles.label, { marginBottom: 5 }]}>Date</Text>
+            <Text style={[styles.label, { marginBottom: 5 }]}>
+              Date
+            </Text>
             <View>
               <DateInput
                 editable={true}
@@ -208,7 +220,7 @@ const ReplyTicket = ({ navigation, route }) => {
             <TextInput
               value={data.Subject}
               style={styles.input}
-              onChangeText={(text) => handleData(text, "Subject")}
+              onChangeText={(text) => handleData(text, 'Subject')}
             />
           </View>
           <View>
@@ -227,12 +239,12 @@ const ReplyTicket = ({ navigation, route }) => {
               multiline={true}
               numberOfLines={8}
               textAlignVertical="top"
-              onChangeText={(text) => handleData(text, "Problem")}
+              onChangeText={(text) => handleData(text, 'Problem')}
             />
           </View>
           <View>
             <Text style={styles.label}>Upload Image:*</Text>
-            <TouchableOpacity onPress={() => pickImage("gallery")}>
+            <TouchableOpacity onPress={() => pickImage('gallery')}>
               <Ionicons
                 name="images"
                 size={50}
@@ -242,7 +254,7 @@ const ReplyTicket = ({ navigation, route }) => {
             </TouchableOpacity>
             {fileName && fileUpload && <Text>{fileName}</Text>}
             {fileUpload && (
-              <Text style={{ color: "green", fontWeight: "bold" }}>
+              <Text style={{ color: 'green', fontWeight: 'bold' }}>
                 Image Uploaded Successfully!
               </Text>
             )}
@@ -252,8 +264,28 @@ const ReplyTicket = ({ navigation, route }) => {
             onPress={submitReply}
             disabled={!fileUpload || !data?.Problem}
           >
-            <View style={styles.btnContainer}>
-              <Text style={styles.submitTxt}>Reply</Text>
+            <View
+              style={[
+                styles.btnContainer,
+                {
+                  backgroundColor:
+                    !fileUpload || !data?.Problem ? 'gray' : 'black',
+                },
+              ]}
+            >
+              <Text
+                style={[
+                  styles.submitTxt,
+                  {
+                    color:
+                      !fileUpload || !data?.Problem
+                        ? 'darkgray'
+                        : 'white',
+                  }, // Change text color too if needed
+                ]}
+              >
+                Reply
+              </Text>
             </View>
           </TouchableOpacity>
         </View>
@@ -268,11 +300,11 @@ export default ReplyTicket;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "white",
+    backgroundColor: 'white',
   },
   mainContainer: {
     padding: 20,
-    display: "flex",
+    display: 'flex',
     gap: 15,
     paddingBottom: 70,
   },
@@ -280,23 +312,23 @@ const styles = StyleSheet.create({
     fontSize: 15,
   },
   input: {
-    backgroundColor: "#DFE1ED",
+    backgroundColor: '#DFE1ED',
     height: 40,
     marginTop: 5,
     borderRadius: 7,
     paddingHorizontal: 10,
   },
   dateInput: {
-    backgroundColor: "#DFE1ED",
+    backgroundColor: '#DFE1ED',
     height: 40,
     marginTop: 5,
     borderRadius: 7,
     paddingHorizontal: 10,
-    display: "flex",
-    justifyContent: "center",
+    display: 'flex',
+    justifyContent: 'center',
   },
   input2: {
-    backgroundColor: "#DFE1ED",
+    backgroundColor: '#DFE1ED',
     height: 150,
     marginTop: 5,
     borderRadius: 7,
@@ -304,15 +336,15 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
   },
   btnContainer: {
-    backgroundColor: "black",
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
+    backgroundColor: 'black',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
     height: 45,
     borderRadius: 10,
   },
   submitTxt: {
-    color: "white",
+    color: 'white',
     fontSize: 17,
   },
 });

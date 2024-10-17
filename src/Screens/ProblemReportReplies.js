@@ -11,10 +11,10 @@ import Color from '../Color';
 const ProblemReportReplies = ({navigation,route}) => {
   const { id, jobTitle, reply, ticket_subject, ticket_message, ticket_priority, ticket_status, ticketDetail , id2 , subject2, jobTitle2} = route.params;
   const ticketDetails = {
-    ticket_subject: ticket_subject, 
-    ticket_message: ticket_message, 
-    ticket_priority: ticket_priority, 
-    ticket_status: ticket_status
+    ticket_subject: ticket_subject || ticketDetail?.ticket_subject, 
+    ticket_message: ticket_message || ticketDetail?.ticket_message, 
+    ticket_priority: ticket_priority || ticketDetail?.ticket_priority, 
+    ticket_status: ticket_status || ticketDetail?.ticket_status
   }
   const [items, setItems] = useState([]);
   const [loading, setLoading]=useState(true)
@@ -49,7 +49,8 @@ const ProblemReportReplies = ({navigation,route}) => {
       })
     })()
   },[reply,id,id2])
-  
+
+  console.log(ticketDetails,"ticketDetails")
   return (
     <View>
       <ScrollView>
@@ -57,7 +58,7 @@ const ProblemReportReplies = ({navigation,route}) => {
           !loading ? 
           (
             <View style={styles.container}>
-            <ViewProblemReport ticketDetails={ticketDetails} />
+            <ViewProblemReport ticketDetails={ticketDetails}  />
             <View style={styles.header}>
               <Text style={styles.headerText}>
                 All Replies

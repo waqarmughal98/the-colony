@@ -53,14 +53,14 @@
               />
             </View>
 
-           {showMap && <Text style={{marginBottom:13,marginHorizontal:5,marginTop:-5,fontSize:12,textAlign:"center",fontWeight:"bold", fontStyle: 'italic',}}> Click anywhere on MapView to open google maps</Text>
-}
+           {showMap && <Text style={{marginBottom:13,marginHorizontal:5,marginTop:-5,fontSize:12,textAlign:"center",fontWeight:"bold", fontStyle: 'italic',}}> Click anywhere on MapView to open google maps</Text>}
 
             {showMap ? (
             <TouchableOpacity
               style={styles.mapContainer}
               onPress={() => {
-                const url = `http://maps.google.de/maps?hl=en&q=${inputData.street} ${inputData.city} ${inputData.locationDetail} ${inputData.postcode}&ie=UTF8&t=&z=17&iwloc=B&output=embed`;
+                const url = `https://maps.google.de/maps?hl=en&q=${inputData.street} ${inputData.city} ${inputData.locationDetail} ${inputData.postcode}&ie=UTF8&t=&z=17&iwloc=B&output=embed`;
+                console.log(url,"url")
                 Linking.openURL(url);
               }}>
               <WebView
