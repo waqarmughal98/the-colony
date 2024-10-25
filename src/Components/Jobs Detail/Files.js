@@ -116,7 +116,7 @@ const Files = ({data}) => {
                       <Text>{item.file_group_name}</Text>
                     </View>
                   </TouchableOpacity>
-                  <View style={styles.rightBtmContainer}>
+                  <View onPress={()=>hendleOpen(index)} style={styles.rightBtmContainer}>
                       <ImagePickerFiles key={index} index={index} data={data} setData={setFileName} currentIndex={currentIndex}  items={items}/>
                   </View>
                 </View>

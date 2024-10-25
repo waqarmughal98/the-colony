@@ -8,6 +8,8 @@ import { Entypo, Ionicons } from '@expo/vector-icons';
 import axios from 'axios';
 
 const ImagePickerFiles = ({setData,index,data,items,currentIndex}) => {
+  console.log(currentIndex,"currentIndex")
+  console.log(index,"index")
   const [image, setImage] = useState(null);
   const [mediaLibraryStatus, setMediaLibraryStatus] = useState(null);
   const [cameraStatus, setCameraStatus] = useState(null);
@@ -105,7 +107,7 @@ const ImagePickerFiles = ({setData,index,data,items,currentIndex}) => {
           attachments: "yes",
           fileresource_type: "project",
           fileresource_id: data?.project_id,
-          filegroup_id: items[currentIndex]?.file_group_id,
+          filegroup_id: items[index]?.file_group_id,
         };
         
         try {
