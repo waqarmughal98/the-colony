@@ -11,6 +11,7 @@ const ImagePickerFiles = ({setData,index,data,items,currentIndex}) => {
   const [image, setImage] = useState(null);
   const [mediaLibraryStatus, setMediaLibraryStatus] = useState(null);
   const [cameraStatus, setCameraStatus] = useState(null);
+  const [loading , setLoading] = useState(false)
   useEffect(() => {
     (async () => {
       const requestPermissions = async () => {
@@ -76,12 +77,14 @@ const ImagePickerFiles = ({setData,index,data,items,currentIndex}) => {
     
       const form = new FormData();
       form.append("file", photo);
-     
+      
+      setLoading(true)
       Toast.show({
-        type: 'success',
-        text1: 'Image is ready to Upload!',
-        text2: 'Wait! It takes some time',
+        type: 'info',
+        text1: 'Uploading Image...',
+        text2: 'Please wait',
         visibilityTime: 2000,
+        autoHide: false, // Prevents auto-hide while loading
         topOffset: 5,
       });
       fetch(`${URL}/fileupload`, {
@@ -135,6 +138,7 @@ const ImagePickerFiles = ({setData,index,data,items,currentIndex}) => {
           });
         } catch (error) {
           console.error(error);
+          Toast.hide();
         }
       })
 
@@ -146,6 +150,7 @@ const ImagePickerFiles = ({setData,index,data,items,currentIndex}) => {
           visibilityTime: 2000
         });
         console.error(error);
+        Toast.hide();
       });
     }
     

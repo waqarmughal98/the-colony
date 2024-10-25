@@ -225,7 +225,7 @@ function HomeScreenStack() {
         name="calender"
         component={Calender}
         options={{
-          title: 'Team Calendar',
+          title: 'My Calendar',
         }}
       />
     </HomeStack.Navigator>

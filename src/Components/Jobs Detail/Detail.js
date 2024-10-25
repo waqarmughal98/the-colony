@@ -43,7 +43,7 @@ const Address = ({data}) => {
   const [inputData, setInputData] = useState({
     Company: data.client_company_name,
     jobName: data.project_title,
-    jobType: data.project_type,
+    jobType: data.project_custom_field_44,
     SiteWorkStartDate: data.project_date_start,
     SiteWorkEndDate: data.project_date_due,
     Category: data.category_name,
