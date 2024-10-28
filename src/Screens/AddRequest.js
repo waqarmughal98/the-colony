@@ -5,9 +5,9 @@ import { vw,vh } from '../utils/ScreenSize'
 import { FontAwesome } from '@expo/vector-icons';
 import SelectDropdown from 'react-native-select-dropdown'
 import Toast from 'react-native-toast-message';
-import DateInput from '../Components/Date/DateInput'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
+import DateTimePickerModal from "react-native-modal-datetime-picker"
 import { URL } from '../utils/Constant';
 import { useNavigation } from '@react-navigation/native';
 import { ContextProvider } from '../Global/Context';
@@ -15,8 +15,8 @@ const AddRequest = () => {
     const { setUpdation ,selectedRequestCategory  } = useContext(ContextProvider);
     const [leave, setLeave] = useState({
         leave_title: "",
-        leave_start_date: new Date().toDateString(),
-        leave_end_date: new Date().toDateString(),
+        leave_start_date: new Date().toISOString(),
+        leave_end_date: new Date().toISOString(),
         leave_reason: "",
         leave_type: selectedRequestCategory,
         day_to_taken: "",
@@ -26,6 +26,8 @@ const AddRequest = () => {
     const updateLeave = (value, field)=> {
         setLeave({...leave, [field]: value})
     }
+
+    console.log(leave,"leave")
 
     console.log(selectedRequestCategory,"selectedRequestCategory")
     const validations=()=>{
@@ -69,6 +71,33 @@ const AddRequest = () => {
 
        
     }
+    
+  const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
+  const [pickerState, setPickerState] = useState("");
+
+  const showDatePicker = (name) => {
+    setPickerState(name)
+    setDatePickerVisibility(true);
+  };
+
+  const hideDatePicker = () => {
+    setDatePickerVisibility(false);
+  };
+
+  const handleConfirm = (date) => {
+    let formatedData =date.toISOString()
+    setLeave((pre)=>({...pre,[pickerState]:formatedData}))
+    hideDatePicker();
+  };
+
+  function formatDate(input) {
+    const date = new Date(input + " 2024");
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0'); 
+    const day = String(date.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
+  }
+
 
     const data=["Holiday","Sickness","Overtime"]
     /* Check this data */
@@ -112,11 +141,27 @@ const AddRequest = () => {
                 </View>
                 <View>
                     <Text style={styles.label}>Start Date*</Text>
-                    <DateInput editable={true}  setLeave={setLeave} name="startDate"  />
+                    <TouchableOpacity activeOpacity={0.6} style={[styles.dayInput,{justifyContent:'center'}]} onPress={()=>showDatePicker('leave_start_date')}>
+                        <Text>{leave.leave_start_date.toString().slice(0,10)}</Text>
+                        <DateTimePickerModal
+                            isVisible={isDatePickerVisible}
+                            mode="date"
+                            onConfirm={handleConfirm}
+                            onCancel={hideDatePicker}
+                        />
+                    </TouchableOpacity>
                 </View>
                 <View>
                     <Text style={styles.label}>End Date*</Text>
-                    <DateInput editable={true} setLeave={setLeave} name="endDate"  />
+                    <TouchableOpacity activeOpacity={0.6} style={[styles.dayInput,{justifyContent:'center'}]} onPress={()=>showDatePicker('leave_end_date')}>
+                        <Text>{leave.leave_end_date.toString().slice(0,10)}</Text>
+                        <DateTimePickerModal
+                            isVisible={isDatePickerVisible}
+                            mode="date"
+                            onConfirm={handleConfirm}
+                            onCancel={hideDatePicker}
+                        />
+                    </TouchableOpacity>
                 </View>
                 <View>
                     <Text style={styles.label}>Days to be taken*</Text>
