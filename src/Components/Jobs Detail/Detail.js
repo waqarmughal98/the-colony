@@ -97,6 +97,23 @@ const Address = ({data}) => {
                 </View>
               )
              }
+             else if (
+              field.key === 'HotelDetails' || 
+              field.key === 'HotelAddress' || 
+              field.key === 'HotelPostCode'
+            ) {
+              if (inputData.HotelDetails) {
+                return (
+                  <View style={styles.inputContainer} key={index}>
+                    <Text style={styles.label}>{field.label}</Text>
+                    <View style={styles.textContainer}>
+                      <Text style={styles.input}>{inputData[field.key]}</Text>
+                    </View>
+                  </View>
+                );
+              }
+              return null; 
+            }
             else {
               return (
                 <View style={styles.inputContainer} key={index}>

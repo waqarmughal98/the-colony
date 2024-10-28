@@ -7,8 +7,10 @@ import {
   ScrollView,
   TouchableOpacity,
   Alert,
+  Button,
 } from 'react-native';
 import DateInput from '../Components/Date/DateInput';
+import DateTimePickerModal from "react-native-modal-datetime-picker"
 import Toast from 'react-native-toast-message';
 import * as ImagePicker from 'expo-image-picker';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -21,7 +23,7 @@ const ReplyTicket = ({ navigation, route }) => {
   const [cameraStatus, setCameraStatus] = useState(null);
   const [fileName, setFileName] = useState('');
   const [fileUpload, setfileUpload] = useState(false);
-  const [fileData, setFileData] = useState();
+  const [fileData, setFileData] = useState('');
   const [imageData, setImageData] = useState();
 
   const getCurrentDate = () => {
@@ -38,6 +40,7 @@ const ReplyTicket = ({ navigation, route }) => {
     Job: jobTitle,
     Problem: '',
   });
+
 
   useEffect(() => {
     const requestPermissions = async () => {
@@ -64,6 +67,8 @@ const ReplyTicket = ({ navigation, route }) => {
 
     requestPermissions();
   }, []);
+
+  console.log(data,"data")
 
   const pickImage = async (sourceType) => {
     let result;
@@ -198,6 +203,31 @@ const ReplyTicket = ({ navigation, route }) => {
     }
   };
 
+  const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
+
+  const showDatePicker = () => {
+    setDatePickerVisibility(true);
+  };
+
+  const hideDatePicker = () => {
+    setDatePickerVisibility(false);
+  };
+
+  const handleConfirm = (date) => {
+    let formatedData =formatDate(date.toString().slice(0,10))
+    setData((pre)=>({...pre,date:formatedData}))
+    hideDatePicker();
+  };
+
+  function formatDate(input) {
+    const date = new Date(input + " 2024");
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0'); 
+    const day = String(date.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
+  }
+
+
   return (
     <View style={styles.container}>
       <ScrollView>
@@ -206,14 +236,15 @@ const ReplyTicket = ({ navigation, route }) => {
             <Text style={[styles.label, { marginBottom: 5 }]}>
               Date
             </Text>
-            <View>
-              <DateInput
-                editable={true}
-                style={styles.input}
-                setData={setData}
-                name="replyTicket"
-              />
-            </View>
+             <TouchableOpacity activeOpacity={0.6} style={[styles.input,{justifyContent:'center'}]} onPress={showDatePicker}>
+                  <Text>{data.date}</Text>
+                  <DateTimePickerModal
+                    isVisible={isDatePickerVisible}
+                    mode="date"
+                    onConfirm={handleConfirm}
+                    onCancel={hideDatePicker}
+                  />
+              </TouchableOpacity>
           </View>
           <View>
             <Text style={styles.label}>Subject</Text>

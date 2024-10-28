@@ -29,6 +29,7 @@ const JobsDetail = ({route, navigation}) => {
   const [noteTitle, setNoteTitle]=useState("")
   const [noteDisc, setNoteDisc]=useState("")
   const [subject, setsubject]=useState("")
+  console.log(items, 'items..................')
   const navbarOptions = [
     {
       id: 0,
