@@ -40,6 +40,8 @@ const Address = ({data}) => {
     { label: 'New Enquiry Notes', value: '', key: 'EnquiryNotes' },
   ];
 
+  console.log('Data.........',data)
+
   const [inputData, setInputData] = useState({
     Company: data.client_company_name,
     jobName: data.project_title,
@@ -56,7 +58,7 @@ const Address = ({data}) => {
     HotelPostCode: data.project_custom_field_4,
     tm: data.project_custom_field_31,
     EnquiryNotes: data.lead_custom_field_47,
-    Status: data.project_status,
+    Status: data.project_status.toString().replaceAll("_"," "),
     TopoQA: data.project_custom_field_6,
     UtilityQA: data.project_custom_field_7,
     QueryRaised: data.project_custom_field_21,
@@ -184,6 +186,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     width: '100%',
     paddingHorizontal: 20,
+    textTransform: 'capitalize'
   },
   inputTextArea:{
     backgroundColor: 'white',

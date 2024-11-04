@@ -18,14 +18,14 @@ const Team = ({ data }) => {
     (async () => {
       const authToken = await AsyncStorage.getItem("token");
       await axios
-        .get(URL + "/team/" + data.task_projectid, {
+        .get(URL + "/team/" + data.project_id, {
           headers: {
             Authorization: `Bearer ${authToken}`,
           },
         })
         .then((res) => {
           const response = res.data;
-          console.log(response,"response")
+          // console.log(response,"response")
           setItems([
             {
               label: "Quote Responsibility",
@@ -53,7 +53,7 @@ const Team = ({ data }) => {
           console.log(err);
         });
     })();
-  }, []);
+  }, [data]);
 
   /* Remove this when fetch data */
   useEffect(() => {

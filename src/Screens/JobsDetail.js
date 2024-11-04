@@ -24,12 +24,10 @@ import Toast from 'react-native-toast-message';
 import UpdateModal from '../Components/Modals/UpdateModal';
 import { vw } from '../utils/ScreenSize';
 const JobsDetail = ({route, navigation}) => {
-  const { items ,ID,tabId} = route.params;
+  const { items, ID, tabId} = route.params;
   const [updateItem, setUdateItem]=useState("")
   const [noteTitle, setNoteTitle]=useState("")
   const [noteDisc, setNoteDisc]=useState("")
-  const [subject, setsubject]=useState("")
-  console.log(items, 'items..................')
   const navbarOptions = [
     {
       id: 0,
