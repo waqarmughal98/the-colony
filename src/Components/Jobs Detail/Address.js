@@ -1,4 +1,4 @@
-  import {StyleSheet, Text, View, ActivityIndicator, Linking, Switch, ScrollView, TouchableOpacity } from 'react-native';
+  import {StyleSheet, Text, View, ActivityIndicator, Linking, Switch, ScrollView, TouchableOpacity, Platform } from 'react-native';
   import React, { useState, useEffect } from 'react';
   import Color from '../../Color';
   import { WebView } from 'react-native-webview';
@@ -60,8 +60,9 @@
               style={styles.mapContainer}
               onPress={() => {
                 const url = `https://maps.google.de/maps?hl=en&q=${inputData.street} ${inputData.city} ${inputData.locationDetail} ${inputData.postcode}&ie=UTF8&t=&z=17&iwloc=B&output=embed`;
-                console.log(url,"url")
-                Linking.openURL(url);
+                const iosUurl = `https://maps.google.com/?q=${encodeURIComponent(inputData.street + ' ' + inputData.city + ' ' + inputData.locationDetail + ' ' + inputData.postcode)}`;
+                const redirectionUrl  = Platform.OS == 'ios' ? iosUurl : url
+                Linking.openURL(redirectionUrl);
               }}>
               <WebView
                 scrollEnabled={false}
