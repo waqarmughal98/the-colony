@@ -15,9 +15,7 @@ const TaskDetail = ({navigation , route}) => {
   const [loading, setLoading]=useState(true)
   const { setUpdation  } = useContext(ContextProvider);
 
-
-     /* Remove this when fethc data */
-    useEffect(()=>{
+  useEffect(()=>{
       setData([
         {
           label:"Company",
@@ -50,8 +48,8 @@ const TaskDetail = ({navigation , route}) => {
         }, 1000);
     },[])
     useEffect(()=>{
-      console.log(screenName,"screenName....")
-    },[screenName])
+      console.log(screenName, items, "screenName....")
+    },[screenName, items])
     const options =['New (Unassigned)', 'Not Started', 'In Progress', 'On Hold','Query Resolved','Query Raised','Completed']
 
     const selectOption = async (value, index)=>{
@@ -83,14 +81,9 @@ const TaskDetail = ({navigation , route}) => {
           },
         });
         setUpdation((pre)=>[...pre,])
-      setTimeout(() => {
-        // navigation.goBack(data)
-          navigation.navigate(screenName,{Task:data,items:Alldata})  
-          // navigation.state.params.updateParent(  
-          //   {item:Alldata}
-          // )
-
-      }, 1000);
+        setTimeout(() => {
+            navigation.navigate(screenName,{Task:data,items:Alldata})  
+        }, 1000);
       }).catch((err)=>{
         console.log(err);
       })
@@ -130,6 +123,10 @@ const TaskDetail = ({navigation , route}) => {
             )}
           </View>
         ))}
+        <View style={[styles.optionContainer,{flexDirection:'column', alignItems:'flex-start', gap:10}]}>
+            <Text style={styles.label}>Task Description: </Text>
+            <Text style={styles.value}>{items.task_description || 'N/A'}</Text>
+        </View>
         <View style={styles.bottomContainer}>
           <View style={styles.TextContainer}>
               <Text style={styles.text1}>Assigned</Text>
@@ -187,7 +184,7 @@ const styles = StyleSheet.create({
         color:'black',
         fontWeight:"bold"
     },
-    optionContainer: {
+      optionContainer: {
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
