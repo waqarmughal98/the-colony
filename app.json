@@ -2,7 +2,7 @@
   "expo": {
     "name": "The Colony Solution ltd",
     "slug": "the-colony",
-    "version": "1.7.0",
+    "version": "4.2.0",
     "orientation": "portrait",
     "icon": "./assets/imgs/lb.png",
     "userInterfaceStyle": "light",
@@ -11,16 +11,14 @@
       "resizeMode": "contain",
       "backgroundColor": "#FAA91C"
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true,
       "config": {
         "usesNonExemptEncryption": false
       },
       "bundleIdentifier": "com.geomapltd.thecolony",
-      "buildNumber": "9"
+      "buildNumber": "16"
     },
     "android": {
       "adaptiveIcon": {
@@ -31,8 +29,8 @@
         "android.permission.CAMERA",
         "android.permission.RECORD_AUDIO"
       ],
-      "package": "com.geomapltd.thecolony",
-      "versionCode": 10
+      "package": "com.waqarmughal005.thecolony",
+      "versionCode": 11
     },
     "web": {
       "favicon": "./assets/favicon.png"
@@ -53,9 +51,7 @@
           }
         }
       ],
-      [
-        "expo-font"
-      ]
+      ["expo-font"]
     ],
     "extra": {
       "eas": {
