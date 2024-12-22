@@ -15,6 +15,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 import Toast from 'react-native-toast-message';
 import { URL } from '../utils/Constant';
+import { decode } from 'html-entities';
 const LatestActivity = ({ navigation }) => {
   const [loading, setLoading] = useState(true);
   const [items, setItems] = useState([]);
@@ -30,7 +31,6 @@ const LatestActivity = ({ navigation }) => {
           },
         })
         .then((res) => {
-          console.log(res);
           setItems(res.data);
           setLoading(false);
         })
@@ -42,7 +42,6 @@ const LatestActivity = ({ navigation }) => {
   }, []);
 
   const FilterData = async (Id) => {
-    console.log(Id, 'id');
     const authToken = await AsyncStorage.getItem('token');
     axios
       .get(URL + '/job-status', {
@@ -55,17 +54,9 @@ const LatestActivity = ({ navigation }) => {
           (item) => item?.project_id == Id
         );
         if (filteredData.length > 0) {
-          console.log(filteredData, 'filterData');
           navigation.navigate('jobs-detail', {
             items: filteredData[0],
             tabId: 5,
-          });
-        } else {
-          Toast.show({
-            type: 'error',
-            text1: 'There is no relevant data against this activity!',
-             visibilityTime:1500,
-             topOffset:5
           });
         }
         setLoading(false);
@@ -74,6 +65,10 @@ const LatestActivity = ({ navigation }) => {
         console.log(err);
       });
   };
+  const stripHtmlTags = (html) => {
+    return html?.replace(/<\/?[^>]+(>|$)/g, '') || '';
+};
+
   return (
     <View>
       <ScrollView style={styles.mainContainer}>
@@ -112,7 +107,7 @@ const LatestActivity = ({ navigation }) => {
                         </Text>
                       </View>
                       <Text style={styles.text2}>
-                        {item?.comment_text}
+                        {stripHtmlTags(item?.comment_text || "")}
                       </Text>
                       <Text style={styles.text3}>
                         {item?.project_title}

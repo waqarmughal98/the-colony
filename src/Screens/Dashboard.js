@@ -45,8 +45,6 @@ function Dashboard({ navigation,route }) {
         (async ()=>{
           const Token = await AsyncStorage.getItem("token");
           setAuthToken(Token)
-          console.log("api call")
-          console.log(Token)
           if(!Token){
              navigation.navigate("LoginScreen")
           }else{

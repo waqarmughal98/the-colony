@@ -19,7 +19,6 @@ const AllJobs = ({navigation,route}) => {
                     Authorization: `Bearer ${authToken}`
                 }
             }).then((res)=>{
-                // console.log('tasks', res.data.tasks.data);
                 if(status){
                     setData(res.data.projects.data.filter(item => item.project_status === status));
                 }else{

@@ -48,7 +48,7 @@ const TaskDetail = ({navigation , route}) => {
         }, 1000);
     },[])
     useEffect(()=>{
-      console.log(screenName, items, "screenName....")
+      console.log(screenName, "screenName....")
     },[screenName, items])
     const options =['New (Unassigned)', 'Not Started', 'In Progress', 'On Hold','Query Resolved','Query Raised','Completed']
 
@@ -82,7 +82,7 @@ const TaskDetail = ({navigation , route}) => {
         });
         setUpdation((pre)=>[...pre,])
         setTimeout(() => {
-            navigation.navigate(screenName,{Task:data,items:Alldata})  
+            navigation.push(screenName,{Task:data,items:Alldata})  
         }, 1000);
       }).catch((err)=>{
         console.log(err);

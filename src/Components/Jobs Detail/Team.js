@@ -18,7 +18,7 @@ const Team = ({ data }) => {
     (async () => {
       const authToken = await AsyncStorage.getItem("token");
       await axios
-        .get(URL + "/team/" + data.project_id, {
+        .get(URL + "/team/" + data?.project_id, {
           headers: {
             Authorization: `Bearer ${authToken}`,
           },
@@ -74,8 +74,8 @@ const Team = ({ data }) => {
                   <Text style={styles.text}>
                     {item.label == "Project Manager" ||
                     item.label == "Site Manager"
-                      ? `${item.value.first_name} ${item.value.last_name}`
-                      : item.value}
+                      ? `${item?.value?.first_name} ${item?.value?.last_name}`
+                      : item?.value}
                   </Text>
                 </View>
               </View>

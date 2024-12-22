@@ -94,7 +94,6 @@ const CalendarComponent = ({ setSelectedDate, AllDates }) => {
     datesArray.forEach((individual_array, index) => {
       individual_array.forEach((date) => {
         const resultData = checkDateInArray(date);
-        console.log(resultData, 'resultData');
         var periodArray = [];
             for (var i = 0; i <= Math.max(...resultData[0]); i++) {
               if (resultData[0].includes(i)) {

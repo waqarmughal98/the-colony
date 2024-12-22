@@ -50,7 +50,6 @@ const ProblemReportReplies = ({navigation,route}) => {
     })()
   },[reply,id,id2])
 
-  console.log(ticketDetails,"ticketDetails")
   return (
     <View>
       <ScrollView>

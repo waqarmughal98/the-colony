@@ -21,13 +21,13 @@ const Address = ({data}) => {
     { label: 'Site Work Start Date', value: '', key: 'SiteWorkStartDate' },
     { label: 'Site Work End Date', value: '', key: 'SiteWorkEndDate' },
     { label: 'Category', value: '', key: 'Category' },
-    { label: 'Po Number', value: '', key: 'PoNumber' },
+    { label: 'PO Number', value: '', key: 'PoNumber' },
     { label: 'Company Notes', value: '', key: 'CompanyNotes' },
     { label: 'Any Special Requirement', value: '', key: 'AnySpecialRequirement' },
     { label: 'Hotel Details', value: '', key: 'HotelDetails' },
     { label: 'Hotel Address', value: '', key: 'HotelAddress' },
     { label: 'Hotel PostCode', value: '', key: 'HotelPostCode' },
-    { label: 'Is TM Required', value: '', key: 'tm' },
+    { label: 'Is TM Required?', value: '', key: 'tm' },
     { label: 'Enquiry Notes', value: '', key: 'EnquiryNotes' },
     { label: 'Status', value: '', key: 'Status' },
     { label: 'Topo QA Approved By', value: '', key: 'TopoQA' },
@@ -39,8 +39,6 @@ const Address = ({data}) => {
     { label: 'Utility Survey and Report', value: '', key: 'Survey' },
     { label: 'New Enquiry Notes', value: '', key: 'EnquiryNotes' },
   ];
-
-  console.log('Data.........',data)
 
   const [inputData, setInputData] = useState({
     Company: data.client_company_name,

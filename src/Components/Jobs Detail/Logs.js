@@ -47,7 +47,6 @@ const Logs = ({ data, screenName, navigation }) => {
             },
           })
           .then((res) => {
-            console.log(res, 'res.,');
             setItems(res.data.logs);
             setLoading(false);
           })
@@ -65,7 +64,6 @@ const Logs = ({ data, screenName, navigation }) => {
     file: 4,
   };
   const FilterData = async (Id, item) => {
-    console.log(Id, 'id');
     const authToken = await AsyncStorage.getItem('token');
     axios
       .get(URL + '/job-status', {
@@ -78,17 +76,9 @@ const Logs = ({ data, screenName, navigation }) => {
           (item) => item?.project_id == Id
         );
         if (filteredData.length > 0) {
-          console.log(filteredData, 'filteredData');
           navigation.navigate('jobs-detail', {
             items: filteredData[0],
             tabId: tabData[item.event_item],
-          });
-        } else {
-          Toast.show({
-            type: 'error',
-            text1: 'There is no relevant data against this activity!',
-            visibilityTime: 1500,
-            topOffset: 5,
           });
         }
         setLoading(false);

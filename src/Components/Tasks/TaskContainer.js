@@ -6,8 +6,7 @@ import { vh, vw } from '../../utils/ScreenSize';
 
 const TaskContainer = ({data,allData, navigation,screenName}) => {
   useEffect(()=>{
-    console.log(screenName,"scsreen")
-
+    console.log(screenName,"screen")
   },[screenName])
   return (
     <View style={styles.mainContainer}>
@@ -20,7 +19,7 @@ const TaskContainer = ({data,allData, navigation,screenName}) => {
           {
             data.length > 0 ? (data.map((item,index)=>{
               return(
-                <TouchableOpacity onPress={()=>navigation.navigate("task-details",{items: item, screenName:screenName, Alldata:allData})} activeOpacity={0.6} key={index}>
+                <TouchableOpacity onPress={()=>navigation.navigate("task-details", {items: item, screenName:screenName, Alldata:allData})} activeOpacity={0.6} key={index}>
                   <View style={[styles.individual,{backgroundColor:index%2==0 ? '#D2CBBC' : '#F2F1CF'}]}>
                     <Text style={styles.dataText}>{item.project_title}</Text>
                     <Text style={styles.dataText2}>{item.client_company_name}</Text> 

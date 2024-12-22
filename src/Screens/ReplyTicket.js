@@ -68,8 +68,6 @@ const ReplyTicket = ({ navigation, route }) => {
     requestPermissions();
   }, []);
 
-  console.log(data,"data")
-
   const pickImage = async (sourceType) => {
     let result;
     if (
@@ -92,8 +90,6 @@ const ReplyTicket = ({ navigation, route }) => {
       });
     }
     if (!result.canceled) {
-      console.log(result.assets[0].uri);
-
       const uriParts = result.assets[0].uri.split('/');
       const filename = uriParts[uriParts.length - 1];
       setFileName(filename);

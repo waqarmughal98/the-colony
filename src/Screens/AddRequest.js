@@ -26,10 +26,6 @@ const AddRequest = () => {
     const updateLeave = (value, field)=> {
         setLeave({...leave, [field]: value})
     }
-
-    console.log(leave,"leave")
-
-    console.log(selectedRequestCategory,"selectedRequestCategory")
     const validations=()=>{
        return Object.values(leave).every((item)=>item!="")
     }

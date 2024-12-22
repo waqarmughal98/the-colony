@@ -64,7 +64,6 @@ const ProblemReports = ({navigation, data,ID}) => {
                 items.length > 0 ?  
                 (
                   items?.map((item,index)=>{
-                    console.log(item,"item")
                     return(
                       <TouchableOpacity onPress={()=>navigation.navigate("problem-report-replies", {id: item.ticket_id, jobTitle: item.project_title})} activeOpacity={0.6} key={index}>
                         <View style={[styles.mainIndividual,{backgroundColor:index%2==0 ? '#D2CBBC' : '#F2F1CF'}]}>

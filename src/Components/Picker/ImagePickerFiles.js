@@ -13,35 +13,39 @@ const ImagePickerFiles = ({setData,index,data,items,currentIndex}) => {
   const [image, setImage] = useState(null);
   const [mediaLibraryStatus, setMediaLibraryStatus] = useState(null);
   const [cameraStatus, setCameraStatus] = useState(null);
-  const [loading , setLoading] = useState(false)
-  useEffect(() => {
-    (async () => {
-      const requestPermissions = async () => {
-        const { status: mediaLibraryPermission } = await ImagePicker.requestMediaLibraryPermissionsAsync();
-        const { status: cameraPermission } = await ImagePicker.requestCameraPermissionsAsync();
-  
-        setMediaLibraryStatus(mediaLibraryPermission);
-        setCameraStatus(cameraPermission);
-  
-        if (mediaLibraryPermission !== 'granted') {
-          Alert.alert('Sorry, we need camera roll permissions to make this work!');
-        }
-  
-        if (cameraPermission !== 'granted') {
-          Alert.alert('Sorry, we need camera permissions to make this work!');
-        }
-      };
-  
-      requestPermissions();
-    })();
-  }, []);
-
-  
+  const [loading , setLoading] = useState(false);
 
   const pickImage = async (sourceType) => {
-    
+    let hasPermission = false;
+
+  if (sourceType === 'gallery') {
+    const { status } = await ImagePicker.getMediaLibraryPermissionsAsync();
+    if (status !== 'granted') {
+      const { status: requestStatus } = await ImagePicker.requestMediaLibraryPermissionsAsync();
+      hasPermission = requestStatus === 'granted';
+    } else {
+      hasPermission = true;
+    }
+  } else if (sourceType === 'camera') {
+    const { status } = await ImagePicker.getCameraPermissionsAsync();
+    if (status !== 'granted') {
+      const { status: requestStatus } = await ImagePicker.requestCameraPermissionsAsync();
+      hasPermission = requestStatus === 'granted';
+    } else {
+      hasPermission = true;
+    }
+  }
+
+  if (!hasPermission) {
+    Alert.alert(
+      'Permission Required',
+      `We need ${sourceType === 'gallery' ? 'media library' : 'camera'} permissions to proceed.`
+    );
+    return; // Exit if permissions are not granted
+  }
+
     // No permissions request is necessary for launching the image library
-    var result 
+    let result;
     if(sourceType=="gallery" && mediaLibraryStatus=="granted"){
       result= await ImagePicker.launchImageLibraryAsync({
         mediaTypes: ImagePicker.MediaTypeOptions.All,
@@ -61,25 +65,14 @@ const ImagePickerFiles = ({setData,index,data,items,currentIndex}) => {
     
 
     if (result) {
-     
       setImage(result.assets[0].uri);
-    
-      const authToken = await AsyncStorage.getItem("token");
-    
-      if (!authToken) {
-        navigation.navigate("LoginScreen");
-        return;
-      }
-    
       const photo = {
         uri: result.assets[0].uri,
         type: 'image/jpeg',
         name: 'photo.jpg',
       };
-    
       const form = new FormData();
       form.append("file", photo);
-      
       setLoading(true)
       Toast.show({
         type: 'info',
@@ -116,19 +109,14 @@ const ImagePickerFiles = ({setData,index,data,items,currentIndex}) => {
               'Authorization': `Bearer ${authToken}`
             },
           });
-        
-        
           setData((prevData) => {
             const newData = [...prevData];
             const updatedImages = [...newData[index]?.images || []];
-        
             updatedImages.push(result.assets[0].uri);
-        
             newData[index] = {
               ...newData[index],
               images: updatedImages,
             };
-        
             return newData;
           });
         
@@ -143,7 +131,6 @@ const ImagePickerFiles = ({setData,index,data,items,currentIndex}) => {
           Toast.hide();
         }
       })
-
       .catch((error) => {
         Toast.show({
           type: 'error',
@@ -155,10 +142,7 @@ const ImagePickerFiles = ({setData,index,data,items,currentIndex}) => {
         Toast.hide();
       });
     }
-    
   };
-
-
 
   return (
     <View style={styles.container}>
