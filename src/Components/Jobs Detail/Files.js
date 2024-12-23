@@ -23,7 +23,7 @@ const Files = ({data}) => {
     setModalVisible(!isModalVisible);
   };
 
-  const hendleOpen=(ind)=>{
+  const handleOpen=(ind)=>{
     if(ind==currentIndex){
       setcurrentIndex(null)
     }else{
@@ -110,14 +110,14 @@ const Files = ({data}) => {
             items.map((item,index)=>
               <View key={index}>
                 <View style={styles.individual}>
-                  <TouchableOpacity activeOpacity={0.6} style={styles.leftBtmContainer} onPress={()=>hendleOpen(index)}>
+                  <TouchableOpacity activeOpacity={0.6} style={styles.leftBtmContainer} onPress={()=>handleOpen(index)}>
                     <View style={styles.leftBtm}>
                       <Image source={currentIndex==index?  require('../../../assets/imgs/opened_folder.png'): require('../../../assets/imgs/close_folder.png')} style={styles.Image3} />
                       <Text>{item.file_group_name}</Text>
                     </View>
                   </TouchableOpacity>
-                  <View onPress={()=>hendleOpen(index)} style={styles.rightBtmContainer}>
-                      <ImagePickerFiles key={index} index={index} data={data} setData={setFileName} currentIndex={currentIndex}  items={items}/>
+                  <View onPress={()=>handleOpen(index)} style={styles.rightBtmContainer}>
+                      <ImagePickerFiles key={index} index={index} data={data} setData={setFileName} currentIndex={currentIndex} items={items}/>
                   </View>
                 </View>
                 {currentIndex==index && (
