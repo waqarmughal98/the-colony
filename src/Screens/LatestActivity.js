@@ -67,7 +67,7 @@ const LatestActivity = ({ navigation }) => {
   };
   const stripHtmlTags = (html) => {
     return html?.replace(/<\/?[^>]+(>|$)/g, '') || '';
-};
+  };
 
   return (
     <View>

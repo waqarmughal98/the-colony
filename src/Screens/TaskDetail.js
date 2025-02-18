@@ -13,7 +13,7 @@ const TaskDetail = ({navigation , route}) => {
   const { items ,Alldata ,screenName} = route.params;
   const [data, setData] = useState()
   const [loading, setLoading]=useState(true)
-  const { setUpdation  } = useContext(ContextProvider);
+  const { setUpdation } = useContext(ContextProvider);
 
   useEffect(()=>{
       setData([
@@ -58,7 +58,7 @@ const TaskDetail = ({navigation , route}) => {
           { ...el, value: index }
         ) : el
       ))
-      await setData(updatedData)
+      setData(updatedData)
     }
 
     const updateTask = async ()=>{

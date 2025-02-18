@@ -34,7 +34,6 @@ const ProblemReportReplies = ({navigation,route}) => {
 
   useEffect(()=>{
     (async ()=>{
-      console.log("......reached........")
       let tId = id || id2 
       const authToken = await AsyncStorage.getItem('token');
       await axios.get(URL + '/problemreports/show/'+ tId, {

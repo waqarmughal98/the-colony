@@ -35,6 +35,11 @@ const Update = ({data,updateItem}) => {
       })
     })()
   }, [updateItem])
+
+
+  const stripHtmlTags = (html) => {
+    return html?.replace(/<\/?[^>]+(>|$)/g, '') || '';
+  };
     
   return (
     <View style={styles.mainContainer}>
@@ -50,7 +55,7 @@ const Update = ({data,updateItem}) => {
                     <Image source={require('../../../assets/imgs/avator.png')} style={styles.Image} />
                   </View>
                   <View style={styles.textContainer} >
-                      <Text>{item.comment_text}</Text>
+                      <Text>{stripHtmlTags(item?.comment_text || "")}</Text>
                       <Text style={{fontWeight:"bold"}}>{`${item.first_name} ${item.last_name}`}</Text>
                       <Text style={{ fontStyle: 'italic'}}>{item?.comment_created?.slice(0,10)}</Text>
                   </View>
