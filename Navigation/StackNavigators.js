@@ -21,8 +21,9 @@ import NewProblemReport from '../src/Screens/NewProblemReport';
 import AllProblemReports from '../src/Screens/AllProblemReports';
 import ReplyTicket from '../src/Screens/ReplyTicket';
 import Calender from '../src/Screens/Calender';
-import { useContext } from 'react';
-import { ContextProvider } from '../src/Global/Context';
+import TaskOption from '../src/Screens/TaskOption';
+import FileUpload from '../src/Screens/FileUpload';
+import MyNotes from '../src/Screens/MyNotes';
 
 const LoginStack = createNativeStackNavigator();
 function LoginStackScreen() {
@@ -226,6 +227,27 @@ function HomeScreenStack() {
         component={Calender}
         options={{
           title: 'My Calendar',
+        }}
+      />
+      <HomeStack.Screen
+        name="taskoption"
+        component={TaskOption}
+        options={{
+          title: 'Task',
+        }}
+      />
+      <HomeStack.Screen
+        name="fileupload"
+        component={FileUpload}
+        options={{
+          title: 'Files Upload',
+        }}
+      />
+      <HomeStack.Screen
+        name="mynotes"
+        component={MyNotes}
+        options={{
+          title: 'My Notes',
         }}
       />
     </HomeStack.Navigator>
