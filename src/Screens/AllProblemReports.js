@@ -61,6 +61,7 @@ const AllProblemReports = ({navigation, data}) => {
           <View style={styles.allData} >
             <ScrollView style={{flexGrow:1}}>
                 <View style={styles.container}>
+                
               {
                 items?.map((item,index)=>{
                   return(
