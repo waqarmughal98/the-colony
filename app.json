@@ -11,7 +11,9 @@
       "resizeMode": "contain",
       "backgroundColor": "#FAA91C"
     },
-    "assetBundlePatterns": ["**/*"],
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "ios": {
       "supportsTablet": true,
       "config": {
@@ -51,11 +53,13 @@
           }
         }
       ],
-      ["expo-font"]
+      [
+        "expo-font"
+      ]
     ],
     "extra": {
       "eas": {
-        "projectId": "1c87c96f-155c-4857-a182-45051abeff28"
+        "projectId": "0ceb9670-c4da-4181-8c8b-8c139ff33371"
       }
     }
   }
