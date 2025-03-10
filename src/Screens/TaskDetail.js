@@ -54,9 +54,11 @@ const TaskDetail = ({ navigation, route }) => {
       setLoading(false);
     }, 1000);
   }, []);
+
   useEffect(() => {
     console.log(screenName, "screenName....");
   }, [screenName, items]);
+
   const options = [
     "New (Unassigned)",
     "Not Started",
@@ -77,6 +79,7 @@ const TaskDetail = ({ navigation, route }) => {
   const updateTask = async () => {
     const statusObject = await data?.find((item) => item?.label === "Status");
     const authToken = await AsyncStorage.getItem("token");
+    console.log(items?.task_id, "task_id");
     await axios
       .post(
         URL + "/update-task/" + items?.task_id,
@@ -96,19 +99,21 @@ const TaskDetail = ({ navigation, route }) => {
           visibilityTime: 1000,
           topOffset: 5,
           style: {
-            width: 100 * vw, // Set the width to 100% to take up the full width
+            width: 100 * vw,
           },
         });
         setUpdation((pre) => [...pre]);
         setTimeout(() => {
-          navigation.push(screenName, { Task: data, items: Alldata });
+          navigation.navigate(screenName, { Task: data, items: Alldata });
         }, 1000);
       })
       .catch((err) => {
         console.log(err);
       });
   };
-
+  function stripHtmlTags(str) {
+    return (str || "N/A").replace(/<[^>]*>/g, "");
+  }
   return (
     <View style={styles.mainContainer}>
       {!loading ? (
@@ -164,7 +169,7 @@ const TaskDetail = ({ navigation, route }) => {
             >
               <Text style={styles.label}>Task Description: </Text>
               <Text style={styles.value}>
-                {items.task_description || "N/A"}
+                {stripHtmlTags(items.task_description)}
               </Text>
             </View>
             <View style={styles.bottomContainer}>

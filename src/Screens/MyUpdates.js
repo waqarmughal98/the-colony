@@ -17,7 +17,7 @@ import axios from "axios";
 import Toast from "react-native-toast-message";
 import AntDesign from "@expo/vector-icons/AntDesign";
 
-const MyNotes = ({ navigation, route }) => {
+const MyUpdates = ({ navigation, route }) => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const { items } = route.params;
@@ -44,7 +44,7 @@ const MyNotes = ({ navigation, route }) => {
     console.log(items?.project_id, "project_id");
     const authToken = await AsyncStorage.getItem("token");
     axios
-      .get(URL + `/task/${Number(items.project_id)}/show-mynotes`, {
+      .get(URL + `/task/${Number(items.project_id)}/show-comment`, {
         headers: {
           Authorization: `Bearer ${authToken}`,
           Accept: "application/json",
@@ -52,7 +52,7 @@ const MyNotes = ({ navigation, route }) => {
       })
       .then((res) => {
         setLoading(false);
-        let notes = res.data.note;
+        let notes = res.data.data;
         setData(notes);
         console.log(items.project_id, "items.project_id");
       })
@@ -69,14 +69,17 @@ const MyNotes = ({ navigation, route }) => {
     }
   };
   const handleAdd_UpdatedNotes = async () => {
+    if (text == "") {
+      return;
+    }
     setUpdating(true);
     console.log("reached");
     try {
       const authToken = await AsyncStorage.getItem("token");
       await axios.post(
-        URL + `/task/${Number(items.project_id)}/update-mynotes`,
+        URL + `/task/${Number(items.project_id)}/post-comment`,
         {
-          task_mynotes: text,
+          comment_text: text,
         },
         {
           headers: {
@@ -85,18 +88,20 @@ const MyNotes = ({ navigation, route }) => {
           },
         }
       );
+      SetText("");
       await fetchNotes();
       setUpdating(false);
-      showSimpleAlert(
-        "Success!",
-        text ? "Notes updated successfully." : "Notes added successfully."
-      );
+      showSimpleAlert("Success!", "Update added successfully");
     } catch (error) {
       console.log(error);
       setUpdating(false);
-      showSimpleAlert("Error", "Failed to update notes. Try again?");
+      showSimpleAlert("Error", "Failed to add update. Try again?");
     }
   };
+
+  function stripHtmlTags(str) {
+    return (str || "N/A").replace(/<[^>]*>/g, "");
+  }
 
   return (
     <>
@@ -124,7 +129,7 @@ const MyNotes = ({ navigation, route }) => {
                   size={29}
                   color="black"
                 />
-                <Text style={styles.txt2}>My Notes</Text>
+                <Text style={styles.txt2}>My Updates</Text>
               </View>
               <TextInput
                 placeholder="Write text.."
@@ -135,78 +140,50 @@ const MyNotes = ({ navigation, route }) => {
                 value={text}
                 onChangeText={(txt) => SetText(txt)}
               />
-              {!editing ? null : (
-                <TouchableOpacity
-                  onPress={() => handleAdd_UpdatedNotes()}
-                  style={styles.btn}
-                  activeOpacity={0.6}
-                >
-                  <Text style={styles.btnTxt}>
-                    {updating ? "Updating Notes..." : "Update Notes"}
-                  </Text>
-                </TouchableOpacity>
-              )}
-              <View style={styles.individualMain}>
-                <View style={styles.individual}>
-                  <View style={styles.individualLeft}>
-                    <View style={styles.numContainer}>
-                      <Text style={styles.num}>1</Text>
-                    </View>
-                    {data?.note_title && (
-                      <Text style={styles.txt5}>
-                        {data?.note_title || "N/A"}
-                      </Text>
-                    )}
-                  </View>
-                  <TouchableOpacity
-                    onPress={() => handleEdittingEnable()}
-                    style={styles.icon}
-                  >
-                    <AntDesign name="edit" size={20} color="black" />
-                  </TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => handleAdd_UpdatedNotes()}
+                style={styles.btn}
+                activeOpacity={0.6}
+              >
+                <Text style={styles.btnTxt}>
+                  {updating ? "Adding Update..." : "Add Update"}
+                </Text>
+              </TouchableOpacity>
+
+              {data.length == 0 ? (
+                <View>
+                  <Text>No Update Found</Text>
                 </View>
-                <Text style={styles.smTxt}>{data?.note_description}</Text>
-                <View style={styles.dateWrapper}>
-                  <Text style={styles.date}>
-                    {formatDate(data?.note_updated?.slice(0, 10)) || "N/A"}
-                  </Text>
-                </View>
-              </View>
-              {/* <View style={styles.fileContainer}>
-            {Array(5)
-              .fill(0)
-              .map((item, index) => {
-                return (
-                  <View key={index} style={styles.individualMain}>
-                    <View style={styles.individual}>
-                      <View style={styles.individualLeft}>
-                        <View style={styles.numContainer}>
-                          <Text style={styles.num}>{index + 1}</Text>
+              ) : (
+                data.map((item, index) => {
+                  return (
+                    <View key={index} style={styles.individualMain}>
+                      <View style={styles.individual}>
+                        <View style={styles.individualLeft}>
+                          <View style={styles.numContainer}>
+                            <Text style={styles.num}>{index + 1}</Text>
+                          </View>
                         </View>
-                        <Text style={styles.txt5}>
-                          Digital Marketing Agency
+                        {/* <TouchableOpacity
+                          onPress={() => handleEdittingEnable()}
+                          style={styles.icon}
+                        >
+                          <AntDesign name="edit" size={20} color="black" />
+                        </TouchableOpacity> */}
+                      </View>
+                      <Text style={styles.smTxt}>
+                        {stripHtmlTags(item?.comment_text)}
+                      </Text>
+                      <View style={styles.dateWrapper}>
+                        <Text style={styles.date}>
+                          {formatDate(item?.comment_created?.slice(0, 10)) ||
+                            "N/A"}
                         </Text>
                       </View>
-                      <TouchableOpacity style={styles.icon}>
-                        <MaterialCommunityIcons
-                          name="delete-outline"
-                          size={20}
-                          color="black"
-                        />
-                      </TouchableOpacity>
                     </View>
-                    <Text style={styles.smTxt}>
-                      Lorem Ipsum is simply dummy text of the printing and
-                      typesetting industry. Lorem Ipsum has been the industry's
-                      standard dummy text ever since the 1500s
-                    </Text>
-                    <View style={styles.dateWrapper}>
-                      <Text style={styles.date}>02-25-2024</Text>
-                    </View>
-                  </View>
-                );
-              })}
-          </View> */}
+                  );
+                })
+              )}
             </View>
           </View>
         </ScrollView>
@@ -215,7 +192,7 @@ const MyNotes = ({ navigation, route }) => {
   );
 };
 
-export default MyNotes;
+export default MyUpdates;
 
 const styles = StyleSheet.create({
   header: {

@@ -25,6 +25,12 @@ const TaskOption = ({ navigation, route }) => {
       iconName: "calendar-edit",
       redirect: "mynotes",
     },
+    {
+      title: "My Updates",
+      bgColor: "#B8780C",
+      iconName: "update",
+      redirect: "myupdates",
+    },
   ];
 
   return (
