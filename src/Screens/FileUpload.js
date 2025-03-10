@@ -7,7 +7,7 @@ import {
   Modal,
 } from "react-native";
 import { FlashList } from "@shopify/flash-list";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useMemo } from "react"; // Added useMemo
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import { ScrollView } from "react-native-gesture-handler";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -215,7 +215,7 @@ const FileUpload = ({ navigation, route }) => {
           source={{ uri }}
           style={[styles.imageContainer, { height: randomHeight }]}
           onLoad={() => setImageLoading(false)}
-          onError={() => setImageLoading(false)} // Optional: hide shimmer on error
+          onError={() => setImageLoading(false)}
         />
       </TouchableOpacity>
     );
@@ -236,7 +236,11 @@ const FileUpload = ({ navigation, route }) => {
     return [leftColumn, rightColumn];
   };
 
-  const [leftColumn, rightColumn] = splitDataIntoColumns();
+  // Memoize the column split
+  const [leftColumn, rightColumn] = useMemo(
+    () => splitDataIntoColumns(),
+    [data]
+  );
 
   // Render Item for FlashList
   const renderItem = ({ item }) => (
@@ -451,7 +455,6 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     width: "100%",
     marginBottom: 4,
-    // ["#E0E0E0", "#F0F0F0", "#E0E0E0"]
     backgroundColor: "#E0E0E0",
   },
   modalContainer: {
