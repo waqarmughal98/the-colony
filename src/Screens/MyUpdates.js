@@ -278,8 +278,7 @@ const styles = StyleSheet.create({
     minHeight: 120,
   },
   smTxt: {
-    fontSize: 11,
-    color: "gray",
+    fontSize: 14,
     marginVertical: 5,
   },
   dateWrapper: {

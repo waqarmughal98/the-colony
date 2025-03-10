@@ -26,8 +26,8 @@ const TaskOption = ({ navigation, route }) => {
       redirect: "mynotes",
     },
     {
-      title: "My Updates",
-      bgColor: "#B8780C",
+      title: "Task Updates",
+      bgColor: "#D89A3C",
       iconName: "update",
       redirect: "myupdates",
     },

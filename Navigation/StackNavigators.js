@@ -255,7 +255,7 @@ function HomeScreenStack() {
         name="myupdates"
         component={MyUpdates}
         options={{
-          title: "My Updates",
+          title: "Task Updates",
         }}
       />
     </HomeStack.Navigator>

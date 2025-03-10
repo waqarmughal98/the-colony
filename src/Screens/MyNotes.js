@@ -54,6 +54,7 @@ const MyNotes = ({ navigation, route }) => {
         setLoading(false);
         let notes = res.data.note;
         setData(notes);
+        SetText(notes.note_description);
         console.log(items.project_id, "items.project_id");
       })
       .catch((err) => {
@@ -135,18 +136,16 @@ const MyNotes = ({ navigation, route }) => {
                 value={text}
                 onChangeText={(txt) => SetText(txt)}
               />
-              {!editing ? null : (
-                <TouchableOpacity
-                  onPress={() => handleAdd_UpdatedNotes()}
-                  style={styles.btn}
-                  activeOpacity={0.6}
-                >
-                  <Text style={styles.btnTxt}>
-                    {updating ? "Updating Notes..." : "Update Notes"}
-                  </Text>
-                </TouchableOpacity>
-              )}
-              <View style={styles.individualMain}>
+              <TouchableOpacity
+                onPress={() => handleAdd_UpdatedNotes()}
+                style={styles.btn}
+                activeOpacity={0.6}
+              >
+                <Text style={styles.btnTxt}>
+                  {updating ? "Updating Notes..." : "Update Notes"}
+                </Text>
+              </TouchableOpacity>
+              {/* <View style={styles.individualMain}>
                 <View style={styles.individual}>
                   <View style={styles.individualLeft}>
                     <View style={styles.numContainer}>
@@ -171,7 +170,7 @@ const MyNotes = ({ navigation, route }) => {
                     {formatDate(data?.note_updated?.slice(0, 10)) || "N/A"}
                   </Text>
                 </View>
-              </View>
+              </View> */}
               {/* <View style={styles.fileContainer}>
             {Array(5)
               .fill(0)

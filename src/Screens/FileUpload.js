@@ -4,8 +4,9 @@ import {
   View,
   Image,
   TouchableOpacity,
-  ActivityIndicator,
+  Modal,
 } from "react-native";
+import { FlashList } from "@shopify/flash-list";
 import React, { useEffect, useState } from "react";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import { ScrollView } from "react-native-gesture-handler";
@@ -13,11 +14,21 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
 import { URL } from "../utils/Constant";
 import * as ImagePicker from "expo-image-picker";
+import { vw } from "../utils/ScreenSize";
+import { LinearGradient } from "expo-linear-gradient";
+import Animated, {
+  useSharedValue,
+  useAnimatedStyle,
+  withRepeat,
+  withTiming,
+} from "react-native-reanimated";
 
 const FileUpload = ({ navigation, route }) => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const { items, Alldata, screenName } = route.params;
+  const [selectedImage, setSelectedImage] = useState(null);
+  const [modalVisible, setModalVisible] = useState(false);
 
   useEffect(() => {
     fetchAttachments();
@@ -45,8 +56,6 @@ const FileUpload = ({ navigation, route }) => {
 
   const pickImage = async (sourceType) => {
     let result;
-
-    // Request permission based on source type
     if (sourceType === "gallery") {
       const { status } =
         await ImagePicker.requestMediaLibraryPermissionsAsync();
@@ -81,10 +90,9 @@ const FileUpload = ({ navigation, route }) => {
     try {
       const authToken = await AsyncStorage.getItem("token");
       const formData = new FormData();
-
       formData.append("file", {
         uri: image.uri,
-        type: "image/jpeg", // Adjust based on your needs
+        type: "image/jpeg",
         name: image.uri.split("/").pop() || "image.jpg",
       });
 
@@ -100,8 +108,6 @@ const FileUpload = ({ navigation, route }) => {
           },
         }
       );
-
-      // Refresh attachments after successful upload
       await fetchAttachments();
     } catch (error) {
       console.log("Upload error:", error);
@@ -117,12 +123,130 @@ const FileUpload = ({ navigation, route }) => {
     return `${month}-${day}-${year}`;
   };
 
-  return loading ? (
-    <View style={styles.loaderContainer}>
-      <ActivityIndicator color={"black"} size={"large"} />
-      <Text>Fetching Data...</Text>
-    </View>
-  ) : (
+  const handleImagePress = (imageUri) => {
+    setSelectedImage(imageUri);
+    setModalVisible(true);
+  };
+
+  // Shimmer Skeleton Component with Animation (for global loading)
+  const ShimmerSkeleton = () => {
+    const shimmerTranslate = useSharedValue(0);
+
+    useEffect(() => {
+      shimmerTranslate.value = withRepeat(
+        withTiming(1, { duration: 1000 }),
+        -1, // Infinite repeat
+        true // Reverse
+      );
+    }, []);
+
+    const animatedStyle = useAnimatedStyle(() => ({
+      transform: [
+        {
+          translateX: shimmerTranslate.value * 200 - 100,
+        },
+      ],
+    }));
+
+    return (
+      <View style={styles.skeletonContainer}>
+        {Array(6)
+          .fill(0)
+          .map((_, index) => (
+            <View
+              key={index}
+              style={[
+                styles.skeletonItem,
+                { height: index % 2 === 0 ? 150 : 200 },
+              ]}
+            >
+              <Animated.View style={[styles.shimmerLayer, animatedStyle]}>
+                <LinearGradient
+                  colors={["#E0E0E0", "#F0F0F0", "#E0E0E0"]}
+                  style={styles.gradient}
+                  start={{ x: 0, y: 0 }}
+                  end={{ x: 1, y: 0 }}
+                />
+              </Animated.View>
+            </View>
+          ))}
+      </View>
+    );
+  };
+
+  // Shimmer for individual images
+  const ImageWithShimmer = ({ uri, onPress }) => {
+    const [imageLoading, setImageLoading] = useState(true);
+    const shimmerTranslate = useSharedValue(0);
+
+    useEffect(() => {
+      shimmerTranslate.value = withRepeat(
+        withTiming(1, { duration: 1000 }),
+        -1,
+        true
+      );
+    }, []);
+
+    const animatedStyle = useAnimatedStyle(() => ({
+      transform: [
+        {
+          translateX: shimmerTranslate.value * 200 - 100,
+        },
+      ],
+    }));
+
+    const randomHeight = Math.random() * 100 + 100;
+
+    return (
+      <TouchableOpacity onPress={onPress}>
+        {imageLoading && (
+          <View style={[styles.imageContainer, { height: randomHeight }]}>
+            <Animated.View style={[styles.shimmerLayer, animatedStyle]}>
+              <LinearGradient
+                colors={["#E0E0E0", "#F0F0F0", "#E0E0E0"]}
+                style={styles.gradient}
+                start={{ x: 0, y: 0 }}
+                end={{ x: 1, y: 0 }}
+              />
+            </Animated.View>
+          </View>
+        )}
+        <Image
+          source={{ uri }}
+          style={[styles.imageContainer, { height: randomHeight }]}
+          onLoad={() => setImageLoading(false)}
+          onError={() => setImageLoading(false)} // Optional: hide shimmer on error
+        />
+      </TouchableOpacity>
+    );
+  };
+
+  // Split data into two columns for masonry-like layout
+  const splitDataIntoColumns = () => {
+    const leftColumn = [];
+    const rightColumn = [];
+    data.forEach((item, index) => {
+      const uri = `https://geomap.imaginedesigns.co/storage/files/${item.attachment_directory}/${item.attachment_filename}`;
+      if (index % 2 === 0) {
+        leftColumn.push({ uri });
+      } else {
+        rightColumn.push({ uri });
+      }
+    });
+    return [leftColumn, rightColumn];
+  };
+
+  const [leftColumn, rightColumn] = splitDataIntoColumns();
+
+  // Render Item for FlashList
+  const renderItem = ({ item }) => (
+    <ImageWithShimmer
+      uri={item.uri}
+      onPress={() => handleImagePress(item.uri)}
+    />
+  );
+
+  return (
     <ScrollView style={{ flex: 1, backgroundColor: "#EEE5DC" }}>
       <View style={styles.maiNContainer}>
         <View style={styles.header}>
@@ -174,30 +298,48 @@ const FileUpload = ({ navigation, route }) => {
             Only .jpg and .png files, 500 KB max file size.
           </Text>
           <View style={styles.fileContainer}>
-            {data.length === 0 ? (
+            {loading ? (
+              <ShimmerSkeleton />
+            ) : data.length === 0 ? (
               <View>
                 <Text>No attachments found</Text>
               </View>
             ) : (
-              data.map((item, index) => (
-                <View key={index} style={styles.individual}>
-                  <View style={styles.individualLeft}>
-                    <Image
-                      style={styles.img}
-                      source={{
-                        uri: `https://geomap.imaginedesigns.co/storage/files/${item.attachment_directory}/${item.attachment_filename}`,
-                      }}
-                    />
-                    <View style={{ width: "82%" }}>
-                      <Text style={styles.txt5}>
-                        {item.attachment_filename}
-                      </Text>
-                      <Text style={styles.completedTxt}>Uploaded Complete</Text>
-                    </View>
-                  </View>
+              <View style={styles.masonryContainer}>
+                <View style={styles.column}>
+                  <FlashList
+                    data={leftColumn}
+                    renderItem={renderItem}
+                    keyExtractor={(item, index) => `left-${index}`}
+                    estimatedItemSize={150}
+                    showsVerticalScrollIndicator={false}
+                  />
                 </View>
-              ))
+                <View style={styles.column}>
+                  <FlashList
+                    data={rightColumn}
+                    renderItem={renderItem}
+                    keyExtractor={(item, index) => `right-${index}`}
+                    estimatedItemSize={150}
+                    showsVerticalScrollIndicator={false}
+                  />
+                </View>
+              </View>
             )}
+            <Modal visible={modalVisible} transparent animationType="fade">
+              <View style={styles.modalContainer}>
+                <Image
+                  source={{ uri: selectedImage }}
+                  style={styles.fullImage}
+                />
+                <TouchableOpacity
+                  style={styles.closeBtn}
+                  onPress={() => setModalVisible(false)}
+                >
+                  <Text>Close</Text>
+                </TouchableOpacity>
+              </View>
+            </Modal>
           </View>
         </View>
       </View>
@@ -295,43 +437,61 @@ const styles = StyleSheet.create({
   },
   fileContainer: {
     gap: 15,
+    flex: 1,
   },
-  img: {
-    width: 35,
-    height: 35,
-    // objectFit: "contain",
-  },
-  individual: {
-    paddingVertical: 15,
-    paddingHorizontal: 10,
-    display: "flex",
+  masonryContainer: {
     flexDirection: "row",
-    justifyContent: "space-betweem",
-    backgroundColor: "white",
-    borderRadius: 8,
     justifyContent: "space-between",
   },
-  txt5: {
-    fontSize: 13,
-  },
-  completedTxt: {
-    fontSize: 11,
-    color: "#FBA81A",
-    fontWeight: "600",
-  },
-  individualLeft: {
-    display: "flex",
-    flexDirection: "row",
-    gap: 7,
-  },
-  icon: {
-    marginTop: -2,
-  },
-  loaderContainer: {
+  column: {
     flex: 1,
+    marginHorizontal: 2,
+  },
+  imageContainer: {
+    borderRadius: 10,
+    width: "100%",
+    marginBottom: 4,
+    // ["#E0E0E0", "#F0F0F0", "#E0E0E0"]
+    backgroundColor: "#E0E0E0",
+  },
+  modalContainer: {
+    flex: 1,
+    backgroundColor: "rgba(0,0,0,0.9)",
     justifyContent: "center",
     alignItems: "center",
-    gap: 5,
-    marginTop: -100,
+  },
+  fullImage: {
+    width: "90%",
+    height: "80%",
+    resizeMode: "contain",
+  },
+  closeBtn: {
+    backgroundColor: "white",
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+    borderRadius: 100,
+    marginTop: 10,
+  },
+  skeletonContainer: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    justifyContent: "space-between",
+    padding: 10,
+  },
+  skeletonItem: {
+    width: "48%",
+    backgroundColor: "#E0E0E0",
+    borderRadius: 10,
+    marginBottom: 10,
+    overflow: "hidden",
+  },
+  shimmerLayer: {
+    position: "absolute",
+    width: "100%",
+    height: "100%",
+  },
+  gradient: {
+    width: 200,
+    height: "100%",
   },
 });
