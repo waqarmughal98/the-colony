@@ -4,7 +4,6 @@ import {
   View,
   FlatList,
   TouchableOpacity,
-  Button
 } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import { Ionicons,AntDesign } from '@expo/vector-icons';

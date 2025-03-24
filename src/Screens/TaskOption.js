@@ -1,31 +1,38 @@
-import { StyleSheet, Text, View } from 'react-native';
-import React from 'react';
-import MaterialIcons from '@expo/vector-icons/MaterialIcons';
-import { TouchableOpacity } from 'react-native-gesture-handler';
-import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
+import { StyleSheet, Text, View } from "react-native";
+import React from "react";
+import MaterialIcons from "@expo/vector-icons/MaterialIcons";
+import { TouchableOpacity } from "react-native-gesture-handler";
+import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 
 const TaskOption = ({ navigation, route }) => {
+  const { items, Alldata, screenName } = route.params;
   let data = [
     {
-      title: 'Tasks Information',
-      bgColor: '#382504',
-      iconName: 'folder-information-outline',
-      redirect: 'tasks',
+      title: "Tasks Information",
+      bgColor: "#382504",
+      iconName: "folder-information-outline",
+      redirect: "task-details",
     },
     {
-      title: 'Files Upload',
-      bgColor: '#774F07',
-      iconName: 'file-upload-outline',
-      redirect: 'fileupload',
+      title: "Files Upload",
+      bgColor: "#774F07",
+      iconName: "file-upload-outline",
+      redirect: "fileupload",
     },
     {
-      title: 'My Notes',
-      bgColor: '#B8780C',
-      iconName: 'calendar-edit',
-      redirect: 'mynotes',
+      title: "My Notes",
+      bgColor: "#B8780C",
+      iconName: "calendar-edit",
+      redirect: "mynotes",
+    },
+    {
+      title: "Task Updates",
+      bgColor: "#D89A3C",
+      iconName: "update",
+      redirect: "myupdates",
     },
   ];
-  const { status } = route.params;
+
   return (
     <View style={styles.mainContainer}>
       {data.map((item, index) => {
@@ -35,14 +42,12 @@ const TaskOption = ({ navigation, route }) => {
             activeOpacity={0.6}
             onPress={() =>
               navigation.navigate(item.redirect, {
-                item: { ScreenTitle: 'Tasks' },
-                status: status,
+                items: items,
+                screenName: screenName,
+                Alldata: Alldata,
               })
             }
-            style={[
-              styles.individual,
-              { backgroundColor: item.bgColor },
-            ]}
+            style={[styles.individual, { backgroundColor: item.bgColor }]}
           >
             <View style={styles.individualLeft}>
               <MaterialCommunityIcons
@@ -77,23 +82,23 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     padding: 15,
     paddingVertical: 19,
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
   },
   individualLeft: {
-    display: 'flex',
-    flexDirection: 'row',
+    display: "flex",
+    flexDirection: "row",
     gap: 10,
-    alignItems: 'center',
+    alignItems: "center",
   },
   txt: {
     fontSize: 13,
-    color: 'white',
+    color: "white",
   },
   individualRight: {
-    backgroundColor: '#FBA81A',
+    backgroundColor: "#FBA81A",
     borderRadius: 4,
     padding: 2,
   },

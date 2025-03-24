@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect } from "react";
 import {
   View,
   Image,
@@ -6,42 +6,42 @@ import {
   StyleSheet,
   TouchableOpacity,
   Dimensions,
-} from 'react-native';
-import Color from '../../Color';
-import { vh, vw } from '../../utils/ScreenSize';
-import { Entypo } from '@expo/vector-icons';
+} from "react-native";
+import Color from "../../Color";
+import { vh, vw } from "../../utils/ScreenSize";
+import { Entypo } from "@expo/vector-icons";
 const DashboardBottom = ({ navigation, status }) => {
   const data = [
     {
-      img: require('../../../assets/imgs/job_status.png'),
-      screenName: 'job-Status',
-      title: 'Jobs Status',
-      color: '#FBA200',
+      img: require("../../../assets/imgs/job_status.png"),
+      screenName: "job-Status",
+      title: "Jobs Status",
+      color: "#FBA200",
     },
     {
-      img: require('../../../assets/imgs/task.png'),
-      screenName: 'taskoption', //tasks
-      title: 'Tasks',
+      img: require("../../../assets/imgs/task.png"),
+      screenName: "tasks", //
+      title: "Tasks",
     },
     {
-      img: require('../../../assets/imgs/request.png'),
-      screenName: 'requests',
-      title: 'Requests',
+      img: require("../../../assets/imgs/request.png"),
+      screenName: "requests",
+      title: "Requests",
     },
     {
-      img: require('../../../assets/imgs/problem.png'),
-      screenName: 'all-problem-report',
-      title: 'Problem Rep',
+      img: require("../../../assets/imgs/problem.png"),
+      screenName: "all-problem-report",
+      title: "Problem Rep",
     },
     {
-      img: require('../../../assets/imgs/latest.png'),
-      screenName: 'latest-activity',
-      title: 'Latest Activity',
+      img: require("../../../assets/imgs/latest.png"),
+      screenName: "latest-activity",
+      title: "Latest Activity",
     },
     {
       img: false,
-      screenName: 'calender',
-      title: 'Calendar',
+      screenName: "calender",
+      title: "Calendar",
     },
   ];
 
@@ -52,7 +52,7 @@ const DashboardBottom = ({ navigation, status }) => {
           <TouchableOpacity
             onPress={() =>
               navigation.navigate(item.screenName, {
-                item: { ScreenTitle: 'Tasks' },
+                item: { ScreenTitle: "Tasks" },
                 status: status,
               })
             }
@@ -62,14 +62,11 @@ const DashboardBottom = ({ navigation, status }) => {
             <View
               style={[
                 styles.individualContainer,
-                { backgroundColor: item.color || 'white' },
+                { backgroundColor: item.color || "white" },
               ]}
             >
               {item.img ? (
-                <Image
-                  style={styles.containerImg}
-                  source={item.img}
-                />
+                <Image style={styles.containerImg} source={item.img} />
               ) : (
                 <Entypo
                   name="calendar"
@@ -80,7 +77,7 @@ const DashboardBottom = ({ navigation, status }) => {
               <Text
                 style={[
                   styles.containerTitle,
-                  { color: item.color ? 'white' : 'black' },
+                  { color: item.color ? "white" : "black" },
                 ]}
               >
                 {item.title}
@@ -97,41 +94,41 @@ export default DashboardBottom;
 
 const styles = StyleSheet.create({
   mainContainer: {
-    overflow: 'hidden',
+    overflow: "hidden",
     borderRadius: 10,
     height: vh * 30,
     backgroundColor: Color.cream,
     marginHorizontal: vw * 4,
   },
   subContainer: {
-    display: 'flex',
-    flexDirection: 'row',
+    display: "flex",
+    flexDirection: "row",
     paddingVertical: vh * 2,
     gap: vw * 4,
-    flexWrap: 'wrap',
-    justifyContent: 'center',
-    alignItems: 'center',
-    margin: 'auto',
+    flexWrap: "wrap",
+    justifyContent: "center",
+    alignItems: "center",
+    margin: "auto",
   },
   individualContainer: {
     height: vh * 12,
     width: vw * 26,
-    backgroundColor: 'white',
+    backgroundColor: "white",
     borderRadius: 5,
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'center',
-    alignContent: 'center',
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center",
+    alignContent: "center",
   },
   containerImg: {
     height: vh * 5,
     width: vw * 10,
-    alignSelf: 'center',
+    alignSelf: "center",
   },
   containerTitle: {
     fontSize: vw * 3,
-    textAlign: 'center',
+    textAlign: "center",
   },
   calendar: {
     marginLeft: 2,
